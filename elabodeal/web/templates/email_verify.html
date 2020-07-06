@@ -1,0 +1,39 @@
+{% extends 'layouts/main.html' %}
+{% load static %}
+
+{% block title-description %}Weryfikacja konta{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/styles/pages/email_verify.css' %}">
+{% endblock %}
+
+{% block children %}
+<section class="section">
+	<div class="logo">
+		<a href="{% url 'web:index' %}">
+			<img 
+				class="logo__img"
+				src="{% static 'images/blue-logo.png' %}"
+			/>
+		</a>
+	</div>
+	<h1 class="section__title">Dziękujemy za rejestrację</h1>
+	<p class="section__description">
+		Na podany email <bold class="bold-text">{{ email }}</bold> został wysłany kod weryfikacjyjny.
+	</p>
+	<form class="form" method="POST" action="/account/verify/" autocomplete="off">
+		{% if form.errors %}
+			{% for error in form.code.errors %}
+				<p class="form__error">{{ error }}</p>
+			{% endfor %}
+		{% endif %}
+
+		{% csrf_token %}
+		<div class="input-container">
+			{{ form.code }}
+		</div>
+
+		<button class="form__submit" type="submit">Zweryfikuj</button>
+	</form>
+</section>
+{% endblock %}

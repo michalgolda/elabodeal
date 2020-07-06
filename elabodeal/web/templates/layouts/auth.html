@@ -1,0 +1,53 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/styles/pages/auth.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+	<div class="left-section">
+		<div class="wrapper">
+			<div class="logo">
+				<a href="{% url 'web:index' %}">
+					<img 
+						class="logo__img"
+						src="{% static '/images/blue-logo.png' %}"
+						alt="Blue logo"
+					/>
+				</a>
+			</div>
+			<div class="choice">
+				{% if request.path == '/auth/login/' %}
+					<div class="choice--left">
+						<a class="choice__link choice__link--current" href="{% url 'web:login' %}">ZALOGUJ SIĘ</a>
+						<div class="choice__decorator"></div>
+					</div>
+					<div class="choice--right">
+						<a class="choice__link" href="{% url 'web:register' %}">ZAREJESTRUJ SIĘ</a>
+					</div>
+				{% elif request.path == '/auth/register/' %}
+					<div class="choice--left">
+						<a class="choice__link" href="{% url 'web:login' %}">ZALOGUJ SIĘ</a>
+					</div>
+					<div class="choice--right">
+						<a class="choice__link choice__link--current" href="{% url 'web:register' %}">ZAREJESTRUJ SIĘ</a>
+						<div class="choice__decorator"></div>
+					</div>
+				{% endif %}
+			</div>
+			{% block form %}{% endblock %}
+		</div>
+	</div>
+	<div class="right-section">
+		<section class="section">
+			<a class="section__link" href="{% url 'web:index' %}">Sprawdź co dla ciebie mamy</a>
+		</section>
+		<div class="hero">
+			<p class="hero__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+		</div>
+		{% include 'components/smallfooter.html' %}
+	</div>
+</div>
+{% endblock %}

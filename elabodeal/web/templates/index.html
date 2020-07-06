@@ -1,0 +1,86 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Home{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/styles/pages/index.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+	<div class="container">
+		<section class="section">
+			<p class="section__label">
+				Kategorie
+			</p>
+			<div class="category-list">
+				<div class="category">
+					<div class="category__decorator">
+					</div>
+					<p class="category__name">Polski</p>
+				</div>
+				<div class="category">
+					<div class="category__decorator">
+					</div>
+					<p class="category__name">Polski</p>
+				</div>
+				<div class="category">
+					<div class="category__decorator">
+					</div>
+					<p class="category__name">Polski</p>
+				</div>
+				<div class="category">
+					<div class="category__decorator">
+					</div>
+					<p class="category__name">Polski</p>
+				</div>
+			</div>
+		</section>
+		<section class="section">
+			<header class="header">
+				<form class="search">
+					<input 
+						class="search__input" 
+						type="text"
+						placeholder="Imię, nazwisko autora lub tytuł"
+						required 
+					/>
+					<button class="search__submit" type="submit">Wyszukaj</button>
+				</form>
+				<div class="banner"></div>
+			</header>
+			<section class="section">
+				<p class="section__label">
+					Promowane
+				</p>
+				<div class="product-list">
+					{% for product in products %}
+						{% include 'components/product.html' with title=product.title author=product.author price=product.price %}
+					{% endfor %}
+				</div>
+			</section>
+			<section class="section">
+				<p class="section__label">
+					Bestsellery
+				</p>
+				<div class="product-list">
+					{% for product in products %}
+						{% include 'components/product.html' with title=product.title author=product.author price=product.price %}
+					{% endfor %}
+				</div>
+			</section>
+			<section class="section">
+				<p class="section__label">
+					Nowości
+				</p>
+				<div class="product-list">
+					{% for product in products %}
+						{% include 'components/product.html' with title=product.title author=product.author price=product.price %}
+					{% endfor %}
+				</div>
+			</section>
+		</section>
+	</div>
+{% include 'components/bigfooter.html' %}
+{% endblock %}

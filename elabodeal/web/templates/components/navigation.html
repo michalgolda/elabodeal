@@ -1,0 +1,38 @@
+{% load static %}
+
+<nav class="nav">
+	<a href="{% url 'web:index' %}">
+		<img
+			class="nav__logo"
+			src="{% static 'images/white-logo.png' %}"
+			alt="White logo"
+		/>
+	</a>
+	<div class="nav__section">
+		{% if not request.user.is_authenticated %}
+			<div class="nav__action">
+				<i class="fas fa-shopping-cart nav__action__icon"></i>
+				<p class="nav__action__text">0.00 zł</p>
+			</div>
+			<div class="nav__action">
+				<a class="nav__link--login">Zaloguj się</a>
+			</div>
+			<div class="nav__action">
+				<a class="nav__link--register">Zaloguj się</a>
+			</div>
+		{% else %}
+			<div class="nav__action">
+				<i class="fas fa-shopping-cart nav__action__icon"></i>
+				<p class="nav__text">0.00 zł</p>
+			</div>
+			<div class="nav__action">
+				<div class="nav__avatar"></div>
+				<p class="nav__text">{{ request.user.username }}</p>
+				<i class="fas fa-angle-down nav__action__icon--arrow"></i>
+			</div>
+			<div class="nav__action">
+				<button class="nav__btn">Dodaj e-booka</button>
+			</div>
+		{% endif %}
+	</div>
+</nav>

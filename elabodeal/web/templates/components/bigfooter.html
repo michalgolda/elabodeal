@@ -1,0 +1,64 @@
+{% load static %}
+
+<footer class="footer footer--big">
+	<div class="footer__container">
+		<div class="footer__section">
+			<div class="footer__logo">
+				<a href="{% url 'web:index' %}">
+					<img 
+						class="footer__logo__img"
+						src="{% static 'images/white-logo.png' %}"
+						alt="White logo" 
+					/>
+				</a>
+			</div>
+			<div class="footer__section">
+				<a class="footer__link footer__link--social" href="#">
+					<i class="fab fa-facebook-square"></i>
+				</a>
+				<a class="footer__link footer__link--social" href="#">
+					<i class="fab fa-twitter-square"></i>
+				</a>
+				<a class="footer__link footer__link--social" href="#">
+					<i class="fab fa-linkedin"></i>
+				</a>
+			</div>
+		</div>
+		<div class="footer__section">
+			<p class="footer__section__title">O nas</p>
+			<div class="footer__link__container">
+				<a class="footer__link" href="#">Informacje o nas</a>
+			</div>
+			<div class="footer__link__container">
+				<a class="footer__link" href="#">Kontakt</a>
+			</div>
+			<div class="footer__link__container">
+				<a class="footer__link" href="#">Relacje inwestorskie</a>
+			</div>
+			<div class="footer__link__container">
+				<a class="footer__link" href="#">Donate</a>
+			</div>
+		</div>
+		<div class="footer__section">
+			<p class="footer__section__title">Pomoc techniczna</p>
+			<div class="footer__link__container">
+				<a class="footer__link" href="#">Centrum pomocy</a>
+			</div>
+			<div class="footer__link__container">
+				<a class="footer__link" href="#">Skontaktuj się z nami</a>
+			</div>
+			<div class="footer__link__container">
+				<a class="footer__link" href="#">Cookies</a>
+			</div>
+			<div class="footer__link__container">
+				<a class="footer__link" href="#">Prywatność i warunki</a>
+			</div>
+		</div>
+		<div class="footer__section">
+			<button class="footer__btn">
+				<i class="fas fa-angle-up"></i>
+			</button>
+		</div>
+	</div>
+	<p class="footer__text--bottom">© 2020 elabodeal.com</p>
+</footer>
