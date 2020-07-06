@@ -27,6 +27,7 @@
 .category-list {
     width: 100%;
     height: auto;
+    min-height: 32px;
     border: 1px solid var(--grey);
     background: white;
     margin-top: 16px;

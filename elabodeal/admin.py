@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from elabodeal.models import User
+from elabodeal.models import User, Category
 
 
 class UserAdmin(BaseUserAdmin):
@@ -25,6 +25,24 @@ class UserAdmin(BaseUserAdmin):
 	ordering = ('email', 'username')
 	filter_horizontal = ()
 
+
+class CategoryAdmin(admin.ModelAdmin):
+	list_display = ('name',)
+	list_filter = ('name',)
+	fieldsets = (
+		(None, {'fields': ('name',)}),
+	)
+	add_fieldsets = (
+		(None, {
+			'classes': ('wide',),
+			'fields': ('name',)}
+		),
+	)
+	search_fields = ('name',)
+	ordering = ('name',)
+	filter_horizontal = ()
+
 admin.site.register(User, UserAdmin)
+admin.site.register(Category, CategoryAdmin)
 
 admin.site.unregister(Group)

@@ -80,3 +80,10 @@ class VerifyCode(models.Model):
 	email = models.EmailField(max_length=256)
 	code = models.CharField(max_length=6)
 	created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Category(models.Model):
+	name = models.CharField(max_length=30)
+
+	class Meta:
+		verbose_name_plural = 'categories'

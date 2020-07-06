@@ -15,26 +15,13 @@
 				Kategorie
 			</p>
 			<div class="category-list">
-				<div class="category">
-					<div class="category__decorator">
+				{% for category in categories %}
+					<div class="category">
+						<div class="category__decorator">
+						</div>
+						<p class="category__name">{{ category.name }}</p>
 					</div>
-					<p class="category__name">Polski</p>
-				</div>
-				<div class="category">
-					<div class="category__decorator">
-					</div>
-					<p class="category__name">Polski</p>
-				</div>
-				<div class="category">
-					<div class="category__decorator">
-					</div>
-					<p class="category__name">Polski</p>
-				</div>
-				<div class="category">
-					<div class="category__decorator">
-					</div>
-					<p class="category__name">Polski</p>
-				</div>
+				{% endfor %}
 			</div>
 		</section>
 		<section class="section">
