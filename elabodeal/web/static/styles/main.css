@@ -237,7 +237,7 @@ body {
     max-width: 150px;
     height: 200px;
     margin: 0 auto;
-    background: var(--grey);
+/*    background: var(--grey);*/
     border-radius: 2px;
 }
 

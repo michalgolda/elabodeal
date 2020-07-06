@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.template.loader import render_to_string
 
-from elabodeal.models import Category
+from elabodeal.models import Category, Product
 
 
 class IndexView(View):
@@ -11,25 +11,13 @@ class IndexView(View):
 
 	def get(self, request):
 		categories = Category.objects.all()
+		products = Product.objects.all()
+
+		for product in products:
+			product.title = product.title[:30] + '...'
 
 		context = {
 			'categories': categories,
-			'products': [
-				{
-					'title': 'Test',
-					'author': 'Krzystof Bosak',
-					'price': 123
-				},
-				{
-					'title': 'Test',
-					'author': 'Krzystof Bosak',
-					'price': 123
-				},
-				{
-					'title': 'Test',
-					'author': 'Krzystof Bosak',
-					'price': 123
-				}
-			]
+			'products': products
 		}
 		return self.respond_index(request, context)
