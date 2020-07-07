@@ -30,15 +30,21 @@
     {% block scripts %}{% endblock %}
     <script>
         $('#acc-action').click(function(){
-            $('.nav-popup').toggle();
-            $('#nav-arrow-down').hide();
-            $('#nav-arrow-up').show();
+            if($('.nav-popup').is(':hidden')){
+                $('.nav-popup').show();
+                $('#nav-arrow-down').show();
+                $('#nav-arrow-up').hide(); 
+            } else {
+                $('#nav-arrow-down').hide();
+                $('#nav-arrow-up').show();
+                $('.nav-popup').hide();
+            }
         })
 
         $('.nav-popup').hover(function(){}, function(){
             $(this).toggle();
-            $('#nav-arrow-down').show();
-            $('#nav-arrow-up').hide();
+            $('#nav-arrow-down').hide();
+            $('#nav-arrow-up').show();
         })
     </script>
 </body>
