@@ -39,29 +39,6 @@
 				<div class="banner"></div>
 			</header>
 			<section class="section">
-				<p class="section__label">
-					Promowane
-				</p>
-				<div class="product-list">
-					{% for product in products %}
-						{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
-					{% endfor %}
-				</div>
-			</section>
-			<section class="section">
-				<p class="section__label">
-					Bestsellery
-				</p>
-				<div class="product-list">
-					{% for product in products %}
-						{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
-					{% endfor %}
-				</div>
-			</section>
-			<section class="section">
-				<p class="section__label">
-					Nowości
-				</p>
 				<div class="product-list">
 					{% for product in products %}
 						{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
