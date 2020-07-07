@@ -28,5 +28,18 @@
 
 
     {% block scripts %}{% endblock %}
+    <script>
+        $('#acc-action').click(function(){
+            $('.nav-popup').toggle();
+            $('#nav-arrow-down').hide();
+            $('#nav-arrow-up').show();
+        })
+
+        $('.nav-popup').hover(function(){}, function(){
+            $(this).toggle();
+            $('#nav-arrow-down').show();
+            $('#nav-arrow-up').hide();
+        })
+    </script>
 </body>
 </html>
