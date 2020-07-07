@@ -17,7 +17,7 @@ class LoginView(View):
 		return LoginForm(request.POST if request else None)
 
 	def respond_login(self, request, context = None):
-		return HttpResponse(render_to_string('login.html', context, request))
+		return HttpResponse(render_to_string('auth/login.html', context, request))
 
 	def get(self, request):
 		form = self.get_form()
@@ -62,7 +62,7 @@ class RegisterView(View):
 		return RegisterForm(request.POST if request else None)
 
 	def respond_register(self, request, context = None):
-		return HttpResponse(render_to_string('register.html', context, request))
+		return HttpResponse(render_to_string('auth/register.html', context, request))
 
 	def get(self, request):
 		form = self.get_form()

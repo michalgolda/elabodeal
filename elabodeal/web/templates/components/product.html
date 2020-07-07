@@ -1,31 +1,33 @@
-<div class="product">
-    <img 
-        class="product__cover"
-        src="{{ cover_img_url }}"
-        alt="{{ title }}"
-    />
-    <div class="product__details">
-        <div class="product__details--wrapper">
-            <p class="product__title">
-                {{ title }}
-            </p>
-        </div>
-        <div class="product__details--wrapper">
-            <p class="product__author">
-                {{ author }}
-            </p>
-        </div>
-        <div class="product__details--wrapper">
-            <p class="product__price">
-                {{ price }} zł
-            </p>
-        </div>
-        <div class="product__details--wrapper">
-            <i class="fas fa-star product__star"></i>
-            <i class="fas fa-star product__star"></i>
-            <i class="fas fa-star product__star"></i>
-            <i class="fas fa-star product__star"></i>
-            <i class="fas fa-star product__star"></i>
+<a class="product__link" href="{% url 'web:product-detail' id=id %}">
+    <div class="product">
+        <img 
+            class="product__cover"
+            src="{{ cover_img_url }}"
+            alt="{{ title }}"
+        />
+        <div class="product__details">
+            <div class="product__details--wrapper">
+                <p class="product__title">
+                    {{ title }}
+                </p>
+            </div>
+            <div class="product__details--wrapper">
+                <p class="product__author">
+                    {{ author }}
+                </p>
+            </div>
+            <div class="product__details--wrapper">
+                <p class="product__price">
+                    {{ price }} zł
+                </p>
+            </div>
+            <div class="product__details--wrapper">
+                <i class="fas fa-star product__star"></i>
+                <i class="fas fa-star product__star"></i>
+                <i class="fas fa-star product__star"></i>
+                <i class="fas fa-star product__star"></i>
+                <i class="fas fa-star product__star"></i>
+            </div>
         </div>
     </div>
-</div>
+</a>

@@ -1,0 +1,40 @@
+.container {
+	width: 500px;
+	height: calc(100vh - 96px);
+	margin: 0 auto;
+}
+
+.error {
+	width: 100%;
+	height: auto;
+	padding-top: 128px;
+	color: var(--black);
+}
+
+.error__title {
+	font-size: 3.5rem;
+	font-weight: 600;
+}
+
+.error__btn {
+	text-decoration: none;
+	padding: 8px 32px 8px 32px;
+	background: var(--orange);
+	display: inline-block;
+	color: white;
+	border-radius: 2px;
+	margin-top: 16px;
+}
+
+.error__description {
+	font-size: 1.5rem;
+	font-weight: 300;
+}
+
+.footer__text {
+	color: var(--green);
+}
+
+.footer__link {
+	color: var(--green);
+}

@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Nie znaleziono produktu{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/styles/pages/product_404.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="container">
+	<div class="error">
+		<h1 class="error__title">404</h1>
+		<p class="error__description">Produkt którego szukasz nie istnieje. Mógł zostać usunięty przez autora.</p>
+		<a class="error__btn" href="{% url 'web:index' %}">Strona główna</a>
+	</div>
+</div>
+{% include 'components/smallfooter.html' %}
+{% endblock %}
+
