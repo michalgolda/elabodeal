@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Twój koszyk{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/styles/pages/cart.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="container">
+	<section class="section">
+		<p class="section__label">Koszyk</p>
+		<section class="section">
+			{% for product in products %}
+				<div class="product">
+					<div class="product__section" style="float: left;">
+						<input class="product__checkbox" type="checkbox"/>
+						<img 
+							class="product__cover"
+							src="{{ product.cover_img_url }}"
+							alt="{{ product.title }}"
+						/>
+						<div style="float: left;">
+							<p class="product__title">{{ product.title }}</p>
+							<p class="product__author">{{ product.author.email }}</p>
+						</div>
+					</div>
+					<div class="product__section" style="float: right;">	
+						<p class="product__price">{{ product.price }} zł</p>
+					</div>
+				</div>
+			{% endfor %}
+		</section>
+	</section>
+	<section class="section bar">
+		<div style="float: left;">
+			<button class="btn saveCartBtn">Zapisz koszyk</button>
+			<button class="btn shareCartBtn">Udostępnij koszyk</button>
+		</div>
+		<form>
+			<button class="btn buyBtn">Zapłać</button>
+		</form>
+	</section>
+</div>
+{% include 'components/smallfooter.html' %}
+{% endblock %}
