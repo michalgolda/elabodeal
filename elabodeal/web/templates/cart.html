@@ -15,21 +15,24 @@
 		<section class="section">
 			{% for product in products %}
 				<div class="product">
-					<div class="product__section" style="float: left;">
-						<input class="product__checkbox" type="checkbox"/>
-						<img 
-							class="product__cover"
-							src="{{ product.cover_img_url }}"
-							alt="{{ product.title }}"
-						/>
-						<div style="float: left;">
-							<p class="product__title">{{ product.title }}</p>
-							<p class="product__author">{{ product.author.email }}</p>
+					<div style="width: calc(100% - 24px); height: 224px; float: left">
+						<div class="product__section" style="float: left;">
+							<input class="product__checkbox" type="checkbox"/>
+							<img 
+								class="product__cover"
+								src="{{ product.cover_img_url }}"
+								alt="{{ product.title }}"
+							/>
+							<div style="float: left;">
+								<p class="product__title">{{ product.title }}</p>
+								<p class="product__author">{{ product.author.email }}</p>
+							</div>
+						</div>
+						<div class="product__section" style="float: right;">	
+							<p class="product__price">{{ product.price }} zł</p>
 						</div>
 					</div>
-					<div class="product__section" style="float: right;">	
-						<p class="product__price">{{ product.price }} zł</p>
-					</div>
+					<i class="fas fa-times delete-product"></i>
 				</div>
 			{% endfor %}
 		</section>
