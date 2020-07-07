@@ -15,19 +15,19 @@
 				<p class="nav__action__text">0.00 zł</p>
 			</div>
 			<div class="nav__action">
-				<a class="nav__link--login">Zaloguj się</a>
+				<a class="nav__link--login" href="{% url 'web:login' %}">Zaloguj się</a>
 			</div>
 			<div class="nav__action">
-				<a class="nav__link--register">Zaloguj się</a>
+				<a class="nav__link--register" href="{% url 'web:register' %}">Zarejestruj się</a>
 			</div>
 		{% else %}
 			<div class="nav__action">
 				<i class="fas fa-shopping-cart nav__action__icon"></i>
-				<p class="nav__text">0.00 zł</p>
+				<p class="nav__action__text">0.00 zł</p>
 			</div>
 			<div class="nav__action" id="acc-action">
 				<div class="nav__avatar"></div>
-				<p class="nav__text">{{ request.user.username }}</p>
+				<p class="nav__action__text">{{ request.user.username }}</p>
 				<i class="fas fa-angle-down nav__action__icon--arrow" id="nav-arrow-down"></i>
 				<i class="fas fa-angle-up nav__action__icon--arrow" id="nav-arrow-up" style="display: none;"></i>
 			</div>
@@ -57,6 +57,6 @@
 		<div class="nav-popup__action">
 			<a class="nav-popup__link" href="#">Ustawienia</a>	
 		</div>
-		<a class="nav-popup__link--logout" href="#">Wyloguj się</a>
+		<a class="nav-popup__link--logout" href="{% url 'web:logout' %}">Wyloguj się</a>
 	</div>
 </div>
