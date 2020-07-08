@@ -15,9 +15,9 @@
 					<i class="fas fa-shopping-cart nav__action__icon"></i>
 					<p class="nav__action__text">
 						{% if 'cart' in request.session %}
-							{{ request.session.cart.total_price }} zł
+							{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
 						{% else %}
-						0.00 zł
+						0.00 zł (0)
 						{% endif %}
 					</p>
 				</a>
@@ -33,7 +33,7 @@
 				<i class="fas fa-shopping-cart nav__action__icon"></i>
 				<p class="nav__action__text">
 					{% if 'cart' in request.session %}
-						{{ request.session.cart.total_price }} zł
+						{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
 					{% else %}
 					0.00 zł
 					{% endif %}

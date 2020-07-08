@@ -32,6 +32,7 @@ class CartView(View):
 		if not 'cart' in request.session:
 			request.session['cart'] = {
 				'products': [],
+				'item_count': 0,
 				'total_price': 0.00
 			}
 
@@ -45,6 +46,7 @@ class CartView(View):
 
 			cart['products'].append({'id': product_id, 'price': product_price})
 			cart['total_price'] = self.calculate_total_price(request)
+			cart['item_count'] += 1
 
 			request.session['cart'] = cart
 
@@ -64,6 +66,7 @@ class CartView(View):
 					cart['products'].remove(p)
 
 			cart['total_price'] = self.calculate_total_price(request)
+			cart['item_count'] -= 1
 
 			request.session['cart'] = cart
 
