@@ -18,9 +18,11 @@
 			<div class="category-list">
 				{% for category in categories %}
 					<div class="category">
-						<div class="category__decorator">
-						</div>
-						<p class="category__name">{{ category.name }}</p>
+						<a href="{% url 'web:index' %}?category={{ category.name }}">
+							<div class="category__decorator">
+							</div>
+							<p class="category__name">{{ category.name }}</p>
+						</a>
 					</div>
 				{% endfor %}
 			</div>
