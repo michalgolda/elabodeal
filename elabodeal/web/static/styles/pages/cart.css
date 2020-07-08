@@ -85,10 +85,20 @@
 	float: left;
 	font-size: 1.5rem;
 	color: var(--grey);
+	background: transparent;
+	border: none;
 }
 
 .delete-product:hover {
 	cursor: pointer;
+}
+
+.cart-success-text {
+	font-size: 2.5rem;
+	font-weight: 600;
+	color: var(--green);
+	text-align: center;
+	padding: 64px 0px 64px 0px;
 }
 
 .bar {
@@ -112,6 +122,14 @@
 
 .shareCartBtn {
 	margin-left: 16px;
+}
+
+.cart-empty-text {
+	font-size: 2.5rem;
+	font-weight: 600;
+	color: var(--black);
+	text-align: center;
+	padding: 128px 0px 128px 0px;
 }
 
 .buyBtn {

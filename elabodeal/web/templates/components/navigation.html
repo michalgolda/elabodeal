@@ -10,9 +10,17 @@
 	</a>
 	<div class="nav__section">
 		{% if not request.user.is_authenticated %}
-			<div class="nav__action">
-				<i class="fas fa-shopping-cart nav__action__icon"></i>
-				<p class="nav__action__text">0.00 zł</p>
+			<div id="cart-open-popup" class="nav__action">
+				<a class="nav__link" href="{% url 'web:cart' %}">
+					<i class="fas fa-shopping-cart nav__action__icon"></i>
+					<p class="nav__action__text">
+						{% if 'cart' in request.session %}
+							{{ request.session.cart.total_price }} zł
+						{% else %}
+						0.00 zł
+						{% endif %}
+					</p>
+				</a>
 			</div>
 			<div class="nav__action">
 				<a class="nav__link--login" href="{% url 'web:login' %}">Zaloguj się</a>
@@ -21,9 +29,15 @@
 				<a class="nav__link--register" href="{% url 'web:register' %}">Zarejestruj się</a>
 			</div>
 		{% else %}
-			<div class="nav__action">
+			<div id="cart-open-popup" class="nav__action">
 				<i class="fas fa-shopping-cart nav__action__icon"></i>
-				<p class="nav__action__text">0.00 zł</p>
+				<p class="nav__action__text">
+					{% if 'cart' in request.session %}
+						{{ request.session.cart.total_price }} zł
+					{% else %}
+					0.00 zł
+					{% endif %}
+				</p>
 			</div>
 			<div class="nav__action" id="acc-action">
 				<div class="nav__avatar"></div>
@@ -37,7 +51,7 @@
 		{% endif %}
 	</div>
 </nav>
-<div class="nav-popup">
+<div id="acc-actions-popup" class="nav-popup">
 	<div class="nav-popup-container">
 		<div class="nav-popup__action">
 			<a class="nav-popup__link" href="#">Twój profil</a>
@@ -58,8 +72,16 @@
 			<a class="nav-popup__link" href="#">Wiadomości</a>
 		</div>
 		<div class="nav-popup__action">
-			<a class="nav-popup__link" href="#">Ustawienia</a>	
+			<a class="nav-popup__link" href="#">Ustawienia</a>
 		</div>
 		<a class="nav-popup__link--logout" href="{% url 'web:logout' %}">Wyloguj się</a>
 	</div>
 </div>
+<!-- <div id="cart-actions-popup" class="nav-popup nav-popup--cart">
+	<div class="nav-popup-container">
+		<div class="nav-popup__action nav-popup--disable-hover">
+			<p class="nav-popup__cart-total-price">Razem {{ request.session.cart_total_price }} zł</a>
+		</div>
+		<a class="nav-popup__link--cart" href="{% url 'web:cart' %}">Przejdz do koszyka</a>
+	</div>
+</div> -->

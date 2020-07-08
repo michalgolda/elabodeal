@@ -30,22 +30,27 @@
     {% block scripts %}{% endblock %}
     <script>
         $('#acc-action').click(function(){
-            if($('.nav-popup').is(':hidden')){
-                $('.nav-popup').show();
+            if($('#acc-actions-popup').is(':hidden')){
+                $('#acc-actions-popup').show();
                 $('#nav-arrow-down').show();
                 $('#nav-arrow-up').hide(); 
             } else {
                 $('#nav-arrow-down').hide();
                 $('#nav-arrow-up').show();
-                $('.nav-popup').hide();
+                $('#acc-actions-popup').hide();
             }
         })
 
-        $('.nav-popup').hover(function(){}, function(){
-            $(this).toggle();
+        $('#acc-actions-popup').hover(function(){}, function(){
+            $(this).hide();
             $('#nav-arrow-down').hide();
             $('#nav-arrow-up').show();
         })
     </script>
+<!--     <script>
+        $('#cart-open-popup').click(function(){
+            $('#cart-actions-popup').toggle();
+        })
+    </script> -->
 </body>
 </html>

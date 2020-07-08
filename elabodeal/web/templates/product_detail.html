@@ -33,7 +33,14 @@
 						<form style="display: inline-block;">
 							<button class="buyOneClickBtn btn">Kup teraz</button>
 						</form>
-						<button class="addToCartBtn btn">Dodaj do koszyka</button>
+						<form method="POST" action="/cart/" style="display: inline-block;">
+							{% csrf_token %}
+							<input type="hidden" name="product_id" value="{{ product.id }}">
+							<input type="hidden" name="product_price" value="{{ product.price }}">
+							<input type="hidden" name="action_type" value="add-product-to-cart">
+							
+							<button id="add-product-to-cart" class="addToCartBtn btn">Dodaj do koszyka</button>
+						</form>
 					</section>
 				</section>
 				<section class="section param-container">

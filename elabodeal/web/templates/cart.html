@@ -12,29 +12,44 @@
 <div class="container">
 	<section class="section">
 		<p class="section__label">Koszyk</p>
+		{% if show_info %}
+			<h1 class="cart-success-text">Produkt został pomyślnie dodany do koszyka :)</h1>
+		{% endif %}
 		<section class="section">
-			{% for product in products %}
-				<div class="product">
-					<div style="width: calc(100% - 24px); height: 224px; float: left">
-						<div class="product__section" style="float: left;">
-							<input class="product__checkbox" type="checkbox"/>
-							<img 
-								class="product__cover"
-								src="{{ product.cover_img_url }}"
-								alt="{{ product.title }}"
-							/>
-							<div style="float: left;">
-								<p class="product__title">{{ product.title }}</p>
-								<p class="product__author">{{ product.author.email }}</p>
+			{% if products %}
+				{% for product in products %}
+					<div class="product">
+						<div style="width: calc(100% - 24px); height: 224px; float: left">
+							<div class="product__section" style="float: left;">
+								<input class="product__checkbox" type="checkbox"/>
+								<img 
+									class="product__cover"
+									src="{{ product.cover_img_url }}"
+									alt="{{ product.title }}"
+								/>
+								<div style="float: left;">
+									<p class="product__title">{{ product.title }}</p>
+									<p class="product__author">{{ product.author.email }}</p>
+								</div>
+							</div>
+							<div class="product__section" style="float: right;">	
+								<p class="product__price">{{ product.price }} zł</p>
 							</div>
 						</div>
-						<div class="product__section" style="float: right;">	
-							<p class="product__price">{{ product.price }} zł</p>
-						</div>
+						<form method="POST" action="/cart/" class="delete-product">
+							{% csrf_token %}
+							<input type="hidden" name="product_id" value="{{ product.id }}">
+							<input type="hidden" name="action_type" value="delete-product-from-cart" />
+							<button class="delete-product">
+								<i class="fas fa-times"></i>
+							</button>
+						</form>
 					</div>
-					<i class="fas fa-times delete-product"></i>
-				</div>
-			{% endfor %}
+				{% endfor %}
+
+				{% else %}
+				<h1 class="cart-empty-text">Twój koszyk jest pusty</h1>
+			{% endif %}
 		</section>
 	</section>
 	<section class="section bar">
