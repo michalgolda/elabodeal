@@ -14,6 +14,7 @@
 				{% for error in form.email.errors %}
 					<p class="form__error">{{ error }}</p>
 				{% endfor %}
+			{% else %}
 				{% if form.password2.errors %}
 					{% for error in form.password2.errors %}
 						<p class="form__error">{{ error }}</p>
