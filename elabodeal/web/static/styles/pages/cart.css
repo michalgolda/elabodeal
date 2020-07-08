@@ -102,6 +102,18 @@
 	padding: 64px 0px 64px 0px;
 }
 
+.cart-total-price {
+	display: inline-block;
+	font-size: 1.3rem;
+	padding: 4px 0px 4px 0px;
+	margin-right: 16px;
+}
+
+.cart-checkout-form {
+	width: auto;
+	float: right;
+}
+
 .bar {
 	margin: 32px 0px 64px 0px;
 }

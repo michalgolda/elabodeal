@@ -12,9 +12,11 @@ class CartView(View):
 
 	def get_cart_products(self, request):
 		products = []
-		for p in request.session['cart']['products']:
-			product = Product.objects.filter(id=p['id']).first()
-			products.append(product)
+		
+		if 'cart' in request.session:
+			for p in request.session['cart']['products']:
+				product = Product.objects.filter(id=p['id']).first()
+				products.append(product)
 
 		return products
 

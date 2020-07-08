@@ -57,7 +57,14 @@
 			<button class="btn saveCartBtn">Zapisz koszyk</button>
 			<button class="btn shareCartBtn">Udostępnij koszyk</button>
 		</div>
-		<form>
+		<form class="cart-checkout-form">
+			<p class="cart-total-price">Razem: 
+				{% if 'cart' in request.session %}
+					<b style="color: var(--orange);">{{ request.session.cart.total_price }} zł</b>
+				{% else %}
+					<b style="color: var(--orange);">0.00 zł</b>
+				{% endif %}
+			</p>
 			<button class="btn buyBtn">Zapłać</button>
 		</form>
 	</section>
