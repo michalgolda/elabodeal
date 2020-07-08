@@ -87,6 +87,7 @@
 	color: var(--grey);
 	background: transparent;
 	border: none;
+	outline: none;
 }
 
 .delete-product:hover {
