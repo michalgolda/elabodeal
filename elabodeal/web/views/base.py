@@ -19,5 +19,5 @@ class BaseView(View):
 	def handle(self, request, *args, **kwargs):
 		return super(BaseView, self).dispatch(request, *args, **kwargs)
 
-	def respond(self, template, context, request):	
+	def respond(self, template, request, context = None):	
 		return HttpResponse(render_to_string(template, context, request))

@@ -18,7 +18,7 @@ class EmailVerifyView(BaseView):
 			'form': self.get_form(),
 			'email': request.session['email']
 		}
-		return self.respond('email_verify.html', context, request)
+		return self.respond('email_verify.html', request, context)
 
 	def post(self, request):
 		form = self.get_form(request)
@@ -42,11 +42,11 @@ class EmailVerifyView(BaseView):
 			context = {
 				'form': form
 			}
-			return self.respond('email_verify.html', context, request)
+			return self.respond('email_verify.html', request, context)
 
 
 
 		context = {
 			'form': form
 		}
-		return self.respond('email_verify.html', context, request)
+		return self.respond('email_verify.html', request, context)

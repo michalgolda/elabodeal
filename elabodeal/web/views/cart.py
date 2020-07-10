@@ -52,7 +52,7 @@ class CartView(BaseView):
 				'show_info': True,
 				'products': self.get_cart_products(request)
 			}
-			return self.respond('cart.html', context, request)
+			return self.respond('cart.html', request, context)
 
 		elif action_type == 'delete-product-from-cart':
 			product_id = int(request.POST.get('product_id'))
@@ -68,10 +68,10 @@ class CartView(BaseView):
 
 			request.session['cart'] = cart
 
-			return self.respond('cart.html', context, request)
+			return self.respond('cart.html', request, context)
 
 	def get(self, request):
 		context = {
 			'products': self.get_cart_products(request)
 		}
-		return self.respond('cart.html', context, request)
+		return self.respond('cart.html', request, context)

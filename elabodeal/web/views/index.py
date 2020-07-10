@@ -24,4 +24,4 @@ class IndexView(BaseView):
 			'categories': categories,
 			'products': products
 		}
-		return self.respond('index.html', context, request)
+		return self.respond('index.html', request, context)

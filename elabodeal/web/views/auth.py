@@ -20,7 +20,7 @@ class LoginView(BaseView):
 		context = {
 			'form': form
 		}
-		return self.respond('auth/login.html', context, request)
+		return self.respond('auth/login.html', request, context)
 
 	def post(self, request):
 		form = self.get_form(request)
@@ -38,19 +38,19 @@ class LoginView(BaseView):
 				context = {
 					'form': form
 				}
-				return self.respond('auth/login.html', context, request)
+				return self.respond('auth/login.html', request, context)
 
 			form.add_error('email', 'Nieprawidłowy email lub hasło')
 			context = {
 				'form': form
 			}
-			return self.respond('auth/login.html', context, request)
+			return self.respond('auth/login.html', request, context)
 
 
 		context = {
 			'form': form
 		}
-		return self.respond('auth/login.html', context, request)
+		return self.respond('auth/login.html', request, context)
 
 
 class RegisterView(BaseView):
@@ -62,7 +62,7 @@ class RegisterView(BaseView):
 		context = {
 			'form': form
 		}
-		return self.respond('auth/register.html', context, request)
+		return self.respond('auth/register.html', request, context)
 
 	def post(self, request):
 		form = self.get_form(request)
@@ -97,4 +97,4 @@ class RegisterView(BaseView):
 		context = {
 			'form': form
 		}
-		return self.respond('auth/register.html', context, request)
+		return self.respond('auth/register.html', request, context)

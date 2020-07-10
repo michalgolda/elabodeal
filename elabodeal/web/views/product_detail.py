@@ -6,7 +6,7 @@ class ProductDetailView(BaseView):
 	def get(self, request, id):
 		product = Product.objects.filter(id=id).first()
 		if not product:
-			return self.respond('product_404.html', context, request)
+			return self.respond('product_404.html', request, context)
 
 		products = Product.objects.all()
 		for p in products:
@@ -16,4 +16,4 @@ class ProductDetailView(BaseView):
 			'product': product,
 			'related_products': products
 		}
-		return self.respond('product_detail.html', context, request)
+		return self.respond('product_detail.html', request, context)

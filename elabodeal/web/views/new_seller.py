@@ -14,4 +14,4 @@ class NewSellerView(BaseView):
 		context = {
 			'form': self.get_form()
 		}
-		return self.respond('new_seller.html', context, request)
+		return self.respond('new_seller.html', request, context)
