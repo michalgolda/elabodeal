@@ -1,30 +1,26 @@
 import random
 
-from django.http import HttpResponse
-from django.views import View
 from django.conf import settings
 from django.shortcuts import redirect
-from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
+from elabodeal.web.views.base import BaseView
 from elabodeal.models import VerifyCode
 from elabodeal.web.forms.auth import LoginForm, RegisterForm
 
 
-class LoginView(View):
+class LoginView(BaseView):
 	def get_form(self, request = None):
 		return LoginForm(request.POST if request else None)
-
-	def respond_login(self, request, context = None):
-		return HttpResponse(render_to_string('auth/login.html', context, request))
 
 	def get(self, request):
 		form = self.get_form()
 		context = {
 			'form': form
 		}
-		return self.respond_login(request, context)
+		return self.respond('auth/login.html', context, request)
 
 	def post(self, request):
 		form = self.get_form(request)
@@ -42,34 +38,31 @@ class LoginView(View):
 				context = {
 					'form': form
 				}
-				return self.respond_login(request, context)
+				return self.respond('auth/login.html', context, request)
 
 			form.add_error('email', 'Nieprawidłowy email lub hasło')
 			context = {
 				'form': form
 			}
-			return self.respond_login(request, context)
+			return self.respond('auth/login.html', context, request)
 
 
 		context = {
 			'form': form
 		}
-		return self.respond_login(request, context)
+		return self.respond('auth/login.html', context, request)
 
 
-class RegisterView(View):
+class RegisterView(BaseView):
 	def get_form(self, request = None):
 		return RegisterForm(request.POST if request else None)
-
-	def respond_register(self, request, context = None):
-		return HttpResponse(render_to_string('auth/register.html', context, request))
 
 	def get(self, request):
 		form = self.get_form()
 		context = {
 			'form': form
 		}
-		return self.respond_register(request, context)
+		return self.respond('auth/register.html', context, request)
 
 	def post(self, request):
 		form = self.get_form(request)
@@ -104,4 +97,4 @@ class RegisterView(View):
 		context = {
 			'form': form
 		}
-		return self.respond_register(request, context)
+		return self.respond('auth/register.html', context, request)

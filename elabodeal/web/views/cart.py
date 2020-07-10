@@ -1,15 +1,11 @@
-from django.http import HttpResponse
-from django.views import View
-from django.shortcuts import redirect
-from django.template.loader import render_to_string
 
+from django.shortcuts import redirect
+
+from elabodeal.web.views.base import BaseView
 from elabodeal.models import Product
 
 
-class CartView(View):
-	def respond_cart(self, request, context = None):
-		return HttpResponse(render_to_string('cart.html', context, request))
-
+class CartView(BaseView):
 	def get_cart_products(self, request):
 		products = []
 		
@@ -56,7 +52,7 @@ class CartView(View):
 				'show_info': True,
 				'products': self.get_cart_products(request)
 			}
-			return self.respond_cart(request, context)
+			return self.respond('cart.html', context, request)
 
 		elif action_type == 'delete-product-from-cart':
 			product_id = int(request.POST.get('product_id'))
@@ -72,10 +68,10 @@ class CartView(View):
 
 			request.session['cart'] = cart
 
-			return redirect('web:cart')
+			return self.respond('cart.html', context, request)
 
 	def get(self, request):
 		context = {
 			'products': self.get_cart_products(request)
 		}
-		return self.respond_cart(request, context)
+		return self.respond('cart.html', context, request)

@@ -1,11 +1,10 @@
-from django.views import View
-from django.shortcuts import redirect
 from django.contrib.auth import logout
+from django.shortcuts import redirect
 
+from elabodeal.web.views.base import BaseView
 
-class LogoutView(View):
+class LogoutView(BaseView):
 	def get(self, request):
-		if request.user.is_authenticated:
-			logout(request)
+		logout(request)
 
 		return redirect('web:index')

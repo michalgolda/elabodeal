@@ -1,0 +1,53 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Menedżer sprzedaży{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/styles/pages/new_seller.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="container">
+	<div class="text-wrapper">
+		<p class="title">Zacznij sprzedawać !</p>
+		<p class="sub-title">Wypełnij poniższy formularz</p>
+	</div>
+	<form class="form">
+		<p class="form__text">1. Dane do wypłaty</p>
+		<div class="form__input__wrapper sectioned">
+			<label class="form__input__label">KRAJ</label>
+			{{ form.country }}
+		</div>
+		<div class="form__input__wrapper sectioned" style="margin-left: 16px;">
+			<label class="form__input__label">SWIFT</label>
+			{{ form.swift }}
+		</div>
+		<div class="form__input__wrapper">
+			<label class="form__input__label">NUMER RACHUNKU</label>
+			{{ form.account_number }}
+		</div>
+		<p class="form__text">2. Dane sprzedającego</p>
+		<div class="form__input__wrapper sectioned">
+			<label class="form__input__label">IMIĘ</label>
+			{{ form.first_name }}
+		</div>
+		<div class="form__input__wrapper sectioned" style="margin-left: 16px;">
+			<label class="form__input__label">NAZWISKO</label>
+			{{ form.last_name }}
+		</div>
+		<p class="form__text">3. Powiadomienia</p>
+		<div class="form__input__wrapper" style="height: 20px;">
+			{{ form.notify_when_buy_book }}
+			<label class="form__input__label">E-MAIL O KUPIONEJ KOPII KSIĄŻKI</label>
+		</div>
+		<div class="form__input__wrapper" style="height: 20px;">
+			{{ form.notify_when_withdraw }}
+			<label class="form__input__label">E-MAIL O WYPŁACIE ŚRODKÓW NA KONTO</label>
+		</div>
+		<button class="form__submit" type="submit">Zapisz</button>
+	</form>
+</div>
+{% include 'components/smallfooter.html' %}
+{% endblock %}

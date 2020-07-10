@@ -1,19 +1,14 @@
 from django.utils import timezone
-from django.views import View
-from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.template.loader import render_to_string
 
+from elabodeal.web.views.base import BaseView
 from elabodeal.models import VerifyCode, User
 from elabodeal.web.forms.email_verify import EmailVerifyForm
 
 
-class EmailVerifyView(View):
+class EmailVerifyView(BaseView):
 	def get_form(self, request = None):
 		return EmailVerifyForm(request.POST if request else None)
-
-	def respond_verify_page(self, request, context = None):
-		return HttpResponse(render_to_string('email_verify.html', context, request))
 
 	def get(self, request):
 		if not 'email' in request.session:
@@ -23,7 +18,7 @@ class EmailVerifyView(View):
 			'form': self.get_form(),
 			'email': request.session['email']
 		}
-		return self.respond_verify_page(request, context)
+		return self.respond('email_verify.html', context, request)
 
 	def post(self, request):
 		form = self.get_form(request)
@@ -47,11 +42,11 @@ class EmailVerifyView(View):
 			context = {
 				'form': form
 			}
-			return self.respond_verify_page(request, context)
+			return self.respond('email_verify.html', context, request)
 
 
 
 		context = {
 			'form': form
 		}
-		return self.respond_verify_page(request, context)
+		return self.respond('email_verify.html', context, request)

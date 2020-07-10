@@ -1,21 +1,12 @@
-from django.http import HttpResponse
-from django.views import View
-from django.template.loader import render_to_string
-
+from elabodeal.web.views.base import BaseView
 from elabodeal.models import Product
 
 
-class ProductDetailView(View):
-	def respond_index(self, request, context = None):
-		return HttpResponse(render_to_string('product_detail.html', context, request))
-
-	def respond_404(self, request, context = None):
-		return HttpResponse(render_to_string('product_404.html', context, request))
-	
+class ProductDetailView(BaseView):
 	def get(self, request, id):
 		product = Product.objects.filter(id=id).first()
 		if not product:
-			return self.respond_404(request)
+			return self.respond('product_404.html', context, request)
 
 		products = Product.objects.all()
 		for p in products:
@@ -25,4 +16,4 @@ class ProductDetailView(View):
 			'product': product,
 			'related_products': products
 		}
-		return self.respond_index(request, context)
+		return self.respond('product_detail.html', context, request)

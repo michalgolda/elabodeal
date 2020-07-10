@@ -6,6 +6,7 @@ from elabodeal.web.views.email_verify import EmailVerifyView
 from elabodeal.web.views.product_detail import ProductDetailView
 from elabodeal.web.views.logout import LogoutView
 from elabodeal.web.views.cart import CartView
+from elabodeal.web.views.new_seller import NewSellerView
 
 app_name = 'web'
 
@@ -16,5 +17,6 @@ urlpatterns = [
 	path('auth/register/', RegisterView.as_view(), name='register'),
 	path('account/verify/', EmailVerifyView.as_view(), name='account-email-verify'),
 	path('logout/', LogoutView.as_view(), name='logout'),
-	path('cart/', CartView.as_view(), name='cart')
+	path('cart/', CartView.as_view(), name='cart'),
+	path('salesmanager/new', NewSellerView.as_view(), name='new-seller')
 ]

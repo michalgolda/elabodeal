@@ -1,14 +1,8 @@
-from django.http import HttpResponse
-from django.views import View
-from django.template.loader import render_to_string
-
+from elabodeal.web.views.base import BaseView
 from elabodeal.models import Category, Product
 
 
-class IndexView(View):
-	def respond_index(self, request, context = None):
-		return HttpResponse(render_to_string('index.html', context, request))
-
+class IndexView(BaseView):
 	def get(self, request):
 		categories = Category.objects.all()
 
@@ -30,4 +24,4 @@ class IndexView(View):
 			'categories': categories,
 			'products': products
 		}
-		return self.respond_index(request, context)
+		return self.respond('index.html', context, request)

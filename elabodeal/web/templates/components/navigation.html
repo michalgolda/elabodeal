@@ -30,14 +30,16 @@
 			</div>
 		{% else %}
 			<div id="cart-open-popup" class="nav__action">
-				<i class="fas fa-shopping-cart nav__action__icon"></i>
-				<p class="nav__action__text">
-					{% if 'cart' in request.session %}
-						{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
-					{% else %}
-					0.00 zł
-					{% endif %}
-				</p>
+				<a class="nav__link" href="{% url 'web:cart' %}">
+					<i class="fas fa-shopping-cart nav__action__icon"></i>
+					<p class="nav__action__text">
+						{% if 'cart' in request.session %}
+							{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
+						{% else %}
+						0.00 zł
+						{% endif %}
+					</p>
+				</a>
 			</div>
 			<div class="nav__action" id="acc-action">
 				<div class="nav__avatar"></div>
