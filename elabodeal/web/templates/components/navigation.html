@@ -47,9 +47,11 @@
 				<i class="fas fa-angle-down nav__action__icon--arrow" id="nav-arrow-down" style="display: none;"></i>
 				<i class="fas fa-angle-up nav__action__icon--arrow" id="nav-arrow-up"></i>
 			</div>
-			<div class="nav__action">
-				<button class="nav__btn">Dodaj e-booka</button>
-			</div>
+			{% if not request.path == '/salesmanager/products/add/' %}
+				<div class="nav__action">
+					<a class="nav__link--login" href="{% url 'web:salesmanager-add-product' %}">Dodaj e-booka</a>
+				</div>
+			{% endif %}
 		{% endif %}
 	</div>
 </nav>
@@ -65,7 +67,7 @@
 			<a class="nav-popup__link" href="#">Zapisane koszyki</a>
 		</div>
 		<div class="nav-popup__action">
-			<a class="nav-popup__link" href="#">Menedżer sprzedaży</a>
+			<a class="nav-popup__link" href="{% url 'web:salesmanager' %}">Menedżer sprzedaży</a>
 		</div>
 		<div class="nav-popup__action">
 			<a class="nav-popup__link" href="#">Statystyki</a>

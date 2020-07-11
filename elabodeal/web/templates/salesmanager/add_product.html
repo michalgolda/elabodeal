@@ -1,0 +1,47 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Dodaj swojego e-booka i zacznij zarabiać{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/styles/pages/add_product.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="container">
+	<p class="title">Dodaj e-booka</p>
+	<p class="sub-title">Wypełnij poniższy formularz aby dodać e-booka</p>
+	<form class="form" action="/salesmanager/products/add/" method="POST" autocomplete="off">
+		{% csrf_token %}
+		<div class="form__input__wrapper">
+			<label class="form__input__label">TYTUŁ</label>
+			{{ form.title }}
+		</div>
+		<div class="form__input__wrapper">
+			<label class="form__input__label">KATEGORIA</label>
+			{{ form.category }}
+		</div>
+		<div class="form__input__wrapper">
+			<label class="form__input__label">OPIS</label>
+			{{ form.description }}
+		</div>
+		<div class="form__section">
+			<div class="form__input__wrapper sectioned">
+				<label class="form__input__label">ILOŚĆ STRON</label>
+				{{ form.page_count }}
+			</div>
+			<div class="form__input__wrapper sectioned" style="margin-left: 16px;">
+				<label class="form__input__label">CENA</label>
+				{{ form.price }}
+			</div>
+		</div>
+		<div class="form__input__wrapper">
+			<label class="form__input__label">LINK DO ZDJĘCIA OKŁADKI</label>
+			{{ form.cover_img_url }}
+		</div>
+		<button class="form__submit" type="submit">Opublikuj</button>
+	</form>
+</div>
+{% include 'components/smallfooter.html' %}
+{% endblock %}

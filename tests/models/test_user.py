@@ -14,6 +14,7 @@ class TestUserModel(BaseTestCase):
 		self.assertEqual(hasattr(User, 'is_staff'), True)
 		self.assertEqual(hasattr(User, 'is_superuser'), True)
 		self.assertEqual(hasattr(User, 'is_active'), True)
+		self.assertEqual(hasattr(User, 'is_seller'), True)
 		self.assertEqual(hasattr(User, 'created_at'), True)
 		self.assertEqual(hasattr(User, 'updated_at'), True)
 

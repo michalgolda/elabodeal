@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from elabodeal.web.views.auth import LoginView, RegisterView
 from elabodeal.web.views.index import IndexView
@@ -6,7 +6,9 @@ from elabodeal.web.views.email_verify import EmailVerifyView
 from elabodeal.web.views.product_detail import ProductDetailView
 from elabodeal.web.views.logout import LogoutView
 from elabodeal.web.views.cart import CartView
-from elabodeal.web.views.new_seller import NewSellerView
+from elabodeal.web.views.salesmanager import SalesManagerView
+from elabodeal.web.views.salesmanager_start import SalesManagerStartView
+from elabodeal.web.views.salesmanager_add_product import SalesManagerAddProductView
 
 app_name = 'web'
 
@@ -18,5 +20,9 @@ urlpatterns = [
 	path('account/verify/', EmailVerifyView.as_view(), name='account-email-verify'),
 	path('logout/', LogoutView.as_view(), name='logout'),
 	path('cart/', CartView.as_view(), name='cart'),
-	path('salesmanager/start', NewSellerView.as_view(), name='start-selling')
+	path('salesmanager/', include([
+		path('', SalesManagerView.as_view(), name='salesmanager'),
+		path('addproduct/', SalesManagerAddProductView.as_view(), name='salesmanager-add-product'),
+		path('start/', SalesManagerStartView.as_view(), name='salesmanager-start')
+	]))
 ]

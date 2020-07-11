@@ -6,13 +6,16 @@ from django.template.loader import render_to_string
 
 class BaseView(View):
 	auth_required = False
+	seller_required = False
 
 	def dispatch(self, request, *args, **kwargs):
 		if self.auth_required:
 			if not request.user.is_authenticated:
 				return redirect('web:index')
-			
-			return self.handle(request, *args, **kwargs)
+				
+		if self.seller_required:
+			if not request.user.is_seller:
+				return redirect('web:salesmanager-start')
 
 		return self.handle(request, *args, **kwargs)
 
