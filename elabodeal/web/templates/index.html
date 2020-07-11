@@ -33,19 +33,39 @@
 					<input 
 						class="search__input" 
 						type="text"
+						name="q"
+						value="{{ search_query }}"
 						placeholder="Imię, nazwisko autora lub tytuł"
 						required 
 					/>
 					<button class="search__submit" type="submit">Wyszukaj</button>
 				</form>
-				<div class="banner"></div>
+				{% if not use_search %}
+					<div class="banner"></div>
+				{% endif %}
 			</header>
 			<section class="section">
-				<div class="product-list">
-					{% for product in products %}
-						{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
-					{% endfor %}
-				</div>
+				{% if use_search %}
+					{% if products %}
+						<div class="product-list">
+							{% for product in products %}
+								{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
+							{% endfor %}
+						</div>
+					{% else %}
+						<h1 class="search-not-found">Nie znaleziono produktu którego szukasz</h1>
+					{% endif %}
+					{% else %}
+					{% if products %}
+						<div class="product-list">
+							{% for product in products %}
+								{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
+							{% endfor %}
+						</div>
+					{% else %}
+						<h1 class="search-not-found">Nie znaleziono produktu którego szukasz</h1>
+					{% endif %}
+				{% endif %}
 			</section>
 		</section>
 	</div>

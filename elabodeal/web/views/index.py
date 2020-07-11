@@ -1,3 +1,5 @@
+from django.contrib.postgres.search import SearchVector
+
 from elabodeal.web.views.base import BaseView
 from elabodeal.models import Category, Product
 
@@ -7,21 +9,29 @@ class IndexView(BaseView):
 		categories = Category.objects.all()
 
 		category_param = request.GET.get('category')
-		if not category_param:
-			products = Product.objects.all()
+		search_query = request.GET.get('q')
 
-		# Check if category does exisit in db
-		category = Category.objects.filter(name=category_param).first()
-		if not category:
-			products = Product.objects.all()
-		else:
+		use_search = False
+
+		if category_param:
 			products = Product.objects.filter(category__name=category_param).all()
+		elif search_query:
+			products = Product.objects.annotate(
+				search=SearchVector('author__first_name', 'author__last_name', 'title')
+			).filter(search=search_query.lower()).all()
 
-		for product in products:
-			product.title = product.title[:30] + '...'
+			use_search = True
+		else:
+			products = Product.objects.all()
+
+		for p in products:
+			p.title = p.title[:30] + '...'
 
 		context = {
 			'categories': categories,
-			'products': products
+			'products': products if len(products) > 0 else False,
+			'use_search': use_search,
+			'search_query': search_query if search_query else ""
 		}
+
 		return self.respond('index.html', request, context)

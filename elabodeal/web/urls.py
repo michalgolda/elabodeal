@@ -18,5 +18,5 @@ urlpatterns = [
 	path('account/verify/', EmailVerifyView.as_view(), name='account-email-verify'),
 	path('logout/', LogoutView.as_view(), name='logout'),
 	path('cart/', CartView.as_view(), name='cart'),
-	path('salesmanager/new', NewSellerView.as_view(), name='new-seller')
+	path('salesmanager/start', NewSellerView.as_view(), name='start-selling')
 ]

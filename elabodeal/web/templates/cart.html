@@ -54,7 +54,9 @@
 	</section>
 	<section class="section bar">
 		<div style="float: left;">
-			<button class="btn saveCartBtn">Zapisz koszyk</button>
+			{% if request.user.is_authenticated %}
+				<button class="btn saveCartBtn">Zapisz koszyk</button>
+			{% endif %}
 			<button class="btn shareCartBtn">Udostępnij koszyk</button>
 		</div>
 		<form class="cart-checkout-form">

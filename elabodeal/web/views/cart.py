@@ -68,7 +68,7 @@ class CartView(BaseView):
 
 			request.session['cart'] = cart
 
-			return self.respond('cart.html', request, context)
+			return self.respond('cart.html', request)
 
 	def get(self, request):
 		context = {

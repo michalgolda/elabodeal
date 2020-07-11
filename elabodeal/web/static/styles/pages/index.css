@@ -125,3 +125,9 @@
     grid-template-columns: 300px 300px 300px;
     text-align: center;
 }
+
+.search-not-found {
+    text-align: center;
+    padding-top: 128px;
+    color: var(--black);
+}
