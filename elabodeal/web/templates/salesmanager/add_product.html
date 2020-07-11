@@ -12,7 +12,7 @@
 <div class="container">
 	<p class="title">Dodaj e-booka</p>
 	<p class="sub-title">Wypełnij poniższy formularz aby dodać e-booka</p>
-	<form class="form" action="/salesmanager/products/add/" method="POST" autocomplete="off">
+	<form class="form" action="/salesmanager/addproduct/" method="POST" autocomplete="off">
 		{% csrf_token %}
 		<div class="form__input__wrapper">
 			<label class="form__input__label">TYTUŁ</label>
@@ -20,11 +20,19 @@
 		</div>
 		<div class="form__input__wrapper">
 			<label class="form__input__label">KATEGORIA</label>
-			{{ form.category }}
+			<select name="category" class="form__input">
+				{% for category in categories %}
+					<option>{{ category.name }}</option>
+				{% endfor %}
+			</select>
 		</div>
 		<div class="form__input__wrapper">
 			<label class="form__input__label">OPIS</label>
 			{{ form.description }}
+		</div>
+		<div class="form__input__wrapper">
+			<label class="form__input__label">ISBN</label>
+			{{ form.isbn }}
 		</div>
 		<div class="form__section">
 			<div class="form__input__wrapper sectioned">

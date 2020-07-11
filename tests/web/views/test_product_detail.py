@@ -19,7 +19,9 @@ class TestProductDetailView(WebTestCase):
 			title='test',
 			description='test',
 			price=12,
-			cover_img_url='test'
+			cover_img_url='test',
+			page_count=123,
+			isbn=123
 		)
 
 		product.save()

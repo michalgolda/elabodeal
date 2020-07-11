@@ -10,6 +10,8 @@ class TestProductModel(BaseTestCase):
 		self.assertEqual(hasattr(Product, 'title'), True)
 		self.assertEqual(hasattr(Product, 'description'), True)
 		self.assertEqual(hasattr(Product, 'price'), True)
+		self.assertEqual(hasattr(Product, 'page_count'), True)
+		self.assertEqual(hasattr(Product, 'isbn'), True)
 		self.assertEqual(hasattr(Product, 'cover_img_url'), True)
 		self.assertEqual(hasattr(Product, 'created_at'), True)
 		self.assertEqual(hasattr(Product, 'updated_at'), True)

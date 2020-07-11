@@ -20,6 +20,8 @@ class TestSalesManagerView(WebTestCase):
 		product.title = 'Test e-book'
 		product.description = 'test'
 		product.price = 12
+		product.page_count = 123
+		product.isbn = 123
 		product.save()
 
 		self.client.login(email='test@test.pl', password='123')

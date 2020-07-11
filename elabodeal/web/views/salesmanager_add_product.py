@@ -12,8 +12,11 @@ class SalesManagerAddProductView(BaseView):
 		return AddProductForm(request.POST if request else None)
 
 	def get(self, request):
+		categories = Category.objects.all()
+
 		context = {
-			'form': self.get_form()
+			'form': self.get_form(),
+			'categories': categories
 		}
 		return self.respond('salesmanager/add_product.html', request, context)
 
@@ -21,7 +24,7 @@ class SalesManagerAddProductView(BaseView):
 		form = self.get_form(request)
 
 		if form.is_valid():
-			category = Category.objects.filter(id=form.cleaned_data['category']).first()
+			category = Category.objects.filter(name=request.POST.get('category')).first()
 			product = Product()
 			product.category = category
 			product.author = request.user
@@ -29,10 +32,12 @@ class SalesManagerAddProductView(BaseView):
 			product.description = form.cleaned_data['description']
 			product.price = form.cleaned_data['price']
 			product.cover_img_url = form.cleaned_data['cover_img_url']
+			product.isbn = form.cleaned_data['isbn']
+			product.page_count = form.cleaned_data['page_count']
 
 			product.save()
 
-			return redirect('web:user-products')
+			return redirect('web:salesmanager')
 
 		context = {
 			'form': form

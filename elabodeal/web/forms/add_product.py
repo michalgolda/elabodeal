@@ -2,7 +2,6 @@ from django import forms
 
 from elabodeal.models import Category
 
-CATEGORY_CHOICES = [(c.id, c.name) for c in Category.objects.all()]
 
 class AddProductForm(forms.Form):
 	title = forms.CharField(
@@ -11,16 +10,14 @@ class AddProductForm(forms.Form):
 		)
 	)
 
-	category = forms.ChoiceField(
-		choices=CATEGORY_CHOICES,
-		widget=forms.Select(
-			attrs={
-			'class': 'form__input'}
+	description = forms.CharField(
+		widget=forms.Textarea(
+			attrs={'class': 'form__input'}
 		),
 	)
 
-	description = forms.CharField(
-		widget=forms.Textarea(
+	isbn = forms.CharField(
+		widget=forms.TextInput(
 			attrs={'class': 'form__input'}
 		),
 	)
