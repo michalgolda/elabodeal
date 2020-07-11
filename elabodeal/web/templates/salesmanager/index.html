@@ -1,1 +1,56 @@
-<h1>sales manager</h1>
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Menedżer sprzedaży{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/styles/pages/salesmanager.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="container">
+	<p class="site-title">Menedżer sprzedaży</p>
+	<form class="search">
+		<input 
+			class="search__input" 
+			type="text"
+			name="q"
+			placeholder="Wyszukaj"
+			required 
+		/>
+		<button class="search__submit" type="submit">Szukaj</button>
+	</form>
+	<section class="choice">
+		<!-- <a class="choice__link choice__current" href="#">Lista twoich e-booków</a> -->
+		<p class="choice__link choice__current">Listwa twoich e-booków</p>
+		<form class="sort">
+			<label class="sort__label">SORTOWANIE</label>
+			<select class="sort__select" name="sort">
+				<option class="sort__option">Domyślnie</option>
+			</select>
+		</form>
+	</section>
+	<div class="wrapper">
+		{% if products %}
+			<div class="product-list">
+				{% for p in products %}
+					<div class="product">
+						<div class="product__section">
+							<p class="product__title">{{ p.title }}</p>
+							<div class="product__actions">
+								<a class="product__action__link" href="#">Statystyki</a>
+								<a class="product__action__link" href="#">Edycja</a>
+							</div>
+						</div>
+						<p class="product__footer"><b>Data dodania: </b> {{ p.created_at }}</p>
+					</div>
+				{% endfor %}
+			</div>
+			{% else %}
+			<h1 class="not-found-products">Nie posiadasz żadnego opublikowanego e-booka zmień to jak najszybciej</h1>
+		{% endif %}
+	</div>
+</div>
+{% include 'components/smallfooter.html' %}
+{% endblock %}
