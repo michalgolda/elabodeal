@@ -46,12 +46,12 @@ class ProductAdmin(admin.ModelAdmin):
 	list_display = ('title', 'category', 'author')
 	list_filter = ('category', 'author')
 	fieldsets = (
-		(None, {'fields': ('title', 'description', 'price', 'category', 'cover_img_url', 'author')}),
+		(None, {'fields': ('title', 'description', 'price', 'category', 'cover_img_url', 'author', 'page_count', 'isbn')}),
 	)
 	add_fieldsets = (
 		(None, {
 			'classes': ('wide',),
-			'fields': ('title', 'description', 'price', 'category', 'cover_img_url', 'author')}
+			'fields': ('title', 'description', 'price', 'page_count', 'isbn', 'category', 'cover_img_url', 'author')}
 		),
 	)
 	search_fields = ('category', 'author')

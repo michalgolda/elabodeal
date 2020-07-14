@@ -6,6 +6,8 @@ from elabodeal.web.views.email_verify import EmailVerifyView
 from elabodeal.web.views.product_detail import ProductDetailView
 from elabodeal.web.views.logout import LogoutView
 from elabodeal.web.views.cart import CartView
+from elabodeal.web.views.my_carts import MyCartsView
+from elabodeal.web.views.saved_cart_detail import SavedCartDetailView
 from elabodeal.web.views.salesmanager import SalesManagerView
 from elabodeal.web.views.salesmanager_start import SalesManagerStartView
 from elabodeal.web.views.salesmanager_add_product import SalesManagerAddProductView
@@ -20,6 +22,8 @@ urlpatterns = [
 	path('account/verify/', EmailVerifyView.as_view(), name='account-email-verify'),
 	path('logout/', LogoutView.as_view(), name='logout'),
 	path('cart/', CartView.as_view(), name='cart'),
+	path('my/carts/', MyCartsView.as_view(), name='my-carts'),
+	path('my/carts/<int:id>/', SavedCartDetailView.as_view(), name='saved-cart-detail'),
 	path('salesmanager/', include([
 		path('', SalesManagerView.as_view(), name='salesmanager'),
 		path('addproduct/', SalesManagerAddProductView.as_view(), name='salesmanager-add-product'),

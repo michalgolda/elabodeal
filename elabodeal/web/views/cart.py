@@ -2,7 +2,7 @@
 from django.shortcuts import redirect
 
 from elabodeal.web.views.base import BaseView
-from elabodeal.models import Product
+from elabodeal.models import Product, Cart, CartItem
 
 
 class CartView(BaseView):
@@ -68,7 +68,26 @@ class CartView(BaseView):
 
 			request.session['cart'] = cart
 
-			return self.respond('cart.html', request)
+			return redirect('web:cart')
+		elif action_type == 'save-cart':
+			cart_title = request.POST.get('title')
+			cart_description = request.POST.get('description')
+
+			cart = Cart()
+			cart.user = request.user
+			cart.title = cart_title
+			cart.description = cart_description
+			cart.save()
+
+			for p in request.session['cart']['products']:
+				product = Product.objects.filter(id=p['id']).first()
+				cart_item = CartItem()
+				cart_item.cart = cart
+				cart_item.product = product
+				cart_item.save()
+
+
+			return redirect('web:my-carts')
 
 	def get(self, request):
 		context = {

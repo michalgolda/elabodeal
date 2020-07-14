@@ -8,6 +8,31 @@
 {% endblock %}
 
 {% block body %}
+<div id="cart-save-popup-container" class="popup-hide">
+	<div class="cart-save-popup">
+		<div class="popup">
+			<div class="popup-close">
+				<i id="hide-cart-save-popup" class="fas fa-times popup-close-icon"></i>
+			</div>
+			<div class="popup-content">
+				<p class="popup-title">Zapisz koszyk</p>
+				<form class="popup-form" action="/cart/" method="POST" autocomplete="off">
+					{% csrf_token %}
+					<input type="hidden" name="action_type" value="save-cart" />
+					<div class="popup-input-wrapper">
+						<label class="popup-input-label">NAZWA</label>
+						<input type="text" class="popup-input" name="title" required />
+					</div>
+					<div class="popup-input-wrapper">
+						<label class="popup-input-label">OPIS</label>
+						<textarea class="popup-input" name="description" required></textarea>
+					</div>
+					<button type="submit" class="popup-submit">Zapisz</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 {% include 'components/navigation.html' %}
 <div class="container">
 	<section class="section">
@@ -54,8 +79,8 @@
 	</section>
 	<section class="section bar">
 		<div style="float: left;">
-			{% if request.user.is_authenticated %}
-				<button class="btn saveCartBtn">Zapisz koszyk</button>
+			{% if request.user.is_authenticated and products %}
+				<button id="show-cart-save-popup" class="btn saveCartBtn">Zapisz koszyk</button>
 			{% endif %}
 			<button class="btn shareCartBtn">Udostępnij koszyk</button>
 		</div>
@@ -72,4 +97,6 @@
 	</section>
 </div>
 {% include 'components/smallfooter.html' %}
+
+<script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

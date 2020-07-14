@@ -97,8 +97,8 @@ class Product(models.Model):
 	category = models.ForeignKey('elabodeal.Category', on_delete=models.CASCADE, related_name='product_category')
 	author = models.ForeignKey('elabodeal.User', on_delete=models.CASCADE, related_name='product_author')
 
-	title = models.CharField(max_length=100)
-	description = models.CharField(max_length=300)
+	title = models.CharField(max_length=200)
+	description = models.CharField(max_length=1000)
 	price =	models.DecimalField(max_digits=4, decimal_places=2)
 	cover_img_url = models.CharField(max_length=255)
 	page_count = models.IntegerField()
@@ -106,3 +106,17 @@ class Product(models.Model):
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+
+
+class Cart(models.Model):
+	title = models.CharField(max_length=100)
+	description = models.CharField(max_length=500)
+	user = models.ForeignKey('elabodeal.User', on_delete=models.CASCADE, related_name='cart_user')
+
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	
+class CartItem(models.Model):
+	cart = models.ForeignKey('elabodeal.Cart', on_delete=models.CASCADE, related_name='cart_item_cart')
+	product = models.ForeignKey('elabodeal.Product', on_delete=models.CASCADE, related_name='cart_item_product')

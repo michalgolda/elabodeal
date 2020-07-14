@@ -28,29 +28,6 @@
 
 
     {% block scripts %}{% endblock %}
-    <script>
-        $('#acc-action').click(function(){
-            if($('#acc-actions-popup').is(':hidden')){
-                $('#acc-actions-popup').show();
-                $('#nav-arrow-down').show();
-                $('#nav-arrow-up').hide(); 
-            } else {
-                $('#nav-arrow-down').hide();
-                $('#nav-arrow-up').show();
-                $('#acc-actions-popup').hide();
-            }
-        })
-
-        $('#acc-actions-popup').hover(function(){}, function(){
-            $(this).hide();
-            $('#nav-arrow-down').hide();
-            $('#nav-arrow-up').show();
-        })
-    </script>
-<!--     <script>
-        $('#cart-open-popup').click(function(){
-            $('#cart-actions-popup').toggle();
-        })
-    </script> -->
+    <script src="{% static 'js/nav.js' %}"></script>
 </body>
 </html>
