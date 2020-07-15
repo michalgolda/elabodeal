@@ -3,52 +3,122 @@
 
 {% block title-description %}Dodaj swojego e-booka i zacznij zarabiać{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" href="{% static '/styles/pages/salesmanager_add_product.css' %}">
+{% block css %}
+<style>
+	.container {
+		max-width: 500px;
+	}
+
+	.footer-text {
+		color: var(--green);
+	}
+
+	.footer-link {
+		color: var(--green);
+	}
+
+	input[type="file"] {
+		padding-top: 3px;
+	}
+
+	input[type="file"]::-webkit-file-upload-button {
+		background: var(--orange);
+		border: none;
+		border-radius: 2px;
+		outline: none;
+		color: white;
+		padding: 3px 5px 3px 5px;
+	}
+
+	input[type="file"]::-webkit-file-upload-button:hover {
+		cursor: pointer;
+	}
+</style>
 {% endblock %}
 
 {% block body %}
 {% include 'components/navigation.html' %}
 <div class="container">
-	<p class="title">Dodaj e-booka</p>
-	<p class="sub-title">Wypełnij poniższy formularz aby dodać e-booka</p>
-	<form class="form" action="/salesmanager/addproduct/" method="POST" autocomplete="off">
+	<div class="section margin-bottom-32px">
+		<p class="font-size-large font-weight-600 color-green">Dodaj e-booka</p>
+		<p class="font-size-medium font-weight-300 color-black">Wypełnij poniższy formularz</p>
+	</div>
+	<form class="section" action="/salesmanager/addproduct/" method="POST" autocomplete="off">
 		{% csrf_token %}
-		<div class="form__input__wrapper">
-			<label class="form__input__label">TYTUŁ</label>
+		<div class="section">
+			<label>TYTUŁ</label>
 			{{ form.title }}
 		</div>
-		<div class="form__input__wrapper">
-			<label class="form__input__label">KATEGORIA</label>
-			<select name="category" class="form__input">
-				{% for category in categories %}
-					<option>{{ category.name }}</option>
-				{% endfor %}
-			</select>
+
+		<div class="section display-flex margin-top-16px">
+			<div class="section">
+				<label>KATEGORIA</label>
+				<select name="category">
+					{% for category in categories %}
+						<option>{{ category.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="section margin-left-16px">
+				<label>WERSJA JĘZYKOWA</label>
+				{{ form.lang }}
+			</div>
 		</div>
-		<div class="form__input__wrapper">
-			<label class="form__input__label">OPIS</label>
+		<div class="section margin-top-16px">
+			<label>OPIS</label>
 			{{ form.description }}
 		</div>
-		<div class="form__input__wrapper">
-			<label class="form__input__label">ISBN</label>
-			{{ form.isbn }}
+		<div class="section margin-top-16px">
+			<label>SPIS TREŚCI</label>
+			{{ form.table_of_content }}
 		</div>
-		<div class="form__section">
-			<div class="form__input__wrapper sectioned">
-				<label class="form__input__label">ILOŚĆ STRON</label>
+		<div class="display-flex margin-top-16px">
+			<div class="section">
+				<label>ISBN</label>
+				{{ form.isbn }}
+			</div>
+			<div class="section margin-left-16px">
+				<label>Autor</label>
+				{{ form.author }}
+			</div>
+		</div>
+		<div class="section display-flex margin-top-16px">
+			<div class="section">
+				<label>ILOŚĆ STRON</label>
 				{{ form.page_count }}
 			</div>
-			<div class="form__input__wrapper sectioned" style="margin-left: 16px;">
-				<label class="form__input__label">CENA</label>
+			<div class="section margin-left-16px">
+				<label>CENA - Prowizja 0.83 zł</label>
 				{{ form.price }}
 			</div>
+			<div class="section margin-left-16px">
+				<label>ILOŚĆ KOPII</label>
+				{{ form.copies }}
+			</div>
 		</div>
-		<div class="form__input__wrapper">
-			<label class="form__input__label">LINK DO ZDJĘCIA OKŁADKI</label>
-			{{ form.cover_img_url }}
+		<div class="section display-flex margin-top-16px">
+			<div class="section">
+				<label>PDF</label>
+				{{ form.pdf }}
+			</div>
+			<div class="section margin-left-16px">
+				<label>MOBI</label>
+				{{ form.mobi }}
+			</div>
+			<div class="section margin-left-16px">
+				<label>EPUB</label>
+				{{ form.epub }}
+			</div>
 		</div>
-		<button class="form__submit" type="submit">Opublikuj</button>
+		<div class="section margin-top-32px">
+			<div class="section flex-center">
+				<div class="section">
+					{{ form.accept_rules }}
+					<label class="margin-left-8px margin-top-2px margin-bottom-2px">AKCEPTUJĘ REGULAMIN</label>
+				</div>
+			</div>
+		</div>
+		<button class="btn btn-green btn-full-width margin-top-32px" type="submit">Opublikuj</button>
 	</form>
 </div>
 {% include 'components/smallfooter.html' %}

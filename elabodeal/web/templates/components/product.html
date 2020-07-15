@@ -1,32 +1,32 @@
-<a class="product__link" href="{% url 'web:product-detail' id=id %}">
-    <div class="product">
+<a class="product-card-link" href="{% url 'web:product-detail' id=id %}">
+    <div class="product-card text-align-center">
         <img 
-            class="product__cover"
+            class="product-card-cover"
             src="{{ cover_img_url }}"
             alt="{{ title }}"
         />
-        <div class="product__details">
-            <div class="product__details--wrapper">
-                <p class="product__title">
+        <div class="product-card-section margin-top-16px">
+            <div class="product-card-section">
+                <p class="product-card-title">
                     {{ title }}
                 </p>
             </div>
-            <div class="product__details--wrapper">
-                <p class="product__author">
+            <div class="product-card-section margin-top-8px">
+                <p class="product-card-author">
                     {{ author }}
                 </p>
             </div>
-            <div class="product__details--wrapper">
-                <p class="product__price">
+            <div class="product-card-section margin-top-8px">
+                <p class="product-card-price">
                     {{ price }} zł
                 </p>
             </div>
-            <div class="product__details--wrapper">
-                <i class="fas fa-star product__star"></i>
-                <i class="fas fa-star product__star"></i>
-                <i class="fas fa-star product__star"></i>
-                <i class="fas fa-star product__star"></i>
-                <i class="fas fa-star product__star"></i>
+            <div class="product-card-section margin-top-4px">
+                <i class="fas fa-star product-card-star-icon"></i>
+                <i class="fas fa-star product-card-star-icon"></i>
+                <i class="fas fa-star product-card-star-icon"></i>
+                <i class="fas fa-star product-card-star-icon"></i>
+                <i class="fas fa-star product-card-star-icon"></i>
             </div>
         </div>
     </div>

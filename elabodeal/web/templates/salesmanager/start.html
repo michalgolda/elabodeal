@@ -1,52 +1,86 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title-description %}Menedżer sprzedaży{% endblock %}
+{% block title-description %}Zacznij sprzedawać{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" href="{% static '/styles/pages/salesmanager_start.css' %}">
+{% block css %}
+<style>
+	.container {
+		max-width: 500px;
+	}
+
+	.footer-text {
+		color: var(--green);
+	}
+
+	.footer-link {
+		color: var(--green);
+	}
+
+	.flex-start {
+		justify-content: flex-start;
+	}
+
+	.flex-end {
+		justify-content: flex-end;
+	}
+</style>
 {% endblock %}
 
 {% block body %}
 {% include 'components/navigation.html' %}
 <div class="container">
-	<div class="text-wrapper">
-		<p class="title">Zacznij sprzedawać !</p>
-		<p class="sub-title">Wypełnij poniższy formularz</p>
+	<div class="section margin-bottom-32px">
+		<p class="font-size-large font-weight-600 color-green">Zacznij sprzedawać !</p>
+		<p class="font-size-medium font-weight-300 color-black">Wypełnij poniższy formularz</p>
 	</div>
-	<form class="form">
-		<p class="form__text">1. Dane do wypłaty</p>
-		<div class="form__input__wrapper sectioned">
-			<label class="form__input__label">KRAJ</label>
-			{{ form.country }}
+	<form class="section">
+		<div class="section">
+			<p class="font-weight-600 font-size-small color-black">1. Dane do wypłaty</p>
+			<div class="section display-flex margin-top-16px">
+				<div class="section flex-start">
+					<label>KRAJ</label>
+					{{ form.country }}
+				</div>
+				<div class="section flex-end margin-left-16px">
+					<label>SWIFT</label>
+					{{ form.swift }}
+				</div>
+			</div>
+			<div class="section margin-top-16px">
+				<label>NUMER RACHUNKU</label>
+				{{ form.account_number }}
+			</div>
 		</div>
-		<div class="form__input__wrapper sectioned" style="margin-left: 16px;">
-			<label class="form__input__label">SWIFT</label>
-			{{ form.swift }}
+		<div class="section margin-top-32px">
+			<p class="font-weight-600 font-size-small color-black">2. Dane sprzedającego</p>
+			<div class="section display-flex margin-top-16px">
+				<div class="section flex-start">
+					<label>IMIĘ</label>
+					{{ form.first_name }}
+				</div>
+				<div class="section flex-end margin-left-16px">
+					<label>NAZWISKO</label>
+					{{ form.last_name }}
+				</div>
+			</div>
 		</div>
-		<div class="form__input__wrapper">
-			<label class="form__input__label">NUMER RACHUNKU</label>
-			{{ form.account_number }}
+		<div class="section margin-top-32px">
+			<p class="font-weight-600 font-size-small color-black">3. Powiadomienia</p>
+			<div class="section flex-center margin-top-16px">
+				<div class="section">
+					{{ form.notify_when_buy_book }}
+					<label class="margin-left-8px margin-top-2px margin-bottom-2px">E-MAIL O KUPIONEJ KOPII KSIĄŻKI</label>
+				</div>
+			</div>
+			<div class="section flex-center margin-top-16px">
+				<div class="section">
+					{{ form.notify_when_withdraw }}
+					<label class="margin-left-8px margin-top-2px margin-bottom-2px">E-MAIL O WYPŁACIE ŚRODKÓW NA KONTO</label>
+				</div>
+			</div>
 		</div>
-		<p class="form__text">2. Dane sprzedającego</p>
-		<div class="form__input__wrapper sectioned">
-			<label class="form__input__label">IMIĘ</label>
-			{{ form.first_name }}
-		</div>
-		<div class="form__input__wrapper sectioned" style="margin-left: 16px;">
-			<label class="form__input__label">NAZWISKO</label>
-			{{ form.last_name }}
-		</div>
-		<p class="form__text">3. Powiadomienia</p>
-		<div class="form__input__wrapper" style="height: 20px;">
-			{{ form.notify_when_buy_book }}
-			<label class="form__input__label">E-MAIL O KUPIONEJ KOPII KSIĄŻKI</label>
-		</div>
-		<div class="form__input__wrapper" style="height: 20px;">
-			{{ form.notify_when_withdraw }}
-			<label class="form__input__label">E-MAIL O WYPŁACIE ŚRODKÓW NA KONTO</label>
-		</div>
-		<button class="form__submit" type="submit">Zapisz</button>
+		<button class="btn btn-green btn-full-width margin-top-32px" type="submit">Zapisz</button>
 	</form>
 </div>
 {% include 'components/smallfooter.html' %}

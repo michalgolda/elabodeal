@@ -8,43 +8,29 @@ COUNTRY_CHOICES = (
 class NewSellerForm(forms.Form):
 	country = forms.ChoiceField(
 		choices=COUNTRY_CHOICES,
-		widget=forms.Select(attrs={
-			'class': 'form__input'
-		}),
+		widget=forms.Select,
 	)
 
 	swift = forms.CharField(
-		widget=forms.TextInput(
-			attrs={
-				'class': 'form__input'
-		}),
+		widget=forms.TextInput,
 	)
 
 	account_number = forms.CharField(
-		widget=forms.TextInput(
-			attrs={
-				'class': 'form__input'
-		}),
+		widget=forms.TextInput,
 	)
 
 	first_name = forms.CharField(
-		widget=forms.TextInput(
-			attrs={
-				'class': 'form__input'
-		}),
+		widget=forms.TextInput,
 	)
 
 	last_name = forms.CharField(
-		widget=forms.TextInput(
-			attrs={
-				'class': 'form__input'
-		}),
+		widget=forms.TextInput,
 	)
 
 	notify_when_buy_book = forms.ChoiceField(
 		widget=forms.CheckboxInput(
 			attrs={
-				'class': 'form__input--checkbox display-inline-block'
+				'class': 'float-left'
 			}
 		)
 	)
@@ -52,8 +38,8 @@ class NewSellerForm(forms.Form):
 	notify_when_withdraw = forms.ChoiceField(
 		widget=forms.CheckboxInput(
 			attrs={
-				'class': 'form__input--checkbox display-inline-block'
+				'class': 'float-left'
 			}
-		)
+		),
 	)
 

@@ -10,6 +10,10 @@ class SalesManagerView(BaseView):
 	def get(self, request):
 		products = Product.objects.filter(author__username=request.user.username).all()
 
+		for p in products:
+			if len(p.title) > 117:
+				p.title = p.title[:114] + '...'
+
 		context = {
 			'products': products if len(products) > 0 else False
 		}

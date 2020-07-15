@@ -3,67 +3,143 @@
 
 {% block title-description %}Home{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" href="{% static '/styles/pages/index.css' %}">
-<link rel="stylesheet" href="{% static '/styles/components/product.css' %}">
+{% block css %}
+<style>
+	.container {
+		display: grid;
+   		grid-column-gap: 16px;
+   		grid-template-columns: 256px 1fr;
+	}
+
+	.search {
+		width: 100%;
+		height: 52px;
+	}
+
+	.search > input {
+		font-size: 1.3rem;
+		float: left;
+		height: 52px;
+
+	    width: calc(100% - 144px);
+	}
+
+	.search > button[type="submit"] {
+		height: 52px;
+		margin-left: 16px;
+	}
+
+	.banner {
+	    margin-top: 32px;
+	    width: 100%;
+	    height: 256px;
+	    background: white;
+	    border: 1px solid var(--grey);
+	    border-radius: 2px;
+	}
+
+	.category-list {
+	    min-height: 32px;
+	    border: 1px solid var(--grey);
+	    background: white;
+	    margin-top: 16px;
+	    border-radius: 2px;
+	}
+
+	.category {
+		height: 32px;
+		margin: 8px 0px 8px 0px;
+	    padding: 0px 16px 0px 16px;
+	}
+
+	.category-decorator {
+	    width: 3px;
+	    height: 32px;
+	    background: var(--orange);
+	    float: left;
+	}
+
+	.category-name {
+	    float: left;
+	    font-size: 1.2rem;
+	    padding: 4px 0px 4px 8px;
+	    height: 32px;
+	    width: 219px;
+	    color: var(--black);
+	    text-align: left;
+	}
+
+	.category-name:hover {
+	    cursor: pointer;
+	    background: var(--orange);
+	    color: white;
+	}
+
+	.product-list {
+	    display: grid;
+	    grid-row-gap: 32px;
+	    grid-column-gap: 16px;
+	    grid-template-columns: 300px 300px 300px;
+	    text-align: center;
+	}
+</style>
 {% endblock %}
 
 {% block body %}
 {% include 'components/navigation.html' %}
 	<div class="container">
 		<section class="section">
-			<p class="section__label">
+			<p class="section-label">
 				Kategorie
 			</p>
-			<div class="category-list">
+			<div class="section category-list">
 				{% for category in categories %}
-					<div class="category">
+					<div class="section category">
 						<a href="{% url 'web:index' %}?category={{ category.name }}">
-							<div class="category__decorator">
+							<div class="category-decorator">
 							</div>
-							<p class="category__name">{{ category.name }}</p>
+							<p class="category-name">{{ category.name }}</p>
 						</a>
 					</div>
 				{% endfor %}
 			</div>
 		</section>
 		<section class="section">
-			<header class="header">
+			<header class="section">
 				<form class="search">
 					<input 
-						class="search__input" 
 						type="text"
 						name="q"
 						value="{{ search_query }}"
 						placeholder="Imię, nazwisko autora lub tytuł"
 						required 
 					/>
-					<button class="search__submit" type="submit">Szukaj</button>
+					<button class="btn btn-green" type="submit">Szukaj</button>
 				</form>
 				{% if not use_search %}
 					<div class="banner"></div>
 				{% endif %}
 			</header>
-			<section class="section">
+			<section class="section margin-top-32px">
 				{% if use_search %}
 					{% if products %}
-						<div class="product-list">
+						<div class="section product-list">
 							{% for product in products %}
 								{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
 							{% endfor %}
 						</div>
 					{% else %}
-						<h1 class="search-not-found">Nie znaleziono produktu którego szukasz</h1>
+						<h1 class="not-found">Nie znaleziono produktu którego szukasz</h1>
 					{% endif %}
 					{% else %}
 					{% if products %}
-						<div class="product-list">
+						<div class="section product-list">
 							{% for product in products %}
 								{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
 							{% endfor %}
 						</div>
 					{% else %}
-						<h1 class="search-not-found">Nie znaleziono produktu którego szukasz</h1>
+						<h1 class="text-align-center color-black">Nie znaleziono produktu którego szukasz</h1>
 					{% endif %}
 				{% endif %}
 			</section>

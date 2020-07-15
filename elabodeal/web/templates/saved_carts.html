@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title-description %}Menedżer sprzedaży{% endblock %}
+{% block title-description %}Zapisane koszyki{% endblock %}
 
 {% block css %}
 <style>
@@ -35,7 +35,7 @@
 {% block body %}
 {% include 'components/navigation.html' %}
 <div class="container">
-	<p class="font-size-medium font-weight-600 color-green">Menedżer sprzedaży</p>
+	<p class="font-size-medium font-weight-600 color-green">Lista zapisanych koszyków</p>
 	<div class="section margin-top-32px margin-bottom-32px">
 		<form class="search">
 			<input 
@@ -49,7 +49,7 @@
 	</div>
 	<div class="section margin-bottom-16px grid">
 		<div>
-			<p class="float-left font-size-small font-weight-600 color-orange">Lista twoich e-booków</p>
+			<p class="float-left font-size-small font-weight-600 color-orange">Lista zapisanych koszyków</p>
 		</div>
 		<div class="section">
 			<form class="float-right">
@@ -61,21 +61,23 @@
 		</div>
 	</div>
 	<div class="section margin-top-32px">
-		{% if products %}
+		{% if carts %}
 			<div class="section record-grid grid">
-				{% for p in products %}
+				{% for c in carts %}
 					<div class="box clear-padding section">
 						<div class="record-body">
 							<div class="record-title flex-center">
-								<p class="font-size-small color-black font-weight-600">{{ p.title }}</p>
+								<p class="font-size-small color-black font-weight-600">{{ c.title }}</p>
 							</div>
 							<div class="record-actions flex-center">
-								<button class="btn btn-green">Podgląd</button>
-								<button class="btn btn-orange margin-left-16px">Statystyki</button>
+								<a href="{% url 'web:saved-cart-detail' id=c.id  %}">
+									<button class="btn btn-orange">Podgląd</button>
+								</a>
+								<button class="btn btn-danger margin-left-16px">Usuń</button>
 							</div>
 						</div>
 						<div class="section flex-center record-footer padding-top-8px padding-bottom-8px">
-							<p class="font-size-small font-weight-300 color-green"><b>Data dodania</b> - {{ p.created_at.day }}.{{ p.created_at.month}}.{{ p.created_at.year }}</p>
+							<p class="font-size-small font-weight-300 color-green"><b>Data zapisu</b> - {{ c.created_at.day }}.{{ c.created_at.month}}.{{ c.created_at.year }}</p>
 						</div>
 					</div>
 				{% endfor %}

@@ -1,16 +1,16 @@
-$('#acc-action').click(function(){
-    if($('#acc-actions-popup').is(':hidden')){
-        $('#acc-actions-popup').show();
+$('#nav-menu-open').click(function(){
+    if($('#nav-menu').is(':hidden')){
+        $('#nav-menu').show();
         $('#nav-arrow-down').show();
         $('#nav-arrow-up').hide(); 
     } else {
         $('#nav-arrow-down').hide();
         $('#nav-arrow-up').show();
-        $('#acc-actions-popup').hide();
+        $('#nav-menu').hide();
     }
 })
 
-$('#acc-actions-popup').hover(function(){}, function(){
+$('#nav-menu').hover(function(){}, function(){
     $(this).hide();
     $('#nav-arrow-down').hide();
     $('#nav-arrow-up').show();

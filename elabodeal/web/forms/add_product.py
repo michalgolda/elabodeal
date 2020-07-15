@@ -2,40 +2,63 @@ from django import forms
 
 from elabodeal.models import Category
 
+LANG_CHOICES = [
+	('1', 'Polski'),
+	('1', 'Niemiecki'),
+	('1', 'Angielski')
+]
 
 class AddProductForm(forms.Form):
+	lang = forms.ChoiceField(
+		choices=LANG_CHOICES,
+		widget=forms.Select,
+	)
+
+	table_of_content = forms.CharField(
+		widget=forms.Textarea,
+	)
+
 	title = forms.CharField(
-		widget=forms.TextInput(
-			attrs={'class': 'form__input'}
-		)
+		widget=forms.TextInput
 	)
 
 	description = forms.CharField(
-		widget=forms.Textarea(
-			attrs={'class': 'form__input'}
-		),
+		widget=forms.Textarea,
+	)
+
+	author = forms.CharField(
+		widget=forms.TextInput
 	)
 
 	isbn = forms.CharField(
-		widget=forms.TextInput(
-			attrs={'class': 'form__input'}
-		),
+		widget=forms.TextInput
 	)
 
 	page_count = forms.IntegerField(
 		widget=forms.NumberInput(
-			attrs={'class': 'form__input', 'min': '1'}
+			attrs={'min': '1'}
 		),
 	)
 
 	price = forms.DecimalField(
 		widget=forms.NumberInput(
-			attrs={'class': 'form__input', 'min': '1'}
+			attrs={'min': '1'}
 		),
 	)
 
-	cover_img_url = forms.URLField(
-		widget=forms.URLInput(
-			attrs={'class': 'form__input'}
-		),
+	copies = forms.IntegerField(
+		widget=forms.NumberInput
 	)
+
+	epub = forms.FileField()
+
+	pdf = forms.FileField()
+
+	mobi = forms.FileField()
+
+	accept_rules = forms.ChoiceField(
+		widget=forms.CheckboxInput(
+			attrs={'class': 'float-left'}
+		)
+	)
+

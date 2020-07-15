@@ -1,0 +1,22 @@
+{% extends 'components/popup.html' %}
+
+{% block title %}Zapisz koszyk{% endblock %}
+
+{% block popup_id %}save-cart-popup{% endblock %}
+{% block popup_close_btn_id %}close-save-cart-popup{% endblock %}
+
+{% block body %}
+<form class="section">
+	<div class="section">
+		<label>NAZWA</label>
+		<input type="text" required/>
+	</div>
+	<div class="section margin-top-16px">
+		<label>OPIS</label>
+		<textarea></textarea>
+	</div>
+	<div class="section margin-top-16px">
+		<button class="btn btn-orange btn-full-width" type="submit">Zapisz</button>
+	</div>
+</form>
+{% endblock %}

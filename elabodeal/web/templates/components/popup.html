@@ -1,0 +1,15 @@
+{% load static %}
+
+<div id="{% block popup_id %}{% endblock %}" class="display-none">
+	<div class="popup-wrapper flex-center">
+	<div class="popup">
+		<div class="popup-header">
+			<p class="popup-title">{% block title %}{% endblock %}</p>
+			<i id="{% block popup_close_btn_id %}{% endblock %}" class="fas fa-times popup-close-btn"></i>
+		</div>
+		<div class="section popup-body">
+			{% block body %} {% endblock %}
+		</div>
+	</div>
+	</div>
+</div>

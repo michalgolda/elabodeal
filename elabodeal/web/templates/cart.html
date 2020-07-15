@@ -7,96 +7,92 @@
 <link rel="stylesheet" href="{% static '/styles/pages/cart.css' %}">
 {% endblock %}
 
+{% block css %}
+<style>
+	.box {
+		height: 256px;
+	}
+
+	.footer-text {
+		color: var(--green);
+	}
+
+	.footer-link {
+		color: var(--green);
+	}
+
+	button[type="share"] {
+		width: 140px;
+	}
+</style>
+{% endblock %}
+
 {% block body %}
-<div id="cart-save-popup-container" class="popup-hide">
-	<div class="cart-save-popup">
-		<div class="popup">
-			<div class="popup-close">
-				<i id="hide-cart-save-popup" class="fas fa-times popup-close-icon"></i>
-			</div>
-			<div class="popup-content">
-				<p class="popup-title">Zapisz koszyk</p>
-				<form class="popup-form" action="/cart/" method="POST" autocomplete="off">
-					{% csrf_token %}
-					<input type="hidden" name="action_type" value="save-cart" />
-					<div class="popup-input-wrapper">
-						<label class="popup-input-label">NAZWA</label>
-						<input type="text" class="popup-input" name="title" required />
-					</div>
-					<div class="popup-input-wrapper">
-						<label class="popup-input-label">OPIS</label>
-						<textarea class="popup-input" name="description" required></textarea>
-					</div>
-					<button type="submit" class="popup-submit">Zapisz</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+{% include 'components/save_cart_popup.html'%}
 {% include 'components/navigation.html' %}
 <div class="container">
 	<section class="section">
-		<p class="section__label">Koszyk</p>
+		<p class="section-label margin-bottom-32px">Koszyk</p>
 		{% if show_info %}
-			<h1 class="cart-success-text">Produkt został pomyślnie dodany do koszyka :)</h1>
+			<h1 class="color-green font-weight-600 font-size-large text-align-center margin-top-32px margin-bottom-32px">Produkt został pomyślnie dodany do koszyka :)</h1>
 		{% endif %}
 		<section class="section">
 			{% if products %}
 				{% for product in products %}
-					<div class="product">
-						<div style="width: calc(100% - 24px); height: 224px; float: left">
-							<div class="product__section" style="float: left;">
-								<input class="product__checkbox" type="checkbox"/>
+					<div class="box padding-16px margin-bottom-16px">
+						<div class="cart-item float-left">
+							<div class="cart-item-section">
+								<input class="cart-item-checkbox" type="checkbox" checked/>
 								<img 
-									class="product__cover"
+									class="cart-item-cover"
 									src="{{ product.cover_img_url }}"
 									alt="{{ product.title }}"
 								/>
-								<div style="float: left;">
-									<p class="product__title">{{ product.title }}</p>
-									<p class="product__author">{{ product.author.email }}</p>
+								<div class="float-left">
+									<p class="cart-item-title font-size-medium">{{ product.title }}</p>
+									<p class="cart-item-author ">{{ product.author.email }}</p>
 								</div>
 							</div>
-							<div class="product__section" style="float: right;">	
-								<p class="product__price">{{ product.price }} zł</p>
-							</div>
 						</div>
-						<form method="POST" action="/cart/" class="delete-product">
+						<form method="POST" action="/cart/" class="float-right">
 							{% csrf_token %}
 							<input type="hidden" name="product_id" value="{{ product.id }}">
 							<input type="hidden" name="action_type" value="delete-product-from-cart" />
-							<button class="delete-product">
+							<button class="font-size-medium color-grey float-left">
 								<i class="fas fa-times"></i>
 							</button>
 						</form>
+						<div class="cart-item-section float-right">	
+								<p class="cart-item-price">{{ product.price }} zł</p>
+						</div>
 					</div>
 				{% endfor %}
 
 				{% else %}
-				<h1 class="cart-empty-text">Twój koszyk jest pusty</h1>
+				<h1 class="font-size-large color-black font-weight-600 text-align-center padding-top-64px padding-bottom-64px">Twój koszyk jest pusty</h1>
 			{% endif %}
 		</section>
 	</section>
-	<section class="section bar">
-		<div style="float: left;">
+	<section class="section margin-top-32px margin-bottom-32px">
+		<div class="float-left">
 			{% if request.user.is_authenticated and products %}
-				<button id="show-cart-save-popup" class="btn saveCartBtn">Zapisz koszyk</button>
+				<button id="show-save-cart-popup" class="btn btn-green">Zapisz koszyk</button>
 			{% endif %}
-			<button class="btn shareCartBtn">Udostępnij koszyk</button>
+			<button class="btn btn-green margin-left-16px" type="share">Udostępnij koszyk</button>
 		</div>
-		<form class="cart-checkout-form">
-			<p class="cart-total-price">Razem: 
+		<form class="float-right">
+			<p class="float-left color-black font-size-medium">Razem: 
 				{% if 'cart' in request.session %}
-					<b style="color: var(--orange);">{{ request.session.cart.total_price }} zł</b>
+					<b class="color-orange">{{ request.session.cart.total_price }} zł</b>
 				{% else %}
-					<b style="color: var(--orange);">0.00 zł</b>
+					<b class="color-orange">0.00 zł</b>
 				{% endif %}
 			</p>
-			<button class="btn buyBtn">Zapłać</button>
+			<button class="btn btn-orange margin-left-16px">Zapłać</button>
 		</form>
 	</section>
 </div>
 {% include 'components/smallfooter.html' %}
 
-<script src="{% static 'js/cart.js' %}"></script>
+<script src="{% static 'js/popup.js' %}"></script>
 {% endblock %}

@@ -10,7 +10,7 @@ class SavedCartDetailView(BaseView):
 	def get(self, request, id):
 		cart = Cart.objects.filter(id=id).first()
 		if not cart:
-			return redirect('web:my-carts')
+			return redirect('web:saved-carts')
 
 		cart_items = CartItem.objects.filter(cart__id=id).all()
 		total_price = 0.00
@@ -22,5 +22,4 @@ class SavedCartDetailView(BaseView):
 			'cart_items': cart_items,
 			'total_price': round(total_price, 2)
 		}
-		print(context)
 		return self.respond('saved_cart_detail.html', request, context)

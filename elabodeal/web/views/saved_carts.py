@@ -4,7 +4,7 @@ from elabodeal.web.views.base import BaseView
 from elabodeal.models import Cart, CartItem, Product
 
 
-class MyCartsView(BaseView):
+class SavedCartsView(BaseView):
 	auth_required = True
 
 	def get(self, request):
@@ -13,7 +13,7 @@ class MyCartsView(BaseView):
 		context = {
 			'carts': carts if len(carts) > 0 else False
 		}
-		return self.respond('my_carts.html', request, context)
+		return self.respond('saved_carts.html', request, context)
 
 	def post(self, request):
 		action_type = request.POST.get('action_type')
@@ -24,4 +24,4 @@ class MyCartsView(BaseView):
 			cart = Cart.objects.filter(id=cart_id).first()
 			cart.delete()
 
-			return redirect('web:my-carts')
+			return redirect('web:saved-carts')

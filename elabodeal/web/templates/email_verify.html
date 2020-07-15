@@ -1,39 +1,68 @@
-{% extends 'layouts/main.html' %}
+{% extends 'layouts/base.html' %}
 {% load static %}
 
 {% block title-description %}Weryfikacja konta{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" href="{% static '/styles/pages/email_verify.css' %}">
+{% block css %}
+<style>
+	.logo {
+		width: 210px;
+		height: auto;
+	}
+
+	.section {
+		max-width: 350px;
+	}
+
+	.footer-link {
+		color: var(--green);
+	}
+
+	.footer-text {
+		color: var(--green);
+	}
+
+	input {
+		letter-spacing: 8px;
+		text-align: center;
+	}
+
+	.container {
+		height: calc(100vh - 83px);
+	}
+</style>
 {% endblock %}
 
-{% block children %}
-<section class="section">
-	<div class="logo">
-		<a href="{% url 'web:index' %}">
-			<img 
-				class="logo__img"
-				src="{% static 'images/blue-logo.png' %}"
-			/>
-		</a>
-	</div>
-	<h1 class="section__title">Dziękujemy za rejestrację</h1>
-	<p class="section__description">
-		Na podany email <bold class="bold-text">{{ email }}</bold> został wysłany kod weryfikacjyjny.
-	</p>
-	<form class="form" method="POST" action="/account/verify/" autocomplete="off">
-		{% if form.errors %}
-			{% for error in form.code.errors %}
-				<p class="form__error">{{ error }}</p>
-			{% endfor %}
-		{% endif %}
-
-		{% csrf_token %}
-		<div class="input-container">
-			{{ form.code }}
+{% block body %}
+<div class="container flex-center">
+	<section class="section text-align-center margin-center">
+		<div class="margin-bottom-32px">
+			<a href="{% url 'web:index' %}">
+				<img 
+					class="logo"
+					src="{% static 'images/blue-logo.png' %}"
+				/>
+			</a>
 		</div>
+		<h1 class="font-size-medium font-weight-600 color-black margin-bottom-8px">Dziękujemy za rejestrację</h1>
+		<p class="font-size-small font-weight-300 color-black">
+			Na podany email <bold class="font-weight-600 color-black">{{ email }}</bold> został wysłany kod weryfikacjyjny.
+		</p>
+		<form class="section margin-top-16px" method="POST" action="/account/verify/" autocomplete="off">
+			{% if form.errors %}
+				{% for error in form.code.errors %}
+					<p class="section color-red margin-bottom-16px">{{ error }}</p>
+				{% endfor %}
+			{% endif %}
 
-		<button class="form__submit" type="submit">Zweryfikuj</button>
-	</form>
-</section>
+			{% csrf_token %}
+			<div class="section margin-bottom-16px">
+				{{ form.code }}
+			</div>
+
+			<button class="btn btn-orange btn-full-width" type="submit">Zweryfikuj</button>
+		</form>
+	</section>
+</div>
+{% include 'components/smallfooter.html' %}
 {% endblock %}
