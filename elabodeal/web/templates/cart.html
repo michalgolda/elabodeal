@@ -20,6 +20,33 @@
 	button[type="share"] {
 		width: 140px;
 	}
+
+	.step {
+		height: 50px;
+		width: 50px;
+		border-radius: 50%;
+		background: white;
+		border: 1px solid var(--grey);
+		color: var(--grey);
+	}
+
+	.current-step {
+		background: var(--orange);
+		color: white;
+	}
+
+	.step-decorator {
+		width: 100px;
+		height: 2px;
+		background: var(--grey);
+	}
+
+	.step-text-decorator {
+		width: calc(100% - 20px);
+		height: 2px;
+		background: var(--green);
+		margin: 0 auto;
+	}
 </style>
 {% endblock %}
 
@@ -28,7 +55,35 @@
 {% include 'components/navigation.html' %}
 <div class="container">
 	<section class="section">
-		<p class="section-label margin-bottom-32px">Koszyk</p>
+		<div class="section flex-center margin-bottom-64px">
+			<div>
+				<div class="step current-step flex-center float-left margin-right-16px">
+					<span class="font-size-medium">1</span>
+				</div>
+				<div class="float-left padding-top-4px padding-bottom-4px">
+					<p class="font-size-big color-orange">Koszyk</p>
+					<div class="step-text-decorator"></div>
+				</div>
+			</div>
+			<div class="flex-center margin-left-16px margin-right-16px">
+				<div class="step-decorator"></div>
+			</div>
+			<div>
+				<div class="step flex-center float-left margin-right-16px">
+					<span class="font-size-medium">2</span>
+				</div>
+				<p class="float-left font-size-big padding-top-4px padding-bottom-4px color-grey">Dostawa</p>
+			</div>
+			<div class="flex-center margin-left-16px margin-right-16px">
+				<div class="step-decorator"></div>
+			</div>
+			<div>
+				<div class="step flex-center float-left margin-right-16px">
+					<span class="font-size-medium">3</span>
+				</div>
+				<p class="float-left font-size-big padding-top-4px padding-bottom-4px color-grey">Płatnośc</p>
+			</div>
+		</div>
 		{% if success_msg %}
 			<h1 class="color-green font-weight-600 font-size-large text-align-center margin-top-32px margin-bottom-32px">Produkt został pomyślnie dodany do koszyka :)</h1>
 		{% endif %}
@@ -84,7 +139,7 @@
 					<b class="color-orange">0.00 zł</b>
 				{% endif %}
 			</p>
-			<button class="btn btn-orange margin-left-16px">Zapłać</button>
+			<button class="btn btn-orange margin-left-16px">Przejdź dalej</button>
 		</form>
 	</section>
 </div>
