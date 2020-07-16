@@ -63,27 +63,30 @@
 	<div class="section margin-top-32px">
 		{% if carts %}
 			<div class="section record-grid grid">
-				{% for c in carts %}
+				{% for cart in carts %}
 					<div class="box clear-padding section">
 						<div class="record-body">
 							<div class="record-title flex-center">
-								<p class="font-size-small color-black font-weight-600">{{ c.title }}</p>
+								<p class="font-size-small color-black font-weight-600">{{ cart.title }}</p>
 							</div>
 							<div class="record-actions flex-center">
-								<a href="{% url 'web:saved-cart-detail' id=c.id  %}">
+								<a href="{% url 'web:saved-cart-detail' id=cart.id  %}">
 									<button class="btn btn-orange">Podgląd</button>
 								</a>
-								<button class="btn btn-danger margin-left-16px">Usuń</button>
+								<form method="POST" action="/saved/carts/{{ cart.id }}/">
+									{% csrf_token %}	
+									<button class="btn btn-danger margin-left-16px">Usuń</button>
+								</form>
 							</div>
 						</div>
 						<div class="section flex-center record-footer padding-top-8px padding-bottom-8px">
-							<p class="font-size-small font-weight-300 color-green"><b>Data zapisu</b> - {{ c.created_at.day }}.{{ c.created_at.month}}.{{ c.created_at.year }}</p>
+							<p class="font-size-small font-weight-300 color-green"><b>Data zapisu</b> - {{ cart.created_at.day }}.{{ cart.created_at.month}}.{{ cart.created_at.year }}</p>
 						</div>
 					</div>
 				{% endfor %}
 			</div>
 			{% else %}
-			<h1 class="text-align-center color-black font-size-medium margin padding-top-64px padding-bottom-64px">Nie posiadasz żadnego opublikowanego e-booka zmień to jak najszybciej</h1>
+			<h1 class="text-align-center color-black font-size-medium margin padding-top-64px padding-bottom-64px">Lista zapisanych koszyków jest pusta </h1>
 		{% endif %}
 	</div>
 </div>

@@ -3,10 +3,6 @@
 
 {% block title-description %}Twój koszyk{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" href="{% static '/styles/pages/cart.css' %}">
-{% endblock %}
-
 {% block css %}
 <style>
 	.box {
@@ -33,7 +29,7 @@
 <div class="container">
 	<section class="section">
 		<p class="section-label margin-bottom-32px">Koszyk</p>
-		{% if show_info %}
+		{% if success_msg %}
 			<h1 class="color-green font-weight-600 font-size-large text-align-center margin-top-32px margin-bottom-32px">Produkt został pomyślnie dodany do koszyka :)</h1>
 		{% endif %}
 		<section class="section">
@@ -57,13 +53,13 @@
 						<form method="POST" action="/cart/" class="float-right">
 							{% csrf_token %}
 							<input type="hidden" name="product_id" value="{{ product.id }}">
-							<input type="hidden" name="action_type" value="delete-product-from-cart" />
+							<input type="hidden" name="action_type" value="delete-product" />
 							<button class="font-size-medium color-grey float-left">
 								<i class="fas fa-times"></i>
 							</button>
 						</form>
 						<div class="cart-item-section float-right">	
-								<p class="cart-item-price">{{ product.price }} zł</p>
+							<p class="cart-item-price">{{ product.price }} zł</p>
 						</div>
 					</div>
 				{% endfor %}
@@ -76,9 +72,9 @@
 	<section class="section margin-top-32px margin-bottom-32px">
 		<div class="float-left">
 			{% if request.user.is_authenticated and products %}
-				<button id="show-save-cart-popup" class="btn btn-green">Zapisz koszyk</button>
+				<button id="show-save-cart-popup" class="btn btn-green margin-right-16px">Zapisz koszyk</button>
 			{% endif %}
-			<button class="btn btn-green margin-left-16px" type="share">Udostępnij koszyk</button>
+			<button class="btn btn-green" type="share">Udostępnij koszyk</button>
 		</div>
 		<form class="float-right">
 			<p class="float-left color-black font-size-medium">Razem: 

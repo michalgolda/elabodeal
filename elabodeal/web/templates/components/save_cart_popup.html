@@ -6,14 +6,17 @@
 {% block popup_close_btn_id %}close-save-cart-popup{% endblock %}
 
 {% block body %}
-<form class="section">
+<form class="section" method="POST" action="/cart/" autocomplete="off">
+	{% csrf_token %}
+
+	<input type="hidden" name="action_type" value="save-cart"/>
 	<div class="section">
 		<label>NAZWA</label>
-		<input type="text" required/>
+		<input type="text" name="title" required/>
 	</div>
 	<div class="section margin-top-16px">
 		<label>OPIS</label>
-		<textarea></textarea>
+		<textarea name="description"></textarea>
 	</div>
 	<div class="section margin-top-16px">
 		<button class="btn btn-orange btn-full-width" type="submit">Zapisz</button>

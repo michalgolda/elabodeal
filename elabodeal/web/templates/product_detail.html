@@ -75,8 +75,7 @@
 						<form method="POST" action="/cart/">
 							{% csrf_token %}
 							<input type="hidden" name="product_id" value="{{ product.id }}">
-							<input type="hidden" name="product_price" value="{{ product.price }}">
-							<input type="hidden" name="action_type" value="add-product-to-cart">
+							<input type="hidden" name="action_type" value="add-product">
 							
 							<button class="btn btn-orange
 							margin-left-16px" type="add-to-cart">Dodaj do koszyka</button>

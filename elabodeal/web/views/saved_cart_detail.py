@@ -23,3 +23,13 @@ class SavedCartDetailView(BaseView):
 			'total_price': round(total_price, 2)
 		}
 		return self.respond('saved_cart_detail.html', request, context)
+
+
+	def post(self, request, id):
+		cart = Cart.objects.filter(id=id).first()
+		if not cart:
+			return redirect('web:saved-carts')
+
+		cart.delete()
+
+		return redirect('web:saved-carts')

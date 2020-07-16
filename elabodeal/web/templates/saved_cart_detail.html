@@ -51,7 +51,7 @@
 				<div class="box padding-16px margin-bottom-16px">
 					<div class="cart-item float-left">
 						<div class="cart-item-section">
-							<input class="cart-item-checkbox" type="checkbox" checked/>
+							<!-- <input class="cart-item-checkbox" type="checkbox" checked/> -->
 							<img 
 								class="cart-item-cover"
 								src="{{ item.product.cover_img_url }}"
@@ -63,14 +63,14 @@
 							</div>
 						</div>
 					</div>
-					<form class="float-right">
+					<!-- <form class="float-right">
 						{% csrf_token %}
 						<input type="hidden" name="product_id" value="{{ product.id }}">
 						<input type="hidden" name="action_type" value="delete-product-from-cart" />
 						<button class="font-size-medium color-grey float-left">
 							<i class="fas fa-times"></i>
 						</button>
-					</form>
+					</form> -->
 					<div class="cart-item-section float-right">	
 							<p class="cart-item-price">{{ item.product.price }} zł</p>
 					</div>

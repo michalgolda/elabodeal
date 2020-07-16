@@ -16,17 +16,19 @@ class CartView(BaseView):
 
 		return products
 
-	def calculate_total_price(self, request):
+	def calculate_total_price(self, products):
 		total_price = 0.00
 
-		for p in request.session['cart']['products']:
-			total_price += p['price']
+		for product in products:
+			total_price += product['price']
 
 		total_price = '{0:.2f}'.format(round(total_price, 2))
 
 		return total_price
 
 	def post(self, request):
+		action_type = request.POST.get('action_type')
+
 		if not 'cart' in request.session:
 			request.session['cart'] = {
 				'products': [],
@@ -34,42 +36,37 @@ class CartView(BaseView):
 				'total_price': 0.00
 			}
 
-		action_type = request.POST.get('action_type')
-		
-		if action_type == 'add-product-to-cart':
+		cart = request.session['cart']
+
+		if action_type == 'add-product':
 			product_id = int(request.POST.get('product_id'))
-			product_price = float(request.POST.get('product_price'))
+			product = Product.objects.filter(id=product_id).first()
 
-			cart = request.session['cart']
-
-			cart['products'].append({'id': product_id, 'price': product_price})
-			cart['total_price'] = self.calculate_total_price(request)
+			cart['products'].append({'id': product_id, 'price': float(product.price)})
+			cart['total_price'] = self.calculate_total_price(cart['products'])
 			cart['item_count'] += 1
 
 			request.session['cart'] = cart
 
 			context = {
-				'show_info': True,
+				'success_msg': True,
 				'products': self.get_cart_products(request)
 			}
 			return self.respond('cart.html', request, context)
 
-		elif action_type == 'delete-product-from-cart':
+		if action_type == 'delete-product':
 			product_id = int(request.POST.get('product_id'))
 
-			cart = request.session['cart']
+			for product in cart['products']:
+				if product['id'] == product_id:
+					cart['products'].remove(product)
 
-			for p in cart['products']:
-				if p['id'] == product_id:
-					cart['products'].remove(p)
-
-			cart['total_price'] = self.calculate_total_price(request)
+			cart['total_price'] = self.calculate_total_price(cart['products'])
 			cart['item_count'] -= 1
 
 			request.session['cart'] = cart
 
-			return redirect('web:cart')
-		elif action_type == 'save-cart':
+		if action_type == 'save-cart':
 			cart_title = request.POST.get('title')
 			cart_description = request.POST.get('description')
 
@@ -79,15 +76,17 @@ class CartView(BaseView):
 			cart.description = cart_description
 			cart.save()
 
-			for p in request.session['cart']['products']:
-				product = Product.objects.filter(id=p['id']).first()
+			for obj in request.session['cart']['products']:
+				product = Product.objects.filter(id=obj['id']).first()
+
 				cart_item = CartItem()
 				cart_item.cart = cart
 				cart_item.product = product
 				cart_item.save()
 
+			return redirect('web:saved-carts')
 
-			return redirect('web:my-carts')
+		return redirect('web:cart')
 
 	def get(self, request):
 		context = {
