@@ -71,13 +71,16 @@ class RegisterView(BaseView):
 
 			code = ''.join(str(random.randint(0, 9)) for _ in range(6))
 
-			send_mail(
-				subject='Elabodeal - Weryfikacja konta',
-				message=f'To jest twój kod weryfikacyjny {code}',
-				from_email=settings.EMAIL_HOST_USER,
-				recipient_list=[form.cleaned_data['email']],
-				html_message=render_to_string('emails/verification.html', {'code': code})
-			)
+			try:
+				send_mail(
+					subject='Elabodeal - Weryfikacja konta',
+					message=f'To jest twój kod weryfikacyjny {code}',
+					from_email=settings.EMAIL_HOST_USER,
+					recipient_list=[form.cleaned_data['email']],
+					html_message=render_to_string('emails/verification.html', {'code': code})
+				)
+			except:
+				return redirect('web:register')
 
 			verify_codes = VerifyCode.objects.filter(email=form.cleaned_data['email']).all()
 			verify_codes.delete()
