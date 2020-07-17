@@ -11,6 +11,8 @@ from elabodeal.web.views.saved_cart_detail import SavedCartDetailView
 from elabodeal.web.views.salesmanager import SalesManagerView
 from elabodeal.web.views.salesmanager_start import SalesManagerStartView
 from elabodeal.web.views.salesmanager_add_product import SalesManagerAddProductView
+from elabodeal.web.views.delivery import DeliveryView
+from elabodeal.web.views.payment import PaymentView
 
 app_name = 'web'
 
@@ -21,7 +23,11 @@ urlpatterns = [
 	path('auth/register/', RegisterView.as_view(), name='register'),
 	path('account/verify/', EmailVerifyView.as_view(), name='account-email-verify'),
 	path('logout/', LogoutView.as_view(), name='logout'),
-	path('cart/', CartView.as_view(), name='cart'),
+	path('cart/', include([
+		path('', CartView.as_view(), name='cart'),
+		path('delivery/', DeliveryView.as_view(), name='cart-delivery'),
+		path('payment/', PaymentView.as_view(), name='cart-payment')
+	])),
 	path('saved/carts/', SavedCartsView.as_view(), name='saved-carts'),
 	path('saved/carts/<int:id>/', SavedCartDetailView.as_view(), name='saved-cart-detail'),
 	path('salesmanager/', include([

@@ -1,3 +1,5 @@
+from unittest import skip
+
 from tests.base import WebTestCase
 from django.urls import reverse
 
@@ -19,6 +21,7 @@ class TestSalesManagerAddProductView(WebTestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'salesmanager/add_product.html')
 
+	@skip('Disable this test because form for add new product is not implemented')
 	def test_add_product(self):
 		user = User.objects.create_user(email='test@wp.pl', username='test', password='123')
 		user.is_seller = True

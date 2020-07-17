@@ -1,0 +1,157 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Dostawa{% endblock %}
+
+{% block css %}
+<style>
+	.box {
+		height: 256px;
+	}
+
+	.footer-text {
+		color: var(--green);
+	}
+
+	.footer-link {
+		color: var(--green);
+	}
+
+	button[type="share"] {
+		width: 140px;
+	}
+
+	.step {
+		height: 50px;
+		width: 50px;
+		border-radius: 50%;
+		background: white;
+		border: 1px solid var(--grey);
+		color: var(--grey);
+	}
+
+	.current-step {
+		background: var(--orange);
+		color: white;
+	}
+
+	.step-decorator {
+		width: 100px;
+		height: 2px;
+		background: var(--grey);
+	}
+
+	.step-text-decorator {
+		width: calc(100% - 20px);
+		height: 2px;
+		background: var(--green);
+		margin: 0 auto;
+	}
+
+	.wrapper {
+		max-width: 500px; 
+	}
+
+	#present-form {
+		display: none;
+		animation: fadeInOpacity 1s;
+	}
+</style>
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="container">
+	<section class="section">
+		<div class="section flex-center margin-bottom-64px">
+			<div>
+				<div class="step flex-center float-left margin-right-16px">
+					<span class="font-size-medium">1</span>
+				</div>
+				<p class="float-left font-size-big padding-top-4px padding-bottom-4px color-grey">Koszyk</p>
+			</div>
+			<div class="flex-center margin-left-16px margin-right-16px">
+				<div class="step-decorator"></div>
+			</div>
+			<div>
+				<div class="step current-step flex-center float-left margin-right-16px"">
+					<span class="font-size-medium">2</span>
+				</div>
+				<div class="float-left padding-top-4px padding-bottom-4px">
+					<p class="font-size-big color-orange">Dostawa</p>
+					<div class="step-text-decorator"></div>
+				</div>
+			</div>
+			<div class="flex-center margin-left-16px margin-right-16px">
+				<div class="step-decorator"></div>
+			</div>
+			<div>
+				<div class="step flex-center float-left margin-right-16px">
+					<span class="font-size-medium">3</span>
+				</div>
+				<p class="float-left font-size-big padding-top-4px padding-bottom-4px color-grey">Płatnośc</p>
+			</div>
+		</div>
+	</section>
+	<div class="wrapper margin-center">
+		<form class="section margin-center" autocomplete="off">
+			<div class="section">
+				<div class="section display-flex margin-top-16px">
+					<div class="section flex-start">
+						<label>IMIĘ</label>
+						{{ form.first_name }}
+					</div>
+					<div class="section flex-end margin-left-16px">
+						<label>NAZWISKO</label>
+						{{ form.last_name }}
+					</div>
+				</div>
+				<div class="section margin-top-16px">
+					<label>EMAIL</label>
+					{{ form.email }}
+					<p class="section color-black font-size-small margin-top-8px">Na podany adres email zostanie wysłana wiadomowść zawierająca link do pobrania ebooka. Po zakupie ebook pojawi się również w zakładce moje książki</p>
+				</div>
+			</div>
+			<div class="section margin-top-32px margin-bottom-32px">
+				<div class="section flex-center margin-top-16px">
+					<div class="section">
+						<input id="show-present-form" class="float-left" type="checkbox" />
+						<label class="margin-left-8px margin-top-2px margin-bottom-2px">KUPNO JAKO PREZENT</label>
+					</div>
+				</div>
+			</div>
+			<div id="present-form" class="section">
+				<div class="section display-flex margin-top-16px">
+					<div class="section flex-start">
+						<label>IMIĘ</label>
+						{{ form.first_name }}
+					</div>
+					<div class="section flex-end margin-left-16px">
+						<label>NAZWISKO</label>
+						{{ form.last_name }}
+					</div>
+				</div>
+				<div class="section margin-top-16px">
+					<label>EMAIL</label>
+					{{ form.email }}
+				</div>
+				<p class="section color-black font-size-small margin-top-8px">Na podany adres e-mail, zostaną produkty kupione podczas tej tranzakcji. Jeśli użytkownik posiada konto w naszym serwisie, będzie miał dostęp do produktów również w zakładce Twoje książki.</p>
+			</div>
+			<button class="btn btn-orange btn-full-width margin-top-16px">Przejdz dalej</button>
+		</form>
+		<a href="{% url 'web:cart' %}">
+			<button class="btn btn-outline-orange btn-full-width margin-top-16px">Wstecz</button>
+		</a>
+	</div>
+</div>
+{% include 'components/smallfooter.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+	$('#show-present-form').click(function(){
+		$('#present-form').toggle();
+	});
+</script>
+{% endblock %}
