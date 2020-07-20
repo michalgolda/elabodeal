@@ -31,7 +31,8 @@ class IndexView(BaseView):
 			'categories': categories,
 			'products': products if len(products) > 0 else False,
 			'use_search': use_search,
-			'search_query': search_query if search_query else ""
+			'search_query': search_query if search_query else "",
+			'category_param': category_param
 		}
 
 		return self.respond('index.html', request, context)

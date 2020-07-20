@@ -75,6 +75,11 @@
 	    color: white;
 	}
 
+	.current-category {
+		background: var(--orange);
+	    color: white;
+	}
+
 	.product-list {
 	    display: grid;
 	    grid-row-gap: 16px;
@@ -98,7 +103,11 @@
 						<a href="{% url 'web:index' %}?category={{ category.name }}">
 							<div class="category-decorator">
 							</div>
-							<p class="category-name">{{ category.name }}</p>
+							{% if category_param == category.name %}
+								<p class="current-category category-name">{{ category.name }}</p>
+							{% else %}
+								<p class="category-name">{{ category.name }}</p>
+							{% endif %}
 						</a>
 					</div>
 				{% endfor %}
@@ -134,6 +143,12 @@
 					{% else %}
 					{% if products %}
 						<div class="section product-list">
+							{% for product in products %}
+								{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
+							{% endfor %}
+							{% for product in products %}
+								{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
+							{% endfor %}
 							{% for product in products %}
 								{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
 							{% endfor %}
