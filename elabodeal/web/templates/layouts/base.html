@@ -1,4 +1,5 @@
 {% load static %}
+{% load stripe %}
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -17,7 +18,9 @@
         integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
         crossorigin="anonymous"
     ></script>
-
+    <script>
+        window.__stripe_public_key__ = "{% get_stripe_public_api_key %}";
+    </script>
     {% block css %}{% endblock %}
 
     <title>{% block title %}Elabodeal - {% block title-description %}{% endblock %}{% endblock %}</title>

@@ -52,7 +52,7 @@
 		max-width: 500px; 
 	}
 
-	#present-form {
+	#gift-form {
 		display: none;
 		animation: fadeInOpacity 1s;
 	}
@@ -74,7 +74,7 @@
 				<div class="step-decorator"></div>
 			</div>
 			<div>
-				<div class="step current-step flex-center float-left margin-right-16px"">
+				<div class="step current-step flex-center float-left margin-right-16px">
 					<span class="font-size-medium">2</span>
 				</div>
 				<div class="float-left padding-top-4px padding-bottom-4px">
@@ -94,7 +94,27 @@
 		</div>
 	</section>
 	<div class="wrapper margin-center">
-		<form class="section margin-center" autocomplete="off">
+		{% if form.errors %}
+			{% if form.first_name.errors %}
+				{% for error in form.first_name.errors %}
+					<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+				{% endfor %}
+			{% else %}
+				{% if form.last_name.errors %}
+					{% for error in form.last_name.errors %}
+						<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+					{% endfor %}
+				{% else %}
+					{% if form.email.errors %}
+						{% for error in form.email.errors %}
+							<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+						{% endfor %}
+					{% endif %}
+				{% endif %}
+			{% endif %}
+		{% endif %}
+		<form class="section margin-center" method="POST" action="/cart/delivery/" autocomplete="off">
+			{% csrf_token %}
 			<div class="section">
 				<div class="section display-flex margin-top-16px">
 					<div class="section flex-start">
@@ -112,28 +132,47 @@
 					<p class="section color-black font-size-small margin-top-8px">Na podany adres email zostanie wysłana wiadomowść zawierająca link do pobrania ebooka. Po zakupie ebook pojawi się również w zakładce moje książki</p>
 				</div>
 			</div>
-			<div class="section margin-top-32px margin-bottom-32px">
+			<div class="section margin-top-32px margin-bottom-16px">
 				<div class="section flex-center margin-top-16px">
 					<div class="section">
-						<input id="show-present-form" class="float-left" type="checkbox" />
+						{{ form.gift }}
 						<label class="margin-left-8px margin-top-2px margin-bottom-2px">KUPNO JAKO PREZENT</label>
 					</div>
 				</div>
 			</div>
-			<div id="present-form" class="section">
+			<div id="gift-form" class="section">
+				{% if form.errors %}
+					{% if form.gift_first_name.errors %}
+						{% for error in form.gift_first_name.errors %}
+							<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+						{% endfor %}
+					{% else %}
+						{% if form.gift_last_name.errors %}
+							{% for error in form.gift_last_name.errors %}
+								<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+							{% endfor %}
+						{% else %}
+							{% if form.gift_email.errors %}
+								{% for error in form.gift_email.errors %}
+									<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+								{% endfor %}
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				{% endif %}
 				<div class="section display-flex margin-top-16px">
 					<div class="section flex-start">
 						<label>IMIĘ</label>
-						{{ form.first_name }}
+						{{ form.gift_first_name }}
 					</div>
 					<div class="section flex-end margin-left-16px">
 						<label>NAZWISKO</label>
-						{{ form.last_name }}
+						{{ form.gift_last_name }}
 					</div>
 				</div>
 				<div class="section margin-top-16px">
 					<label>EMAIL</label>
-					{{ form.email }}
+					{{ form.gift_email }}
 				</div>
 				<p class="section color-black font-size-small margin-top-8px">Na podany adres e-mail, zostaną produkty kupione podczas tej tranzakcji. Jeśli użytkownik posiada konto w naszym serwisie, będzie miał dostęp do produktów również w zakładce Twoje książki.</p>
 			</div>
@@ -150,8 +189,16 @@
 
 {% block scripts %}
 <script>
-	$('#show-present-form').click(function(){
-		$('#present-form').toggle();
+	if($('#show-gift-form').attr('checked')){
+		$('#gift-form').show();
+	}
+
+	$('#show-gift-form').click(function(){
+		if($('#gift-form').is(':hidden')){
+	        $('#gift-form').show();
+	    } else {
+	        $('#gift-form').hide();
+	    }
 	});
 </script>
 {% endblock %}

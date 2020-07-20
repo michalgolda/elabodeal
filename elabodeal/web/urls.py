@@ -13,6 +13,7 @@ from elabodeal.web.views.salesmanager_start import SalesManagerStartView
 from elabodeal.web.views.salesmanager_add_product import SalesManagerAddProductView
 from elabodeal.web.views.delivery import DeliveryView
 from elabodeal.web.views.payment import PaymentView
+from elabodeal.web.views.payment_success import PaymentSuccessView
 
 app_name = 'web'
 
@@ -28,6 +29,7 @@ urlpatterns = [
 		path('delivery/', DeliveryView.as_view(), name='cart-delivery'),
 		path('payment/', PaymentView.as_view(), name='cart-payment')
 	])),
+	path('success/', PaymentSuccessView.as_view(), name='payment-success'),
 	path('saved/carts/', SavedCartsView.as_view(), name='saved-carts'),
 	path('saved/carts/<int:id>/', SavedCartDetailView.as_view(), name='saved-cart-detail'),
 	path('salesmanager/', include([

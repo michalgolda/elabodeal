@@ -1,6 +1,10 @@
-from django.urls import path
-from elabodeal.api.views.hello import HelloAPIView
+from django.urls import path, include
+from elabodeal.api.views.webhook import WebHookAPIView
+from elabodeal.api.views.payment import PaymentAPIView
+
+app_name = 'api'
 
 urlpatterns = [
-	path('', HelloAPIView.as_view())
+	path('webhooks/', WebHookAPIView.as_view(), name='webhooks'),
+	path('payments/', PaymentAPIView.as_view(), name='payments')
 ]
