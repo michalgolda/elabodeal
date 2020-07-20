@@ -4,6 +4,10 @@ from django.urls import reverse
 
 class TestPaymentView(WebTestCase):
 	def test_simple(self):
+		session = self.client.session
+		session['payment'] = {}
+		session.save()
+		
 		response = self.client.get(reverse('web:cart-payment'))
 
 		self.assertEqual(response._headers['content-type'][1], 'text/html; charset=utf-8')
