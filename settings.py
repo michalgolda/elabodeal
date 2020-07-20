@@ -61,6 +61,9 @@ TEMPLATES = [
         ],
         'APP_DIRS': True,
         'OPTIONS': {
+            'libraries': {
+                'stripe': 'elabodeal.web.templatetags.stripe'
+            },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -155,3 +158,9 @@ EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
+
+# STRIPE
+
+STRIPE_PUBLIC_API_KEY = os.environ.get('STRIPE_PUBLIC_API_KEY')
+STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY')
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')

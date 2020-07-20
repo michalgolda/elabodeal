@@ -103,29 +103,29 @@
 		</div>		
 	</section>
 	<div class="section wrapper">
-		<form class="section margin-center">
+		<form id="payment-form" class="section margin-center">
 			<div class="section margin-top-32px">
 				<div class="section display-flex margin-top-16px">
 					<div class="section flex-start">
 						<label>IMIĘ</label>
-						<input type="text" required />
+						<input type="text" name="first_name" required />
 					</div>
 					<div class="section flex-end margin-left-16px">
 						<label>NAZWISKO</label>
-						<input type="text" required />
+						<input type="text" name="last_name" required />
 					</div>
 				</div>
 			</div>
 			<div class="section flex-end margin-top-16px">
 				<label>EMAIL</label>
-				<input type="text" required />
+				<input type="text" name="email" required />
 			</div>
 			<div class="section flex-end margin-top-16px">
 				<label>NUMER TELEFONU</label>
-				<input type="text" required />
+				<input type="text" name="phone_number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required />
 			</div>
 			<div class="box margin-top-16px" id="card-element"></div>
-			<button class="btn btn-orange btn-full-width margin-top-16px">Zapłać</button>
+			<button class="btn btn-orange btn-full-width margin-top-16px" type="submit">Zapłać {{ request.session.cart.total_price }} zł</button>
 		</form>
 		<a href="{% url 'web:cart-delivery' %}">
 			<button class="btn btn-outline-orange btn-full-width margin-top-16px">Wstecz</button>
@@ -136,25 +136,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-	var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
-	var elements = stripe.elements();
-
-	var cardElement = elements.create('card', {
-	  style: {
-	    base: {
-	      color: '#011627',
-	      fontWeight: 500,
-	      fontFamily: 'Montserrat, Open Sans, Segoe UI, sans-serif',
-	      fontSize: '15.5px'
-	    },
-	    invalid: {
-	      iconColor: '#E71D36',
-	      color: '#E71D36',
-	    },
-	  },
-	});
-
-	cardElement.mount('#card-element');
-</script>
+<script  src="{% static 'js/payment.js' %}"/>
 {% endblock %}

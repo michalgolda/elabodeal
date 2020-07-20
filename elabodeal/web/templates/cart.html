@@ -131,7 +131,7 @@
 			{% endif %}
 			<button class="btn btn-green" type="share">Udostępnij koszyk</button>
 		</div>
-		<form class="float-right">
+		<div class="float-right">
 			<p class="float-left color-black font-size-medium">Razem: 
 				{% if 'cart' in request.session %}
 					<b class="color-orange">{{ request.session.cart.total_price }} zł</b>
@@ -139,8 +139,10 @@
 					<b class="color-orange">0.00 zł</b>
 				{% endif %}
 			</p>
-			<button class="btn btn-orange margin-left-16px">Przejdź dalej</button>
-		</form>
+			<a href="{% url 'web:cart-delivery' %}">
+				<button class="btn btn-orange margin-left-16px">Przejdź dalej</button>
+			</a>
+		</div>
 	</section>
 </div>
 {% include 'components/smallfooter.html' %}
