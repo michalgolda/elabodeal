@@ -40,6 +40,12 @@ class CartView(BaseView):
 
 		if action_type == 'add-product':
 			product_id = int(request.POST.get('product_id'))
+
+			# Check if product does exists in cart
+			for product in cart['products']:
+				if product['id'] == product_id:
+					return redirect('web:product-detail', id=product_id)
+
 			product = Product.objects.filter(id=product_id).first()
 
 			cart['products'].append({'id': product_id, 'price': float(product.price)})
