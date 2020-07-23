@@ -27,7 +27,8 @@ paymentForm.addEventListener("submit", function(event){
 	fetch('/api/payments/', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'X-CSRFToken': window.__csrf_token__
 		},
 		body: JSON.stringify({
 			'first_name': formData[0]['value'],
