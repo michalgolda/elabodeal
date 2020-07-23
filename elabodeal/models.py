@@ -120,3 +120,8 @@ class Cart(models.Model):
 class CartItem(models.Model):
 	cart = models.ForeignKey('elabodeal.Cart', on_delete=models.CASCADE, related_name='cart_item_cart')
 	product = models.ForeignKey('elabodeal.Product', on_delete=models.CASCADE, related_name='cart_item_product')
+
+
+class PurchasedProduct(models.Model):
+	user = models.ForeignKey('elabodeal.User', on_delete=models.CASCADE)
+	product = models.ForeignKey('elabodeal.Product', on_delete=models.CASCADE)
