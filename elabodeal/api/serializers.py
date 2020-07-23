@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-class NewPaymentIntentSerailizer(serializers.Serializer):
+class NewPaymentIntentSerializer(serializers.Serializer):
 	email = serializers.EmailField()
 	first_name = serializers.CharField()
 	last_name = serializers.CharField()
