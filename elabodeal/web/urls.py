@@ -14,6 +14,7 @@ from elabodeal.web.views.salesmanager_add_product import SalesManagerAddProductV
 from elabodeal.web.views.delivery import DeliveryView
 from elabodeal.web.views.payment import PaymentView
 from elabodeal.web.views.payment_success import PaymentSuccessView
+from elabodeal.web.views.my_books import MyBooksView
 
 app_name = 'web'
 
@@ -24,6 +25,7 @@ urlpatterns = [
 	path('auth/register/', RegisterView.as_view(), name='register'),
 	path('account/verify/', EmailVerifyView.as_view(), name='account-email-verify'),
 	path('logout/', LogoutView.as_view(), name='logout'),
+	path('mybooks', MyBooksView.as_view(), name='my-books'),
 	path('cart/', include([
 		path('', CartView.as_view(), name='cart'),
 		path('delivery/', DeliveryView.as_view(), name='cart-delivery'),

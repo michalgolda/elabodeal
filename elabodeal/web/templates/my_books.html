@@ -1,0 +1,89 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Menedżer sprzedaży{% endblock %}
+
+{% block css %}
+<style>
+	input[type="text"] {
+		height: 52px;
+		width: calc(100% - 144px);
+		float: elft;
+	}
+
+	button[type="submit"] {
+		height: 52px;
+	}
+
+	.search {
+		max-width: 700px;
+	    width: 100%;
+	    height: 52px;
+	    margin: 0 auto;
+	}
+
+	.footer-text {
+		color: var(--green);
+	}
+
+	.footer-link {
+		color: var(--green);
+	}
+</style>
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="container">
+	<p class="font-size-medium font-weight-600 color-green">Moje książki</p>
+	<div class="section margin-top-32px margin-bottom-32px">
+		<form class="search">
+			<input 
+				type="text"
+				name="q"
+				placeholder="Wyszukaj"
+				required 
+			/>
+			<button class="btn btn-green margin-left-16px float-right" type="submit">Szukaj</button>
+		</form>
+	</div>
+	<div class="section margin-bottom-16px grid">
+		<div>
+			<p class="float-left font-size-small font-weight-600 color-orange">Lista zakupionych e-booków</p>
+		</div>
+		<div class="section">
+			<form class="float-right">
+				<label>SORTOWANIE</label>
+				<select>
+					<option>Domyślnie</option>
+				</select>
+			</form>
+		</div>
+	</div>
+	<div class="section margin-top-32px">
+		{% if products %}
+			<div class="section record-grid grid">
+				{% for purchased in products %}
+					<div class="box clear-padding section">
+						<div class="record-body">
+							<div class="record-title flex-center">
+								<p class="font-size-small color-black font-weight-600">{{ purchased.product.title }}</p>
+							</div>
+							<div class="record-actions flex-center">
+								<button class="btn btn-green">Czytaj</button>
+								<button class="btn btn-orange margin-left-16px">Pobierz</button>
+							</div>
+						</div>
+						<div class="section flex-center record-footer padding-top-8px padding-bottom-8px">
+							<p class="font-size-small font-weight-300 color-green"><b>Data zakupu</b> - {{ purchased.product.created_at.day }}.{{ purchased.product.created_at.month}}.{{ purchased.product.created_at.year }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			{% else %}
+			<h1 class="text-align-center color-black font-size-medium margin padding-top-64px padding-bottom-64px">Nie posiadasz żadnego ebooka</h1>
+		{% endif %}
+	</div>
+</div>
+{% include 'components/smallfooter.html' %}
+{% endblock %}
