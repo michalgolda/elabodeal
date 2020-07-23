@@ -5,7 +5,7 @@ from django.urls import reverse
 class TestPaymentView(WebTestCase):
 	def test_simple(self):
 		session = self.client.session
-		session['payment'] = {}
+		session['delivery'] = {}
 		session.save()
 		
 		response = self.client.get(reverse('web:cart-payment'))
