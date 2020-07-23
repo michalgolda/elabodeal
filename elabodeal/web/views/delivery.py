@@ -23,24 +23,15 @@ class DeliveryView(BaseView):
 		form = self.get_form(request)
 
 		if form.is_valid():
-			if form.cleaned_data['gift']:
-				request.session['payment'] = {
-					'ready': True,
-					'gift': form.cleaned_data['gift'],
-					'gift_email': form.cleaned_data['gift_email'],
-					'gift_first_name': form.cleaned_data['gift_first_name'],
-					'gift_last_name': form.cleaned_data['gift_last_name'],
-					'email': form.cleaned_data['email'],
-					'first_name': form.cleaned_data['first_name'],
-					'last_name': form.cleaned_data['last_name']
-				}
-			else:
-				request.session['payment'] = {
-					'ready': True,
-					'email': form.cleaned_data['email'],
-					'first_name': form.cleaned_data['first_name'],
-					'last_name': form.cleaned_data['last_name']
-				}
+			request.session['delivery'] = {
+				'gift': form.cleaned_data['gift'],
+				'gift_email': form.cleaned_data['gift_email'],
+				'gift_first_name': form.cleaned_data['gift_first_name'],
+				'gift_last_name': form.cleaned_data['gift_last_name'],
+				'email': form.cleaned_data['email'],
+				'first_name': form.cleaned_data['first_name'],
+				'last_name': form.cleaned_data['last_name']
+			}
 
 			return redirect('web:cart-payment')
 
