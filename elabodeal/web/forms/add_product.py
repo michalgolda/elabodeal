@@ -4,8 +4,8 @@ from elabodeal.models import Category
 
 LANG_CHOICES = [
 	('1', 'Polski'),
-	('1', 'Niemiecki'),
-	('1', 'Angielski')
+	('2', 'Niemiecki'),
+	('3', 'Angielski')
 ]
 
 class AddProductForm(forms.Form):
@@ -50,12 +50,113 @@ class AddProductForm(forms.Form):
 		widget=forms.NumberInput
 	)
 
-	epub = forms.FileField()
+	epub = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'ebook-file-input', 'accept': '.epub'}
+		)
+	)
 
-	pdf = forms.FileField()
+	pdf = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'ebook-file-input', 'accept': '.pdf'}
+		)
+	)
 
-	mobi = forms.FileField()
+	mobi = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'ebook-file-input', 'accept': '.mobi'}
+		)
+	)
 
+	demo_pdf = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'ebook-file-input', 'accept': '.pdf'}
+		)
+	)
+
+	age_0 = forms.BooleanField(
+		required=False,
+		widget=forms.CheckboxInput(
+			attrs={'id': 'age-choice-input'}
+		)
+	)
+
+	age_1 = forms.BooleanField(
+		required=False,
+		widget=forms.CheckboxInput(
+			attrs={'id': 'age-choice-input'}
+		)
+	)
+
+	age_2 = forms.BooleanField(
+		required=False,
+		widget=forms.CheckboxInput(
+			attrs={'id': 'age-choice-input'}
+		)
+	)
+
+	age_3 = forms.BooleanField(
+		required=False,
+		widget=forms.CheckboxInput(
+			attrs={'id': 'age-choice-input'}
+		)
+	)
+
+	age_4 = forms.BooleanField(
+		required=False,
+		widget=forms.CheckboxInput(
+			attrs={'id': 'age-choice-input'}
+		)
+	)
+
+	image_0 = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'image-file-input', 'accept': 'images/*'}
+		)
+	)
+
+	image_1 = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'image-file-input', 'accept': 'images/*'}
+		)
+	)
+
+	image_2 = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'image-file-input', 'accept': 'images/*'}
+		)
+	)
+
+	image_3 = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'image-file-input', 'accept': 'images/*'}
+		)
+	)
+
+	image_4 = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'image-file-input', 'accept': 'images/*'}
+		)
+	)
+
+	image_5 = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'image-file-input', 'accept': 'images/*'}
+		)
+	)
+
+	image_6 = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'image-file-input', 'accept': 'images/*'}
+		)
+	)
+
+	image_7 = forms.FileField(
+		widget=forms.FileInput(
+			attrs={'id': 'image-file-input', 'accept': 'images/*'}
+		)
+	)
+	
 	accept_rules = forms.ChoiceField(
 		widget=forms.CheckboxInput(
 			attrs={'class': 'float-left'}

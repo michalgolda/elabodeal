@@ -42,6 +42,10 @@ input::placeholder {
     color: var(--grey);
 }
 
+input[type="file"] {
+    display: none;
+}
+
 input[type="checkbox"] {
     width: 20px;
     height: 20px;

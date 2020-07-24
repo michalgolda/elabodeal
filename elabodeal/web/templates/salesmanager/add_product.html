@@ -39,6 +39,118 @@
 		max-height: 256px;
 		resize: none;
 	}
+
+	textarea[name="table_of_content"] {
+		height: 256px;
+		max-height: 256px;
+		resize: none;
+	}
+
+	.demo-pdf {
+		max-width: 156px;
+	}
+
+	.image-grid {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-row-gap: 16px;
+		grid-column-gap: 16px;
+	}
+
+	.age-grid {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+		grid-row-gap: 16px;
+		grid-column-gap: 16px;
+	}
+
+	.age {
+		width: 87.2px;
+		height: 87.2px;
+	}
+
+	.age:hover {
+		background: var(--green);
+		cursor: pointer;
+	}
+
+	.age:hover > p {
+		color: white;
+	}
+
+	.image {
+		width: 113px;
+		height: 113px;
+	}
+
+	.image:hover {
+		background: var(--green);
+		cursor: pointer;
+	}
+
+	#image-upload-btn > i[id="upload"] {
+		display: none;
+	}
+
+	#image-upload-btn > i[id="camera"] {
+		color: var(--grey);
+	}
+
+	.image:hover > #image-upload-btn > i[id="upload"] {
+		display: inline-flex;
+		color: white;
+	}
+
+	.image:hover > #image-upload-btn > i[id="camera"] {
+		display: none;
+	}
+
+	#image-upload-btn {
+		width: 100%;
+		height: 100%;
+	}
+
+	#image-preview {
+		width: 113px;
+		height: 113px;
+	}
+
+	#image-preview > #image-delete-btn {
+		display: none;
+		position: absolute;
+		z-index: 99;
+		width: 113px;
+		height: 113px;
+		margin-left: -8px;
+		background: rgb(1, 22, 39, 0.30);
+		justify-content: center;
+		align-items: center;
+		border-radius: 2px;
+	}
+
+	#image-preview:hover > #image-delete-btn {
+		display: flex;
+	}
+	
+	#image-preview > img {
+		width: 113px;
+		height: 113px;
+		background-position: center;
+		border-radius: 2px;
+		z-index: 98;
+		position: absolute;
+		margin-left: -8px;
+	}
+
+	#age-choice-input {
+		display: none;
+	}
+
+	.age-checked {
+		background-color: var(--green);
+	}
+
+	.age-checked > p {
+		color: white;
+	}
 </style>
 {% endblock %}
 
@@ -105,15 +217,175 @@
 		<div class="section display-flex margin-top-16px">
 			<div class="section">
 				<label>PDF</label>
-				{{ form.pdf }}
-			</div>
-			<div class="section margin-left-16px">
-				<label>MOBI</label>
-				{{ form.mobi }}
+				<div class="section">
+					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" file-input-id="0">Prześlij</button>
+					{{ form.pdf }}
+				</div>
 			</div>
 			<div class="section margin-left-16px">
 				<label>EPUB</label>
-				{{ form.epub }}
+				<div class="section">
+					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="1">Prześlij</button>
+					{{ form.epub }}
+				</div>
+			</div>
+			<div class="section margin-left-16px">
+				<label>MOBI</label>
+				<div class="section">
+					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="2">Prześlij</button>
+					{{ form.mobi }}
+				</div>
+			</div>
+		</div>
+		<div class="section margin-top-16px">
+			<div class="demo-pdf margin-center">
+				<label>PDF - Wersja demo</label>
+				<div class="section">
+					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="3">Prześlij</button>
+					{{ form.demo_pdf }}
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<label>Kategoria wiekowa</label>
+			<div class="section display-grid grid age-grid">
+				<div id="age-selector" class="section box age flex-center" age-input-id="0">
+					<p class="font-size-medium color-grey">3+</p>
+					{{ form.age_0 }}
+				</div>
+				<div id="age-selector" class="section box age flex-center" age-input-id="1">
+					<p class="font-size-medium color-grey">7+</p>
+					{{ form.age_1 }}
+				</div>
+				<div id="age-selector" class="section box age flex-center" age-input-id="2">
+					<p class="font-size-medium color-grey">12+</p>
+					{{ form.age_2 }}
+				</div>
+				<div id="age-selector" class="section box age flex-center" age-input-id="3">
+					<p class="font-size-medium color-grey">16+</p>
+					{{ form.age_3 }}
+				</div>
+				<div id="age-selector" class="section box age flex-center" age-input-id="4">
+					<p class="font-size-medium color-grey">18+</p>
+					{{ form.age_4 }}
+				</div>
+			</div>
+		</div>
+		<div class="section margin-top-16px">
+			<label>Zdjęcia</label>
+			<div class="section display-grid grid image-grid">
+				<div class="section image box flex-center">
+					<button id="image-upload-btn" type="button" file-input-id="0">
+						<i id="upload" class="fas fa-upload font-size-medium"></i>
+						<i id="camera" class="fas fa-camera font-size-medium"></i>
+					</button>
+					<div id="image-preview" class="display-none">
+						<img src="#">
+						</img>
+						<button id="image-delete-btn" type="button" file-input-id="0">
+							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+						</button>
+					</div>
+					{{ form.image_0 }}
+				</div>
+				<div class="section image box flex-center">
+					<button id="image-upload-btn" type="button" file-input-id="1">
+						<i id="upload" class="fas fa-upload font-size-medium"></i>
+						<i id="camera" class="fas fa-camera font-size-medium"></i>
+					</button>
+					<div id="image-preview" class="display-none">
+						<img src="#">
+						</img>
+						<button id="image-delete-btn" type="button" file-input-id="1">
+							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+						</button>
+					</div>
+					{{ form.image_1 }}
+				</div>
+				<div class="section image box flex-center">
+					<button id="image-upload-btn" type="button" file-input-id="2">
+						<i id="upload" class="fas fa-upload font-size-medium"></i>
+						<i id="camera" class="fas fa-camera font-size-medium"></i>
+					</button>
+					<div id="image-preview" class="display-none">
+						<img src="#">
+						</img>
+						<button id="image-delete-btn" type="button" file-input-id="2">
+							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+						</button>
+					</div>
+					{{ form.image_2 }}
+				</div>
+				<div class="section image box flex-center">
+					<button id="image-upload-btn" type="button" file-input-id="3">
+						<i id="upload" class="fas fa-upload font-size-medium"></i>
+						<i id="camera" class="fas fa-camera font-size-medium"></i>
+					</button>
+					<div id="image-preview" class="display-none">
+						<img src="#">
+						</img>
+						<button id="image-delete-btn" type="button" file-input-id="3">
+							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+						</button>
+					</div>
+					{{ form.image_3 }}
+				</div>
+				<div class="section image box flex-center">
+					<button id="image-upload-btn" type="button" file-input-id="4">
+						<i id="upload" class="fas fa-upload font-size-medium"></i>
+						<i id="camera" class="fas fa-camera font-size-medium"></i>
+					</button>
+					<div id="image-preview" class="display-none">
+						<img src="#">
+						</img>
+						<button id="image-delete-btn" type="button" file-input-id="4">
+							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+						</button>
+					</div>
+					{{ form.image_4 }}
+				</div>
+				<div class="section image box flex-center">
+					<button id="image-upload-btn" type="button" file-input-id="5">
+						<i id="upload" class="fas fa-upload font-size-medium"></i>
+						<i id="camera" class="fas fa-camera font-size-medium"></i>
+					</button>
+					<div id="image-preview" class="display-none">
+						<img src="#">
+						</img>
+						<button id="image-delete-btn" type="button" file-input-id="5">
+							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+						</button>
+					</div>
+					{{ form.image_5 }}
+				</div>
+				<div class="section image box flex-center">
+					<button id="image-upload-btn" type="button" file-input-id="6">
+						<i id="upload" class="fas fa-upload font-size-medium"></i>
+						<i id="camera" class="fas fa-camera font-size-medium"></i>
+					</button>
+					<div id="image-preview" class="display-none">
+						<img src="#">
+						</img>
+						<button id="image-delete-btn" type="button" file-input-id="6">
+							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+						</button>
+					</div>
+					{{ form.image_6 }}
+				</div>
+				<div class="section image box flex-center">
+					<button id="image-upload-btn" type="button" file-input-id="7">
+						<i id="upload" class="fas fa-upload font-size-medium"></i>
+						<i id="camera" class="fas fa-camera font-size-medium"></i>
+					</button>
+					<div id="image-preview" class="display-none">
+						<img src="#">
+						</img>
+						<button id="image-delete-btn" type="button" file-input-id="7">
+							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+						</button>
+					</div>
+					{{ form.image_7 }}
+				</div>
 			</div>
 		</div>
 		<div class="section margin-top-32px">
@@ -124,8 +396,105 @@
 				</div>
 			</div>
 		</div>
-		<button class="btn btn-green btn-full-width margin-top-32px" type="submit">Opublikuj</button>
+		<button class="btn btn-orange btn-full-width margin-top-32px" type="submit">Opublikuj</button>
 	</form>
 </div>
 {% include 'components/smallfooter.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).on('click', 'div#age-selector', function(){
+	var id = Number($(this).attr('age-input-id'));
+	var input = $($('input#age-choice-input')[id]);
+	var isChecked = input.attr('checked');
+
+	if(isChecked == undefined) {
+		input.attr('checked', true);
+		$(this).addClass('age-checked');
+	} else {
+		input.attr('checked', false);
+		$(this).removeClass('age-checked');
+	}
+});
+</script>
+<script>
+$(document).on('click', 'button#image-upload-btn', function(){
+	var inputId = Number($(this).attr('file-input-id'));
+	var input = $($('input#image-file-input')[inputId]);
+
+	input.trigger('click');
+});
+
+$(document).on('click', 'button#image-delete-btn', function(){
+	var id = Number($(this).attr('file-input-id'));
+	var imagePreview = $($('div#image-preview')[id]);
+	var uploadBtn = $($('button#image-upload-btn')[id]);
+	var input = $($('input#image-file-input')[id]);
+
+	input[0].value = '';
+
+	imagePreview.hide();
+	uploadBtn.show()
+});
+
+$(document).on('change', 'input#image-file-input', function(){
+	var inputId = Number($(this).attr('name')[6]);
+	var imagePreview = $($('div#image-preview')[inputId]);
+	var previewImg = $(imagePreview).children('img');
+	var uploadBtn = $($('button#image-upload-btn')[inputId]);
+
+	var reader = new FileReader();
+
+	reader.addEventListener("load", function() {
+		previewImg[0].src = reader.result;
+
+		imagePreview.show();
+		uploadBtn.hide();
+	}, false);
+
+	reader.readAsDataURL($(this)[0].files[0]);
+});
+</script>
+<script>
+$(document).on('click', '#ebook-upload-btn', function(){
+	var inputId = Number($(this).attr('file-input-id'));
+	var input = $($('input#ebook-file-input')[inputId]);
+	var uploadBtn = $($('button#ebook-upload-btn')[inputId]);
+
+	if(input[0].files && input[0].files[0]) {
+		input[0].value = '';
+		uploadBtn.removeClass('btn-danger');
+		uploadBtn.html('Prześlij');
+
+	} else {
+		input.trigger('click');
+	}
+});
+
+$(document).on('change', '#ebook-file-input', function(){
+	var inputName = $(this).attr('name');
+	let inputId = null;
+
+	switch(inputName) {
+		case 'pdf':
+			inputId = 0;
+			break;
+		case 'epub':
+			inputId = 1;
+			break;
+		case 'mobi':
+			inputId = 2;
+			break;
+		case 'demo_pdf':
+			inputId = 3;
+			break;
+	}
+
+	var uploadBtn = $($('button#ebook-upload-btn')[inputId]);
+	uploadBtn.addClass('btn-danger');
+	uploadBtn.html('Usuń');
+});
+
+</script>
 {% endblock %}
