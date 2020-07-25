@@ -43,10 +43,10 @@ class CategoryAdmin(admin.ModelAdmin):
 	filter_horizontal = ()
 
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ('title', 'category', 'author')
+	list_display = ('title', 'category', 'author', 'user')
 	list_filter = ('category', 'author')
 	fieldsets = (
-		(None, {'fields': ('title', 'description', 'price', 'category', 'cover_img_url', 'author', 'page_count', 'isbn')}),
+		(None, {'fields': ('title', 'description', 'price', 'category', 'cover_img', 'pdf', 'epub', 'mobi', 'author', 'user', 'page_count', 'isbn')}),
 	)
 	add_fieldsets = (
 		(None, {
