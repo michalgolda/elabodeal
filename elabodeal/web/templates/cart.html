@@ -96,12 +96,12 @@
 								<input class="cart-item-checkbox" type="checkbox" checked/>
 								<img 
 									class="cart-item-cover"
-									src="{{ product.cover_img_url }}"
+									src="{{ product.cover_img.url }}"
 									alt="{{ product.title }}"
 								/>
 								<div class="float-left">
 									<p class="cart-item-title font-size-medium">{{ product.title }}</p>
-									<p class="cart-item-author ">{{ product.author.email }}</p>
+									<p class="cart-item-author ">{{ product.author }}</p>
 								</div>
 							</div>
 						</div>

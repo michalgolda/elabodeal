@@ -724,6 +724,7 @@ label {
 .cart-item-cover {
     height: 200px;
     width: auto;
+    max-width: 150px;
     float: left;
     border-radius: 2px;
     margin: 0px 16px 0px 16px;

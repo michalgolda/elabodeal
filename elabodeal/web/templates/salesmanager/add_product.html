@@ -161,7 +161,7 @@
 		<p class="font-size-large font-weight-600 color-green">Dodaj e-booka</p>
 		<p class="font-size-medium font-weight-300 color-black">Wypełnij poniższy formularz</p>
 	</div>
-	<form class="section" action="/salesmanager/addproduct/" method="POST" autocomplete="off">
+	<form class="section" action="/salesmanager/addproduct/" method="POST" enctype="multipart/form-data" autocomplete="off">
 		{% csrf_token %}
 		<div class="section">
 			<label>TYTUŁ</label>
@@ -218,22 +218,22 @@
 			<div class="section">
 				<label>PDF</label>
 				<div class="section">
-					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" file-input-id="0">Prześlij</button>
-					{{ form.pdf }}
+					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="0">Prześlij</button>
+					{{ form.pdf_file }}
 				</div>
 			</div>
 			<div class="section margin-left-16px">
 				<label>EPUB</label>
 				<div class="section">
 					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="1">Prześlij</button>
-					{{ form.epub }}
+					{{ form.epub_file }}
 				</div>
 			</div>
 			<div class="section margin-left-16px">
 				<label>MOBI</label>
 				<div class="section">
 					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="2">Prześlij</button>
-					{{ form.mobi }}
+					{{ form.mobi_file }}
 				</div>
 			</div>
 		</div>
@@ -242,7 +242,7 @@
 				<label>PDF - Wersja demo</label>
 				<div class="section">
 					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="3">Prześlij</button>
-					{{ form.demo_pdf }}
+					{{ form.demo_pdf_file }}
 				</div>
 			</div>
 		</div>
@@ -286,7 +286,7 @@
 							<i class="fas fa-trash-alt font-size-medium color-white"></i>
 						</button>
 					</div>
-					{{ form.image_0 }}
+					{{ form.file_image_0 }}
 				</div>
 				<div class="section image box flex-center">
 					<button id="image-upload-btn" type="button" file-input-id="1">
@@ -300,7 +300,7 @@
 							<i class="fas fa-trash-alt font-size-medium color-white"></i>
 						</button>
 					</div>
-					{{ form.image_1 }}
+					{{ form.file_image_1 }}
 				</div>
 				<div class="section image box flex-center">
 					<button id="image-upload-btn" type="button" file-input-id="2">
@@ -314,7 +314,7 @@
 							<i class="fas fa-trash-alt font-size-medium color-white"></i>
 						</button>
 					</div>
-					{{ form.image_2 }}
+					{{ form.file_image_2 }}
 				</div>
 				<div class="section image box flex-center">
 					<button id="image-upload-btn" type="button" file-input-id="3">
@@ -328,7 +328,7 @@
 							<i class="fas fa-trash-alt font-size-medium color-white"></i>
 						</button>
 					</div>
-					{{ form.image_3 }}
+					{{ form.file_image_3 }}
 				</div>
 				<div class="section image box flex-center">
 					<button id="image-upload-btn" type="button" file-input-id="4">
@@ -342,7 +342,7 @@
 							<i class="fas fa-trash-alt font-size-medium color-white"></i>
 						</button>
 					</div>
-					{{ form.image_4 }}
+					{{ form.file_image_4 }}
 				</div>
 				<div class="section image box flex-center">
 					<button id="image-upload-btn" type="button" file-input-id="5">
@@ -356,7 +356,7 @@
 							<i class="fas fa-trash-alt font-size-medium color-white"></i>
 						</button>
 					</div>
-					{{ form.image_5 }}
+					{{ form.file_image_5 }}
 				</div>
 				<div class="section image box flex-center">
 					<button id="image-upload-btn" type="button" file-input-id="6">
@@ -370,7 +370,7 @@
 							<i class="fas fa-trash-alt font-size-medium color-white"></i>
 						</button>
 					</div>
-					{{ form.image_6 }}
+					{{ form.file_image_6 }}
 				</div>
 				<div class="section image box flex-center">
 					<button id="image-upload-btn" type="button" file-input-id="7">
@@ -384,7 +384,7 @@
 							<i class="fas fa-trash-alt font-size-medium color-white"></i>
 						</button>
 					</div>
-					{{ form.image_7 }}
+					{{ form.file_image_7 }}
 				</div>
 			</div>
 		</div>
@@ -439,7 +439,7 @@ $(document).on('click', 'button#image-delete-btn', function(){
 });
 
 $(document).on('change', 'input#image-file-input', function(){
-	var inputId = Number($(this).attr('name')[6]);
+	var inputId = Number($(this).attr('name')[11]);
 	var imagePreview = $($('div#image-preview')[inputId]);
 	var previewImg = $(imagePreview).children('img');
 	var uploadBtn = $($('button#image-upload-btn')[inputId]);
@@ -460,6 +460,7 @@ $(document).on('change', 'input#image-file-input', function(){
 $(document).on('click', '#ebook-upload-btn', function(){
 	var inputId = Number($(this).attr('file-input-id'));
 	var input = $($('input#ebook-file-input')[inputId]);
+	console.log(input);
 	var uploadBtn = $($('button#ebook-upload-btn')[inputId]);
 
 	if(input[0].files && input[0].files[0]) {
@@ -477,16 +478,16 @@ $(document).on('change', '#ebook-file-input', function(){
 	let inputId = null;
 
 	switch(inputName) {
-		case 'pdf':
+		case 'pdf_file':
 			inputId = 0;
 			break;
-		case 'epub':
+		case 'epub_file':
 			inputId = 1;
 			break;
-		case 'mobi':
+		case 'mobi_file':
 			inputId = 2;
 			break;
-		case 'demo_pdf':
+		case 'demo_pdf_file':
 			inputId = 3;
 			break;
 	}

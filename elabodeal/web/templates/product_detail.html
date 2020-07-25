@@ -13,6 +13,7 @@
 
 	.pdfviewer {
 		width: auto;
+		max-width: 422.33px;
 		height: 600px;
 		background: white;
 		border: 1px solid var(--grey);
@@ -54,7 +55,7 @@
 		<section class="section">
 			<img
 				class="pdfviewer"
-				src="{{ product.cover_img_url }}"
+				src="{{ product.cover_img.url }}"
 				alt="{{ product.title }}"
 			/>
 		</section>
@@ -62,7 +63,7 @@
 			<div class="section">
 				<section class="section">
 					<h1 class="font-size-big color-black font-weight-600">{{ product.title }}</h1>
-					<p class="margin-top-8px font-size-medium font-weight-300">Krzystof Bosak</p>
+					<p class="margin-top-8px font-size-medium font-weight-300">{{ product.author }}</p>
 				</section>
 				<section class="section">
 					<section class="section">
@@ -93,7 +94,17 @@
 					</div>
 					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
 						<p class="float-left color-black">Formaty</p>
-						<p class="float-right color-orange">PDF MOBI</p>
+						<p class="float-right color-orange">
+							{% if product.pdf %}
+								PDF
+							{% endif %}
+							{% if product.mobi %}
+								MOBI
+							{% endif %}
+							{% if product.epub %}
+								EPUB
+							{% endif %}
+						</p>
 					</div>
 					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
 						<p class="float-left color-black">Kategoria</p>
@@ -118,7 +129,7 @@
 		<p class="section-label margin-top-32px margin-bottom-16px">Podobne</p>
 		<div class="section product-list">
 			{% for p in related_products %}
-				{% include 'components/product.html' with title=p.title author=p.author.username price=p.price cover_img_url=p.cover_img_url id=p.id %}
+				{% include 'components/product.html' with title=p.title author=p.author price=p.price cover_img_url=p.cover_img.url id=p.id %}
 			{% endfor %}
 		</div>
 	</section>
