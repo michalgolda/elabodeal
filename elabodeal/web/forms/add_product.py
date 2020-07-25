@@ -50,25 +50,29 @@ class AddProductForm(forms.Form):
 		widget=forms.NumberInput
 	)
 
-	epub = forms.FileField(
+	epub_file = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'ebook-file-input', 'accept': '.epub'}
 		)
 	)
 
-	pdf = forms.FileField(
+	pdf_file = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'ebook-file-input', 'accept': '.pdf'}
 		)
 	)
 
-	mobi = forms.FileField(
+	mobi_file = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'ebook-file-input', 'accept': '.mobi'}
 		)
 	)
 
-	demo_pdf = forms.FileField(
+	demo_pdf_file = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'ebook-file-input', 'accept': '.pdf'}
 		)
@@ -109,55 +113,63 @@ class AddProductForm(forms.Form):
 		)
 	)
 
-	image_0 = forms.FileField(
+	file_image_0 = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'image-file-input', 'accept': 'images/*'}
 		)
 	)
 
-	image_1 = forms.FileField(
+	file_image_1 = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'image-file-input', 'accept': 'images/*'}
 		)
 	)
 
-	image_2 = forms.FileField(
+	file_image_2 = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'image-file-input', 'accept': 'images/*'}
 		)
 	)
 
-	image_3 = forms.FileField(
+	file_image_3 = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'image-file-input', 'accept': 'images/*'}
 		)
 	)
 
-	image_4 = forms.FileField(
+	file_image_4 = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'image-file-input', 'accept': 'images/*'}
 		)
 	)
 
-	image_5 = forms.FileField(
+	file_image_5 = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'image-file-input', 'accept': 'images/*'}
 		)
 	)
 
-	image_6 = forms.FileField(
+	file_image_6 = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'image-file-input', 'accept': 'images/*'}
 		)
 	)
 
-	image_7 = forms.FileField(
+	file_image_7 = forms.FileField(
+		required=False,
 		widget=forms.FileInput(
 			attrs={'id': 'image-file-input', 'accept': 'images/*'}
 		)
 	)
 	
-	accept_rules = forms.ChoiceField(
+	accept_rules = forms.BooleanField(
 		widget=forms.CheckboxInput(
 			attrs={'class': 'float-left'}
 		)
