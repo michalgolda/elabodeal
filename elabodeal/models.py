@@ -95,17 +95,31 @@ class Category(models.Model):
 
 class Product(models.Model):
 	category = models.ForeignKey('elabodeal.Category', on_delete=models.CASCADE, related_name='product_category')
-	author = models.ForeignKey('elabodeal.User', on_delete=models.CASCADE, related_name='product_author')
+	user = models.ForeignKey('elabodeal.User', on_delete=models.CASCADE, related_name='product_user')
 
+	pdf = models.ForeignKey('elabodeal.File', on_delete=models.CASCADE, null=True, related_name='product_pdf_file')
+	epub = models.ForeignKey('elabodeal.File', on_delete=models.CASCADE, null=True, related_name='product_epub_file')
+	mobi = models.ForeignKey('elabodeal.File', on_delete=models.CASCADE, null=True, related_name='product_mobi_file')
+	cover_img = models.ForeignKey('elabodeal.File', on_delete=models.CASCADE, related_name='product_cover_img_file')
+
+	author = models.CharField(max_length=50)
 	title = models.CharField(max_length=200)
 	description = models.CharField(max_length=1000)
-	price =	models.DecimalField(max_digits=4, decimal_places=2)
-	cover_img_url = models.CharField(max_length=255)
+	price =	models.DecimalField(max_digits=10, decimal_places=2)
 	page_count = models.IntegerField()
 	isbn = models.CharField(max_length=13)
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+
+
+class File(models.Model):
+	size = models.IntegerField()
+	url = models.URLField()
+	mime = models.CharField(max_length=30)
+	name = models.CharField(max_length=150)
+	extension = models.CharField(max_length=4)
+	uploaded_at = models.DateTimeField(auto_now_add=True)
 
 
 class Cart(models.Model):
