@@ -8,7 +8,7 @@ class SalesManagerView(BaseView):
 	seller_required = True
 
 	def get(self, request):
-		products = Product.objects.filter(author__username=request.user.username).all()
+		products = Product.objects.filter(user__username=request.user.username).all()
 
 		for p in products:
 			if len(p.title) > 117:
