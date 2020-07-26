@@ -72,5 +72,11 @@ class WebHookAPIView(APIView):
 				recipient_list=[delivery['email']],
 				html_message=render_to_string('emails/payment_success.html', context)
 			)
+		if event.type == 'payment_intent.payment_failed':
+			payment_intent_id = event.data.object.id
+
+			stripe.api_key = settings.STRIPE_API_KEY
+
+			stripe.PaymentIntent.cancel(sid=payment_intent_id)
 
 		return Response(status=200)
