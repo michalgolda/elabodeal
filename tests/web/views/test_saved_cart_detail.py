@@ -15,12 +15,12 @@ class TestSavedCartDetailView(WebTestCase):
 		category.save()
 
 		product = Product(
-			author=user,
+			author='test',
+			user=user,
 			category=category,
 			title='test',
 			description='test',
 			price=12,
-			cover_img_url='test',
 			page_count=123,
 			isbn=123
 		)

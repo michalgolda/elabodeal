@@ -16,7 +16,8 @@ class TestSalesManagerView(WebTestCase):
 
 		product = Product()
 		product.category = category
-		product.author = user
+		product.author = 'Test'
+		product.user = user
 		product.title = 'Test e-book'
 		product.description = 'test'
 		product.price = 12
