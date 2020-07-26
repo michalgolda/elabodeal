@@ -53,8 +53,15 @@ paymentForm.addEventListener("submit", function(event){
 							}
 						})
 						.then(function(result){
-							var url = `${window.location.origin}/success/`;
-							window.location = url;
+							if(result.paymentIntent) {
+								var url = `${window.location.origin}/success/`;
+								window.location = url;
+							} else {
+								if(result.error.code === 'payment_intent_authentication_failure') {
+									var displayError = document.getElementById('payment-error-msg');
+									displayError.textContent = "Autoryzacja płatności zakończyła się niepowodzeniem. Spróbuj ponownie"
+								}
+							}
 						})
 				})
 		}
