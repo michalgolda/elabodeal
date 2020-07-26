@@ -1,17 +1,143 @@
 <head>
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    .logo-text {
+      color: white;
+      padding: 8px 0px 8px 0px;
+      margin: 0;
+    }
+    
+    .info-text {
+      margin: 0;
+      font-weight: 300;
+      font-size: 1.1rem;
+    }
+    
+    .title {
+      margin: 0;
+      padding: 32px 0px 16px 0px;
+      color: #2EC4B6;
+    }
+    
+    .download-now {
+      width: 128px;
+      height: 20px;
+      text-align: center;
+      padding: 8px 0px 8px 0px;
+      background: orange;
+      display: inline-block;
+      margin: 8px 0px 16px 0px;
+      text-decoration: none;
+      color: white;
+      border-radius: 2px;
+      font-size: 1rem;
+    }
+    
+    .redirect-btn {
+      width: 128px;
+      height: 20px;
+      text-align: center;
+      padding: 8px 0px 8px 0px;
+      background: #2EC4B6;
+      display: inline-block;
+      margin: 8px 0px 16px 0px;
+      text-decoration: none;
+      color: white;
+      border-radius: 2px;
+      font-size: 1rem;
+      margin: 0px 0px 0px 16px;
+    }
+    
+    .product-cover {
+      width: 70px;
+      height: 100px;
+      border-radius: 2px;
+      background: grey;
+      float: left;
+    }
+    
+    .product-title {
+      margin: 0px 0px 0px 16px;
+      font-size: 1.1rem;
+      width: 100%;
+    }
+    
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .product-price {
+      color: #2EC4B6;
+      font-size: 1.1rem;
+    }
+    
+    .product {
+      padding: 0px 0px 16px 0px;
+    }
+    
+  </style>
 </head>
 <body style="font-family: 'Montserrat',sans-serif;">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<table width="720px" align="center" border="0" cellspacing="0" cellpadding="0">
 		<tr>
-			<td align="center">
-				<h1 style="font-weight: bold;">Dziękujemy za zakupy!</h1>
+			<td align="center" bgcolor="orange">
+        <h1 class="logo-text" style="color: white;">Elabodeal</h1>
 			</td>
 		</tr>
-		<tr>
-			<td align="center">
-				<h3 style="font-size: 1.2em; font-weight: 100;">Pozdrawia zespół elabodeal.</h3>
+    <tr>
+			<td>
+				<h1 class="title">Dziękujemy za zakupy!</h1>
 			</td>
-		</tr>
+    </tr>
+    <tr>
+      <td>
+        <p class="info-text">Możesz pobrać swoje książki klikając poniższy przycisk lub odwiedając portal</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a class="download-now" href="#">Pobierz teraz</a>
+        <a class="redirect-btn" href="#">Odwiedz portal</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Podsumowanie płatności: </p>
+      </td>
+    </tr>
+    {% for product in products %}
+    	<tr>
+	      <td style="padding-bottom: 16px;">
+	        <div>
+	          <div style="float: left;">
+	            <div class="product-cover"></div>
+	            <div style="float: left; height: 100px; width: auto;" class="flex-center">
+	              <h1 class="product-title">{{ product.title }}</h1>
+	            </div>
+	          </div>
+	          <div class="flex-center" style="height: 100px; width: auto; float: right;">
+	            <p class="product-price">{{ product.price }} zł</p>
+	          </div>
+	        </div>
+	      </td>
+	    </tr>
+    {% endfor %}
+    <tr>
+      <td>
+        <p style="float: right; font-size: 1.3rem; color: black; margin: 0;">Razem: <b style="color: orange;">{{ total_price }} zł</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p style="float: right; font-size: 1.3rem; color: black; margin: 8px 0px 32px 0px;">Metoda płatności: <b style="color: orange;">{{ payment_method }}</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="orange" style="padding: 0px 16px 0px 16px; color: white;">
+        <p style="float: left;">Masz pytania ? <a style="color: white;" href="#">Skorzystaj z centrum pomocy</a></p>
+        <p style="float: right;">Pozdrawia zespół Elabodeal</p>
+      </td>
+    </tr>
 	</table>
 </body>
