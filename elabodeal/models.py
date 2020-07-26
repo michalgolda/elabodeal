@@ -100,7 +100,7 @@ class Product(models.Model):
 	pdf = models.ForeignKey('elabodeal.File', on_delete=models.CASCADE, null=True, related_name='product_pdf_file')
 	epub = models.ForeignKey('elabodeal.File', on_delete=models.CASCADE, null=True, related_name='product_epub_file')
 	mobi = models.ForeignKey('elabodeal.File', on_delete=models.CASCADE, null=True, related_name='product_mobi_file')
-	cover_img = models.ForeignKey('elabodeal.File', on_delete=models.CASCADE, related_name='product_cover_img_file')
+	cover_img = models.ForeignKey('elabodeal.File', on_delete=models.CASCADE, null=True, related_name='product_cover_img_file')
 
 	author = models.CharField(max_length=50)
 	title = models.CharField(max_length=200)
