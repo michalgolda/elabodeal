@@ -18,6 +18,8 @@ var card = elements.create('card', {
 
 card.mount('#card-element');
 
+var displayError = document.getElementById('payment-error-msg');
+
 var paymentForm = document.getElementById("payment-form");
 paymentForm.addEventListener("submit", function(event){
 	event.preventDefault();
@@ -58,12 +60,13 @@ paymentForm.addEventListener("submit", function(event){
 								window.location = url;
 							} else {
 								if(result.error.code === 'payment_intent_authentication_failure') {
-									var displayError = document.getElementById('payment-error-msg');
-									displayError.textContent = "Autoryzacja płatności zakończyła się niepowodzeniem. Spróbuj ponownie"
+									displayError.textContent = 'Autoryzacja płatności zakończyła się niepowodzeniem. Spróbuj ponownie'
 								}
 							}
 						})
 				})
+		} else {
+			displayError.textContent = 'Coś poszło nie tak. Przepraszamy za utrdunienia';
 		}
 	})
 });
