@@ -1,143 +1,111 @@
 <head>
-  <style>
-    .logo-text {
-      color: white;
-      padding: 8px 0px 8px 0px;
-      margin: 0;
-    }
-    
-    .info-text {
-      margin: 0;
-      font-weight: 300;
-      font-size: 1.1rem;
-    }
-    
-    .title {
-      margin: 0;
-      padding: 32px 0px 16px 0px;
-      color: #2EC4B6;
-    }
-    
-    .download-now {
-      width: 128px;
-      height: 20px;
-      text-align: center;
-      padding: 8px 0px 8px 0px;
-      background: orange;
-      display: inline-block;
-      margin: 8px 0px 16px 0px;
-      text-decoration: none;
-      color: white;
-      border-radius: 2px;
-      font-size: 1rem;
-    }
-    
-    .redirect-btn {
-      width: 128px;
-      height: 20px;
-      text-align: center;
-      padding: 8px 0px 8px 0px;
-      background: #2EC4B6;
-      display: inline-block;
-      margin: 8px 0px 16px 0px;
-      text-decoration: none;
-      color: white;
-      border-radius: 2px;
-      font-size: 1rem;
-      margin: 0px 0px 0px 16px;
-    }
-    
-    .product-cover {
-      width: 70px;
-      height: 100px;
-      border-radius: 2px;
-      background: grey;
-      float: left;
-    }
-    
-    .product-title {
-      margin: 0px 0px 0px 16px;
-      font-size: 1.1rem;
-      width: 100%;
-    }
-    
-    .flex-center {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .product-price {
-      color: #2EC4B6;
-      font-size: 1.1rem;
-    }
-    
-    .product {
-      padding: 0px 0px 16px 0px;
-    }
-    
-  </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+    </style>
 </head>
-<body style="font-family: 'Montserrat',sans-serif;">
-	<table width="720px" align="center" border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td align="center" bgcolor="orange">
-        <h1 class="logo-text" style="color: white;">Elabodeal</h1>
-			</td>
-		</tr>
+<body>
+  <table align="center" style="width: 600px;">
     <tr>
-			<td>
-				<h1 class="title">Dziękujemy za zakupy!</h1>
-			</td>
-    </tr>
-    <tr>
-      <td>
-        <p class="info-text">Możesz pobrać swoje książki klikając poniższy przycisk lub odwiedając portal</p>
+      <td align="center">
+        <h1 style="color: orange; font-size: 2.5rem;">Elabodeal</h1>
       </td>
     </tr>
     <tr>
       <td>
-        <a class="download-now" href="#">Pobierz teraz</a>
-        <a class="redirect-btn" href="#">Odwiedz portal</a>
+        <h2 style="color: #2EC4B6; margin: 0;">Dziekujemy za zakupy !</h2>
       </td>
     </tr>
     <tr>
       <td>
-        <p>Podsumowanie płatności: </p>
+        <p
+          style="color: #011627; font-size: 1.2rem; margin: 0; font-weight: 300;"
+        >
+          Możesz pobrać swoje książki klikając poniższy przycisk. Książki
+          dostępne bedą również po zalogowaniu się na swoje konto w zakładce
+          moje książki
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-top: 8px;">
+        <a
+          style="display: inline-block; width: 128px; height: 24px; background-color: orange; color: white; text-decoration: none; text-align: center;
+        padding-top: 5px; border-radius: 2px;"
+          href="#"
+          >Pobierz teraz</a
+        >
+        <a
+          style="display: inline-block; width: 128px; height: 24px; background-color: #2EC4B6; color: white; text-decoration: none; text-align: center;
+        padding-top: 5px; border-radius: 2px; margin-left: 8px;"
+          href="#"
+          >Odwiedz portal</a
+        >
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p style="color: #011627; font-size: 1.2rem;">
+          Podsumowanie płatności:
+        </p>
       </td>
     </tr>
     {% for product in products %}
-    	<tr>
-	      <td style="padding-bottom: 16px;">
-	        <div>
-	          <div style="float: left;">
-	            <div class="product-cover"></div>
-	            <div style="float: left; height: 100px; width: auto;" class="flex-center">
-	              <h1 class="product-title">{{ product.title }}</h1>
-	            </div>
-	          </div>
-	          <div class="flex-center" style="height: 100px; width: auto; float: right;">
-	            <p class="product-price">{{ product.price }} zł</p>
-	          </div>
-	        </div>
-	      </td>
-	    </tr>
+      <tr>
+        <td>
+          <tr>
+            <td>
+              <span style="display: flex;">
+                <span style="justify-content: flex-start; width: 60%;">
+                  <p
+                    style="color: #011627; font-weight: bold; font-size: 1.3rem; margin: 0;"
+                  >
+                    {{ product.title }}
+                  </p>
+                  <p style="color: #011627; font-size: 1.1rem; margin: 0;">
+                    {{ product.author }}
+                  </p>
+                </span>
+                <span style="justify-content: flex-end; width: 40%;">
+                  <p style="color: #2EC4B6; font-size: 1.3rem; float: right;">
+                    {{ product.price }} zł
+                  </p>
+                </span>
+              </span>
+            </td>
+          </tr>
+        </td>
+      </tr>
     {% endfor %}
     <tr>
-      <td>
-        <p style="float: right; font-size: 1.3rem; color: black; margin: 0;">Razem: <b style="color: orange;">{{ total_price }} zł</b></p>
+      <td align="right">
+        <p style="font-size: 1.3rem; margin: 0; color: #011627;">
+          Razem: <b style="color: orange;">{{ total_price }} zł</b>
+        </p>
       </td>
     </tr>
     <tr>
-      <td>
-        <p style="float: right; font-size: 1.3rem; color: black; margin: 8px 0px 32px 0px;">Metoda płatności: <b style="color: orange;">{{ payment_method }}</b></p>
+      <td align="right" style="padding-bottom: 32px;">
+        <p style="font-size: 1.3rem; margin: 0; color: #011627;">
+          Metoda płatności: <b style="color: orange;">{{ payment_method }}</b>
+        </p>
       </td>
     </tr>
     <tr>
-      <td bgcolor="orange" style="padding: 0px 16px 0px 16px; color: white;">
-        <p style="float: left;">Masz pytania ? <a style="color: white;" href="#">Skorzystaj z centrum pomocy</a></p>
-        <p style="float: right;">Pozdrawia zespół Elabodeal</p>
+      <td
+        style="color: white; background: orange; padding: 0px 16px 0px 16px;"
+      >
+        <p style="float: left;">
+          Masz pytania ?
+          <a style="color: white;" href="#">Skorzystaj z centrum pomocy</a>
+        </p>
+        <p>
+          <a style="float: right; color: white; text-decoration: none; margin: 0;" href="#">© elabodeal.com</a>
+        </p>
       </td>
     </tr>
-	</table>
+  </table>
 </body>
