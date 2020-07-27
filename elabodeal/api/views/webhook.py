@@ -38,11 +38,11 @@ class WebHookAPIView(APIView):
 			product_objects = []
 
 			user = User.objects.filter(email=delivery['email']).first()
-			if user:
-				for p in products:
-					product = Product.objects.filter(id=p['id']).first()
-					product_objects.append(product)
-					has_purchased_product = PurchasedProduct.objects.filter(product__id=p['id']).first()
+			for p in products:
+				product = Product.objects.filter(id=p['id']).first()
+				product_objects.append(product)
+				if user:
+					has_purchased_product = PurchasedProduct.objects.filter(user__email=user.email, product__id=product.id).first()
 					if not has_purchased_product:
 						purchased_product = PurchasedProduct(
 							user=user,
