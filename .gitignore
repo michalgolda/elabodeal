@@ -4,3 +4,7 @@ __pycache__
 migrations
 media/
 cover_images/
+node_modules/
+tests_output/
+geckodriver.log
+package-lock.json

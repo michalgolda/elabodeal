@@ -1,0 +1,15 @@
+{
+  "name": "elabodeal",
+  "version": "0.0.0",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "nightwatch tests"
+  },
+  "devDependencies": {
+    "chromedriver": "^84.0.1",
+    "geckodriver": "^1.19.1",
+    "selenium-server": "^3.141.59"
+  }
+}
