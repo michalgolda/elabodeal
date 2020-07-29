@@ -131,6 +131,7 @@ class Product(models.Model):
 	isbn = models.CharField(max_length=13)
 	age_categories = models.ManyToManyField(AgeCategory, blank=True, related_name='product_age_category')
 	contents = models.CharField(max_length=400, null=True)
+	url_name = models.CharField(max_length=200)
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -142,6 +143,7 @@ class Product(models.Model):
 		age_category = AgeCategory.objects.filter(value=value).first()
 		if not age_category:
 			age_category = AgeCategory(value=value)
+			age_category.save()
 
 		self.age_categories.add(age_category)
 

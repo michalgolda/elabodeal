@@ -134,7 +134,7 @@
 					{% if products %}
 						<div class="section product-list">
 							{% for product in products %}
-								{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url id=product.id %}
+								{% include 'components/product.html' with title=product.title author=product.author.username price=product.price cover_img_url=product.cover_img_url url_name=product.url_name %}
 							{% endfor %}
 						</div>
 					{% else %}
@@ -144,13 +144,13 @@
 					{% if products %}
 						<div class="section product-list">
 							{% for product in products %}
-								{% include 'components/product.html' with title=product.title author=product.author price=product.price cover_img_url=product.cover_img.url id=product.id %}
+								{% include 'components/product.html' with title=product.title author=product.author price=product.price cover_img_url=product.cover_img.url url_name=product.url_name %}
 							{% endfor %}
 							{% for product in products %}
-								{% include 'components/product.html' with title=product.title author=product.author price=product.price cover_img_url=product.cover_img.url id=product.id %}
+								{% include 'components/product.html' with title=product.title author=product.author price=product.price cover_img_url=product.cover_img.url url_name=product.url_name %}
 							{% endfor %}
 							{% for product in products %}
-								{% include 'components/product.html' with title=product.title author=product.author price=product.price cover_img_url=product.cover_img.url id=product.id %}
+								{% include 'components/product.html' with title=product.title author=product.author price=product.price cover_img_url=product.cover_img.url url_name=product.url_name %}
 							{% endfor %}
 						</div>
 					{% else %}

@@ -1,6 +1,8 @@
 from tests.base import WebTestCase
 from django.urls import reverse
 
+from elabodeal.models import Product, User, Category
+
 
 class TestCartView(WebTestCase):
 	def test_simple(self):
@@ -15,6 +17,28 @@ class TestCartView(WebTestCase):
 		session = self.client.session
 		session['cart'] = {'products': [{'id': 1}]}
 		session.save()
+
+		user = User.objects.create_user(email='test@wp.pl', username='test', password='123')
+		
+		category = Category(
+			name='test'
+		)
+
+		category.save()
+
+		product = Product(
+			author='test',
+			user=user,
+			category=category,
+			title='test',
+			description='test',
+			price=12,
+			page_count=123,
+			isbn=123,
+			url_name='test'
+		)
+
+		product.save()
 
 		form_data = {
 			'action_type': 'add-product',

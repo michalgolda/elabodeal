@@ -41,7 +41,8 @@ class SalesManagerAddProductView(BaseView):
 				price=form.cleaned_data['price'],
 				page_count=form.cleaned_data['page_count'],
 				isbn=form.cleaned_data['isbn'],
-				contents=form.cleaned_data['table_of_content']
+				contents=form.cleaned_data['table_of_content'],
+				url_name=form.cleaned_data['title'].replace(' ', '_')
 			)
 			product.save()
 

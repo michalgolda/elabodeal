@@ -3,8 +3,8 @@ from elabodeal.models import Product
 
 
 class ProductDetailView(BaseView):
-	def get(self, request, id):
-		product = Product.objects.filter(id=id).first()
+	def get(self, request, url_name: str):
+		product = Product.objects.filter(url_name=url_name).first()
 		if not product:
 			return self.respond('product_404.html', request)
 

@@ -21,12 +21,13 @@ class TestProductDetailView(WebTestCase):
 			description='test',
 			price=12,
 			page_count=123,
-			isbn=123
+			isbn=123,
+			url_name='test'
 		)
 
 		product.save()
 
-		response = self.client.get(reverse('web:product-detail', args=[1]),)
+		response = self.client.get(reverse('web:product-detail', args=['test']),)
 
 		self.assertEqual(response._headers['content-type'][1], 'text/html; charset=utf-8')
 		self.assertEqual(response.status_code, 200)

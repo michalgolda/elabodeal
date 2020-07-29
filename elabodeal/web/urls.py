@@ -20,7 +20,7 @@ app_name = 'web'
 
 urlpatterns = [
 	path('', IndexView.as_view(), name='index'),
-	path('product/<int:id>/', ProductDetailView.as_view(), name='product-detail'),
+	path('product/<str:url_name>/', ProductDetailView.as_view(), name='product-detail'),
 	path('auth/login/', LoginView.as_view(), name='login'),
 	path('auth/register/', RegisterView.as_view(), name='register'),
 	path('account/verify/', EmailVerifyView.as_view(), name='account-email-verify'),
