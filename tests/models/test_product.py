@@ -19,3 +19,7 @@ class TestProductModel(BaseTestCase):
 		self.assertEqual(hasattr(Product, 'mobi'), True)
 		self.assertEqual(hasattr(Product, 'created_at'), True)
 		self.assertEqual(hasattr(Product, 'updated_at'), True)
+		self.assertEqual(hasattr(Product, 'age_categories'), True)
+		self.assertEqual(hasattr(Product, 'url_name'), True)
+		self.assertEqual(hasattr(Product, 'count_views'), True)
+		self.assertEqual(hasattr(Product, 'contents'), True)

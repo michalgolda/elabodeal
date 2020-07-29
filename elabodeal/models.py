@@ -133,6 +133,8 @@ class Product(models.Model):
 	contents = models.CharField(max_length=400, null=True)
 	url_name = models.CharField(max_length=200)
 
+	count_views = models.IntegerField(default=0)
+
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	

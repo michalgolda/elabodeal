@@ -13,6 +13,11 @@ class ProductDetailView(BaseView):
 			if len(p.title) >= 30:
 				p.title = p.title[:30] + '...'
 
+		if not 'counted_view' in request.session:
+			product.count_views += 1
+			product.save()
+			request.session['counted_view'] = True
+
 		context = {
 			'product': product,
 			'related_products': products[:4]
