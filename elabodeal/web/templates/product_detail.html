@@ -45,6 +45,21 @@
 	    grid-template-columns: 280px 280px 280px 280px;
 	}
 
+	.age-category {
+		width: 32px;
+		height: 32px;
+		background: var(--green);
+		border-radius: 2px;
+		text-align: center;
+		margin-right: 8px;
+	}
+
+	.age-category > p {
+		color: white;
+		font-size: 1.2rem;
+		font-weight: 300;
+		padding-top: 2px;
+	}
 </style>
 {% endblock %}
 
@@ -70,17 +85,28 @@
 						<p class="margin-top-8px text-align-right color-green font-size-big">{{ product.price }} zł</p>
 					</section>
 					<section class="section text-align-right margin-top-16px">
-						<form>
-							<button class="btn btn-green">Kup teraz</button>
-						</form>
-						<form method="POST" action="/cart/">
-							{% csrf_token %}
-							<input type="hidden" name="product_id" value="{{ product.id }}">
-							<input type="hidden" name="action_type" value="add-product">
-							
-							<button class="btn btn-orange
-							margin-left-16px" type="add-to-cart">Dodaj do koszyka</button>
-						</form>
+						<div class="section" style="display: flex;">
+							<div style="justify-content: flex-start; width: 50%;">
+								{% for age_category in product.age_categories.all %}
+									<div class="age-category float-left">
+										<p>{{ age_category.value }}+</p>
+									</div>
+								{% endfor %}
+							</div>
+							<div style="justify-content: flex-end; width: 50%;" class="float-right">
+								<form style="display: inline-block;">
+									<button class="btn btn-green">Kup teraz</button>
+								</form>
+								<form style="display: inline-block;" method="POST" action="/cart/">
+									{% csrf_token %}
+									<input type="hidden" name="product_id" value="{{ product.id }}">
+									<input type="hidden" name="action_type" value="add-product">
+									
+									<button class="btn btn-orange
+									margin-left-16px" type="add-to-cart">Dodaj do koszyka</button>
+								</form>
+							</div>
+						</div>
 					</section>
 				</section>
 				<section class="section box margin-top-16px">

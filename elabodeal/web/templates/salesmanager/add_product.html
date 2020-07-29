@@ -404,12 +404,31 @@
 
 {% block scripts %}
 <script>
+function getCheckedInput() {
+	var inputs = $($('input#age-choice-input'));
+	for(var i = 0; i < inputs.length; i++) {
+		if($(inputs[i]).attr('checked')) {
+			return inputs[i];
+		}
+	}
+
+}
+
 $(document).on('click', 'div#age-selector', function(){
 	var id = Number($(this).attr('age-input-id'));
 	var input = $($('input#age-choice-input')[id]);
 	var isChecked = input.attr('checked');
 
-	if(isChecked == undefined) {
+
+	if(!isChecked) {
+		var checkedInput = getCheckedInput();
+		if(checkedInput) {
+			$(checkedInput).attr('checked', false);
+			var id = $(checkedInput).attr('age-input-id');
+			var selector = $($('div#age-selector'));
+			selector.removeClass('age-checked');
+		}
+
 		input.attr('checked', true);
 		$(this).addClass('age-checked');
 	} else {

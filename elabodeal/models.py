@@ -1,5 +1,10 @@
+import uuid
+import json
+
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.files.storage import FileSystemStorage
 
 
 class UserManager(BaseUserManager):
@@ -93,6 +98,22 @@ class Category(models.Model):
 		return f'{self.name}'
 
 
+class AgeCategory(models.Model):
+	value = models.IntegerField()
+
+	def __str__(self):
+		return f'{self.value}+'
+
+
+class File(models.Model):
+	size = models.IntegerField()
+	url = models.URLField()
+	mime = models.CharField(max_length=30)
+	name = models.CharField(max_length=150)
+	extension = models.CharField(max_length=4)
+	uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
 class Product(models.Model):
 	category = models.ForeignKey('elabodeal.Category', on_delete=models.CASCADE, related_name='product_category')
 	user = models.ForeignKey('elabodeal.User', on_delete=models.CASCADE, related_name='product_user')
@@ -108,19 +129,108 @@ class Product(models.Model):
 	price =	models.DecimalField(max_digits=10, decimal_places=2)
 	page_count = models.IntegerField()
 	isbn = models.CharField(max_length=13)
+	age_categories = models.ManyToManyField(AgeCategory, blank=True, related_name='product_age_category')
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+	
+	def set_age(self, value):
+		if not value in [3, 7, 12, 16, 18]: 
+			raise ValueError(f'Value {value} is invalid.')
 
+		age_category = AgeCategory.objects.filter(value=value).first()
+		if not age_category:
+			age_category = AgeCategory(value=value)
 
-class File(models.Model):
-	size = models.IntegerField()
-	url = models.URLField()
-	mime = models.CharField(max_length=30)
-	name = models.CharField(max_length=150)
-	extension = models.CharField(max_length=4)
-	uploaded_at = models.DateTimeField(auto_now_add=True)
+		self.age_categories.add(age_category)
 
+	def set_pdf(self, file):
+		name = uuid.uuid4()
+		content_type = file.content_type
+		extension = content_type[-3:]
+		full_name = f'{name}.{extension}'
+		url = f'/api/files/{full_name}/'
+		pdf = self.add_file(
+			uuid.uuid4(),
+			extension,
+			content_type,
+			file.size,
+			url
+		)
+		self.pdf = pdf
+		self.save()
+
+		file_storage = FileSystemStorage()
+		file_storage.save(full_name, file)
+
+	def set_mobi(self, file):
+		name = uuid.uuid4()
+		content_type = file.content_type
+		extension = content_type[-3:]
+		full_name = f'{name}.{extension}'
+		url = f'/api/files/{full_name}/'
+		mobi = self.add_file(
+			uuid.uuid4(),
+			extension,
+			content_type,
+			file.size,
+			url
+		)
+		self.mobi = mobi
+		self.save()
+
+		file_storage = FileSystemStorage()
+		file_storage.save(full_name, file)
+
+	def set_epub(self, file):
+		name = uuid.uuid4()
+		content_type = file.content_type
+		extension = content_type[-3:]
+		full_name = f'{name}.{extension}'
+		url = f'/api/files/{full_name}/'
+		epub = self.add_file(
+			uuid.uuid4(),
+			extension,
+			content_type,
+			file.size,
+			url
+		)
+		self.epub = epub
+		self.save()
+
+		file_storage = FileSystemStorage()
+		file_storage.save(full_name, file)
+
+	def set_cover_img(self, file):
+		name = uuid.uuid4()
+		content_type = file.content_type
+		extension = content_type.split('image/')[1]
+		full_name = f'{name}.{extension}'
+		url = f'/static/cover_images/{full_name}'
+		cover_img = self.add_file(
+			uuid.uuid4(),
+			extension,
+			content_type,
+			file.size,
+			url
+		)
+		self.cover_img = cover_img
+		self.save()
+
+		file_storage = FileSystemStorage(location=f'{settings.BASE_DIR}/elabodeal/web/static/cover_images/')
+		file_storage.save(full_name, file)
+
+	def add_file(self, name: str, extension: str, mime: str, size: int, url: str) -> File:
+		file = File(
+			name=name,
+			extension=extension,
+			mime=mime,
+			size=size,
+			url=url
+		)
+		file.save()
+
+		return file
 
 class Cart(models.Model):
 	title = models.CharField(max_length=100)

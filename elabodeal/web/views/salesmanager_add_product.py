@@ -6,7 +6,7 @@ from django.core.files.storage import FileSystemStorage
 
 from elabodeal.web.views.base import BaseView
 from elabodeal.web.forms.add_product import AddProductForm
-from elabodeal.models import Product, Category, File
+from elabodeal.models import Product, Category, File, AgeCategory
 
 
 class SalesManagerAddProductView(BaseView):
@@ -32,76 +32,6 @@ class SalesManagerAddProductView(BaseView):
 		if form.is_valid():
 			category = Category.objects.filter(name=request.POST.get('category')).first()
 
-			fs_static = FileSystemStorage(location=f'{settings.BASE_DIR}/elabodeal/web/static/cover_images/')
-			fs_media = FileSystemStorage()
-
-			cover_img = None
-			pdf = None
-			epub = None
-			mobi = None
-
-			for k, v in form.cleaned_data.items():
-				if (k.startswith('file') or k.endswith('file')) and v:
-					file = v
-					file_size = file.size
-					file_name = uuid.uuid4()
-					file_content_type = file.content_type
-
-					if k == 'file_image_0':
-						file_extenstion = file_content_type.split('image/')[1]
-						file_url = f'/static/cover_images/{file_name}.{file_extenstion}'
-
-						fs_static.save(f'{file_name}.{file_extenstion}', file)
-
-						cover_img = File(
-							name=file_name,
-							extension=file_extenstion,
-							mime=file_content_type,
-							size=file_size,
-							url=file_url
-						)
-
-						cover_img.save()
-
-					file_extenstion = file_content_type[-3:]
-					file_url = f'/api/files/{file_name}.{file_extenstion}/'
-
-					if k == 'pdf_file':			
-						fs_media.save(f'{file_name}.{file_extenstion}', file)
-
-						pdf = File(
-							name=file_name,
-							extension=file_extenstion,
-							mime=file_content_type,
-							size=file_size,
-							url=file_url
-						)
-						pdf.save()
-
-					if k == 'mobi_file':			
-						fs_media.save(f'{file_name}.{file_extenstion}', file)
-
-						mobi = File(
-							name=file_name,
-							extension=file_extenstion,
-							mime=file_content_type,
-							size=file_size,
-							url=file_url
-						)
-						mobi.save()
-
-					if k == 'epub_file':			
-						fs_media.save(f'{file_name}.{file_extenstion}', file)
-
-						epub = File(
-							name=file_name,
-							extension=file_extenstion,
-							mime=file_content_type,
-							size=file_size,
-							url=file_url
-						)
-						epub.save()
-
 			product = Product(
 				title=form.cleaned_data['title'],
 				description=form.cleaned_data['description'],
@@ -110,13 +40,31 @@ class SalesManagerAddProductView(BaseView):
 				author=form.cleaned_data['author'],
 				price=form.cleaned_data['price'],
 				page_count=form.cleaned_data['page_count'],
-				isbn=form.cleaned_data['isbn'],
-				cover_img=cover_img,
-				pdf=pdf,
-				mobi=mobi,
-				epub=epub
+				isbn=form.cleaned_data['isbn']
 			)
 			product.save()
+
+			for k, v in form.cleaned_data.items():
+				if k.startswith('age') and v:
+					if k.endswith('0'):
+						product.set_age(3)
+					if k.endswith('1'):
+						product.set_age(7)
+					if k.endswith('2'):
+						product.set_age(12)
+					if k.endswith('3'):
+						product.set_age(16)
+					if k.endswith('4'):
+						product.set_age(18)
+				if (k.startswith('file') or k.endswith('file')) and v:
+					if k == 'file_image_0':
+						product.set_cover_img(v)
+					if k == 'pdf_file':			
+						product.set_pdf(v)
+					if k == 'mobi_file':			
+						product.set_mobi(v)
+					if k == 'epub_file':			
+						product.set_epub(v)
 
 			return redirect('web:salesmanager')
 

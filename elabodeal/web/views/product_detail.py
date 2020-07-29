@@ -10,7 +10,8 @@ class ProductDetailView(BaseView):
 
 		products = Product.objects.all()
 		for p in products:
-			p.title = p.title[:30] + '...'
+			if len(p.title) >= 30:
+				p.title = p.title[:30] + '...'
 
 		context = {
 			'product': product,
