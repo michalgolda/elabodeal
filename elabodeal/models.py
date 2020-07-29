@@ -130,6 +130,7 @@ class Product(models.Model):
 	page_count = models.IntegerField()
 	isbn = models.CharField(max_length=13)
 	age_categories = models.ManyToManyField(AgeCategory, blank=True, related_name='product_age_category')
+	contents = models.CharField(max_length=400, null=True)
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

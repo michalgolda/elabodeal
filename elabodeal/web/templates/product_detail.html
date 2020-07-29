@@ -142,10 +142,13 @@
 					</div>
 				</section>
 				<section class="section margin-top-32px">
-					<button class="btn btn-orange">Opis</button>
-					<button class="btn btn-outline-orange margin-left-16px">Spis treści</button>
-					<div class="box margin-top-16px">
+					<button id="show-description-btn" class="btn btn-orange">Opis</button>
+					<button id="show-contents-btn" class="btn btn-outline-orange margin-left-16px">Spis treści</button>
+					<div id="product-description" class="box margin-top-16px">
 						<p class="color-black">{{ product.description }}</p>
+					</div>
+					<div id="product-contents" class="box margin-top-16px display-none">
+						<p class="color-black">{{ product.contents }}</p>
 					</div>
 				</section>
 			</div>
@@ -161,4 +164,26 @@
 	</section>
 </div>
 {% include 'components/bigfooter.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+$('#show-contents-btn').click(function() {
+	$(this).removeClass('btn-outline-orange');
+	$(this).addClass('btn-orange');
+	$('#show-description-btn').removeClass('btn-orange');
+	$('#show-description-btn').addClass('btn-outline-orange');
+	$('#product-description').hide();
+	$('#product-contents').show();
+});
+
+$('#show-description-btn').click(function() {
+	$(this).removeClass('btn-outline-orange');
+	$(this).addClass('btn-orange');
+	$('#show-contents-btn').removeClass('btn-orange');
+	$('#show-contents-btn').addClass('btn-outline-orange');
+	$('#product-description').show();
+	$('#product-contents').hide();
+});
+</script>
 {% endblock %}
