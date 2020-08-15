@@ -22,11 +22,12 @@
                 </p>
             </div>
             <div class="product-card-section margin-top-4px">
-                <i class="fas fa-star product-card-star-icon"></i>
-                <i class="fas fa-star product-card-star-icon"></i>
-                <i class="fas fa-star product-card-star-icon"></i>
-                <i class="fas fa-star product-card-star-icon"></i>
-                <i class="fas fa-star product-card-star-icon"></i>
+                {% for _ in rating  %}
+                    <i class="fas fa-star product-card-star-icon"></i>
+                {% endfor %}
+                {% for _ in empty_stars %}
+                    <i class="far fa-star product-card-star-icon"></i>
+                {% endfor %}
             </div>
         </div>
     </div>

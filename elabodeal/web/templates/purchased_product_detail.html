@@ -20,14 +20,6 @@
 		border-radius: 2px;
 	}
 
-	.section > form {
-		display: inline-block;
-	}
-
-	button[type="add-to-cart"] {
-		width: 150px;
-	}
-
 	.detail {
 		border: 1px solid var(--grey);
 		background: white;
@@ -60,10 +52,41 @@
 		font-weight: 300;
 		padding-top: 2px;
 	}
+
+	.rating {
+		display: flex;
+	 	flex-wrap: wrap;
+	 	justify-content: space-around;
+	 	flex-direction: row-reverse;
+	}
+
+	.rating > .star {
+		color: var(--orange);
+		font-size: 2rem;
+	}
+
+	.rating > .fas {
+		display: none;
+	}
+
+	.rating .star:hover,
+	.rating .star:hover ~ .fas {
+		display: flex;
+	} 
+
+	.rating .star:hover,
+	.rating .star:hover ~ .far {
+		display: none;
+	}
 </style>
 {% endblock %}
 
 {% block body %}
+{% if not purchased_product.review %}
+	{% include 'components/review_product_popup.html' with product_id=product.id %}
+{% else %}
+	{% include 'components/change_review_product_popup.html' with product_id=product.id %}
+{% endif %}
 {% include 'components/navigation.html' %}
 <div class="container">
 	<header class="section header">
@@ -81,9 +104,6 @@
 					<p class="margin-top-8px font-size-medium font-weight-300">{{ product.author }}</p>
 				</section>
 				<section class="section">
-					<section class="section">
-						<p class="margin-top-8px text-align-right color-green font-size-big">{{ product.price }} zł</p>
-					</section>
 					<section class="section text-align-right margin-top-16px">
 						<div class="section" style="display: flex;">
 							<div style="justify-content: flex-start; width: 50%;">
@@ -94,17 +114,11 @@
 								{% endfor %}
 							</div>
 							<div style="justify-content: flex-end; width: 50%;" class="float-right">
-								<form style="display: inline-block;">
-									<button class="btn btn-green">Kup teraz</button>
-								</form>
-								<form style="display: inline-block;" method="POST" action="/cart/">
-									{% csrf_token %}
-									<input type="hidden" name="product_id" value="{{ product.id }}">
-									<input type="hidden" name="action_type" value="add-product">
-									
-									<button class="btn btn-orange
-									margin-left-16px" type="add-to-cart">Dodaj do koszyka</button>
-								</form>
+								{% if not purchased_product.review %}
+									<button id="open-review-product-popup" class="btn btn-green">Dodaj ocenę</button>
+								{% else %}
+									<button id="open-change-review-product-popup" class="btn btn-green">Edytuj {{ purchased_product.product.rating }} / 5.0</button>
+								{% endif %}
 							</div>
 						</div>
 					</section>
@@ -119,20 +133,6 @@
 						<p class="float-right color-orange">1920</p>
 					</div>
 					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
-						<p class="float-left color-black">Formaty</p>
-						<p class="float-right color-orange">
-							{% if product.pdf %}
-								PDF
-							{% endif %}
-							{% if product.mobi %}
-								MOBI
-							{% endif %}
-							{% if product.epub %}
-								EPUB
-							{% endif %}
-						</p>
-					</div>
-					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
 						<p class="float-left color-black">Kategoria</p>
 						<p class="float-right color-orange">{{ product.category.name }}</p>
 					</div>
@@ -145,7 +145,18 @@
 						<p class="float-right color-orange">{{ product.rating }} / 5.0 - {{ product.reviews }}</p>
 					</div>
 				</section>
-				<section class="section margin-top-32px">
+				<section class="section margin-top-16px" style="height: 32px;">
+					{% if product.pdf %}
+						<button class="btn btn-orange float-right"><i class="fas fa-download"></i> PDF</button>
+					{% endif %}
+					{% if product.epub %}
+						<button class="btn btn-orange float-right"><i class="fas fa-download"></i> EPUB</button>
+					{% endif %}
+					{% if product.mobi %}
+						<button class="btn btn-orange float-right"><i class="fas fa-download"></i> MOBI</button>
+					{% endif %}
+				</section>
+				<section class="section margin-top-32px clear-both">
 					<button id="show-description-btn" class="btn btn-orange">Opis</button>
 					<button id="show-contents-btn" class="btn btn-outline-orange margin-left-16px">Spis treści</button>
 					<div id="product-description" class="box margin-top-16px">
@@ -158,14 +169,6 @@
 			</div>
 		</section>
 	</header>
-	<section class="section">
-		<p class="section-label margin-top-32px margin-bottom-16px">Podobne</p>
-		<div class="section product-list">
-			{% for p in related_products %}
-				{% include 'components/product.html' with title=p.title author=p.author price=p.price cover_img_url=p.cover_img.url url_name=p.url_name rating=p.rating empty_stars=p.empty_stars %}
-			{% endfor %}
-		</div>
-	</section>
 </div>
 {% include 'components/bigfooter.html' %}
 {% endblock %}
@@ -189,5 +192,44 @@ $('#show-description-btn').click(function() {
 	$('#product-description').show();
 	$('#product-contents').hide();
 });
+</script>
+<script>
+	$('#open-review-product-popup').click(function(){
+		$('#review-product-popup').toggle();
+	});
+
+	$('#close-review-product-popup').click(function() {
+		$('#review-product-popup').toggle();
+	});
+
+	$('#open-change-review-product-popup').click(function(){
+		$('#change-review-product-popup').toggle();
+	});
+
+	$('#close-change-review-product-popup').click(function() {
+		$('#change-review-product-popup').toggle();
+	});
+</script>
+<script>
+	function reverseRatingNumber(number) {
+		switch(number) {
+			case 5:
+				return 1
+			case 4:
+				return 2;
+			case 3:
+				return 3;
+			case 2:
+				return 4;
+			case 1:
+				return 5;
+		}
+	}
+
+	$(document).on('click', 'i#star', function() {
+		var rating = reverseRatingNumber(Number($(this).attr('star')));
+		var ratingInput = $('#rating-input');
+		ratingInput.attr('value', rating);
+	});
 </script>
 {% endblock %}

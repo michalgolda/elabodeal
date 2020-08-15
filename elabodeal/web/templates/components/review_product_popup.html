@@ -1,0 +1,36 @@
+{% extends 'components/popup.html' %}
+
+{% block title %}Dodaj ocenę{% endblock %}
+
+{% block popup_id %}review-product-popup{% endblock %}
+{% block popup_close_btn_id %}close-review-product-popup{% endblock %}
+
+{% block body %}
+<form class="section text-align-center" method="POST" action="/mybooks/{{ product_id }}/" autocomplete="off">
+	{% csrf_token %}
+	<input id="rating-input" type="hidden" name="rating" value="0" />
+
+	<div class="section rating margin-top-16px">
+		<i id="star" class="star far fa-star" star="1"></i>
+		<i id="star" class="star fas fa-star" star="1"></i>
+
+		<i id="star" class="star far fa-star" star="2"></i>
+		<i id="star" class="star fas fa-star" star="2"></i>
+
+
+		<i id="star" class="star far fa-star" star="3"></i>
+		<i id="star" class="star fas fa-star" star="3"></i>
+
+
+		<i id="star" class="star far fa-star" star="4"></i>
+		<i id="star" class="star fas fa-star" star="4"></i>
+
+
+		<i id="star" class="star far fa-star" star="5"></i>
+		<i id="star" class="star fas fa-star" star="5"></i>
+	</div>
+	<div class="section margin-top-32px">
+		<button id="submit-review" class="btn btn-orange btn-full-width" type="submit">Zapisz</button>
+	</div>
+</form>
+{% endblock %}

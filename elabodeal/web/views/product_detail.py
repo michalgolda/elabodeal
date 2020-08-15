@@ -18,8 +18,13 @@ class ProductDetailView(BaseView):
 			product.save()
 			request.session['counted_view'] = True
 
+		related_products = products[:4]
+		for p in related_products:
+			p.empty_stars = range(5 - int(p.rating))
+			p.rating = range(int(p.rating))
+
 		context = {
 			'product': product,
-			'related_products': products[:4]
+			'related_products': related_products,
 		}
 		return self.respond('product_detail.html', request, context)

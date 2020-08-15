@@ -134,6 +134,8 @@ class Product(models.Model):
 	url_name = models.CharField(max_length=200)
 
 	count_views = models.IntegerField(default=0)
+	rating = models.FloatField(default=0)
+	reviews = models.IntegerField(default=0)
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -254,3 +256,5 @@ class CartItem(models.Model):
 class PurchasedProduct(models.Model):
 	user = models.ForeignKey('elabodeal.User', on_delete=models.CASCADE)
 	product = models.ForeignKey('elabodeal.Product', on_delete=models.CASCADE)
+	review = models.BooleanField(default=False)
+	set_rating = models.FloatField(default=0)

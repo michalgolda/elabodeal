@@ -70,7 +70,9 @@
 								<p class="font-size-small color-black font-weight-600">{{ purchased.product.title }}</p>
 							</div>
 							<div class="record-actions flex-center">
-								<button class="btn btn-green">Czytaj</button>
+								<a href="{% url 'web:purchased-product-detail' id=purchased.product.id %}">
+									<button class="btn btn-green">Czytaj</button>
+								</a>
 								<button class="btn btn-orange margin-left-16px">Pobierz</button>
 							</div>
 						</div>

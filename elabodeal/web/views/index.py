@@ -27,12 +27,16 @@ class IndexView(BaseView):
 		for p in products:
 			p.title = p.title[:30] + '...'
 
+		for p in products:
+			p.empty_stars = range(5 - int(p.rating))
+			p.rating = range(int(p.rating))
+
 		context = {
 			'categories': categories,
 			'products': products if len(products) > 0 else False,
 			'use_search': use_search,
 			'search_query': search_query if search_query else "",
-			'category_param': category_param
+			'category_param': category_param,
 		}
 
 		return self.respond('index.html', request, context)

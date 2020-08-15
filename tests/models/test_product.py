@@ -23,3 +23,5 @@ class TestProductModel(BaseTestCase):
 		self.assertEqual(hasattr(Product, 'url_name'), True)
 		self.assertEqual(hasattr(Product, 'count_views'), True)
 		self.assertEqual(hasattr(Product, 'contents'), True)
+		self.assertEqual(hasattr(Product, 'rating'), True)
+		self.assertEqual(hasattr(Product, 'reviews'), True)
