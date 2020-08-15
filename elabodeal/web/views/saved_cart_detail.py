@@ -17,10 +17,12 @@ class SavedCartDetailView(BaseView):
 		for item in cart_items:
 			total_price += float(item.product.price)
 
+		total_price = '{0:.2f}'.format(round(total_price, 2))
+
 		context = {
 			'cart': cart,
 			'cart_items': cart_items,
-			'total_price': round(total_price, 2)
+			'total_price': total_price
 		}
 		return self.respond('saved_cart_detail.html', request, context)
 
