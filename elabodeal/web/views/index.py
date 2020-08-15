@@ -17,7 +17,7 @@ class IndexView(BaseView):
 			products = Product.objects.filter(category__name=category_param).all()
 		elif search_query:
 			products = Product.objects.annotate(
-				search=SearchVector('author__first_name', 'author__last_name', 'title')
+				search=SearchVector('author', 'title')
 			).filter(search=search_query.lower()).all()
 
 			use_search = True
