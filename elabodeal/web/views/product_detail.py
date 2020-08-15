@@ -13,10 +13,17 @@ class ProductDetailView(BaseView):
 			if len(p.title) >= 30:
 				p.title = p.title[:30] + '...'
 
-		if not 'counted_view' in request.session:
+		# Count view increment
+		if not 'viewed_products' in request.session:
+			request.session['viewed_products'] = []
+			
+		viewed_products = request.session['viewed_products']
+		if not product.id in viewed_products:
+			viewed_products.append(product.id)
+			request.session['viewed_products'] = viewed_products
+
 			product.count_views += 1
 			product.save()
-			request.session['counted_view'] = True
 
 		related_products = products[:4]
 		for p in related_products:
