@@ -3,6 +3,13 @@
 
 {% block title-description %}{{shared_cart.title}}{% endblock %}
 
+{% block meta_tags %}
+<meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="{{ shared_cart.title }}" />
+<meta property="og:description"   content="{{ shared_cart.description }}" />
+{% endblock %}
+
 {% block css %}
 <style>
 	.footer-text {
@@ -23,6 +30,7 @@
 	{% for cart_item in shared_cart_items %}
 		<p>{{ cart_item.product.title }}</p>
 	{% endfor %}
+
 </div>
 {% include 'components/smallfooter.html' %}
 {% endblock %}

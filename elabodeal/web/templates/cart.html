@@ -59,12 +59,20 @@
 	.fa-reddit {
 		color: #FF5700;
 	}
+
+	.fa-twitter-square {
+		color: #1DA1F2;
+	}
 </style>
 {% endblock %}
 
 {% block body %}
-{% include 'components/share_cart_popup.html' %}
-{% include 'components/save_cart_popup.html'%}
+{% if products %}
+	{% include 'components/share_cart_popup.html' %}
+{% endif %}
+{% if request.user.is_authenticated and products %}
+	{% include 'components/save_cart_popup.html'%}
+{% endif %}
 {% include 'components/navigation.html' %}
 <div class="container">
 	<section class="section">
@@ -142,7 +150,9 @@
 			{% if request.user.is_authenticated and products %}
 				<button id="show-save-cart-popup" class="btn btn-green margin-right-16px">Zapisz koszyk</button>
 			{% endif %}
-			<button id="open-share-cart-popup" class="btn btn-green" type="share">Udostępnij koszyk</button>
+			{% if products %}
+				<button id="open-share-cart-popup" class="btn btn-green" type="share">Udostępnij koszyk</button>
+			{% endif %}
 		</div>
 		<div class="float-right">
 			<p class="float-left color-black font-size-medium">Razem: 
@@ -159,7 +169,9 @@
 	</section>
 </div>
 {% include 'components/smallfooter.html' %}
+{% endblock %}
 
+{% block scripts %}
 <script>
 	$('#show-save-cart-popup').click(function(){
 		$('#save-cart-popup').show();
@@ -210,9 +222,6 @@
 						var shareCartForm = $('#share-cart-form');
 						var shareCartDetails = $('#share-cart-details');
 						var shareCartURLCopyBtn = $('#share-cart-copy-url');
-						
-						shareCartDetails.show();
-						shareCartForm.hide();
 
 						var sharedCode = data.shared_cart_code;
 						var shareURL = `${window.location.origin}/shared/carts/${sharedCode}`;
@@ -226,12 +235,46 @@
 						    e.clearSelection();
 						});
 
+						shareCartDetails.show();
+						shareCartForm.hide();
 					})
 			} else {
 				var displayError = document.getElementById('share-cart-error-msg');
 				displayError.textContent = 'Coś poszło nie tak :(';
 			}
 		})
+	});
+</script>
+<script>
+	function getShareURL(){
+		var shareCartURLText = $('#share-cart-url');
+		var shareURL = shareCartURLText.html();
+
+		return shareURL;
+	}
+
+	$('#share-fb-btn').click(function(){
+		window.open(
+			`https://www.facebook.com/sharer/sharer.php?u=${getShareURL()}`, 
+			'facebook-share', 
+			'width=600, height=400'
+		);
+	});
+
+	$('#share-reddit-btn').click(function(){
+		window.open(
+			`http://www.reddit.com/submit?url=${getShareURL()}`, 
+			'reddit-share', 
+			'width=600, height=400'
+		);
+	});
+
+	$('#share-twitter-btn').click(function(){
+		window.open(
+			`https://twitter.com/share?ref_src=${getShareURL()}`, 
+			'reddit-share', 
+			'width=600, height=400'
+		);
 	});
 </script>
 {% endblock %}

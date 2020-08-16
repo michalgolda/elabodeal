@@ -28,9 +28,32 @@
     {% block body %}
     {% endblock %}
 
-
     {% block scripts %}{% endblock %}
-    <script src="{% static 'js/nav.js' %}"></script>
-    <script src="{% static 'js/scroll.js' %}"></script>
+    <script>
+        $('#nav-menu-open').click(function(){
+            if($('#nav-menu').is(':hidden')){
+                $('#nav-menu').show();
+                $('#nav-arrow-down').hide();
+                $('#nav-arrow-up').show(); 
+            } else {
+                $('#nav-arrow-down').show();
+                $('#nav-arrow-up').hide();
+                $('#nav-menu').hide();
+            }
+        })
+
+        $('#nav-menu').hover(function(){}, function(){
+            $(this).hide();
+            $('#nav-arrow-down').show();
+            $('#nav-arrow-up').hide();
+        })
+    </script>
+    <script>
+        $('#scrollUpBtn').click(function() {
+            $('html, body').animate({
+                scrollTop: 0
+               }, 1000);
+        });
+    </script>
 </body>
 </html>
