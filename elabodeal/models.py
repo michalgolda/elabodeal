@@ -1,5 +1,7 @@
 import uuid
 import json
+import random
+import string
 
 from django.conf import settings
 from django.db import models
@@ -258,3 +260,19 @@ class PurchasedProduct(models.Model):
 	product = models.ForeignKey('elabodeal.Product', on_delete=models.CASCADE)
 	review = models.BooleanField(default=False)
 	set_rating = models.FloatField(default=0)
+
+
+class SharedCart(models.Model):
+	code = models.CharField(max_length=20, unique=True)
+	title = models.CharField(max_length=100)
+	description = models.CharField(max_length=500)
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	@staticmethod
+	def generate_code(length = 10):
+		return ''.join(random.choice(string.ascii_letters + string.digits) for i in range(length))
+
+
+class SharedCartItem(models.Model):
+	shared_cart = models.ForeignKey('elabodeal.SharedCart', on_delete=models.CASCADE)
+	product = models.ForeignKey('elabodeal.Product', on_delete=models.CASCADE)

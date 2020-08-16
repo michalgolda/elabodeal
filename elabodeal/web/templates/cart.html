@@ -47,10 +47,23 @@
 		background: var(--green);
 		margin: 0 auto;
 	}
+
+	.social-icon:hover {
+		cursor: pointer;
+	}
+
+	.fa-facebook {
+		color: #4267B2;
+	}
+
+	.fa-reddit {
+		color: #FF5700;
+	}
 </style>
 {% endblock %}
 
 {% block body %}
+{% include 'components/share_cart_popup.html' %}
 {% include 'components/save_cart_popup.html'%}
 {% include 'components/navigation.html' %}
 <div class="container">
@@ -129,7 +142,7 @@
 			{% if request.user.is_authenticated and products %}
 				<button id="show-save-cart-popup" class="btn btn-green margin-right-16px">Zapisz koszyk</button>
 			{% endif %}
-			<button class="btn btn-green" type="share">Udostępnij koszyk</button>
+			<button id="open-share-cart-popup" class="btn btn-green" type="share">Udostępnij koszyk</button>
 		</div>
 		<div class="float-right">
 			<p class="float-left color-black font-size-medium">Razem: 
@@ -147,5 +160,78 @@
 </div>
 {% include 'components/smallfooter.html' %}
 
-<script src="{% static 'js/popup.js' %}"></script>
+<script>
+	$('#show-save-cart-popup').click(function(){
+		$('#save-cart-popup').show();
+	});
+
+	$('#close-save-cart-popup').click(function(){
+		$('#save-cart-popup').hide();
+	});
+</script>
+<script>
+	$('#open-share-cart-popup').click(function(){
+		$('#share-cart-popup').show();
+	});
+
+	$('#close-share-cart-popup').click(function(){
+		$('#share-cart-popup').hide();
+
+		var shareCartURLCopyBtn = $('#share-cart-copy-url');
+		shareCartURLCopyBtn.html('Kopiuj');
+	});
+</script>
+<script>
+	var shareCartForm = document.getElementById('share-cart-form');
+	shareCartForm.addEventListener('submit', function(e){
+		e.preventDefault();
+
+		var formData = new $('#share-cart-form').serializeArray();
+
+		fetch('/api/share/carts/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': window.__csrf_token__
+			},
+			body: JSON.stringify({
+				'title': formData[0]['value'],
+				'description': formData[1]['value']
+			})
+		})
+		.then(response => {
+			if(response.ok) {
+				const data = response.json()
+					.then(data => {
+						var clipboard = new ClipboardJS('#share-cart-copy-url');
+						
+						var shareCartURLText = document.getElementById('share-cart-url');
+						
+						var shareCartForm = $('#share-cart-form');
+						var shareCartDetails = $('#share-cart-details');
+						var shareCartURLCopyBtn = $('#share-cart-copy-url');
+						
+						shareCartDetails.show();
+						shareCartForm.hide();
+
+						var sharedCode = data.shared_cart_code;
+						var shareURL = `${window.location.origin}/shared/carts/${sharedCode}`;
+
+						shareCartURLText.textContent = shareURL;
+						shareCartURLCopyBtn.attr('data-clipboard-text', shareURL);
+
+						clipboard.on('success', function(e) {
+						    shareCartURLCopyBtn.html('<i class="fas fa-check"></i>');
+
+						    e.clearSelection();
+						});
+
+					})
+			} else {
+				var displayError = document.getElementById('share-cart-error-msg');
+				displayError.textContent = 'Coś poszło nie tak :(';
+			}
+		})
+	});
+</script>
 {% endblock %}

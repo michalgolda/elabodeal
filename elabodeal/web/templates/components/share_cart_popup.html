@@ -1,0 +1,33 @@
+{% extends 'components/popup.html' %}
+
+{% block title %}Udostępnij{% endblock %}
+
+{% block popup_id %}share-cart-popup{% endblock %}
+{% block popup_close_btn_id %}close-share-cart-popup{% endblock %}
+
+{% block body %}
+<div class="section">
+	<form id="share-cart-form" class="section" autocomplete="off">
+		<div class="section">
+			<label>NAZWA</label>
+			<input type="text" name="title" required/>
+		</div>
+		<div class="section margin-top-16px">
+			<label>OPIS</label>
+			<textarea name="description"></textarea>
+		</div>
+		<p id="share-cart-error-msg" class="margin-top-16px color-red font-size-small text-align-center"></p>
+		<div class="section margin-top-16px">
+			<button class="btn btn-orange btn-full-width" type="submit">Udostępnij</button>
+		</div>
+	</form>
+	<div id="share-cart-details" class="section margin-top-16px display-none">
+		<div class="section text-align-center margin-top-16pxm margin-bottom-16px">
+			<i class="social-icon font-size-large margin-right-4px fab fa-facebook"></i>
+			<i class="social-icon font-size-large margin-left-4px fab fa-reddit"></i>
+		</div>
+		<p id="share-cart-url" class="box" style="height: 32px; width: calc(100% - 136px); float: left;"></p>
+		<button id="share-cart-copy-url" data-clipboard-text="" class="btn btn-orange margin-left-8px" style="float: left;">Kopiuj</button>
+	</div>
+</div>
+{% endblock %}

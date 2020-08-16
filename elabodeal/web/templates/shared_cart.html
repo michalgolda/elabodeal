@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}{{shared_cart.title}}{% endblock %}
+
+{% block css %}
+<style>
+	.footer-text {
+		color: var(--green);
+	}
+
+	.footer-link {
+		color: var(--green);
+	}
+</style>
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="container">
+	<p>{{ shared_cart.title }}</p>
+	<p>{{ shared_cart.description }}</p>
+	{% for cart_item in shared_cart_items %}
+		<p>{{ cart_item.product.title }}</p>
+	{% endfor %}
+</div>
+{% include 'components/smallfooter.html' %}
+{% endblock %}

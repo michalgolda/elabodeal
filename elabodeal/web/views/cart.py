@@ -42,6 +42,8 @@ class CartView(BaseView):
 			product_id = int(request.POST.get('product_id'))
 
 			product = Product.objects.filter(id=product_id).first()
+			if not product:
+				return redirect('web:index')
 
 			# Check if product does exists in cart
 			for cart_item in cart['products']:
