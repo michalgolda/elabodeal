@@ -1,5 +1,3 @@
-import string
-import random
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -24,6 +22,7 @@ class ShareCartAPIView(APIView):
 			description=serializer.data['description']
 		)
 		shared_cart.save()
+		
 		for cart_item in cart['products']:
 			product = Product.objects.filter(id=cart_item['id']).first()
 			shared_cart_item = SharedCartItem(shared_cart=shared_cart, product=product)

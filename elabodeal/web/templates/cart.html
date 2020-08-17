@@ -244,8 +244,7 @@
 			}
 		})
 	});
-</script>
-<script>
+
 	function getShareURL(){
 		var shareCartURLText = $('#share-cart-url');
 		var shareURL = shareCartURLText.html();
@@ -257,7 +256,7 @@
 		window.open(
 			`https://www.facebook.com/sharer/sharer.php?u=${getShareURL()}`, 
 			'facebook-share', 
-			'width=600, height=400'
+			'width=600, height=500'
 		);
 	});
 
@@ -265,15 +264,23 @@
 		window.open(
 			`http://www.reddit.com/submit?url=${getShareURL()}`, 
 			'reddit-share', 
-			'width=600, height=400'
+			'width=600, height=500'
 		);
 	});
 
 	$('#share-twitter-btn').click(function(){
 		window.open(
 			`https://twitter.com/share?ref_src=${getShareURL()}`, 
-			'reddit-share', 
-			'width=600, height=400'
+			'twitter-share', 
+			'width=600, height=500'
+		);
+	});
+
+	$('#share-email-btn').click(function(){
+		window.open(
+			`mailto:?to=&subject=Mój koszyk&body=${getShareURL()}`, 
+			'email-share', 
+			'width=600, height=500'
 		);
 	});
 </script>
