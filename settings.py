@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -159,8 +162,18 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
 
+
 # STRIPE
 
 STRIPE_PUBLIC_API_KEY = os.environ.get('STRIPE_PUBLIC_API_KEY')
 STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY')
 STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
+
+
+# SENTRY
+
+sentry_sdk.init(
+    dsn='https://9a681512f70b45a6a25b1f1a5dec5753@o320975.ingest.sentry.io/5394238',
+    integrations=[DjangoIntegration()],
+    send_default_pii=True
+)

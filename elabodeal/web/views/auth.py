@@ -79,8 +79,8 @@ class RegisterView(BaseView):
 					recipient_list=[form.cleaned_data['email']],
 					html_message=render_to_string('emails/verification.html', {'code': code})
 				)
-			except:
-				return redirect('web:register')
+			except Exception as e:
+				raise e
 
 			verify_codes = VerifyCode.objects.filter(email=form.cleaned_data['email']).all()
 			verify_codes.delete()

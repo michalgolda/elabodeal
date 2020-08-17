@@ -212,7 +212,7 @@
 			})
 		})
 		.then(response => {
-			if(response.ok) {
+			if(!response.ok) {
 				const data = response.json()
 					.then(data => {
 						var clipboard = new ClipboardJS('#share-cart-copy-url');
@@ -241,6 +241,11 @@
 			} else {
 				var displayError = document.getElementById('share-cart-error-msg');
 				displayError.textContent = 'Coś poszło nie tak :(';
+
+				Sentry.configureScope(function(scope) {
+				  scope.setFingerprint('Share-cart-process');
+				});
+				Sentry.captureException(new Error(response.statusText));
 			}
 		})
 	});

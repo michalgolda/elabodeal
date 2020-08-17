@@ -36,7 +36,7 @@ paymentForm.addEventListener("submit", function(event){
 			'first_name': formData[0]['value'],
 			'last_name': formData[1]['value'],
 			'email': formData[2]['value'],
-			'phone_number': formData[3]['value']
+			'phone_number': formData[3]['value'],
 		})
 	})
 	.then(response => {
@@ -59,14 +59,26 @@ paymentForm.addEventListener("submit", function(event){
 								var url = `${window.location.origin}/success/`;
 								window.location = url;
 							} else {
+								console.log(result);
 								if(result.error.code === 'payment_intent_authentication_failure') {
 									displayError.textContent = 'Autoryzacja płatności zakończyła się niepowodzeniem. Spróbuj ponownie'
+								} else {
+									Sentry.configureScope(function(scope) {
+									  scope.setFingerprint('Payment-process');
+									  scope.setTag('payment_intent_id', result.error.payment_intent.id);
+									});
+									Sentry.captureException(new Error(result.error.message));
 								}
 							}
 						})
 				})
 		} else {
 			displayError.textContent = 'Coś poszło nie tak. Przepraszamy za utrdunienia';
+
+			Sentry.configureScope(function(scope) {
+			  scope.setFingerprint('Payment-process');
+			});
+			Sentry.captureException(new Error(response.statusText));
 		}
 	})
 });
