@@ -55,12 +55,9 @@ class CartView(BaseView):
 			cart['item_count'] += 1
 
 			request.session['cart'] = cart
+			request.session['show_add_product_info'] = True
 
-			context = {
-				'success_msg': True,
-				'products': self.get_cart_products(request)
-			}
-			return self.respond('cart.html', request, context)
+			return redirect('web:product-detail', url_name=product.url_name)
 
 		if action_type == 'delete-product':
 			product_id = int(request.POST.get('product_id'))

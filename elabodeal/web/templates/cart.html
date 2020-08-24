@@ -105,9 +105,6 @@
 				<p class="float-left font-size-big padding-top-4px padding-bottom-4px color-grey">Płatnośc</p>
 			</div>
 		</div>
-		{% if success_msg %}
-			<h1 class="color-green font-weight-600 font-size-large text-align-center margin-top-32px margin-bottom-32px">Produkt został pomyślnie dodany do koszyka :)</h1>
-		{% endif %}
 		<section class="section">
 			{% if products %}
 				{% for product in products %}
@@ -162,9 +159,11 @@
 					<b class="color-orange">0.00 zł</b>
 				{% endif %}
 			</p>
-			<a href="{% url 'web:cart-delivery' %}">
-				<button class="btn btn-orange margin-left-16px">Przejdź dalej</button>
-			</a>
+			{% if products %}
+				<a href="{% url 'web:cart-delivery' %}">
+					<button class="btn btn-orange margin-left-16px">Przejdź dalej</button>
+				</a>
+			{% endif %}
 		</div>
 	</section>
 </div>
@@ -212,7 +211,7 @@
 			})
 		})
 		.then(response => {
-			if(!response.ok) {
+			if(response.ok) {
 				const data = response.json()
 					.then(data => {
 						var clipboard = new ClipboardJS('#share-cart-copy-url');

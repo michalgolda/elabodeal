@@ -60,10 +60,28 @@
 		font-weight: 300;
 		padding-top: 2px;
 	}
+
+	.cart-item {
+		width: auto;
+		height: 100px;
+	}
+
+	.cart-item-section {
+		height: 100px;
+	}
+
+	.cart-item-cover {
+		height: 100px;
+		width: 70px;
+		margin-left: 0;
+	}
 </style>
 {% endblock %}
 
 {% block body %}
+{% if show_add_product_info %}
+	{% include 'components/add_product_to_cart_info_popup.html' %}
+{% endif %}
 {% include 'components/navigation.html' %}
 <div class="container">
 	<header class="section header">
@@ -102,9 +120,10 @@
 									<input type="hidden" name="product_id" value="{{ product.id }}">
 									<input type="hidden" name="action_type" value="add-product">
 									
-									<button class="btn btn-orange
+									<button id="add-to-cart" class="btn btn-orange
 									margin-left-16px" type="add-to-cart">Dodaj do koszyka</button>
 								</form>
+								
 							</div>
 						</div>
 					</section>
@@ -188,6 +207,15 @@ $('#show-description-btn').click(function() {
 	$('#show-contents-btn').addClass('btn-outline-orange');
 	$('#product-description').show();
 	$('#product-contents').hide();
+});
+
+$('#add-product-to-cart-info-popup').removeClass('display-none');
+$('#close-add-product-to-cart-info-popup').click(function(){
+	$('#add-product-to-cart-info-popup').hide();
+});
+
+$('#continue-shopping').click(function(){
+	$('#add-product-to-cart-info-popup').hide();
 });
 </script>
 {% endblock %}

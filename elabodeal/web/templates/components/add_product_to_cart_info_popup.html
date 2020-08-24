@@ -1,0 +1,35 @@
+{% extends 'components/popup.html' %}
+
+{% block title %}E-book został dodany do koszyka{% endblock %}
+
+{% block popup_id %}add-product-to-cart-info-popup{% endblock %}
+{% block popup_close_btn_id %}close-add-product-to-cart-info-popup{% endblock %}
+
+{% block body %}
+<div>
+	<div class="margin-top-32px margin-bottom-16px clear-both" style="height: 100px">
+		<div class="cart-item float-left">
+			<div class="cart-item-section">
+				<img 
+					class="cart-item-cover"
+					src="{{ product.cover_img.url }}"
+					alt="{{ product.title }}"
+				/>
+				<div class="float-left">
+					<p class="cart-item-title font-size-small">{{ product.title }}</p>
+					<p class="cart-item-author ">{{ product.author }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="cart-item-section float-right">	
+			<p class="color-green font-size-small" style="font-weight: bold;">{{ product.price }} zł</p>
+		</div>
+	</div>
+	<div class="section margin-top-32px clear-both">
+		<button id="continue-shopping" class="btn btn-outline-orange float-left" style="width: calc((100% / 2) - 4px)">Kontynuj zakupy</button>
+		<a href="{% url 'web:cart' %}">
+			<button id="go-to-cart" class="btn btn-orange float-right" style="width: calc((100% / 2) - 4px)">Przejdz do koszyka</button>
+		</a>
+	</div>
+</div>
+{% endblock %}

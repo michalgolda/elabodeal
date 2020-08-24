@@ -30,8 +30,13 @@ class ProductDetailView(BaseView):
 			p.empty_stars = range(5 - int(p.rating))
 			p.rating = range(int(p.rating))
 
+
+		show_add_product_info = request.session['show_add_product_info']
+		request.session['show_add_product_info'] = False
+
 		context = {
 			'product': product,
 			'related_products': related_products,
+			'show_add_product_info': show_add_product_info
 		}
 		return self.respond('product_detail.html', request, context)
