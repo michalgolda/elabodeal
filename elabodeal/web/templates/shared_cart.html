@@ -12,6 +12,10 @@
 
 {% block css %}
 <style>
+	.box {
+		height: 256px;
+	}
+
 	.footer-text {
 		color: var(--green);
 	}
@@ -19,18 +23,60 @@
 	.footer-link {
 		color: var(--green);
 	}
+
+	button[type="share"] {
+		width: 140px;
+	}
+
+	.flex-start {
+		justify-content: flex-start;
+		width: 50%;
+	}
+
+	.flex-end {
+		width: 50%;
+		justify-content: flex-end;
+	}
+
 </style>
 {% endblock %}
 
 {% block body %}
 {% include 'components/navigation.html' %}
 <div class="container">
-	<p>{{ shared_cart.title }}</p>
-	<p>{{ shared_cart.description }}</p>
-	{% for cart_item in shared_cart_items %}
-		<p>{{ cart_item.product.title }}</p>
-	{% endfor %}
-
+	<section class="section">
+		<div class="section flex-center">
+			<div class="flex-start flex-center">
+				<p class="font-size-big font-weight-600 color-green margin-bottom-8px">{{ shared_cart.title }}</p>
+			</div>
+			<div class="flex-end flex-center">
+				<p class="font-size-small color-black font-weight-300"><b class="color-green">Data udostępnienia: </b> {{ shared_cart.created_at.day }}.{{ shared_cart.created_at.month }}.{{ shared_cart.created_at.year }}</p>
+			</div>
+		</div>
+		<p class="section color-black font-size-small font-weight-300 margin-bottom-32px">{{ shared_cart.description }}</p>
+		<section class="section">
+			{% for item in shared_cart_items %}
+				<div class="box padding-16px margin-bottom-16px">
+					<div class="cart-item float-left">
+						<div class="cart-item-section">
+							<img 
+								class="cart-item-cover"
+								src="{{ item.product.cover_img.url }}"
+								alt="{{ item.product.title }}"
+							/>
+							<div class="float-left">
+								<p class="cart-item-title font-size-medium">{{ item.product.title }}</p>
+								<p class="cart-item-author ">{{ item.product.author }}</p>
+							</div>
+						</div>
+					</div>
+					<div class="cart-item-section float-right">	
+						<p class="cart-item-price">{{ item.product.price }} zł</p>
+					</div>
+				</div>
+			{% endfor %}
+		</section>
+	</section>
 </div>
 {% include 'components/smallfooter.html' %}
 {% endblock %}
