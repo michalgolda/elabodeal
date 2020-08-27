@@ -30,10 +30,27 @@
 		width: 50%;
 		justify-content: flex-end;
 	}
+
+	.social-icon:hover {
+		cursor: pointer;
+	}
+
+	.fa-facebook {
+		color: #4267B2;
+	}
+
+	.fa-reddit {
+		color: #FF5700;
+	}
+
+	.fa-twitter-square {
+		color: #1DA1F2;
+	}
 </style>
 {% endblock %}
 
 {% block body %}
+{% include 'components/share_cart_popup.html' %}
 {% include 'components/navigation.html' %}
 <div class="container">
 	<section class="section">
@@ -59,18 +76,10 @@
 							/>
 							<div class="float-left">
 								<p class="cart-item-title font-size-medium">{{ item.product.title }}</p>
-								<p class="cart-item-author ">{{ item.product.author.email }}</p>
+								<p class="cart-item-author ">{{ item.product.author }}</p>
 							</div>
 						</div>
 					</div>
-					<!-- <form class="float-right">
-						{% csrf_token %}
-						<input type="hidden" name="product_id" value="{{ product.id }}">
-						<input type="hidden" name="action_type" value="delete-product-from-cart" />
-						<button class="font-size-medium color-grey float-left">
-							<i class="fas fa-times"></i>
-						</button>
-					</form> -->
 					<div class="cart-item-section float-right">	
 						<p class="cart-item-price">{{ item.product.price }} zł</p>
 					</div>
@@ -80,7 +89,7 @@
 	</section>
 	<section class="section margin-top-32px margin-bottom-32px">
 		<div class="float-left">
-			<button class="btn btn-green" type="share">Udostępnij koszyk</button>
+			<button id="open-share-cart-popup" class="btn btn-green" type="share">Udostępnij koszyk</button>
 		</div>
 		<form class="float-right">
 			<p class="float-left color-black font-size-medium">Razem: <b class="color-orange">{{ total_price }} zł</b>
@@ -90,4 +99,20 @@
 	</section>
 </div>
 {% include 'components/smallfooter.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+	$('#open-share-cart-popup').click(function(){
+		$('#share-cart-popup').show();
+	});
+
+	$('#close-share-cart-popup').click(function(){
+		$('#share-cart-popup').hide();
+
+		var shareCartURLCopyBtn = $('#share-cart-copy-url');
+		shareCartURLCopyBtn.html('Kopiuj');
+	});
+</script>
+<script src="{% static 'js/share_cart.js' %}"></script>
 {% endblock %}
