@@ -64,7 +64,7 @@ paymentForm.addEventListener("submit", function(event){
 									displayError.textContent = 'Autoryzacja płatności zakończyła się niepowodzeniem. Spróbuj ponownie'
 								} else {
 									Sentry.configureScope(function(scope) {
-									  scope.setFingerprint('Payment-process');
+									  scope.setFingerprint('Payment-proccess');
 									  scope.setTag('payment_intent_id', result.error.payment_intent.id);
 									});
 									Sentry.captureException(new Error(result.error.message));
@@ -76,7 +76,7 @@ paymentForm.addEventListener("submit", function(event){
 			displayError.textContent = 'Coś poszło nie tak. Przepraszamy za utrdunienia';
 
 			Sentry.configureScope(function(scope) {
-			  scope.setFingerprint('Payment-process');
+			  scope.setFingerprint('Payment-proccess');
 			});
 			Sentry.captureException(new Error(response.statusText));
 		}

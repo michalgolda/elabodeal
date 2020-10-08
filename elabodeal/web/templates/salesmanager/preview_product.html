@@ -1,0 +1,315 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}{{ product.title }}{% endblock %}
+
+{% block css %}
+<style>
+	.header {
+		display: grid;
+	    grid-column-gap: 32px;
+	    grid-template-columns: 420.33px 1fr;
+	}
+
+	.pdfviewer {
+		width: auto;
+		max-width: 422.33px;
+		height: 600px;
+		background: white;
+		border: 1px solid var(--grey);
+		border-radius: 2px;
+	}
+
+	.section > form {
+		display: inline-block;
+	}
+
+	button[type="add-to-cart"] {
+		width: 150px;
+	}
+
+	.detail {
+		border: 1px solid var(--grey);
+		background: white;
+		border-radius: 2px;
+		padding: 0px 16px 0px 16px;
+	}
+
+	.detail-wrapper {
+		height: 22px;
+	}
+
+	.product-list {
+	    display: grid;
+	    grid-column-gap: 32px;
+	    grid-template-columns: 280px 280px 280px 280px;
+	}
+
+	.age-category {
+		width: 32px;
+		height: 32px;
+		background: var(--green);
+		border-radius: 2px;
+		text-align: center;
+		margin-right: 8px;
+	}
+
+	.age-category > p {
+		color: white;
+		font-size: 1.2rem;
+		font-weight: 300;
+		padding-top: 2px;
+	}
+
+	.cart-item {
+		width: auto;
+		height: 100px;
+	}
+
+	.cart-item-section {
+		height: 100px;
+	}
+
+	.cart-item-cover {
+		height: 100px;
+		width: 70px;
+		margin-left: 0;
+	}
+
+	.edit-box {
+		width: auto;
+		height: 32px;
+		display: inline-block;
+		position: absolute;
+		margin: 5px 0px 0px 0px;
+	}
+
+	.edit-box .btn {
+		width: 32px;
+	}
+
+	.edit-box[change-input-id="author-change-input"] {
+		margin: 2.5px 0px 0px 0px;
+	}
+
+	#title-change-input {
+		width: calc(100% - 80px);
+		height: 40px;
+		margin: 0px 8px 0px 0px;
+		font-size: 2rem;
+		font-weight: 600;
+		padding-left: 0;
+	}
+
+	#author-change-input {
+		width: calc(100% - 80px);
+		height: 37px;
+		margin: 0px 8px 0px 0px;
+		font-size: 1.5rem;
+		font-weight: 300;
+		padding-left: 0;
+	}
+</style>
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="container">
+	<header class="section header">
+		<section class="section">
+			<img
+				class="pdfviewer"
+				src="{{ product.cover_img.url }}"
+				alt="{{ product.title }}"
+			/>
+		</section>
+		<section class="section">
+			<div class="section">
+				<section class="section">
+					<p 
+						class="font-size-small font-weight-600"
+						style="font-size: .9rem;"
+					>
+						Data dodania: {{ product.created_at.day }}.{{ product.created_at.month }}.{{ product.created_at.year }}
+					</p>
+				</section>
+				<section class="section margin-top-16px">
+					<div  class="section">
+						<h1 
+							id="product-title"
+							class="font-size-big color-black font-weight-600 margin-right-8px"
+							style="display: inline-block; width: calc(100% - 40px);"
+						>{{ product.title }}</h1>
+						<input id="title-change-input" type="text" class="display-none" />
+						<div 
+							class="edit-box"
+							data-field-name="title"
+							change-input-id="title-change-input" 
+							value-elem-id="product-title"
+							submit-change-btn-index="0" 
+							cancel-change-btn-index="0" 
+						>
+							<button 
+								id="open-edit-box-btn" 
+								edit-box-index="0" 
+								class="btn btn-green"
+							>
+								<!-- <i class="fas fa-edit"></i> -->
+							</button>
+							<button id="submit-change-btn" class="btn btn-green display-none"></button>
+							<button id="cancel-change-btn" class="btn btn-danger display-none margin-left-4px"></button>
+						</div>
+					</div>
+					<div class="section">
+						<p
+							id="product-author"
+							class="margin-top-8px margin-right-8px font-size-medium font-weight-300"
+							style="display: inline-block; width: calc(100% - 40px);"
+						>{{ product.author }}</p>
+
+						<input id="author-change-input" type="text" class="display-none" />
+						<div 
+							class="edit-box"
+							data-field-name="author"
+							change-input-id="author-change-input"
+							value-elem-id="product-author"
+							submit-change-btn-index="1" 
+							cancel-change-btn-index="1"
+						>
+							<button
+								id="open-edit-box-btn" 
+								edit-box-index="1"
+								class="btn btn-green"
+							>
+								<!-- <i class="fas fa-edit"></i> -->
+							</button>
+							<button id="submit-change-btn" class="btn btn-green display-none"></button>
+							<button id="cancel-change-btn" class="btn btn-danger display-none margin-left-4px"></button>
+						</div>
+					</div>
+				</section>
+				<section class="section margin-top-32px">
+					<section class="section" 
+						style="text-align: right;  padding-right: 32px;"
+					>
+						<p 
+							class="margin-top-8px margin-right-8px text-align-right color-green font-size-big"
+							style="display: inline-block;"
+						>{{ product.price }} zł</p>
+						<div class="edit-box" style="margin-top: 8px">
+							<button id="edit-btn" edit-box-id="0" class="btn btn-green">
+								<i class="fas fa-edit"></i>
+							</button>
+						</div>
+					</section>
+					<section class="section text-align-right margin-top-16px">
+						<div class="section" style="display: flex;">
+							<div style="justify-content: flex-start; width: 50%;">
+								{% for age_category in product.age_categories.all %}
+									<div class="age-category float-left">
+										<p>{{ age_category.value }}+</p>
+									</div>
+								{% endfor %}
+							</div>
+							<div style="justify-content: flex-end; width: 50%;" class="float-right">
+								<button id="add-to-cart" class="btn btn-orange
+									margin-left-16px" type="add-to-cart">Czasowa przecena</button>
+								
+							</div>
+						</div>
+					</section>
+				</section>
+				<section class="section box margin-top-16px">
+					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
+						<p class="float-left color-black">Ilość stron</p>
+						<p class="float-right color-orange">{{ product.page_count }}</p>
+					</div>
+					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
+						<p class="float-left color-black">Rok wydania</p>
+						<p class="float-right color-orange">1920</p>
+					</div>
+					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
+						<p class="float-left color-black">Formaty</p>
+						<p class="float-right color-orange">
+							{% if product.pdf %}
+								PDF
+							{% endif %}
+							{% if product.mobi %}
+								MOBI
+							{% endif %}
+							{% if product.epub %}
+								EPUB
+							{% endif %}
+						</p>
+					</div>
+					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
+						<p class="float-left color-black">Kategoria</p>
+						<p class="float-right color-orange">{{ product.category.name }}</p>
+					</div>
+					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
+						<p class="float-left color-black">Numer ISBN</p>
+						<p class="float-right color-orange">{{ product.isbn }}</p>
+					</div>
+					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
+						<p class="float-left color-black">Oceny</p>
+						<p class="float-right color-orange">{{ product.rating }} / 5.0 - {{ product.reviews }}</p>
+					</div>
+				</section>
+				<section class="section margin-top-32px">
+					<button id="show-description-btn" class="btn btn-orange">Opis</button>
+					<button id="show-contents-btn" class="btn btn-outline-orange margin-left-16px">Spis treści</button>
+					<div 
+						id="product-description" 
+						class="box margin-top-16px" 
+						style="word-break: break-all; width: calc(100% - 40px); float: left;"
+					>
+						<p class="color-black">{{ product.description }}</p>
+					</div>
+					<div id="product-contents" class="box margin-top-16px display-none" style="word-break: break-all; width: calc(100% - 40px); float: left;">
+						<p class="color-black">{{ product.contents }}</p>
+					</div>
+					<div 
+						class="edit-box" 
+						style="float: left; position: relative; margin: 17px 0px 0px 8px;"
+					>
+						<button id="edit-btn" class="btn btn-green">
+							<i class="fas fa-edit"></i>
+						</button>
+					</div>
+				</section>
+			</div>
+		</section>
+	</header>
+	<section class="section">
+		<!-- asdasd -->
+	</section>
+</div>
+{% include 'components/bigfooter.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+$('#show-contents-btn').click(function() {
+	$(this).removeClass('btn-outline-orange');
+	$(this).addClass('btn-orange');
+	$('#show-description-btn').removeClass('btn-orange');
+	$('#show-description-btn').addClass('btn-outline-orange');
+	$('#product-description').hide();
+	$('#product-contents').show();
+});
+
+$('#show-description-btn').click(function() {
+	$(this).removeClass('btn-outline-orange');
+	$(this).addClass('btn-orange');
+	$('#show-contents-btn').removeClass('btn-orange');
+	$('#show-contents-btn').addClass('btn-outline-orange');
+	$('#product-description').show();
+	$('#product-contents').hide();
+});
+</script>
+<script>
+	const fieldsForUpdate = {{ fields_for_update }};
+	const currentProductId = {{ product.id }};
+</script>
+<script src="{% static 'js/update_product.js' %}"></script>
+{% endblock %}

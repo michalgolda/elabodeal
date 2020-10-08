@@ -11,3 +11,8 @@ class NewPaymentIntentSerializer(serializers.Serializer):
 class ShareCartSerializer(serializers.Serializer):
 	title = serializers.CharField()
 	description = serializers.CharField()
+
+
+class ProductUpdateSerializer(serializers.Serializer):
+	title = serializers.CharField()
+	author = serializers.CharField()

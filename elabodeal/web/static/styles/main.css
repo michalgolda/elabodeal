@@ -26,6 +26,10 @@ body {
     background: var(--light-grey);
 }
 
+h1  {
+    word-break: break-all;
+}
+
 input {
     width: 100%;
     height: 32px;

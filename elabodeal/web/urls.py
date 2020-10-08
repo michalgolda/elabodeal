@@ -17,6 +17,7 @@ from elabodeal.web.views.payment_success import PaymentSuccessView
 from elabodeal.web.views.my_books import MyBooksView
 from elabodeal.web.views.purchased_product_detail import PurchasedProductDetailView
 from elabodeal.web.views.shared_cart import SharedCartView
+from elabodeal.web.views.salesmanager_preview_product import SalesManagerPreviewProductView
 
 app_name = 'web'
 
@@ -40,7 +41,8 @@ urlpatterns = [
 	path('salesmanager/', include([
 		path('', SalesManagerView.as_view(), name='salesmanager'),
 		path('addproduct/', SalesManagerAddProductView.as_view(), name='salesmanager-add-product'),
-		path('start/', SalesManagerStartView.as_view(), name='salesmanager-start')
+		path('start/', SalesManagerStartView.as_view(), name='salesmanager-start'),
+		path('product/<int:id>/', SalesManagerPreviewProductView.as_view(), name='salesmanager-preview-product')
 	])),
 	path('shared/carts/<str:code>/', SharedCartView.as_view(), name='shared-cart')
 ]

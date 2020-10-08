@@ -70,7 +70,9 @@
 								<p class="font-size-small color-black font-weight-600">{{ p.title }}</p>
 							</div>
 							<div class="record-actions flex-center">
-								<button class="btn btn-green">Podgląd</button>
+								<a href="{% url 'web:salesmanager-preview-product' id=p.id %}">
+									<button class="btn btn-green">Podgląd</button>
+								</a>
 								<button class="btn btn-orange margin-left-16px">Statystyki</button>
 							</div>
 						</div>
