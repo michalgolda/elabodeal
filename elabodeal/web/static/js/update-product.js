@@ -1,3 +1,4 @@
+
 const openEditBoxButtons = $('button#open-edit-box-btn');
 
 let editMode = false;

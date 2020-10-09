@@ -289,27 +289,7 @@
 
 {% block scripts %}
 <script>
-$('#show-contents-btn').click(function() {
-	$(this).removeClass('btn-outline-orange');
-	$(this).addClass('btn-orange');
-	$('#show-description-btn').removeClass('btn-orange');
-	$('#show-description-btn').addClass('btn-outline-orange');
-	$('#product-description').hide();
-	$('#product-contents').show();
-});
-
-$('#show-description-btn').click(function() {
-	$(this).removeClass('btn-outline-orange');
-	$(this).addClass('btn-orange');
-	$('#show-contents-btn').removeClass('btn-orange');
-	$('#show-contents-btn').addClass('btn-outline-orange');
-	$('#product-description').show();
-	$('#product-contents').hide();
-});
-</script>
-<script>
 	const fieldsForUpdate = {{ fields_for_update }};
 	const currentProductId = {{ product.id }};
 </script>
-<script src="{% static 'js/update_product.js' %}"></script>
 {% endblock %}

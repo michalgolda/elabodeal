@@ -100,19 +100,3 @@
 </div>
 {% include 'components/smallfooter.html' %}
 {% endblock %}
-
-{% block scripts %}
-<script>
-	$('#open-share-cart-popup').click(function(){
-		$('#share-cart-popup').show();
-	});
-
-	$('#close-share-cart-popup').click(function(){
-		$('#share-cart-popup').hide();
-
-		var shareCartURLCopyBtn = $('#share-cart-copy-url');
-		shareCartURLCopyBtn.html('Kopiuj');
-	});
-</script>
-<script src="{% static 'js/share_cart.js' %}"></script>
-{% endblock %}

@@ -184,21 +184,4 @@
 	</div>
 </div>
 {% include 'components/smallfooter.html' %}
-
-{% endblock %}
-
-{% block scripts %}
-<script>
-	if($('#show-gift-form').attr('checked')){
-		$('#gift-form').show();
-	}
-
-	$('#show-gift-form').click(function(){
-		if($('#gift-form').is(':hidden')){
-	        $('#gift-form').show();
-	    } else {
-	        $('#gift-form').hide();
-	    }
-	});
-</script>
 {% endblock %}

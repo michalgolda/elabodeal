@@ -1,0 +1,11 @@
+require( './nav.js' );
+require( './payment.js' );
+require( './scrollup.js' );
+require( './share-cart.js' );
+require( './update-product.js' );
+require( './delivery-form.js' );
+require( './product-detail.js' );
+require( './cart-add-popup.js' );
+require( './change-review-product-popup.js' );
+require( './review-product-popup.js' );
+require( './add-product.js' );

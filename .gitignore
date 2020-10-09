@@ -1,3 +1,4 @@
+
 __pycache__
 .env
 .venv
@@ -8,3 +9,4 @@ node_modules/
 tests_output/
 geckodriver.log
 package-lock.json
+dist/

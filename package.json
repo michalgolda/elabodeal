@@ -5,11 +5,16 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "nightwatch tests"
+    "test": "nightwatch tests",
+    "dev": "webpack --config webpack.dev.config.js",
+    "build": "webpack --config webpack.prod.config.js"
   },
   "devDependencies": {
     "chromedriver": "^84.0.1",
     "geckodriver": "^1.19.1",
-    "selenium-server": "^3.141.59"
+    "nightwatch": "^1.4.3",
+    "selenium-server": "^3.141.59",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
   }
 }
