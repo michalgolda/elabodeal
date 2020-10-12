@@ -4,10 +4,10 @@ var popupContinueShopping = $( '#continue-shopping' );
 
 popup.removeClass( 'display-none' );
 
-popupCloseBtn.click( function(){
+popupCloseBtn.click( function() {
 	popup.hide();
 });
 
-popupContinueShopping.click( function(){
+popupContinueShopping.click( function() {
 	popup.hide();
 });

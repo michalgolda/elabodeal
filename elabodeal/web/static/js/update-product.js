@@ -1,28 +1,27 @@
-
-const openEditBoxButtons = $('button#open-edit-box-btn');
+const openEditBoxButtons = $( 'button#open-edit-box-btn' );
 
 let editMode = false;
 
-$(openEditBoxButtons).click(function(e){
-	if(!editMode) {
-		const currTarget = $(e.target);
+$( openEditBoxButtons ).click( function( e ) {
+	if( !editMode ) {
+		const currTarget = $( e.target );
 
 		/* Hide btn which open edit box */
 		currTarget.hide();
 
-		const editBoxIndex = parseInt(currTarget.attr('edit-box-index'));
-		const editBox = $($('.edit-box')[editBoxIndex]);
+		const editBoxIndex = parseInt( currTarget.attr( 'edit-box-index' ) );
+		const editBox = $( $( '.edit-box' )[ editBoxIndex ] );
 
-		const changeInputId = editBox.attr('change-input-id');
-		const valueElemId = editBox.attr('value-elem-id');
-		const submitBtnIndex = parseInt(editBox.attr('submit-change-btn-index'));
-		const cancelBtnIndex = parseInt(editBox.attr('cancel-change-btn-index'));
-		const dataFieldName = editBox.attr('data-field-name');
+		const changeInputId = editBox.attr( 'change-input-id' );
+		const valueElemId = editBox.attr( 'value-elem-id' );
+		const submitBtnIndex = parseInt( editBox.attr( 'submit-change-btn-index' ) );
+		const cancelBtnIndex = parseInt( editBox.attr( 'cancel-change-btn-index' ) );
+		const dataFieldName = editBox.attr( 'data-field-name' );
 
-		const changeInput = $(`#${changeInputId}`);
-		const valueElem = $(`#${valueElemId}`);
-		const submitBtn = $($(`button#submit-change-btn`)[submitBtnIndex]);
-		const cancelBtn = $($('button#cancel-change-btn')[cancelBtnIndex]);
+		const changeInput = $( `#${changeInputId}` );
+		const valueElem = $( `#${valueElemId}` );
+		const submitBtn = $( $( `button#submit-change-btn` )[ submitBtnIndex ] );
+		const cancelBtn = $( $( 'button#cancel-change-btn' )[ cancelBtnIndex ] );
 
 		// Helper functions
 		const openEditMode = () => {
@@ -36,7 +35,7 @@ $(openEditBoxButtons).click(function(e){
 			  set that value to default value on input
 			*/
 			const defaultValue = valueElem.html();
-			changeInput.val(defaultValue);
+			changeInput.val( defaultValue );
 
 			editMode = true;
 		};
@@ -61,9 +60,9 @@ $(openEditBoxButtons).click(function(e){
 			changeInputValue = changeInput.val();
 
 			bodyData = fieldsForUpdate;
-			bodyData[`${dataFieldName}`] = changeInputValue;
+			bodyData[ `${dataFieldName}` ] = changeInputValue;
 
-			fetch(`/api/product/${currentProductId}/`, {
+			fetch( `/api/product/${currentProductId}/`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -71,25 +70,25 @@ $(openEditBoxButtons).click(function(e){
 				},
 				body: JSON.stringify(bodyData)
 			})
-			.then(response => {
-				if(response.ok) {
+			.then( response => {
+				if( response.ok ) {
 					exitEditMode();
 
 					// Update valueElem with new value
-					valueElem.html(changeInputValue);
+					valueElem.html( changeInputValue );
 				} else {
 					exitEditMode();
 
-					Sentry.configureScope(function(scope) {
-					  scope.setFingerprint('Product-update-proccess');
-					  scope.setTag('update-field-name', dataFieldName);
+					Sentry.configureScope( function( scope ) {
+					  scope.setFingerprint( 'Product-update-proccess' );
+					  scope.setTag( 'update-field-name', dataFieldName );
 					});
-					Sentry.captureException(new Error(response.statusText));
+					Sentry.captureException( new Error( response.statusText ) );
 				}
 			})
 		});
 
-		cancelBtn.click(function(e) {
+		cancelBtn.click( function( e ) {
 			exitEditMode();
 		});
 	} 
