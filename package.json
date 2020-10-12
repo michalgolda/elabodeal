@@ -11,7 +11,10 @@
   },
   "devDependencies": {
     "chromedriver": "^84.0.1",
+    "css-loader": "^4.3.0",
+    "css-minimizer-webpack-plugin": "^1.1.5",
     "geckodriver": "^1.19.1",
+    "mini-css-extract-plugin": "^1.0.0",
     "nightwatch": "^1.4.3",
     "selenium-server": "^3.141.59",
     "webpack": "^4.44.2",

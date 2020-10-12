@@ -1,27 +1,52 @@
 const path = require( 'path' );
 const webpack = require( 'webpack' );
 
-console.log(__dirname);
+// Plugins
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+	
 
 const paths = {
-	'appBuild': path.resolve(
+	'dist': path.resolve(
 		__dirname, 
-		'elabodeal/web/static/js/dist/'
+		'elabodeal/web/static/dist/'
 	),
-	'appEntry': path.resolve(
-		__dirname, 
-		'elabodeal/web/static/js/index.js'
-	)	
+	'mainEntry': [
+		path.resolve(
+			__dirname, 
+			'elabodeal/web/static/js/index.js'
+		),
+		path.resolve(
+			__dirname,
+			'elabodeal/web/static/styles/main.css'
+		),
+	]
 }
 
 module.exports = {
 	mode: 'development',
+	devtool: 'cheap-module-eval-source-map',
 	entry: {
-		app: paths.appEntry
+		app: paths.mainEntry
 	},
 	output: {
 		filename: 'app.js',
-		path: paths.appBuild
+		path: paths.dist
+	},
+	plugins: [
+		new MiniCssExtractPlugin({
+			filename: 'main.css',
+		}),
+	],
+	module: {
+		rules: [
+			{
+				test: /\.css$/i,
+        		use: [
+        			MiniCssExtractPlugin.loader, 
+        			'css-loader'
+        		], 
+			}
+		],
 	},
 	watch: true
-}
+};
