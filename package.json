@@ -19,5 +19,9 @@
     "selenium-server": "^3.141.59",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@sentry/browser": "^5.26.0",
+    "@sentry/tracing": "^5.26.0"
   }
 }
