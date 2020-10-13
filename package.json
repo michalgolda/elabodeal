@@ -16,12 +16,11 @@
     "geckodriver": "^1.19.1",
     "mini-css-extract-plugin": "^1.0.0",
     "nightwatch": "^1.4.3",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^10.0.3",
     "selenium-server": "^3.141.59",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
-  "dependencies": {
-    "@sentry/browser": "^5.26.0",
-    "@sentry/tracing": "^5.26.0"
-  }
+  "dependencies": {}
 }

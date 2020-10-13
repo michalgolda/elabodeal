@@ -12,14 +12,14 @@ const paths = {
 		__dirname, 
 		'elabodeal/web/static/dist/'
 	),
-	'mainEntry': [
+	'mainEntrances': [
 		path.resolve(
 			__dirname, 
 			'elabodeal/web/static/js/index.js'
 		),
 		path.resolve(
 			__dirname,
-			'elabodeal/web/static/styles/main.css'
+			'elabodeal/web/static/styles/main.scss'
 		),
 	]
 }
@@ -28,7 +28,7 @@ module.exports = {
 	mode: 'production',
 	devtool: 'source-map',
 	entry: {
-		app: paths.mainEntry
+		app: paths.mainEntrances
 	},
 	output: {
 		filename: 'main.js',
@@ -42,10 +42,21 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.css$/i,
+				test: /\.(css|sass|scss)$/,
         		use: [
         			MiniCssExtractPlugin.loader, 
-        			'css-loader'
+        			{
+        				loader: 'css-loader',
+        				options: {
+        					sourceMap: true
+        				}
+        			},
+        			{
+        				loader: 'sass-loader',
+        				options: {
+        					sourceMap: true
+        				},
+        			},
         		], 
 			}
 		],

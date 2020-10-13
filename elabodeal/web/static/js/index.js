@@ -1,14 +1,8 @@
-import { env } from 'process';
-
-import * as Sentry from "@sentry/browser";
-import { Integrations } from "@sentry/tracing";
-
-
-Sentry.init(	{
+Sentry.init( {
   dsn: "https://3785464099b948e18884fe59dfbc438e@o320975.ingest.sentry.io/5367878",
-  integrations: [ new Integrations.BrowserTracing() ],
-  debug: env.NODE_ENV === 'production' ? false : true
-}	);
+  debug: true
+} );
+
 
 import './nav.js';
 import './payment.js';
