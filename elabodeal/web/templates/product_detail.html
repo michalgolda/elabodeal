@@ -3,219 +3,121 @@
 
 {% block title-description %}{{ product.title }}{% endblock %}
 
-{% block css %}
-<style>
-	.header {
-		display: grid;
-	    grid-column-gap: 32px;
-	    grid-template-columns: 420.33px 1fr;
-	}
-
-	.pdfviewer {
-		width: auto;
-		max-width: 422.33px;
-		height: 600px;
-		background: white;
-		border: 1px solid var(--grey);
-		border-radius: 2px;
-	}
-
-	.section > form {
-		display: inline-block;
-	}
-
-	button[type="add-to-cart"] {
-		width: 150px;
-	}
-
-	.detail {
-		border: 1px solid var(--grey);
-		background: white;
-		border-radius: 2px;
-		padding: 0px 16px 0px 16px;
-	}
-
-	.detail-wrapper {
-		height: 22px;
-	}
-
-	.product-list {
-	    display: grid;
-	    grid-column-gap: 32px;
-	    grid-template-columns: 280px 280px 280px 280px;
-	}
-
-	.age-category {
-		width: 32px;
-		height: 32px;
-		background: var(--green);
-		border-radius: 2px;
-		text-align: center;
-		margin-right: 8px;
-	}
-
-	.age-category > p {
-		color: white;
-		font-size: 1.2rem;
-		font-weight: 300;
-		padding-top: 2px;
-	}
-
-	.cart-item {
-		width: auto;
-		height: 100px;
-	}
-
-	.cart-item-section {
-		height: 100px;
-	}
-
-	.cart-item-cover {
-		height: 100px;
-		width: 70px;
-		margin-left: 0;
-	}
-</style>
-{% endblock %}
+{% block page_class_name %}p-product-detail{% endblock %}
 
 {% block body %}
 {% if show_add_product_info %}
-	{% include 'components/add_product_to_cart_info_popup.html' %}
+{% include 'components/add_product_to_cart_info_popup.html' %}
 {% endif %}
 {% include 'components/navigation.html' %}
-<div class="container">
-	<header class="section header">
-		<section class="section">
-			<img
-				class="pdfviewer"
-				src="{{ product.cover_img.url }}"
-				alt="{{ product.title }}"
-			/>
-		</section>
-		<section class="section">
+<div class="wrapper">
+	<div class="container">
+		<img class="product-cover" src="{{ product.cover_img.url }}" />
+		<div class="section">
 			<div class="section">
-				<section class="section">
-					<h1 class="font-size-big color-black font-weight-600">{{ product.title }}</h1>
-					<p class="margin-top-8px font-size-medium font-weight-300">{{ product.author }}</p>
-				</section>
-				<section class="section">
-					<section class="section">
-						<p class="margin-top-8px text-align-right color-green font-size-big">{{ product.price }} zł</p>
-					</section>
-					<section class="section text-align-right margin-top-16px">
-						<div class="section" style="display: flex;">
-							<div style="justify-content: flex-start; width: 50%;">
-								{% for age_category in product.age_categories.all %}
-									<div class="age-category float-left">
-										<p>{{ age_category.value }}+</p>
-									</div>
-								{% endfor %}
-							</div>
-							<div style="justify-content: flex-end; width: 50%;" class="float-right">
-								<form style="display: inline-block;">
-									<button class="btn btn-green">Kup teraz</button>
-								</form>
-								<form style="display: inline-block;" method="POST" action="/cart/">
-									{% csrf_token %}
-									<input type="hidden" name="product_id" value="{{ product.id }}">
-									<input type="hidden" name="action_type" value="add-product">
-									
-									<button id="add-to-cart" class="btn btn-orange
-									margin-left-16px" type="add-to-cart">Dodaj do koszyka</button>
-								</form>
-								
-							</div>
-						</div>
-					</section>
-				</section>
-				<section class="section box margin-top-16px">
-					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
-						<p class="float-left color-black">Ilość stron</p>
-						<p class="float-right color-orange">{{ product.page_count }}</p>
+				<h1 class="product-title">{{ product.title }}</h1>
+				<p class="product-author">{{ product.author }}</p>
+			</div>
+			<div class="section section__age">
+				<!-- {% for age_category in product.age_categories.all %}
+					<span class="product-age">
+						{{ age_category.value }}+
+					</span>
+				{% endfor %} -->
+				<span class="product-age" age="18">
+					18+
+				</span>
+			</div>
+			<div class="section section__flex">
+				<p class="product-price">{{ product.price }} zł</p>
+				<div>
+					<button class="btn btn__primary">Kup teraz</button>
+					<button class="btn btn__secondary">Dodaj do koszyka</button>
+				</div>
+			</div>
+			<div class="section">
+				<h4>Szczegółowe informacje: </h4>
+			</div>
+			<div class="section section__subsection">
+				<div class="product-information">
+					<div class="info">
+						<p class="info__key">Kategoria</p>
+						<p class="info__value">{{ product.category }}</p>
 					</div>
-					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
-						<p class="float-left color-black">Rok wydania</p>
-						<p class="float-right color-orange">1920</p>
+					<div class="info">
+						<p class="info__key">Ilość stron</p>
+						<p class="info__value">{{ product.page_count }}</p>
 					</div>
-					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
-						<p class="float-left color-black">Formaty</p>
-						<p class="float-right color-orange">
+					<div class="info">
+						<p class="info__key">Oceny</p>
+						<p class="info__value">{{ product.rating }} / 5</p>
+					</div>
+					<div class="info">
+						<p class="info__key">Rok wydania</p>
+						<p class="info__value">2020</p>
+					</div>
+					<div class="info">
+						<p class="info__key">Formaty</p>
+						<p class="info__value">
 							{% if product.pdf %}
-								PDF
+							PDF
 							{% endif %}
 							{% if product.mobi %}
-								MOBI
+							MOBI
 							{% endif %}
 							{% if product.epub %}
-								EPUB
+							EPUB
 							{% endif %}
 						</p>
 					</div>
-					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
-						<p class="float-left color-black">Kategoria</p>
-						<p class="float-right color-orange">{{ product.category.name }}</p>
+					<div class="info">
+						<p class="info__key">Numer ISBN</p>
+						<p class="info__value">{{ product.isbn }}</p>
 					</div>
-					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
-						<p class="float-left color-black">Numer ISBN</p>
-						<p class="float-right color-orange">{{ product.isbn }}</p>
-					</div>
-					<div class="detail-wrapper section margin-top-8px margin-bottom-8px clear-both">
-						<p class="float-left color-black">Oceny</p>
-						<p class="float-right color-orange">{{ product.rating }} / 5.0 - {{ product.reviews }}</p>
-					</div>
-				</section>
-				<section class="section margin-top-32px">
-					<button id="show-description-btn" class="btn btn-orange">Opis</button>
-					<button id="show-contents-btn" class="btn btn-outline-orange margin-left-16px">Spis treści</button>
-					<div id="product-description" class="box margin-top-16px" style="word-break: break-all;">
-						<p class="color-black">{{ product.description }}</p>
-					</div>
-					<div id="product-contents" class="box margin-top-16px display-none" style="word-break: break-all;">
-						<p class="color-black">{{ product.contents }}</p>
-					</div>
-				</section>
+				</div>
 			</div>
-		</section>
-	</header>
-	<section class="section">
-		<p class="section-label margin-top-32px margin-bottom-16px">Podobne</p>
-		<div class="section product-list">
-			{% for p in related_products %}
-				{% include 'components/product.html' with title=p.title author=p.author price=p.price cover_img_url=p.cover_img.url url_name=p.url_name rating=p.rating empty_stars=p.empty_stars %}
-			{% endfor %}
+			<div class="section">
+				<div class="section">
+					<button id="show-product-description" class="btn btn__primary">Opis</button>
+					<button id="show-product-contents" class="btn btn__primary btn__primary-outline">Spis treści</button>
+				</div>
+				<div class="section">
+					<div id="product-description" class="product-text-box">
+						<p>{{ product.description }}</p>
+					</div>
+					<div id="product-contents" class="product-text-box">
+					</div>
+				</div>
+			</div>
 		</div>
-	</section>
+	</div>
 </div>
-{% include 'components/bigfooter.html' %}
+{% include 'components/small-footer-light.html' %}
 {% endblock %}
 
 {% block scripts %}
 <script>
-$('#show-contents-btn').click(function() {
-	$(this).removeClass('btn-outline-orange');
-	$(this).addClass('btn-orange');
-	$('#show-description-btn').removeClass('btn-orange');
-	$('#show-description-btn').addClass('btn-outline-orange');
+$('#show-product-contents').click(function() {
+	$(this).removeClass('btn__primary-outline');
+	$('#show-product-description').addClass('btn__primary-outline');
 	$('#product-description').hide();
 	$('#product-contents').show();
 });
 
-$('#show-description-btn').click(function() {
-	$(this).removeClass('btn-outline-orange');
-	$(this).addClass('btn-orange');
-	$('#show-contents-btn').removeClass('btn-orange');
-	$('#show-contents-btn').addClass('btn-outline-orange');
+$('#show-product-description').click(function() {
+	$(this).removeClass('btn__primary-outline');
+	$('#show-product-contents').addClass('btn__primary-outline');
 	$('#product-description').show();
 	$('#product-contents').hide();
 });
 
-$('#add-product-to-cart-info-popup').removeClass('display-none');
-$('#close-add-product-to-cart-info-popup').click(function(){
-	$('#add-product-to-cart-info-popup').hide();
-});
+// $('#add-product-to-cart-info-popup').removeClass('display-none');
+// $('#close-add-product-to-cart-info-popup').click(function(){
+// 	$('#add-product-to-cart-info-popup').hide();
+// });
 
-$('#continue-shopping').click(function(){
-	$('#add-product-to-cart-info-popup').hide();
-});
+// $('#continue-shopping').click(function(){
+// 	$('#add-product-to-cart-info-popup').hide();
+// });
 </script>
 {% endblock %}

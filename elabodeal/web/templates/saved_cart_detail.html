@@ -3,100 +3,52 @@
 
 {% block title-description %}Twój koszyk{% endblock %}
 
-{% block css %}
-<style>
-	.box {
-		height: 256px;
-	}
-
-	.footer-text {
-		color: var(--green);
-	}
-
-	.footer-link {
-		color: var(--green);
-	}
-
-	button[type="share"] {
-		width: 140px;
-	}
-
-	.flex-start {
-		justify-content: flex-start;
-		width: 50%;
-	}
-
-	.flex-end {
-		width: 50%;
-		justify-content: flex-end;
-	}
-
-	.social-icon:hover {
-		cursor: pointer;
-	}
-
-	.fa-facebook {
-		color: #4267B2;
-	}
-
-	.fa-reddit {
-		color: #FF5700;
-	}
-
-	.fa-twitter-square {
-		color: #1DA1F2;
-	}
-</style>
-{% endblock %}
+{% block page_class_name %}p-saved-cart-detail{% endblock %}
 
 {% block body %}
-{% include 'components/share_cart_popup.html' %}
+<!-- {% include 'components/share_cart_popup.html' %} -->
 {% include 'components/navigation.html' %}
-<div class="container">
-	<section class="section">
-		<div class="section flex-center">
-			<div class="flex-start flex-center">
-				<p class="font-size-big font-weight-600 color-green margin-bottom-8px">{{ cart.title }}</p>
-			</div>
-			<div class="flex-end flex-center">
-				<p class="font-size-small color-black font-weight-300"><b class="color-green">Data dodania: </b> {{ cart.created_at.day }}.{{ cart.created_at.month }}.{{ cart.created_at.year }}</p>
-			</div>
+<div class="wrapper">
+	<div class="cart-information">
+		<div class="section top-content">
+			<p class="section__title">{{ cart.title }}</p>
+			<p>Data zapisu: <strong>{{ cart.created_at.day }}.{{ cart.created_at.month }}.{{ cart.created_at.year }}</strong></p>
 		</div>
-		<p class="section color-black font-size-small font-weight-300 margin-bottom-32px">{{ cart.description }}</p>
-		<section class="section">
+		<div class="cart-description">
+			awdjawkdjakwdjkawjdakwdkawdjakwdjakw
+		</div>
+	</div>
+	<div class="section">
+		<div class="cart-items section">
 			{% for item in cart_items %}
-				<div class="box padding-16px margin-bottom-16px">
-					<div class="cart-item float-left">
-						<div class="cart-item-section">
-							<input class="cart-item-checkbox" type="checkbox" checked/>
-							<img 
-								class="cart-item-cover"
-								src="{{ item.product.cover_img.url }}"
-								alt="{{ item.product.title }}"
-							/>
-							<div class="float-left">
-								<p class="cart-item-title font-size-medium">{{ item.product.title }}</p>
-								<p class="cart-item-author ">{{ item.product.author }}</p>
-							</div>
-						</div>
+			<div class="product">
+				<div class="flex-center">
+					<input type="checkbox" checked />
+				</div>
+				<img src="{{ item.product.cover_img.url }}" alt="{{ item.product.title }}" />
+				<div class="product__details">
+					<div>
+						<h3 class="product__title">{{ item.product.title }}</h3>
+						<p class="product__author">{{ item.product.author }}</p>
 					</div>
-					<div class="cart-item-section float-right">	
-						<p class="cart-item-price">{{ item.product.price }} zł</p>
+					<div>
+						<p class="product__price">{{ item.product.price }} zł</p>
 					</div>
 				</div>
+				<i class="fas fa-times h2 product__delete"></i>
+			</div>
 			{% endfor %}
-		</section>
-	</section>
-	<section class="section margin-top-32px margin-bottom-32px">
-		<div class="float-left">
-			<button id="open-share-cart-popup" class="btn btn-green" type="share">Udostępnij koszyk</button>
 		</div>
-		<form class="float-right">
-			<p class="float-left color-black font-size-medium">Razem: <b class="color-orange">{{ total_price }} zł</b>
-			</p>
-			<button class="btn btn-orange margin-left-16px">Zapłać</button>
-		</form>
-	</section>
+		<div class="cart-details">
+			<div>
+				<button id="open-share-cart-popup" class="btn btn__secondary">Udostępnij</button>
+			</div>
+			<div>
+				<p>Razem: {{ total_price }} zł</p>
+				<a class="btn btn__primary">Dodaj do koszyka</a>
+			</div>
+		</div>
+	</div>
 </div>
-{% include 'components/smallfooter.html' %}
+{% include 'components/small-footer-light.html' %}
 {% endblock %}

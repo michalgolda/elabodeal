@@ -9,10 +9,10 @@ class DeliveryView(BaseView):
 		return DeliveryForm(request.POST if request else None)
 
 	def get(self, request):
-		if not 'cart' in request.session:
-			return redirect('web:cart')
-		if request.session['cart']['item_count'] <= 0:
-			return redirect('web:cart')
+		# if not 'cart' in request.session:
+		# 	return redirect('web:cart')
+		# if request.session['cart']['item_count'] <= 0:
+		# 	return redirect('web:cart')
 
 		context = {
 			'form': self.get_form()

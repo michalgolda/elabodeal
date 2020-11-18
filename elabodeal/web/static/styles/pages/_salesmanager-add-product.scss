@@ -1,0 +1,171 @@
+.p-salesmanager-add-product {
+    textarea {
+        min-height: 128px;
+        max-height: 256px;
+        padding: 1rem;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    .form-wrapper {
+        height: auto;
+        max-width: 512px;
+        margin: 2rem auto;
+    }
+
+    .form {
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-rows: auto;
+        grid-row-gap: 1rem;
+
+        &__section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: 1rem;
+
+            &-xl {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            &-blocks {
+                grid-template-columns: repeat(auto-fill, minmax(89.6px, 1fr));
+            }
+        }
+
+        &__information {
+            font-size: $font-size-small;
+            font-weight: 500;
+            color: $color-grey;
+            padding-bottom: 1rem;
+        }
+
+        &__error {
+            color: $color-red;
+            font-size: $font-size-small;
+        }
+
+        
+        &__option {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+
+            & > p {
+                padding-left: 1rem;
+                font-weight: 500;
+                font-size: $font-size-small;
+            }
+        }
+    }
+
+    #age-selector {
+        min-height: 89.6px; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $color-white;
+        border: 1px solid $color-grey;
+        @include transition-animation;
+
+        & > p {
+            color: $color-grey;
+            font-weight: 500;
+        }
+
+        & > input {
+            display: none;
+        }
+
+        &:hover {
+            background-color: $color-green;
+            cursor: pointer;
+
+            & > p {
+                color: $color-white;
+            }
+        }
+    }
+
+    .age-checked {
+        background-color: $color-green !important;
+        color: $color-white;
+    }
+
+    .image {
+        width: 100%;
+        min-height: 89.6px;
+    
+        &__preview {
+            display: none;
+            width: 89.6px;
+            height: 89.6px;
+            text-align: center;
+            background-color: $color-green;
+            justify-content: center;
+            align-items: center;
+
+            & > img {
+                height: 89.6px;
+                max-width: 89.6px;
+                position: relative;
+            }
+
+            & > button {
+                width: 89.6px;
+                height: 89.6px;
+                position: absolute;
+                color: $color-white;
+                font-size: $font-size-medium;
+                border: none;
+                background-color: transparent;
+                outline: none;
+
+                & > i {
+                    display: none;
+                }
+
+                &:hover {
+                    background-color: rgba(1, 22, 39, 0.30);
+                    cursor: pointer;
+
+                    & > i {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        &__upload {
+            width: 89.6px;
+            height: 89.6px;
+            background: $color-white;
+            border-radius: 2px;
+            border: 1px solid $color-grey;
+            color: $color-grey;
+            @include transition-animation;
+            outline: none;
+            
+            &:hover {
+                background-color: $color-green;
+                color: $color-white;
+                cursor: pointer;
+            }
+         }
+    }
+
+    #file-name {
+        width: 248px;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: $font-size-small;
+        font-weight: bold;
+        display: none;
+    }
+}

@@ -1,137 +1,64 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title-description %}Twój koszyk{% endblock %}
+{% block title-description %}Płatność{% endblock %}
 
-{% block css %}
-<style>
-	.box {
-		height: 256px;
-	}
-
-	.footer-text {
-		color: var(--green);
-	}
-
-	.footer-link {
-		color: var(--green);
-	}
-
-	button[type="share"] {
-		width: 140px;
-	}
-
-	.step {
-		height: 50px;
-		width: 50px;
-		border-radius: 50%;
-		background: white;
-		border: 1px solid var(--grey);
-		color: var(--grey);
-	}
-
-	.current-step {
-		background: var(--orange);
-		color: white;
-	}
-
-	.step-decorator {
-		width: 100px;
-		height: 2px;
-		background: var(--grey);
-	}
-
-	.step-text-decorator {
-		width: calc(100% - 20px);
-		height: 2px;
-		background: var(--green);
-		margin: 0 auto;
-	}
-
-	.wrapper {
-		max-width: 500px;
-		margin: 0 auto;
-	}
-
-	button {
-		height: 36.58px;
-	}
-
-	input {
-		height: 36.58px;
-		font-size: 15.5px;
-	}
-
-	.box {
-		height: auto;
-	}
-</style>
-{% endblock %}
+{% block page_class_name %}p-cart-payment{% endblock %}
 
 {% block body %}
 {% include 'components/navigation.html' %}
-<div class="container">
-	<section class="section">
-		<div class="section flex-center margin-bottom-64px">
-			<div>
-				<div class="step flex-center float-left margin-right-16px">
-					<span class="font-size-medium">1</span>
-				</div>
-				<p class="float-left font-size-big padding-top-4px padding-bottom-4px color-grey">Koszyk</p>
-			</div>
-			<div class="flex-center margin-left-16px margin-right-16px">
-				<div class="step-decorator"></div>
-			</div>
-			<div>
-				<div class="step flex-center float-left margin-right-16px">
-					<span class="font-size-medium">2</span>
-				</div>
-				<p class="float-left font-size-big padding-top-4px padding-bottom-4px color-grey">Dostawa</p>
-			</div>
-			<div class="flex-center margin-left-16px margin-right-16px">
-				<div class="step-decorator"></div>
-			</div>
-			<div>
-				<div class="step current-step flex-center float-left margin-right-16px">
-					<span class="font-size-medium">3</span>
-				</div>
-				<div class="float-left padding-top-4px padding-bottom-4px">
-					<p class="font-size-big color-orange">Płatność</p>
-					<div class="step-text-decorator"></div>
-				</div>
-			</div>
-		</div>		
-	</section>
-	<div class="section wrapper">
-		<p id="payment-error-msg" class="section color-red font-size-small text-align-center"></p>
-		<form id="payment-form" class="section margin-center">
-			<div class="section margin-top-32px">
-				<div class="section display-flex margin-top-16px">
-					<div class="section flex-start">
-						<label>IMIĘ</label>
-						<input type="text" name="first_name" required />
-					</div>
-					<div class="section flex-end margin-left-16px">
-						<label>NAZWISKO</label>
-						<input type="text" name="last_name" required />
-					</div>
-				</div>
-			</div>
-			<div class="section flex-end margin-top-16px">
-				<label>EMAIL</label>
-				<input type="text" name="email" required />
-			</div>
-			<div class="section flex-end margin-top-16px">
-				<label>NUMER TELEFONU</label>
-				<input type="text" name="phone_number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required />
-			</div>
-			<div class="box margin-top-16px" id="card-element"></div>
-			<button class="btn btn-orange btn-full-width margin-top-16px" type="submit">Zapłać {{ request.session.cart.total_price }} zł</button>
-		</form>
-		<a href="{% url 'web:cart-delivery' %}">
-			<button class="btn btn-outline-orange btn-full-width margin-top-16px">Wstecz</button>
-		</a>
+<div class="wrapper">
+	<div class="section flex-center">
+		<div class="step flex-center">
+			<figure class="flex-center">
+				<span class="h2"><i class="fas fa-check"></i></span>
+			</figure>
+			<span class="h2">Koszyk</span>
+		</div>
+		<div class="step-separator"></div>
+		<div class="step flex-center">
+			<figure class="flex-center">
+				<span class="h2"><i class="fas fa-check"></i></span>
+			</figure>
+			<span class="h2">Wysyłka</span>
+		</div>
+		<div class="step-separator"></div>
+		<div class="step flex-center step-current">
+			<figure class="flex-center">
+				<span class="h2">3</span>
+			</figure>
+			<span class="h2">Płatność</span>
+		</div>
 	</div>
+	<div class="section">
+		<div class="form-wrapper">
+			<form id="payment-form" class="form">
+				<p id="payment-error-msg" class="form__error"></p>
+				<div class="form__section">
+					<div>
+						<label>IMIĘ</label>
+						<input type="text" name="first_name" required/>
+					</div>
+					<div>
+						<label>NAZWISKO</label>
+						<input type="text" name="last_name" required />						
+					</div>
+				</div>
+				<div>
+					<label>E-MAIL</label>
+					<input type="text" name="email" required />
+				</div>
+				<div>
+					<label>NUMER TELEFONU</label>
+					<input type="text" name="phone_number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required />
+				</div>
+				<div id="card-element" class=""></div>
+				<button class="btn btn__primary btn-block">Przejdź dalej</button>
+				<a class="btn btn__primary btn__primary-outline btn-block" href="{% url 'web:cart-delivery' %}">Wstecz</a>
+			</form>
+		</div>
+	</div>
+
 </div>
-{% include 'components/smallfooter.html' %}
+{% include 'components/small-footer-light.html' %}
 {% endblock %}

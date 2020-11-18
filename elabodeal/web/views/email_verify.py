@@ -16,7 +16,8 @@ class EmailVerifyView(BaseView):
 
 		context = {
 			'form': self.get_form(),
-			'email': request.session['email']
+			'email': request.session['email'],
+			'email': 'michalgolda@vp.pl'
 		}
 		return self.respond('email_verify.html', request, context)
 

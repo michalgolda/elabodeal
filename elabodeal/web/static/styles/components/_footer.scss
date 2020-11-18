@@ -1,0 +1,112 @@
+.footer {
+    height: auto;
+    width: 100%;
+    color: $color-white;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    font-weight: 300;
+    padding: 2rem 0 2rem 0;
+    clear: both;
+    left: 0;
+
+    &-light {
+        & > p {
+            color: $color-orange;
+        }
+        
+        & > a {
+            color: $color-black;
+        }
+    }
+
+    &-big {
+        padding: 1rem;
+        background-color: $color-orange;
+    }
+
+    &__container {
+        display: grid;
+        grid-gap: 2rem;
+        justify-content: center;
+        grid-template-columns: 1fr 1fr 1fr;
+        text-align: center;
+        margin: 0 0 2rem 0;
+        justify-content: center;
+        align-items: center;
+        grid-auto-flow: row;
+
+        @include for-tablet-landscape-up {
+            grid-template-columns: 1fr 1fr 1fr 2rem;
+            justify-content: inherit;
+            text-align: left;
+        }
+        
+    }
+
+    &__section {
+        width: 100%;
+        height: auto;
+
+        &-title {
+            font-size: $font-size-small;
+            font-weight: 700;
+            padding: 0 0 0.5rem 0;
+        }
+    }
+
+    &__logo {
+        & > a > img {
+            width: 182px;
+            height: auto;
+            margin: 0 0 1rem 0;
+        }
+    }
+
+    &__link {
+        padding: 0 0.5rem 0 0;
+        color: $color-white;
+        font-size: $font-size-small;
+
+        &-wrapper {
+            margin: 0 0 0.5rem 0;
+        }
+
+        &-social {
+            width: 32px;
+            height: 32px;
+            display: inline-block;
+            background: transparent;
+            font-size: $font-size-large;
+            margin: 0 1rem 0 0;
+            color: $color-white;
+        }
+    }
+
+    &__text {
+        font-size: $font-size-small;
+        font-weight: 600;
+        display: inline-block;
+        padding: 0 0.5rem 0 0.5rem;
+    }
+
+    &__scrollup {
+        width: 32px;
+        height: 32px;
+        border: none;
+        outline: none;
+        font-size: $font-size-medium;
+        color: $color-orange;
+        background-color: $color-black;
+        border-radius: 2px;
+        display: none;
+
+        @include for-tablet-landscape-up {
+            display: inherit;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

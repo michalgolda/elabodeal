@@ -2,22 +2,24 @@
 
 {% block title-description %}Stwórz swoje konto{% endblock %}
 
+{% block page-class-name %}p-register{% endblock %}
+
 {% block form %}
-<form class="form section padding-top-16px clear-both margin-center" method="POST" action="/auth/register/" autocomplete="off">
+<form class="form" method="POST" action="/auth/register/" autocomplete="off">
 	{% if form.errors %}
 		{% if form.username.errors %}
 			{% for error in form.username.errors %}
-				<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+				<p class="form__error">{{ error }}</p>
 			{% endfor %}
 		{% else %}
 			{% if form.email.errors %}
 				{% for error in form.email.errors %}
-					<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+					<p class="form__error">{{ error }}</p>
 				{% endfor %}
 			{% else %}
 				{% if form.password2.errors %}
 					{% for error in form.password2.errors %}
-						<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+						<p class="form__error">{{ error }}</p>
 					{% endfor %}
 				{% endif %}
 			{% endif %}
@@ -26,23 +28,23 @@
 
 	{% csrf_token %}
 
-	<div class="section margin-bottom-16px">
+	<div class="form__section">
 		<label>NAZWA UŻYTKOWNIKA</label>
 		{{ form.username }}
 	</div>
-	<div class="section margin-bottom-16px">
+	<div class="form__section">
 		<label>EMAIL</label>
 		{{ form.email }}
 	</div>
-	<div class="section margin-bottom-16px">
+	<div class="form__section">
 		<label>HASŁO</label>
 		{{ form.password1 }}
 	</div>
-	<div class="section margin-bottom-16px">
+	<div class="form__section">
 		<label>POWTÓRZ HASŁO</label>
 		{{ form.password2 }}
 	</div>
 
-	<button class="btn btn-orange" type="submit">Zarejestruj się</button>
+	<button class="btn btn__primary btn-block" type="submit">Zarejestruj się</button>
 </form>
 {% endblock %}

@@ -1,0 +1,124 @@
+.p-home {
+    .wrapper {
+        display: grid;
+    
+        @include for-tablet-landscape-up {
+            grid-template-columns: 14rem 1fr;
+            grid-column-gap: 2rem;
+        }
+    }
+    
+    .category-list {
+        background-color: $color-white;
+        border-radius: 2px;
+        border: 1px solid $color-grey;
+        padding: 1rem;
+        display: grid;
+        margin: 1rem 0 0 0;
+        grid-row-gap: 1rem;
+
+        @include for-tablet-portrait-up {
+            grid-template-columns: auto auto auto;
+            grid-row-gap: 1rem;
+            grid-column-gap: 1rem;    
+        }
+
+        @include for-tablet-landscape-up {
+            grid-template-rows: auto;
+            grid-template-columns: none;
+        }   
+
+
+        .category {
+            width: 100%;
+            height: 2rem;
+            justify-content: left;
+            border-left: 2.5px solid $color-orange;
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+            border-right: 1px solid transparent;
+
+            &:hover {
+                border-top: 1px solid $color-orange;
+                border-bottom: 1px solid $color-orange;
+                border-right: 1px solid $color-orange;
+                @include transition-animation;
+
+                & > a {
+                    color: $color-orange; 
+                    @include transition-animation;
+                }
+            }
+
+            &__current {
+                background-color: $color-orange;
+                
+                &:hover {
+                    & > a {
+                        color: $color-white;
+                    }
+                }
+
+                & > a {
+                    color: $color-white;
+                    font-weight: 500;
+                }
+            }
+
+            & > a {
+                width: 100%;
+                max-width: 187.5px;
+                height: 32px;
+                font-size: $font-size-small;
+                padding: 0.50rem 0 0.50rem 1rem;
+
+                & > p {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+
+    .search {
+        width: 100%;
+        height: 48px;
+        display: flex;
+        justify-content: space-between;
+
+        @include for-tablet-portrait-up {
+            margin: 2rem 0 2rem 0;
+        }
+
+        @include for-tablet-landscape-up {
+            margin: 0 0 2rem 0;
+        }
+
+        &__input {
+            width: calc(100% - 144px);
+            height: 48px;
+        }
+
+        &__submit {
+            width: 128px;
+            height: 48px;
+        }
+    }
+
+    .banner {
+        width: 100%;
+        height: 256px;
+        background-color: $color-white;
+        border-radius: 2px;
+        border: 1px solid $color-grey;
+        margin: 0 0 2rem 0;
+        padding: 0.25rem;
+    }
+
+    .product-list {
+        margin: 1rem 0 0 0;
+    }
+}

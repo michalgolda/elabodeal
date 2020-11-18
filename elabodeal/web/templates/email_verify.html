@@ -3,66 +3,35 @@
 
 {% block title-description %}Weryfikacja konta{% endblock %}
 
-{% block css %}
-<style>
-	.logo {
-		width: 210px;
-		height: auto;
-	}
 
-	.section {
-		max-width: 350px;
-	}
-
-	.footer-link {
-		color: var(--green);
-	}
-
-	.footer-text {
-		color: var(--green);
-	}
-
-	input {
-		letter-spacing: 8px;
-		text-align: center;
-	}
-
-	.container {
-		height: calc(100vh - 83px);
-	}
-</style>
-{% endblock %}
+{% block page_class_name %}p-account-verify{% endblock %}
 
 {% block body %}
-<div class="container flex-center">
-	<section class="section text-align-center margin-center">
-		<div class="margin-bottom-32px">
+<div class="wrapper flex-center">
+	<div class="section">
+		<div class="logo">
 			<a href="{% url 'web:index' %}">
-				<img 
-					class="logo"
-					src="{% static 'images/blue-logo.png' %}"
-				/>
+				<img src="{% static 'images/blue-logo.png' %}">
 			</a>
 		</div>
-		<h1 class="font-size-medium font-weight-600 color-black margin-bottom-8px">Dziękujemy za rejestrację</h1>
-		<p class="font-size-small font-weight-300 color-black">
-			Na podany email <bold class="font-weight-600 color-black">{{ email }}</bold> został wysłany kod weryfikacjyjny.
+		<h3 class="greeting">Dziękujemy za rejestrację</h3>
+		<p class="information">
+			Na podany email <strong>{{ email }}</strong> został wysłany kod weryfikacyjny.
 		</p>
-		<form class="section margin-top-16px" method="POST" action="/account/verify/" autocomplete="off">
-			{% if form.errors %}
-				{% for error in form.code.errors %}
-					<p class="section color-red margin-bottom-16px">{{ error }}</p>
-				{% endfor %}
-			{% endif %}
-
+		<form class="form" method="POST" action="/account/verify/" autocomplete="off">
 			{% csrf_token %}
-			<div class="section margin-bottom-16px">
+			{% if form.errors %}
+			{% for error in form.code.errors %}
+			<p class="form__error">{{ error }}</p>
+			{% endfor %}
+			{% endif %}
+			<div class="form__section">
 				{{ form.code }}
+				<button class="btn btn__primary" type="submit">Zweryfikuj</button>
+				<button class="btn btn__primary" disabled>Wyślij kod ponownie</button>
 			</div>
-
-			<button class="btn btn-orange btn-full-width" type="submit">Zweryfikuj</button>
 		</form>
-	</section>
+	</div>
 </div>
-{% include 'components/smallfooter.html' %}
+{% include 'components/small-footer-light.html' %}
 {% endblock %}

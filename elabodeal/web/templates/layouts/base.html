@@ -23,12 +23,12 @@
     </script>
     {% block css %}{% endblock %}
 
-    <script src="{% static 'dist/main.js' %}" defer="defer"></script>
+    <script src="{% static 'dist/app.js' %}" defer="defer"></script>
 
     <title>{% block title %}Elabodeal - {% block title-description %}{% endblock %}{% endblock %}</title>
 </head>
 </head>
-<body>
+<body class="{% block page_class_name %}{% endblock %}">
     {% block body %}
     {% endblock %}
 

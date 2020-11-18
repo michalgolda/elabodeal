@@ -1,0 +1,88 @@
+.btn {
+    height: 32px;
+    border: none;
+    border-radius: 2px;
+    font-size: $font-size-small;
+    outline: none;
+    display: inline-block;
+    padding: .35rem 1rem;
+    font-weight: 500;
+    text-align: center;
+    @include transition-animation;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &__disabled {
+        background-color: $color-grey !important;
+        color: $color-light-grey !important;
+    
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+
+    &__danger {
+        color: $color-white;
+        background-color: $color-red;
+
+        &-outline {
+            background-color: transparent;
+            color: $color-red;
+            border: 1px solid $color-red;
+
+            &:hover {
+                background-color: $color-red;
+                color: $color-white;
+            }
+        }
+    }
+
+    &__primary {
+        color: $color-white;
+        background-color: $color-orange;
+
+        &-outline {
+            background-color: transparent;
+            color: $color-orange;
+            border: 1px solid $color-orange;
+        
+            &:hover {
+                background-color: $color-orange;
+                color: $color-white;
+            }
+        }
+
+        &-light {
+            color: $color-orange;
+            background: $color-white;
+        }
+    }
+
+    &__secondary {
+        color: white;
+        background-color: $color-green;
+
+        &-outline {
+            background-color: transparent;
+            color: $color-green;
+            border: 1px solid $color-green;
+        
+            &:hover {
+                background-color: $color-green;
+                color: $color-white;
+            }
+        }
+
+        &-light {
+            color: $color-green;
+            background: $color-white;
+        }
+    }
+
+    &-block {
+        display: block;
+        width: 100%;
+    }
+}

@@ -1,105 +1,30 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block css %}
-<style>
-	.container {
-		padding: 0;
-		margin: 0;
-		width: 100%;
-		max-width: 100%;
-	}
-
-	.left-section {
-		width: 40%;
-		height: 100vh;
-	}
-
-	.right-section {
-		width: 60%;
-	    height: 100vh;
-	    background: url('/static/images/auth-bg.jpg');
-	    background-size: cover;
-	    background-position: center;
-	    padding: 32px;
-	}
-
-	.logo {
-		width: 210px;
-	}
-
-	.max-width-300 {
-		max-width: 300px !important;
-	}
-
-	.decorator {
-		width: calc(100% - 20px);
-	    height: 2px;
-	    margin: 0 auto;
-	    background: var(--green);
-	    margin-top: 5px;
-	}
-
-	.hero {
-		width: 100%;
-		height: calc(100vh - 134px);
-		max-width: 600px;
-	}
-
-	.form {
-		max-width: 300px;
-	}
-
-	button[type="submit"] {
-		width: 100%;
-		background-color: var(--orange);
-	}
-</style>
-{% endblock %}
 
 {% block body %}
-<div class="container">
-	<div class="left-section flex-center float-left margin-center bg-light-grey">
-		<div class="section">
-			<div class="section margin-center padding-top-64px padding-bottom-64px text-align-center">
-				<a href="{% url 'web:index' %}">
-					<img 
-						class="logo"
-						src="{% static '/images/blue-logo.png' %}"
-						alt="Blue logo"
-					/>
-				</a>
-			</div>
-			<div class="section max-width-300 margin-center">
-				{% if request.path == '/auth/login/' %}
-					<div class="float-left">
-						<a class="color-orange font-weight-600 font-weight-300" href="{% url 'web:login' %}">ZALOGUJ SIĘ</a>
-						<div class="decorator"></div>
-					</div>
-					<div class="float-right">
-						<a class="color-black font-weight-300" href="{% url 'web:register' %}">ZAREJESTRUJ SIĘ</a>
-					</div>
-				{% elif request.path == '/auth/register/' %}
-					<div class="float-left">
-						<a class="color-black font-weight-300" href="{% url 'web:login' %}">ZALOGUJ SIĘ</a>
-					</div>
-					<div class="float-right">
-						<a class="color-orange font-weight-300" href="{% url 'web:register' %}">ZAREJESTRUJ SIĘ</a>
-						<div class="decorator"></div>
-					</div>
-				{% endif %}
-			</div>
+<div class="layout-auth">
+	<div class="left-panel flex-center">
+		<div class="form-container">
+			<a href="{% url 'web:index' %}">
+				<img src="{% static '/images/blue-logo.png' %}"/>
+			</a>
 			{% block form %}{% endblock %}
 		</div>
 	</div>
-	<div class="right-section float-left">
-		<section class="section">
-			<a class="float-right font-weight-600 color-white" href="{% url 'web:index' %}">Sprawdź co dla ciebie mamy</a>
-		</section>
-		<div class="hero clear-both padding-left-16px padding-right-16px flex-center margin-center">
-			<p class="font-size-big color-white font-weight-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+	<div class="right-panel">
+		<div class="content">
+			<div class="content__links">
+				<div>
+					<a href="{% url 'web:index' %}">Sprawdź co dla ciebie mamy</a>
+					<i class="fas fa-angle-right"></i>
+				</div>
+			</div>
+			<div class="flex-center">
+				<h1 class="content__heading">Twórz, Kupuj, Sprzedawaj! Czekamy na ciebie</h1>
+			</div>
+			{% include 'components/small-footer.html' %}
 		</div>
-		{% include 'components/smallfooter.html' %}
 	</div>
 </div>
 {% endblock %}

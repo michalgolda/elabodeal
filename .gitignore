@@ -10,3 +10,4 @@ tests_output/
 geckodriver.log
 package-lock.json
 dist/
+.vscode/

@@ -13,7 +13,6 @@ $( document ).on( 'click', 'div#age-selector', function() {
 	var input = $( $( 'input#age-choice-input' )[ id ] );
 	var isChecked = input.attr( 'checked' );
 
-
 	if( !isChecked ) {
 		var checkedInput = getCheckedInput();
 		if( checkedInput ) {
@@ -61,7 +60,7 @@ $( document ).on( 'change', 'input#image-file-input', function() {
 	reader.addEventListener( "load", function() {
 		previewImg[ 0 ].src = reader.result;
 
-		imagePreview.show();
+		imagePreview.css('display', 'flex');
 		uploadBtn.hide();
 	}, false );
 
@@ -71,12 +70,16 @@ $( document ).on( 'change', 'input#image-file-input', function() {
 $( document ).on( 'click', '#ebook-upload-btn', function() {
 	var inputId = Number( $( this ).attr( 'file-input-id' ) );
 	var input = $( $( 'input#ebook-file-input' )[ inputId ] );
+	var fileName = $( $( 'span#file-name' )[ inputId ] );
 
 	var uploadBtn = $( $( 'button#ebook-upload-btn' )[ inputId ] );
 
 	if( input[ 0 ].files && input[ 0 ].files[ 0 ] ) {
 		input[ 0 ].value = '';
-		uploadBtn.removeClass( 'btn-danger' );
+			
+		fileName.css('display', 'none');
+		uploadBtn.removeClass( 'btn__danger' );
+		uploadBtn.addClass( 'btn__primary' );
 		uploadBtn.html( 'Prześlij' );
 
 	} else {
@@ -104,7 +107,13 @@ $( document ).on( 'change', '#ebook-file-input', function() {
 	}
 
 	var uploadBtn = $( $( 'button#ebook-upload-btn' )[ inputId ] );
-	
-	uploadBtn.addClass( 'btn-danger' );
+	var fileName = $( $( 'span#file-name' )[ inputId ] );
+	var uploadProgess = $( $( 'div#file-progress-upload' )[ inputId ] );
+
+	fileName.html( $( this )[ 0 ].files[ 0 ].name );
+
+	fileName.css('display', 'block');
+	uploadBtn.addClass( 'btn__danger' );
+	uploadBtn.removeClass( 'btn__primary' );
 	uploadBtn.html( 'Usuń' );
 });

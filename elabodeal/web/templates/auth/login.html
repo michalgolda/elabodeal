@@ -2,25 +2,27 @@
 
 {% block title-description %}Zaloguj się{% endblock %}
 
+{% block page_class_name %}p-login{% endblock %}
+
 {% block form %}
-<form class="form section padding-top-16px clear-both margin-center" method="POST" action="/auth/login/" autocomplete="off">
+<form class="form" method="POST" action="/auth/login/" autocomplete="off">
 	{% if form.errors %}
 		{% for error in form.email.errors %}
-			<p class="section color-red margin-bottom-8px text-align-center">{{ error }}</p>
+			<p class="form__error">{{ error }}</p>
 		{% endfor %}
 	{% endif %}
 
 	{% csrf_token %}
 
-	<div class="section margin-bottom-16px">
+	<div class="form__section">
 		<label>EMAIL</label>
 		{{ form.email }}
 	</div>
-	<div class="section margin-bottom-16px">
+	<div class="form__section">
 		<label>HASŁO</label>
 		{{ form.password }}
 	</div>	
 
-	<button class="btn btn-orange" type="submit">Zaloguj się</button>
+	<button class="btn btn__primary btn-block" type="submit">Zaloguj się</button>
 </form>
 {% endblock %}

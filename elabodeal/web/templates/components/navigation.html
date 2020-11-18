@@ -3,17 +3,17 @@
 <nav class="nav">
 	<a href="{% url 'web:index' %}">
 		<img
-			class="nav-logo"
+			class="nav__logo"
 			src="{% static 'images/white-logo.png' %}"
 			alt="White logo"
 		/>
 	</a>
-	<div class="nav-section">
+	<div class="nav__section">
 		{% if not request.user.is_authenticated %}
-			<div class="nav-action">
-				<a class="nav-link" href="{% url 'web:cart' %}">
-					<i class="fas fa-shopping-cart nav-icon"></i>
-					<p class="nav-text">
+			<div class="nav__action">
+				<a class="nav__link nav__cart" href="{% url 'web:cart' %}">
+					<i class="fas fa-shopping-cart nav__icon"></i>
+					<p>
 						{% if 'cart' in request.session %}
 							{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
 						{% else %}
@@ -22,17 +22,27 @@
 					</p>
 				</a>
 			</div>
-			<div class="nav-action">
-				<a class="nav-btn" href="{% url 'web:login' %}">Zaloguj się</a>
+			<div class="nav__action">
+				<a
+					class="btn btn__secondary btn__secondary"
+					href="{% url 'web:login' %}"
+				>
+					Zaloguj się
+				</a>
 			</div>
-			<div class="nav-action">
-				<a class="nav-btn" style="background: white; color: var(--orange);" href="{% url 'web:register' %}">Zarejestruj się</a>
+			<div class="nav__action">
+				<a 
+					class="btn btn__primary btn__primary-light" 
+					href="{% url 'web:register' %}"
+				>
+					Zarejestruj się
+				</a>
 			</div>
 		{% else %}
-			<div class="nav-action">
-				<a class="nav-link" href="{% url 'web:cart' %}">
-					<i class="fas fa-shopping-cart nav-icon"></i>
-					<p class="nav-text">
+			<div class="nav__action">
+				<a class="nav__link nav__cart" href="{% url 'web:cart' %}">
+					<i class="fas fa-shopping-cart nav__icon"></i>
+					<p>
 						{% if 'cart' in request.session %}
 							{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
 						{% else %}
@@ -41,43 +51,48 @@
 					</p>
 				</a>
 			</div>
-			<div id="nav-menu-open" class="nav-action">
-				<div class="nav-account-avatar"></div>
-				<p class="nav-text">{{ request.user.username }}</p>
-				<i id="nav-arrow-down" class="fas fa-angle-down nav-icon-arrow"></i>
-				<i id="nav-arrow-up" class="fas fa-angle-up nav-icon-arrow" style="display: none;"></i>
+			<div id="nav-menu-open" class="nav__action flex-center">
+				<div class="nav__avatar"></div>
+				<p class="nav__username">{{ request.user.username }}</p>
+				<i id="nav-arrow-down" class="fas fa-angle-down nav__icon nav__icon-arrow"></i>
+				<i id="nav-arrow-up" class="fas fa-angle-up nav__icon nav__icon-arrow" style="display: none;"></i>
 			</div>
 			{% if not request.path == '/salesmanager/products/add/' %}
-				<div class="nav-action">
-					<a class="nav-btn" href="{% url 'web:salesmanager-add-product' %}">Dodaj e-booka</a>
+				<div class="nav__action">
+					<a 
+						class="btn btn__secondary" 
+						href="{% url 'web:salesmanager-add-product' %}"
+					>
+						Dodaj e-booka
+					</a>
 				</div>
 			{% endif %}
 		{% endif %}
 	</div>
 </nav>
-<div id="nav-menu" class="nav-menu">
-	<div class="nav-menu-wrapper">
-		<div class="nav-menu-action">
-			<a class="nav-menu-link" href="#">Twój profil</a>
+<div id="nav-menu" class="nav__menu">
+	<div class="nav__menu-wrapper">
+		<div class="nav__menu-action">
+			<a href="#">Twój profil</a>
 		</div>
-		<div class="nav-menu-action">
-			<a class="nav-menu-link" href="{% url 'web:my-books' %}">Moje książki</a>
+		<div class="nav__menu-action">
+			<a href="{% url 'web:my-books' %}">Moja półka</a>
 		</div>
-		<div class="nav-menu-action">
-			<a class="nav-menu-link" href="{% url 'web:saved-carts' %}">Zapisane koszyki</a>
+		<div class="nav__menu-action">
+			<a href="{% url 'web:saved-carts' %}">Zapisane koszyki</a>
 		</div>
-		<div class="nav-menu-action">
-			<a class="nav-menu-link" href="{% url 'web:salesmanager' %}">Menedżer sprzedaży</a>
+		<div class="nav__menu-action">
+			<a href="{% url 'web:salesmanager' %}">Menedżer sprzedaży</a>
 		</div>
-		<div class="nav-menu-action">
-			<a class="nav-menu-link" href="#">Statystyki</a>
+		<div class="nav__menu-action">
+			<a href="#">Statystyki</a>
 		</div>
-		<div class="nav-menu-action">
-			<a class="nav-menu-link" href="#">Wiadomości</a>
+		<div class="nav__menu-action">
+			<a href="#">Wiadomości</a>
 		</div>
-		<div class="nav-menu-action">
-			<a class="nav-menu-link" href="#">Ustawienia</a>
+		<div class="nav__menu-action">
+			<a href="#">Ustawienia</a>
 		</div>
-		<a class="nav-menu-btn" href="{% url 'web:logout' %}">Wyloguj się</a>
+		<a class="btn btn__primary nav__menu-btn" href="{% url 'web:logout' %}">Wyloguj się</a>
 	</div>
 </div>

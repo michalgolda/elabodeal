@@ -3,89 +3,44 @@
 
 {% block title-description %}Menedżer sprzedaży{% endblock %}
 
-{% block css %}
-<style>
-	input[type="text"] {
-		height: 52px;
-		width: calc(100% - 144px);
-		float: elft;
-	}
-
-	button[type="submit"] {
-		height: 52px;
-	}
-
-	.search {
-		max-width: 700px;
-	    width: 100%;
-	    height: 52px;
-	    margin: 0 auto;
-	}
-
-	.footer-text {
-		color: var(--green);
-	}
-
-	.footer-link {
-		color: var(--green);
-	}
-</style>
-{% endblock %}
+{% block page_class_name %}p-salesmanger-index{% endblock %}
 
 {% block body %}
 {% include 'components/navigation.html' %}
-<div class="container">
-	<p class="font-size-medium font-weight-600 color-green">Menedżer sprzedaży</p>
-	<div class="section margin-top-32px margin-bottom-32px">
-		<form class="search">
-			<input 
-				type="text"
-				name="q"
-				placeholder="Wyszukaj"
-				required 
-			/>
-			<button class="btn btn-green margin-left-16px float-right" type="submit">Szukaj</button>
-		</form>
-	</div>
-	<div class="section margin-bottom-16px grid">
-		<div>
-			<p class="float-left font-size-small font-weight-600 color-orange">Lista twoich e-booków</p>
-		</div>
-		<div class="section">
-			<form class="float-right">
-				<label>SORTOWANIE</label>
-				<select>
-					<option>Domyślnie</option>
+<div class="wrapper">
+	<div class="section">
+		<p class="section__title">Menedżer sprzedaży</p>
+		<div class="record-list">
+			{% if products %}
+			<div class="record-list__options">
+				<form class="search-form">
+					<input type="text" placeholder="Wyszukaj.." />
+					<button class="btn btn__primary">Szukaj</button>
+				</form>
+				<select class="sort-selection">
+					<option>Sortowanie</option>
 				</select>
-			</form>
-		</div>
-	</div>
-	<div class="section margin-top-32px">
-		{% if products %}
-			<div class="section record-grid grid">
-				{% for p in products %}
-					<div class="box clear-padding section">
-						<div class="record-body">
-							<div class="record-title flex-center">
-								<p class="font-size-small color-black font-weight-600">{{ p.title }}</p>
-							</div>
-							<div class="record-actions flex-center">
-								<a href="{% url 'web:salesmanager-preview-product' id=p.id %}">
-									<button class="btn btn-green">Podgląd</button>
-								</a>
-								<button class="btn btn-orange margin-left-16px">Statystyki</button>
-							</div>
-						</div>
-						<div class="section flex-center record-footer padding-top-8px padding-bottom-8px">
-							<p class="font-size-small font-weight-300 color-green"><b>Data dodania</b> - {{ p.created_at.day }}.{{ p.created_at.month}}.{{ p.created_at.year }}</p>
-						</div>
-					</div>
-				{% endfor %}
 			</div>
+			{% for product in products %}
+			<div class="record">
+				<div>
+					<p class="record__title">{{ product.title }}</p>
+					<p class="record__subtitle">Data wystawienia -
+						{{ product.created_at.day }}.{{ product.created_at.month}}.{{ product.created_at.year }}</p>
+				</div>
+				<div>
+					<a href="#" class="btn btn__primary">Podgląd</a>
+					<a href="#" class="btn btn__secondary">Statystyki</a>
+				</div>
+			</div>
+			{% endfor %}
 			{% else %}
-			<h1 class="text-align-center color-black font-size-medium margin padding-top-64px padding-bottom-64px">Nie posiadasz żadnego opublikowanego e-booka zmień to jak najszybciej</h1>
-		{% endif %}
+			<div class="section flex-center">
+				<h2>Nie posiadasz produktów wystawionych na sprzedaż</h2>
+			</div>
+			{% endif %}
+		</div>
 	</div>
 </div>
-{% include 'components/smallfooter.html' %}
+{% include 'components/small-footer-light.html' %}
 {% endblock %}

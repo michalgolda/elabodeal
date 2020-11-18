@@ -3,401 +3,198 @@
 
 {% block title-description %}Dodaj swojego e-booka i zacznij zarabiać{% endblock %}
 
-{% block css %}
-<style>
-	.container {
-		max-width: 500px;
-	}
-
-	.footer-text {
-		color: var(--green);
-	}
-
-	.footer-link {
-		color: var(--green);
-	}
-
-	input[type="file"] {
-		padding-top: 3px;
-	}
-
-	input[type="file"]::-webkit-file-upload-button {
-		background: var(--orange);
-		border: none;
-		border-radius: 2px;
-		outline: none;
-		color: white;
-		padding: 3px 5px 3px 5px;
-	}
-
-	input[type="file"]::-webkit-file-upload-button:hover {
-		cursor: pointer;
-	}
-
-	textarea[name="description"] {
-		height: 256px;
-		max-height: 256px;
-		resize: none;
-	}
-
-	textarea[name="table_of_content"] {
-		height: 256px;
-		max-height: 256px;
-		resize: none;
-	}
-
-	.demo-pdf {
-		max-width: 156px;
-	}
-
-	.image-grid {
-		grid-template-columns: 1fr 1fr 1fr 1fr;
-		grid-row-gap: 16px;
-		grid-column-gap: 16px;
-	}
-
-	.age-grid {
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-		grid-row-gap: 16px;
-		grid-column-gap: 16px;
-	}
-
-	.age {
-		width: 87.2px;
-		height: 87.2px;
-	}
-
-	.age:hover {
-		background: var(--green);
-		cursor: pointer;
-	}
-
-	.age:hover > p {
-		color: white;
-	}
-
-	.image {
-		width: 113px;
-		height: 113px;
-	}
-
-	.image:hover {
-		background: var(--green);
-		cursor: pointer;
-	}
-
-	#image-upload-btn > i[id="upload"] {
-		display: none;
-	}
-
-	#image-upload-btn > i[id="camera"] {
-		color: var(--grey);
-	}
-
-	.image:hover > #image-upload-btn > i[id="upload"] {
-		display: inline-flex;
-		color: white;
-	}
-
-	.image:hover > #image-upload-btn > i[id="camera"] {
-		display: none;
-	}
-
-	#image-upload-btn {
-		width: 100%;
-		height: 100%;
-	}
-
-	#image-preview {
-		width: 113px;
-		height: 113px;
-	}
-
-	#image-preview > #image-delete-btn {
-		display: none;
-		position: absolute;
-		z-index: 99;
-		width: 113px;
-		height: 113px;
-		margin-left: -8px;
-		background: rgb(1, 22, 39, 0.30);
-		justify-content: center;
-		align-items: center;
-		border-radius: 2px;
-	}
-
-	#image-preview:hover > #image-delete-btn {
-		display: flex;
-	}
-	
-	#image-preview > img {
-		width: 113px;
-		height: 113px;
-		background-position: center;
-		border-radius: 2px;
-		z-index: 98;
-		position: absolute;
-		margin-left: -8px;
-	}
-
-	#age-choice-input {
-		display: none;
-	}
-
-	.age-checked {
-		background-color: var(--green);
-	}
-
-	.age-checked > p {
-		color: white;
-	}
-</style>
-{% endblock %}
+{% block page_class_name %}p-salesmanager-add-product{% endblock %}
 
 {% block body %}
 {% include 'components/navigation.html' %}
-<div class="container">
-	<div class="section margin-bottom-32px">
-		<p class="font-size-large font-weight-600 color-green">Dodaj e-booka</p>
-		<p class="font-size-medium font-weight-300 color-black">Wypełnij poniższy formularz</p>
-	</div>
-	<form class="section" action="/salesmanager/addproduct/" method="POST" enctype="multipart/form-data" autocomplete="off">
-		{% csrf_token %}
-		<div class="section">
-			<label>TYTUŁ</label>
-			{{ form.title }}
-		</div>
-
-		<div class="section display-flex margin-top-16px">
-			<div class="section">
-				<label>KATEGORIA</label>
-				<select name="category">
-					{% for category in categories %}
-						<option>{{ category.name }}</option>
-					{% endfor %}
-				</select>
+<div class="wrapper">
+	<div class="form-wrapper">
+		<form class="form" action="/salesmanager/addproduct/" method="POST" enctype="multipart/form-data" autocomplete="off">
+			{% csrf_token %}
+			<p class="h2">Aby móc wystawić swojego ebooka na sprzedaż musisz wypełnić ponniższy formularz.</p>
+			<div>
+				<label>TYTUŁ</label>
+				{{ form.title }}
 			</div>
-			<div class="section margin-left-16px">
-				<label>WERSJA JĘZYKOWA</label>
-				{{ form.lang }}
-			</div>
-		</div>
-		<div class="section margin-top-16px">
-			<label>OPIS</label>
-			{{ form.description }}
-		</div>
-		<div class="section margin-top-16px">
-			<label>SPIS TREŚCI</label>
-			{{ form.table_of_content }}
-		</div>
-		<div class="display-flex margin-top-16px">
-			<div class="section">
-				<label>ISBN</label>
-				{{ form.isbn }}
-			</div>
-			<div class="section margin-left-16px">
-				<label>Autor</label>
-				{{ form.author }}
-			</div>
-		</div>
-		<div class="section display-flex margin-top-16px">
-			<div class="section">
-				<label>ILOŚĆ STRON</label>
-				{{ form.page_count }}
-			</div>
-			<div class="section margin-left-16px">
-				<label>CENA - Prowizja 0.83 zł</label>
-				{{ form.price }}
-			</div>
-			<div class="section margin-left-16px">
-				<label>ILOŚĆ KOPII</label>
-				{{ form.copies }}
-			</div>
-		</div>
-		<div class="section display-flex margin-top-16px">
-			<div class="section">
-				<label>PDF</label>
-				<div class="section">
-					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="0">Prześlij</button>
-					{{ form.pdf_file }}
+			<div class="form__section">
+				<div>
+					<label>KATEGORIA</label>
+					<select name="category">
+						{% for category in categories %}
+							<option>{{ category.name }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div>
+					<label>WERSJA JĘZYKOWA</label>
+					{{ form.lang }}
 				</div>
 			</div>
-			<div class="section margin-left-16px">
-				<label>EPUB</label>
-				<div class="section">
-					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="1">Prześlij</button>
+			<div>
+				<label>OPIS</label>
+				{{ form.description }}
+			</div>
+			<div>
+				<label>SPIS TREŚCI</label>
+				{{ form.table_of_content }}
+			</div>
+			<div class="form__section">
+				<div>
+					<label>AUTOR</label>
+					{{ form.author }}
+				</div>
+				<div>
+					<label>ISBN</label>
+					{{ form.isbn }}
+				</div>
+			</div>
+			<div class="form__section form__section-xl">
+				<div>
+					<label>ILOŚĆ STRON</label>
+					{{ form.page_count }}
+				</div>
+				<div>
+					<label>CENA</label>
+					{{ form.price }}
+				</div>
+				<div>
+					<label>ILOŚĆ KOPII</label>
+					{{ form.copies }}
+				</div>
+			</div>
+			<div class="form__section">
+				<div>
+					<label>PDF</label>
+					<span id="file-name"></span>
+					<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="0">Prześlij</button>
+					{{ form.pdf_file }}
+				</div>
+				<div>
+					<label>EPUB</label>
+					<span id="file-name"></span>
+					<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="1">Prześlij</button>
 					{{ form.epub_file }}
 				</div>
 			</div>
-			<div class="section margin-left-16px">
-				<label>MOBI</label>
-				<div class="section">
-					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="2">Prześlij</button>
+			<div class="form__section">
+				<div>
+					<label>MOBI</label>
+					<span id="file-name"></span>
+					<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="2">Prześlij</button>
 					{{ form.mobi_file }}
 				</div>
-			</div>
-		</div>
-		<div class="section margin-top-16px">
-			<div class="demo-pdf margin-center">
-				<label>PDF - Wersja demo</label>
-				<div class="section">
-					<button id="ebook-upload-btn" class="btn btn-green btn-full-width" type="button" file-input-id="3">Prześlij</button>
+				<div>
+					<label>WERSJA DEMO (PDF)</label>
+					<span id="file-name"></span>
+					<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="3">Prześlij</button>
 					{{ form.demo_pdf_file }}
 				</div>
 			</div>
-		</div>
-		<div class="section">
-			<label>Kategoria wiekowa</label>
-			<div class="section display-grid grid age-grid">
-				<div id="age-selector" class="section box age flex-center" age-input-id="0">
-					<p class="font-size-medium color-grey">3+</p>
-					{{ form.age_0 }}
-				</div>
-				<div id="age-selector" class="section box age flex-center" age-input-id="1">
-					<p class="font-size-medium color-grey">7+</p>
-					{{ form.age_1 }}
-				</div>
-				<div id="age-selector" class="section box age flex-center" age-input-id="2">
-					<p class="font-size-medium color-grey">12+</p>
-					{{ form.age_2 }}
-				</div>
-				<div id="age-selector" class="section box age flex-center" age-input-id="3">
-					<p class="font-size-medium color-grey">16+</p>
-					{{ form.age_3 }}
-				</div>
-				<div id="age-selector" class="section box age flex-center" age-input-id="4">
-					<p class="font-size-medium color-grey">18+</p>
-					{{ form.age_4 }}
+			<div>
+				<label>Kategoria wiekowa</label>
+				<div class="form__section form__section-blocks">
+					<div id="age-selector" age-input-id="0">
+						<p>3+</p>
+						{{ form.age_0 }}
+					</div>
+					<div id="age-selector" age-input-id="1">
+						<p>7+</p>
+						{{ form.age_1 }}
+					</div>
+					<div id="age-selector" age-input-id="2">
+						<p>12+</p>
+						{{ form.age_2 }}
+					</div>
+					<div id="age-selector" age-input-id="3">
+						<p>16+</p>
+						{{ form.age_3 }}
+					</div>
+					<div id="age-selector" age-input-id="4">
+						<p>18+</p>
+						{{ form.age_4 }}
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="section margin-top-16px">
-			<label>Zdjęcia</label>
-			<div class="section display-grid grid image-grid">
-				<div class="section image box flex-center">
-					<button id="image-upload-btn" type="button" file-input-id="0">
-						<i id="upload" class="fas fa-upload font-size-medium"></i>
-						<i id="camera" class="fas fa-camera font-size-medium"></i>
-					</button>
-					<div id="image-preview" class="display-none">
-						<img src="#">
-						</img>
-						<button id="image-delete-btn" type="button" file-input-id="0">
-							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+			<div>
+				<label>Zdjęcia</label>
+				<div class="form__section form__section-blocks">
+					<div class="image">
+						<button id="image-upload-btn" class="image__upload" type="button" file-input-id="0">
+							<span>Okładka</span>
+							<i id="upload" class="fas fa-upload font-size-medium"></i>
 						</button>
+						<div id="image-preview" class="image__preview">
+							<img src="#">
+							</img>
+							<button id="image-delete-btn" type="button" file-input-id="0">
+								<i class="fas fa-trash-alt font-size-medium color-white"></i>
+							</button>
+						</div>
+						{{ form.file_image_0 }}
 					</div>
-					{{ form.file_image_0 }}
-				</div>
-				<div class="section image box flex-center">
-					<button id="image-upload-btn" type="button" file-input-id="1">
-						<i id="upload" class="fas fa-upload font-size-medium"></i>
-						<i id="camera" class="fas fa-camera font-size-medium"></i>
-					</button>
-					<div id="image-preview" class="display-none">
-						<img src="#">
-						</img>
-						<button id="image-delete-btn" type="button" file-input-id="1">
-							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+					<div class="image">
+						<button id="image-upload-btn" class="image__upload" type="button" file-input-id="1">
+							<i id="upload" class="fas fa-upload font-size-medium"></i>
 						</button>
+						<div id="image-preview" class="image__preview">
+							<img src="#">
+							</img>
+							<button id="image-delete-btn" type="button" file-input-id="1">
+								<i class="fas fa-trash-alt font-size-medium color-white"></i>
+							</button>
+						</div>
+						{{ form.file_image_1 }}
 					</div>
-					{{ form.file_image_1 }}
-				</div>
-				<div class="section image box flex-center">
-					<button id="image-upload-btn" type="button" file-input-id="2">
-						<i id="upload" class="fas fa-upload font-size-medium"></i>
-						<i id="camera" class="fas fa-camera font-size-medium"></i>
-					</button>
-					<div id="image-preview" class="display-none">
-						<img src="#">
-						</img>
-						<button id="image-delete-btn" type="button" file-input-id="2">
-							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+					<div class="image">
+						<button id="image-upload-btn" class="image__upload" type="button" file-input-id="2">
+							<i id="upload" class="fas fa-upload font-size-medium"></i>
 						</button>
+						<div id="image-preview" class="image__preview">
+							<img src="#">
+							</img>
+							<button id="image-delete-btn" type="button" file-input-id="2">
+								<i class="fas fa-trash-alt font-size-medium color-white"></i>
+							</button>
+						</div>
+						{{ form.file_image_2 }}
 					</div>
-					{{ form.file_image_2 }}
-				</div>
-				<div class="section image box flex-center">
-					<button id="image-upload-btn" type="button" file-input-id="3">
-						<i id="upload" class="fas fa-upload font-size-medium"></i>
-						<i id="camera" class="fas fa-camera font-size-medium"></i>
-					</button>
-					<div id="image-preview" class="display-none">
-						<img src="#">
-						</img>
-						<button id="image-delete-btn" type="button" file-input-id="3">
-							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+					<div class="image">
+						<button id="image-upload-btn" class="image__upload" type="button" file-input-id="3">
+							<span></span>
+							<i id="upload" class="fas fa-upload font-size-medium"></i>
 						</button>
+						<div id="image-preview" class="image__preview">
+							<img src="#">
+							</img>
+							<button id="image-delete-btn" type="button" file-input-id="3">
+								<i class="fas fa-trash-alt font-size-medium color-white"></i>
+							</button>
+						</div>
+						{{ form.file_image_3 }}
 					</div>
-					{{ form.file_image_3 }}
-				</div>
-				<div class="section image box flex-center">
-					<button id="image-upload-btn" type="button" file-input-id="4">
-						<i id="upload" class="fas fa-upload font-size-medium"></i>
-						<i id="camera" class="fas fa-camera font-size-medium"></i>
-					</button>
-					<div id="image-preview" class="display-none">
-						<img src="#">
-						</img>
-						<button id="image-delete-btn" type="button" file-input-id="4">
-							<i class="fas fa-trash-alt font-size-medium color-white"></i>
+					<div class="image">
+						<button id="image-upload-btn" class="image__upload" type="button" file-input-id="4">
+							<i id="upload" class="fas fa-upload font-size-medium"></i>
 						</button>
+						<div id="image-preview" class="image__preview">
+							<img src="#">
+							</img>
+							<button id="image-delete-btn" type="button" file-input-id="4">
+								<i class="fas fa-trash-alt font-size-medium color-white"></i>
+							</button>
+						</div>
+						{{ form.file_image_4 }}
 					</div>
-					{{ form.file_image_4 }}
-				</div>
-				<div class="section image box flex-center">
-					<button id="image-upload-btn" type="button" file-input-id="5">
-						<i id="upload" class="fas fa-upload font-size-medium"></i>
-						<i id="camera" class="fas fa-camera font-size-medium"></i>
-					</button>
-					<div id="image-preview" class="display-none">
-						<img src="#">
-						</img>
-						<button id="image-delete-btn" type="button" file-input-id="5">
-							<i class="fas fa-trash-alt font-size-medium color-white"></i>
-						</button>
 					</div>
-					{{ form.file_image_5 }}
 				</div>
-				<div class="section image box flex-center">
-					<button id="image-upload-btn" type="button" file-input-id="6">
-						<i id="upload" class="fas fa-upload font-size-medium"></i>
-						<i id="camera" class="fas fa-camera font-size-medium"></i>
-					</button>
-					<div id="image-preview" class="display-none">
-						<img src="#">
-						</img>
-						<button id="image-delete-btn" type="button" file-input-id="6">
-							<i class="fas fa-trash-alt font-size-medium color-white"></i>
-						</button>
-					</div>
-					{{ form.file_image_6 }}
-				</div>
-				<div class="section image box flex-center">
-					<button id="image-upload-btn" type="button" file-input-id="7">
-						<i id="upload" class="fas fa-upload font-size-medium"></i>
-						<i id="camera" class="fas fa-camera font-size-medium"></i>
-					</button>
-					<div id="image-preview" class="display-none">
-						<img src="#">
-						</img>
-						<button id="image-delete-btn" type="button" file-input-id="7">
-							<i class="fas fa-trash-alt font-size-medium color-white"></i>
-						</button>
-					</div>
-					{{ form.file_image_7 }}
-				</div>
-			</div>
-		</div>
-		<div class="section margin-top-32px">
-			<div class="section flex-center">
-				<div class="section">
+				<div class="form__option">
 					{{ form.accept_rules }}
-					<label class="margin-left-8px margin-top-2px margin-bottom-2px">AKCEPTUJĘ REGULAMIN</label>
+					<p>Akceptuję regulamin</p>
 				</div>
+				<button class="btn btn__primary btn-block">Wystaw produkt</button>
 			</div>
 		</div>
-		<button class="btn btn-orange btn-full-width margin-top-32px" type="submit">Opublikuj</button>
-	</form>
+	</div>
 </div>
-{% include 'components/smallfooter.html' %}
+{% include 'components/big-footer.html' %}
 {% endblock %}

@@ -1,0 +1,10 @@
+.section {
+    width: 100%;
+    height: auto;
+
+    &__title {
+        font-size: $font-size-big;
+        font-weight: 600;
+        color: $color-green;
+    }
+}

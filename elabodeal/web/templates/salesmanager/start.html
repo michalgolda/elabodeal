@@ -3,85 +3,53 @@
 
 {% block title-description %}Zacznij sprzedawać{% endblock %}
 
-{% block css %}
-<style>
-	.container {
-		max-width: 500px;
-	}
-
-	.footer-text {
-		color: var(--green);
-	}
-
-	.footer-link {
-		color: var(--green);
-	}
-
-	.flex-start {
-		justify-content: flex-start;
-	}
-
-	.flex-end {
-		justify-content: flex-end;
-	}
-</style>
-{% endblock %}
+{% block page_class_name %}p-salesmanager-start{% endblock %}
 
 {% block body %}
 {% include 'components/navigation.html' %}
-<div class="container">
-	<div class="section margin-bottom-32px">
-		<p class="font-size-large font-weight-600 color-green">Zacznij sprzedawać !</p>
-		<p class="font-size-medium font-weight-300 color-black">Wypełnij poniższy formularz</p>
-	</div>
-	<form class="section">
-		<div class="section">
-			<p class="font-weight-600 font-size-small color-black">1. Dane do wypłaty</p>
-			<div class="section display-flex margin-top-16px">
-				<div class="section flex-start">
+<div class="wrapper">
+	<div class="section">
+		<div class="form-wrapper">
+			<form class="form">
+				<p class="h2">Aby móc wystawić swojego ebooka na sprzedaż musisz wypełnić ponniższy formularz.</p>
+				<p class="h3">1. Dane do wypłaty</p>
+				<div>
 					<label>KRAJ</label>
 					{{ form.country }}
 				</div>
-				<div class="section flex-end margin-left-16px">
+				<div>
 					<label>SWIFT</label>
 					{{ form.swift }}
 				</div>
-			</div>
-			<div class="section margin-top-16px">
-				<label>NUMER RACHUNKU</label>
-				{{ form.account_number }}
-			</div>
-		</div>
-		<div class="section margin-top-32px">
-			<p class="font-weight-600 font-size-small color-black">2. Dane sprzedającego</p>
-			<div class="section display-flex margin-top-16px">
-				<div class="section flex-start">
-					<label>IMIĘ</label>
-					{{ form.first_name }}
+				<div>
+					<label>NUMER RACHUNKU</label>
+					{{ form.account_number }}
 				</div>
-				<div class="section flex-end margin-left-16px">
-					<label>NAZWISKO</label>
-					{{ form.last_name }}
+				<p class="h3">2. Dane sprzedającego</p>
+				<div class="form__section">
+					<div>
+						<label>IMIĘ</label>
+						{{ form.first_name }}
+					</div>
+					<div>
+						<label>NAZWISKO</label>
+						{{ form.last_name }}
+					</div>
 				</div>
-			</div>
-		</div>
-		<div class="section margin-top-32px">
-			<p class="font-weight-600 font-size-small color-black">3. Powiadomienia</p>
-			<div class="section flex-center margin-top-16px">
-				<div class="section">
+				<p class="h3">3. Powiadomienia</p>
+				<p class="form__information">Zmiana ustawień powiadomień możesz dokonać w ustawieniach.</p>
+				<div class="form__option">
 					{{ form.notify_when_buy_book }}
-					<label class="margin-left-8px margin-top-2px margin-bottom-2px">E-MAIL O KUPIONEJ KOPII KSIĄŻKI</label>
+					<p>Wyślij email z informacją o sprzedaży kopii książki</p>
 				</div>
-			</div>
-			<div class="section flex-center margin-top-16px">
-				<div class="section">
+				<div class="form__option">
 					{{ form.notify_when_withdraw }}
-					<label class="margin-left-8px margin-top-2px margin-bottom-2px">E-MAIL O WYPŁACIE ŚRODKÓW NA KONTO</label>
+					<p>Wyślij email z informacją o wypłacie środków na konto</p>
 				</div>
-			</div>
+				<button class="btn btn__primary btn-block">Kontynuj</button>
+			</form>
 		</div>
-		<button class="btn btn-green btn-full-width margin-top-32px" type="submit">Zapisz</button>
-	</form>
+	</div>
 </div>
-{% include 'components/smallfooter.html' %}
+{% include 'components/small-footer-light.html' %}
 {% endblock %}

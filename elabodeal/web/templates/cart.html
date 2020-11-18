@@ -1,171 +1,95 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title-description %}Twój koszyk{% endblock %}
+{% block title-description %}Koszyk {% if 'cart' in request.session %}({{ request.session.cart.item_count }})
+{% else %}(0){% endif %}{% endblock %}
 
-{% block css %}
-<style>
-	.box {
-		height: 256px;
-	}
-
-	.footer-text {
-		color: var(--green);
-	}
-
-	.footer-link {
-		color: var(--green);
-	}
-
-	button[type="share"] {
-		width: 140px;
-	}
-
-	.step {
-		height: 50px;
-		width: 50px;
-		border-radius: 50%;
-		background: white;
-		border: 1px solid var(--grey);
-		color: var(--grey);
-	}
-
-	.current-step {
-		background: var(--orange);
-		color: white;
-	}
-
-	.step-decorator {
-		width: 100px;
-		height: 2px;
-		background: var(--grey);
-	}
-
-	.step-text-decorator {
-		width: calc(100% - 20px);
-		height: 2px;
-		background: var(--green);
-		margin: 0 auto;
-	}
-
-	.social-icon:hover {
-		cursor: pointer;
-	}
-
-	.fa-facebook {
-		color: #4267B2;
-	}
-
-	.fa-reddit {
-		color: #FF5700;
-	}
-
-	.fa-twitter-square {
-		color: #1DA1F2;
-	}
-</style>
-{% endblock %}
+{% block page_class_name %}p-cart{% endblock %}
 
 {% block body %}
 {% if products %}
-	{% include 'components/share_cart_popup.html' %}
+{% include 'components/share_cart_popup.html' %}
 {% endif %}
 {% if request.user.is_authenticated and products %}
-	{% include 'components/save_cart_popup.html'%}
+{% include 'components/save_cart_popup.html'%}
 {% endif %}
 {% include 'components/navigation.html' %}
-<div class="container">
-	<section class="section">
-		<div class="section flex-center margin-bottom-64px">
-			<div>
-				<div class="step current-step flex-center float-left margin-right-16px">
-					<span class="font-size-medium">1</span>
-				</div>
-				<div class="float-left padding-top-4px padding-bottom-4px">
-					<p class="font-size-big color-orange">Koszyk</p>
-					<div class="step-text-decorator"></div>
-				</div>
-			</div>
-			<div class="flex-center margin-left-16px margin-right-16px">
-				<div class="step-decorator"></div>
-			</div>
-			<div>
-				<div class="step flex-center float-left margin-right-16px">
-					<span class="font-size-medium">2</span>
-				</div>
-				<p class="float-left font-size-big padding-top-4px padding-bottom-4px color-grey">Dostawa</p>
-			</div>
-			<div class="flex-center margin-left-16px margin-right-16px">
-				<div class="step-decorator"></div>
-			</div>
-			<div>
-				<div class="step flex-center float-left margin-right-16px">
-					<span class="font-size-medium">3</span>
-				</div>
-				<p class="float-left font-size-big padding-top-4px padding-bottom-4px color-grey">Płatnośc</p>
-			</div>
+<div class="wrapper">
+	<div class="section flex-center">
+		<div class="step flex-center step-current">
+			<figure class="flex-center">
+				<span class="h2">1</span>
+			</figure>
+			<span class="h2">Koszyk</span>
 		</div>
-		<section class="section">
-			{% if products %}
+		<div class="step-separator"></div>
+		<div class="step flex-center">
+			<figure class="flex-center">
+				<span class="h2">2</span>
+			</figure>
+			<span class="h2">Wysyłka</span>
+		</div>
+		<div class="step-separator"></div>
+		<div class="step flex-center">
+			<figure class="flex-center">
+				<span class="h2">3</span>
+			</figure>
+			<span class="h2">Płatność</span>
+		</div>
+	</div>
+	<div class="flex-center" style="min-height: calc(100vh - 258.2px);">
+		<div class="section">
+			<div class="section" style="margin-top: 2rem;">
+				<p class="section__title">Lista produktów</p>
+				{% if products %}
 				{% for product in products %}
-					<div class="box padding-16px margin-bottom-16px">
-						<div class="cart-item float-left">
-							<div class="cart-item-section">
-								<input class="cart-item-checkbox" type="checkbox" checked/>
-								<img 
-									class="cart-item-cover"
-									src="{{ product.cover_img.url }}"
-									alt="{{ product.title }}"
-								/>
-								<div class="float-left">
-									<p class="cart-item-title font-size-medium">{{ product.title }}</p>
-									<p class="cart-item-author ">{{ product.author }}</p>
-								</div>
+				<div class="cart-items">
+					<div class="product">
+						<div class="flex-center">
+							<input type="checkbox" checked />
+						</div>
+						<img src="{{ product.cover_img.url }}" />
+						<div class="product__details">
+							<div>
+								<h3 class="product__title">{{ product.title }}</h3>
+								<p class="product__author">{{ product.author }}</p>
+							</div>
+							<div>
+								<p class="product__price">{{ product.price }} zł</p>
 							</div>
 						</div>
-						<form method="POST" action="/cart/" class="float-right">
-							{% csrf_token %}
-							<input type="hidden" name="product_id" value="{{ product.id }}">
-							<input type="hidden" name="action_type" value="delete-product" />
-							<button class="font-size-medium color-grey float-left">
-								<i class="fas fa-times"></i>
-							</button>
-						</form>
-						<div class="cart-item-section float-right">	
-							<p class="cart-item-price">{{ product.price }} zł</p>
-						</div>
+						<i class="fas fa-times h2 product__delete"></i>
 					</div>
+				</div>
 				{% endfor %}
-
 				{% else %}
-				<h1 class="font-size-large color-black font-weight-600 text-align-center padding-top-64px padding-bottom-64px">Twój koszyk jest pusty</h1>
-			{% endif %}
-		</section>
-	</section>
-	<section class="section margin-top-32px margin-bottom-32px">
-		<div class="float-left">
-			{% if request.user.is_authenticated and products %}
-				<button id="show-save-cart-popup" class="btn btn-green margin-right-16px">Zapisz koszyk</button>
-			{% endif %}
-			{% if products %}
-				<button id="open-share-cart-popup" class="btn btn-green" type="share">Udostępnij koszyk</button>
-			{% endif %}
-		</div>
-		<div class="float-right">
-			<p class="float-left color-black font-size-medium">Razem: 
-				{% if 'cart' in request.session %}
-					<b class="color-orange">{{ request.session.cart.total_price }} zł</b>
-				{% else %}
-					<b class="color-orange">0.00 zł</b>
+				<div class="empty-cart flex-center">
+					<p class="h2">Twój koszyk jest pusty 😯</p>
+				</div>
 				{% endif %}
-			</p>
-			{% if products %}
-				<a href="{% url 'web:cart-delivery' %}">
-					<button class="btn btn-orange margin-left-16px">Przejdź dalej</button>
-				</a>
-			{% endif %}
+			</div>
+			<div class="cart-details">
+				<div>
+					{% if products %}
+					<button id="open-share-cart-popup" class="btn btn__primary">Udostępnij</button>
+					{% else %}
+					<button class="btn btn__disabled">Udostępnij</button>
+					{% endif %}
+					{% if request.user.is_authenticated and products %}
+					<button id="show-save-cart-popup" class="btn btn__primary">Zapisz</button>
+					{% endif %}
+				</div>
+				<div>
+					{% if 'cart' in request.session %}
+					<p>Razem: {{ request.session.cart.total_price }} zł</p=>
+						{% else %}
+						<p>Razem: 0.00 zł</p>
+						<a class="btn btn__disabled" href="{% url 'web:cart-delivery' %}">Przejdź dalej</a>
+						{% endif %}
+				</div>
+			</div>
 		</div>
-	</section>
+	</div>
 </div>
-{% include 'components/smallfooter.html' %}
+{% include 'components/small-footer-light.html' %}
 {% endblock %}

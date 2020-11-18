@@ -25,9 +25,6 @@ class IndexView(BaseView):
 			products = Product.objects.all()
 
 		for p in products:
-			p.title = p.title[:30] + '...'
-
-		for p in products:
 			p.empty_stars = range(5 - int(p.rating))
 			p.rating = range(int(p.rating))
 

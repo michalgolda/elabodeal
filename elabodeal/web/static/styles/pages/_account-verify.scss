@@ -1,0 +1,54 @@
+.p-account-verify {
+
+    .section {
+        max-width: 400px;
+        text-align: center;
+    }
+    
+    .logo {
+        width: 100%;
+        height: 32px;
+        text-align: center;
+
+        & > a > img {
+            height: 32px;
+        }
+    }
+    
+    .greeting {
+        margin-top: 2rem;
+    }
+
+    .information {
+        margin-top: 0.5rem;
+        font-weight: 500;
+        font-size: $font-size-small;
+        word-break: keep-all;
+    }
+
+    .form {
+        width: 100%;
+        height: auto;
+        margin-top: 1rem;
+
+        &__section {
+            max-width: 256px;
+            height: auto;
+            display: grid;
+            grid-template-rows: auto;
+            grid-row-gap: 1rem;
+            margin: 1rem auto;
+        }
+
+        &__error {
+            color: $color-red;
+            font-size: $font-size-small;
+            margin-top: 1rem;
+        }
+
+        &__input {
+            text-align: center;
+            letter-spacing: 1.5rem;
+        }
+    }
+}
