@@ -2,71 +2,58 @@
 
 <nav class="nav">
 	<a href="{% url 'web:index' %}">
-		<img
-			class="nav__logo"
-			src="{% static 'images/white-logo.png' %}"
-			alt="White logo"
-		/>
+		<img class="nav__logo" src="{% static 'images/white-logo.png' %}" alt="White logo" />
 	</a>
 	<div class="nav__section">
 		{% if not request.user.is_authenticated %}
-			<div class="nav__action">
-				<a class="nav__link nav__cart" href="{% url 'web:cart' %}">
-					<i class="fas fa-shopping-cart nav__icon"></i>
-					<p>
-						{% if 'cart' in request.session %}
-							{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
-						{% else %}
-						0.00 zł (0)
-						{% endif %}
-					</p>
-				</a>
-			</div>
-			<div class="nav__action">
-				<a
-					class="btn btn__secondary btn__secondary"
-					href="{% url 'web:login' %}"
-				>
-					Zaloguj się
-				</a>
-			</div>
-			<div class="nav__action">
-				<a 
-					class="btn btn__primary btn__primary-light" 
-					href="{% url 'web:register' %}"
-				>
-					Zarejestruj się
-				</a>
-			</div>
+		<div class="nav__action">
+			<a class="nav__link nav__cart" href="{% url 'web:cart' %}">
+				<i class="fas fa-shopping-cart nav__icon"></i>
+				<p>
+					{% if 'cart' in request.session %}
+					{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
+					{% else %}
+					0.00 zł (0)
+					{% endif %}
+				</p>
+			</a>
+		</div>
+		<div class="nav__action">
+			<a class="btn btn__secondary btn__secondary" href="{% url 'web:login' %}">
+				Zaloguj się
+			</a>
+		</div>
+		<div class="nav__action">
+			<a class="btn btn__primary btn__primary-light" href="{% url 'web:register' %}">
+				Zarejestruj się
+			</a>
+		</div>
 		{% else %}
-			<div class="nav__action">
-				<a class="nav__link nav__cart" href="{% url 'web:cart' %}">
-					<i class="fas fa-shopping-cart nav__icon"></i>
-					<p>
-						{% if 'cart' in request.session %}
-							{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
-						{% else %}
-						0.00 zł
-						{% endif %}
-					</p>
-				</a>
-			</div>
-			<div id="nav-menu-open" class="nav__action flex-center">
-				<div class="nav__avatar"></div>
-				<p class="nav__username">{{ request.user.username }}</p>
-				<i id="nav-arrow-down" class="fas fa-angle-down nav__icon nav__icon-arrow"></i>
-				<i id="nav-arrow-up" class="fas fa-angle-up nav__icon nav__icon-arrow" style="display: none;"></i>
-			</div>
-			{% if not request.path == '/salesmanager/products/add/' %}
-				<div class="nav__action">
-					<a 
-						class="btn btn__secondary" 
-						href="{% url 'web:salesmanager-add-product' %}"
-					>
-						Dodaj e-booka
-					</a>
-				</div>
-			{% endif %}
+		<div class="nav__action">
+			<a class="nav__link nav__cart" href="{% url 'web:cart' %}">
+				<i class="fas fa-shopping-cart nav__icon"></i>
+				<p>
+					{% if 'cart' in request.session %}
+					{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
+					{% else %}
+					0.00 zł
+					{% endif %}
+				</p>
+			</a>
+		</div>
+		<div id="nav-menu-open" class="nav__action flex-center">
+			<div class="nav__avatar"></div>
+			<p class="nav__username">{{ request.user.username }}</p>
+			<i id="nav-arrow-down" class="fas fa-angle-down nav__icon nav__icon-arrow"></i>
+			<i id="nav-arrow-up" class="fas fa-angle-up nav__icon nav__icon-arrow" style="display: none;"></i>
+		</div>
+		{% if not request.path == '/salesmanager/products/add/' %}
+		<div class="nav__action">
+			<a class="btn btn__secondary" href="{% url 'web:salesmanager-add-product' %}">
+				Dodaj e-booka
+			</a>
+		</div>
+		{% endif %}
 		{% endif %}
 	</div>
 </nav>
@@ -76,7 +63,7 @@
 			<a href="#">Twój profil</a>
 		</div>
 		<div class="nav__menu-action">
-			<a href="{% url 'web:my-books' %}">Moja półka</a>
+			<a href="#">Moja półka</a>
 		</div>
 		<div class="nav__menu-action">
 			<a href="{% url 'web:saved-carts' %}">Zapisane koszyki</a>

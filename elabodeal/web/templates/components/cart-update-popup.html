@@ -1,0 +1,30 @@
+{% extends 'components/popup.html' %}
+{% load static %}
+
+{% block title %}Produkt został dodany do koszyka{% endblock %}
+
+{% block popup_id %}cart-update-popup{% endblock %}
+{% block popup_close_btn_id %}close-cart-update-popup{% endblock %}
+
+{% block body %}
+<div class="item-list">
+	<div class="item">
+		<divv class="flex-center">
+			<img class="item__cover" src="{% static product.cover_img.path %}" alt="{{ product.title}}" />
+			<div class="item__container">
+				<p class="item__title">{{ product.title }}</p>
+				<p class="item__author">{{ product.author }}</p>
+			</div>
+		</divv>
+		<div class="flex-center">
+			<p class="item__price">{{ product.price }} zł</p>
+		</div>
+	</div>
+	<div id="popup-actions" class="popup__actions">
+		<a href="{% url 'web:cart' %}" class="btn btn-block btn__primary" style="margin-right: .5rem;">Przejdż do
+			koszyka</a>
+		<button id="popup-action" class="btn btn-block btn__primary" style="margin-left: .5rem;">Kontynuuj
+			zakupy</button>
+	</div>
+</div>
+{% endblock %}

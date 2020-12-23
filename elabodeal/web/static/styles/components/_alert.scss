@@ -1,0 +1,28 @@
+.alert {
+    width: calc(100% - 1rem);
+    height: 50px;
+    padding: .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+    border-radius: 2px;
+    @include transition-animation;
+
+    &__success {
+        background-color: #9bffad;
+        border: 1px solid #52d35b;
+        color: #52d35b;
+    }
+
+    &__error {
+        background-color: #ff6898;
+        border: 1px solid #ea1c5d;
+        color: #ea1c5d;
+    }
+
+    &__msg {
+        text-align: center;
+        font-size: $font-size-small;
+    }
+}

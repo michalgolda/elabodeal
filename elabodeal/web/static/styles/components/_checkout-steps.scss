@@ -1,0 +1,28 @@
+.checkout-step {
+    color: $color-grey;
+
+    & > figure {
+        width: 50px;
+        height: 50px;
+        background-color: $color-white;
+        border: 1px solid $color-grey;
+        border-radius: 50%;
+    }
+
+    & > span {
+        margin-left: 0.5rem;
+    }
+
+    &-current {
+        color: $color-black;
+    }
+
+    &__separator {
+        width: 100px;
+        height: 2px;
+        background-color: $color-grey;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        border-radius: 2px;
+    }
+}

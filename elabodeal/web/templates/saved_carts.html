@@ -26,11 +26,10 @@
 				<div>
 					<p class="record__title">{{ cart.title }}</p>
 					<p class="record__subtitle">Data zapisu -
-						{{ cart.created_at.day }}.{{ cart.created_at.month}}.{{ cart.created_at.year }}
-						}}</p>
+						{{ cart.created_at.day }}.{{ cart.created_at.month}}.{{ cart.created_at.year }}</p>
 				</div>
 				<div>
-					<a href="#" class="btn btn__primary">Otwórz</a>
+					<a href="{% url 'web:saved-cart-detail' id=cart.id %}" class="btn btn__primary">Otwórz</a>
 				</div>
 			</div>
 			{% endfor %}

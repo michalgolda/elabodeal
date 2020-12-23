@@ -79,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -143,7 +142,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = BASE_DIR + '/elabodeal/media/'
+# Ebook files and images
+MEDIA_ROOT = BASE_DIR + '/elabodeal/web/static/files/'
 
 STATICFILES_DIRS = (
     BASE_DIR + '/elabodeal/web/static/',

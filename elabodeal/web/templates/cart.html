@@ -1,36 +1,39 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title-description %}Koszyk {% if 'cart' in request.session %}({{ request.session.cart.item_count }})
-{% else %}(0){% endif %}{% endblock %}
+{% block title-description %}
+Koszyk
+{% if 'cart' in request.session %}
+({{ request.session.cart.item_count }})
+{% else %}
+(0)
+{% endif %}
+{% endblock %}
 
 {% block page_class_name %}p-cart{% endblock %}
 
 {% block body %}
-{% if products %}
-{% include 'components/share_cart_popup.html' %}
-{% endif %}
 {% if request.user.is_authenticated and products %}
-{% include 'components/save_cart_popup.html'%}
+{% include 'components/save-cart-popup.html'%}
 {% endif %}
 {% include 'components/navigation.html' %}
 <div class="wrapper">
 	<div class="section flex-center">
-		<div class="step flex-center step-current">
+		<div class="checkout-step checkout-step-current flex-center">
 			<figure class="flex-center">
 				<span class="h2">1</span>
 			</figure>
 			<span class="h2">Koszyk</span>
 		</div>
-		<div class="step-separator"></div>
-		<div class="step flex-center">
+		<div class="checkout-step__separator"></div>
+		<div class="checkout-step flex-center">
 			<figure class="flex-center">
 				<span class="h2">2</span>
 			</figure>
 			<span class="h2">Wysyłka</span>
 		</div>
-		<div class="step-separator"></div>
-		<div class="step flex-center">
+		<div class="checkout-step__separator"></div>
+		<div class="checkout-step flex-center">
 			<figure class="flex-center">
 				<span class="h2">3</span>
 			</figure>
@@ -40,7 +43,6 @@
 	<div class="flex-center" style="min-height: calc(100vh - 258.2px);">
 		<div class="section">
 			<div class="section" style="margin-top: 2rem;">
-				<p class="section__title">Lista produktów</p>
 				{% if products %}
 				{% for product in products %}
 				<div class="cart-items">
@@ -48,7 +50,7 @@
 						<div class="flex-center">
 							<input type="checkbox" checked />
 						</div>
-						<img src="{{ product.cover_img.url }}" />
+						<img src="{% static product.cover_img.path %}" style="width:100%;" />
 						<div class="product__details">
 							<div>
 								<h3 class="product__title">{{ product.title }}</h3>
@@ -58,7 +60,13 @@
 								<p class="product__price">{{ product.price }} zł</p>
 							</div>
 						</div>
-						<i class="fas fa-times h2 product__delete"></i>
+						<form method="POST" action="{% url 'web:cart-action-delete-item' %}">
+							{% csrf_token %}
+							<input type="hidden" name="product_id" value="{{ product.id }}" />
+							<button style="background-color: transparent; border: none; outline: none;">
+								<i class="fas fa-times h2 product__delete"></i>
+							</button>
+						</form>
 					</div>
 				</div>
 				{% endfor %}
@@ -71,7 +79,7 @@
 			<div class="cart-details">
 				<div>
 					{% if products %}
-					<button id="open-share-cart-popup" class="btn btn__primary">Udostępnij</button>
+					<button id="show-share-cart-popup" class="btn btn__primary">Udostępnij</button>
 					{% else %}
 					<button class="btn btn__disabled">Udostępnij</button>
 					{% endif %}
@@ -81,11 +89,12 @@
 				</div>
 				<div>
 					{% if 'cart' in request.session %}
-					<p>Razem: {{ request.session.cart.total_price }} zł</p=>
-						{% else %}
-						<p>Razem: 0.00 zł</p>
-						<a class="btn btn__disabled" href="{% url 'web:cart-delivery' %}">Przejdź dalej</a>
-						{% endif %}
+					<p>Razem: {{ request.session.cart.total_price }} zł</p>
+					<a class="btn btn__primary" href="{% url 'web:cart-checkout-delivery' %}">Przejdź dalej</a>
+					{% else %}
+					<p>Razem: 0.00 zł</p>
+					<a class="btn btn__disabled">Przejdź dalej</a>
+					{% endif %}
 				</div>
 			</div>
 		</div>

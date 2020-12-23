@@ -11,14 +11,14 @@ class TestIndexView(WebTestCase):
 		self.assertTemplateUsed(response, 'index.html')
 
 	def test_category_loading(self):
-		response = self.client.get(reverse('web:index'), { 'category': 'Ekonomia' })
+		response = self.client.get(reverse('web:index'), { 'c': 'Test' })
 
 		self.assertEqual(response._headers['content-type'][1], 'text/html; charset=utf-8')
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'index.html')
 
 	def test_invalid_category_name(self):
-		response = self.client.get(reverse('web:index'), { 'category': 'asdas' })
+		response = self.client.get(reverse('web:index'), { 'c': 'asdas' })
 
 		self.assertEqual(response._headers['content-type'][1], 'text/html; charset=utf-8')
 		self.assertEqual(response.status_code, 200)

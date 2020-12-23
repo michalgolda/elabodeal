@@ -1,27 +1,40 @@
 from django.shortcuts import redirect
 
-from elabodeal.web.views.base import BaseView
-from elabodeal.models import Cart, CartItem, Product
+from elabodeal.web.views import BaseView, BaseAjaxView
+from elabodeal.models import Cart, CartItem, Product, SharedCart
 
 
 class SavedCartsView(BaseView):
 	auth_required = True
 
 	def get(self, request):
-		carts = Cart.objects.filter(user__id=request.user.id).all()
+		user = request.user
 
-		context = {
-			'carts': carts if len(carts) > 0 else False
-		}
+		carts = Cart.objects.filter(user=user).all()
+
+		context = {'carts': carts}
+
 		return self.respond('saved_carts.html', request, context)
 
+
+class SavedCartShareAjaxView(BaseAjaxView):
+	auth_required = True
+
 	def post(self, request):
-		action_type = request.POST.get('action_type')
+		cart_id = request.POST.get('cart_id')
 
-		if action_type == 'delete-cart':
-			cart_id = request.POST.get('cart_id')
+		saved_cart = Cart.objects.filter(id=cart_id).first()
+		if not saved_cart or not cart_id:
+			return self.respond(message='BadRequest',
+								status=400)
 
-			cart = Cart.objects.filter(id=cart_id).first()
-			cart.delete()
+		shared_cart = SharedCart.objects.create_share(cart=saved_cart)
 
-			return redirect('web:saved-carts')
+		data = {'url': shared_cart.url}
+
+		return self.respond(message='Success',
+							data=data,
+							status=201)
+
+
+		

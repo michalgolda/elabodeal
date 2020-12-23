@@ -12,16 +12,26 @@
 		<p class="section__title">Kategorie</p>
 		<div class="category-list">
 			{% for category in categories %}
-			{% if category_param == category.name %}
+			{% if current_category == category.name %}
 			<div class="category category__current flex-center">
-				<a href="{% url 'web:index' %}?category={{ category.name }}">
+				<a href="{% url 'web:index' %}?c={{ category.name }}">
 					<p>{{ category.name }}</p>
+				</a>
+			</div>
+			<div class="category flex-center">
+				<a href="{% url 'web:index' %}">
+					<p>Wszystkie</p>
 				</a>
 			</div>
 			{% else %}
 			<div class="category flex-center">
-				<a href="{% url 'web:index' %}?category={{ category.name }}">
+				<a href="{% url 'web:index' %}?c={{ category.name }}">
 					<p>{{ category.name }}</p>
+				</a>
+			</div>
+			<div class="category category__current flex-center">
+				<a href="{% url 'web:index' %}">
+					<p>Wszystkie</p>
 				</a>
 			</div>
 			{% endif %}
@@ -29,21 +39,17 @@
 		</div>
 	</div>
 	<div class="section">
-		<form class="search" action="/">
-			<input class="search__input" name="q" type="text" placeholder="Wyszukaj..." />
+		<form class="search" action="{% url 'web:search-results' %}">
+			<input class="search__input" name="query" type="text" placeholder="Wyszukaj..." required/>
 			<button class="btn btn__secondary btn__secondary-outline search__submit">Szukaj</button>
 		</form>
-		{% if not use_search %}
 		<div class="banner"></div>
-		{% endif %}
 		<div class="section">
-			{% if use_search %}
 			{% if products %}
-			<p>asdas</p>
 			<div class="product-list">
 				{% for product in products %}
 				<div class="product">
-					<img src="{{ product.cover_img.url }}" alt="{{ product.title }}" />
+					<img src="{% static product.cover_img.path %}" alt="{{ product.title }}" />
 					<div class="product__info">
 						<div class="section">
 							<h2 class="product__title">{{ product.title }}</h2>
@@ -52,7 +58,7 @@
 						<div class="section">
 							<p class="product__price h2">{{ product.price }} zł</p>
 							<div class="product__stars h2">
-								{% for _ in product.rating  %}
+								{% for _ in product.filled_stars  %}
 								<i class="fas fa-star"></i>
 								{% endfor %}
 								{% for _ in product.empty_stars %}
@@ -62,102 +68,19 @@
 						</div>
 						<div class="section">
 							<div class="product__metadata">
-								<p>Liczba kopii: <strong>100</strong></p>
-								<p>Odsłony: <strong>{{ product.count_views }}</strong></p>
-								<p>Opinie: <strong>{{ product.reviews }}</strong></p>
-								<p>Data dodania:
-									<strong>{{ product.created_at.day }}.{{ product.created_at.month }}.{{ product.created_at.year }}</strong>
+								<p>Liczba kopii: <strong>{{ product.copies }}</strong></p>
+								<p>Odsłony: <strong>{{ product.views }}</strong></p>
+								<p>Opinie: <strong>{{ product.rating_count }}</strong></p>
+								<p>Data publikacji:
+									<strong>{{ product.published_at.day }}.{{ product.published_at.month }}.{{ product.published_at.year }}</strong>
 								</p>
 							</div>
-							<a class="btn btn__secondary btn-block"
-								href="{% url 'web:product-detail' url_name=product.url_name %}">Pokaż szczegóły</a>
+							<a class="btn btn__secondary btn-block" href="{% url 'web:product-detail' url_name=product.url_name %}">Pokaż szczegóły</a>
 						</div>
 					</div>
 				</div>
 				{% endfor %}
 			</div>
-			{% else %}
-			<div class="section flex-center">
-				<h2>Nie znaleziono produktu</h2>
-			</div>
-			{% endif %}
-			{% else %}
-			{% if products %}
-			<p class="section__title">Bestsellery</p>
-			<div class="product-list">
-				{% for product in products %}
-				<div class="product">
-					<img src="https://static01.helion.com.pl/global/okladki/326x466/czykov.png" alt="Product cover" />
-					<div class="product__info">
-						<div class="section">
-							<h2 class="product__title">{{ product.title }}</h2>
-							<h4 class="product__author">{{ product.author }}</h4>
-						</div>
-						<div class="section">
-							<p class="product__price h2">{{ product.price }} zł</p>
-							<div class="product__stars h2">
-								{% for _ in product.rating  %}
-								<i class="fas fa-star"></i>
-								{% endfor %}
-								{% for _ in product.empty_stars %}
-								<i class="far fa-star"></i>
-								{% endfor %}
-							</div>
-						</div>
-						<div class="section">
-							<div class="product__metadata">
-								<p>Liczba kopii: <strong>100</strong></p>
-								<p>Odsłony: <strong>{{ product.count_views }}</strong></p>
-								<p>Opinie: <strong>{{ product.reviews }}</strong></p>
-								<p>Data dodania:
-									<strong>{{ product.created_at.day }}.{{ product.created_at.month }}.{{ product.created_at.year }}</strong>
-								</p>
-							</div>
-							<a class="btn btn__secondary btn-block"
-								href="{% url 'web:product-detail' url_name=product.url_name %}">Pokaż szczegóły</a>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-			</div>
-			<p class="section__title" style="margin: 2rem 0 0 0;">Proponowane</p>
-			<div class="product-list">
-				{% for product in products %}
-				<div class="product">
-					<img src="https://static01.helion.com.pl/global/okladki/326x466/czykov.png" alt="Product cover" />
-					<div class="product__info">
-						<div class="section">
-							<h2 class="product__title">{{ product.title }}</h2>
-							<h4 class="product__author">{{ product.author }}</h4>
-						</div>
-						<div class="section">
-							<p class="product__price h2">{{ product.price }} zł</p>
-							<div class="product__stars h2">
-								{% for _ in product.rating  %}
-								<i class="fas fa-star"></i>
-								{% endfor %}
-								{% for _ in product.empty_stars %}
-								<i class="far fa-star"></i>
-								{% endfor %}
-							</div>
-						</div>
-						<div class="section">
-							<div class="product__metadata">
-								<p>Liczba kopii: <strong>100</strong></p>
-								<p>Odsłony: <strong>{{ product.count_views }}</strong></p>
-								<p>Opinie: <strong>{{ product.reviews }}</strong></p>
-								<p>Data dodania:
-									<strong>{{ product.created_at.day }}.{{ product.created_at.month }}.{{ product.created_at.year }}</strong>
-								</p>
-							</div>
-							<a class="btn btn__secondary btn-block"
-								href="{% url 'web:product-detail' url_name=product.url_name %}">Pokaż szczegóły</a>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-			</div>
-			{% endif %}
 			{% endif %}
 		</div>
 	</div>

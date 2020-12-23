@@ -1,35 +1,12 @@
-function getCheckedInput() {
-	var inputs = $( $( 'input#age-choice-input' ) );
-	for( var i = 0; i < inputs.length; i++ ) {
-		if( $( inputs[i] ).attr( 'checked' ) ) {
-			return inputs[ i ];
-		}
-	}
-
-}
-
+// Age category select logic
 $( document ).on( 'click', 'div#age-selector', function() {
-	var id = Number( $( this ).attr( 'age-input-id' ) );
-	var input = $( $( 'input#age-choice-input' )[ id ] );
-	var isChecked = input.attr( 'checked' );
+	var age = Number( $( this ).attr( 'age' ) );
+	var age_input = $( 'input[name=age_category]' );
 
-	if( !isChecked ) {
-		var checkedInput = getCheckedInput();
-		if( checkedInput ) {
-			$( checkedInput ).attr( 'checked', false );
-			var id = $( checkedInput ).attr('age-input-id');
-			var selector = $( $( 'div#age-selector' ) );
-			selector.removeClass( 'age-checked' );
-		}
-
-		input.attr( 'checked', true );
-		$(this).addClass( 'age-checked' );
-	} else {
-		input.attr( 'checked' , false );
-		$(this).removeClass( 'age-checked' );
-	}
+	age_input.attr( 'value', age );
 });
 
+// Image upload logic
 $( document ).on( 'click', 'button#image-upload-btn', function() {
 	var inputId = Number( $( this ).attr( 'file-input-id' ) );
 	var input = $( $( 'input#image-file-input' )[ inputId ] );
@@ -50,7 +27,7 @@ $( document ).on( 'click', 'button#image-delete-btn', function() {
 });
 
 $( document ).on( 'change', 'input#image-file-input', function() {
-	var inputId = Number( $( this ).attr( 'name' )[ 11 ] );
+	var inputId = 0;
 	var imagePreview = $( $( 'div#image-preview' )[ inputId ] );
 	var previewImg = $( imagePreview ).children( 'img' );
 	var uploadBtn = $( $( 'button#image-upload-btn' )[ inputId ] );
@@ -67,52 +44,39 @@ $( document ).on( 'change', 'input#image-file-input', function() {
 	reader.readAsDataURL( $( this )[ 0 ].files[ 0 ]);
 });
 
-$( document ).on( 'click', '#ebook-upload-btn', function() {
-	var inputId = Number( $( this ).attr( 'file-input-id' ) );
-	var input = $( $( 'input#ebook-file-input' )[ inputId ] );
-	var fileName = $( $( 'span#file-name' )[ inputId ] );
 
-	var uploadBtn = $( $( 'button#ebook-upload-btn' )[ inputId ] );
+$( document ).on( 'click', '#ebook-upload-btn', function() { 
+	var parentElement = this.parentElement;
+	var parentElementChildren = parentElement.children;
 
-	if( input[ 0 ].files && input[ 0 ].files[ 0 ] ) {
-		input[ 0 ].value = '';
-			
-		fileName.css('display', 'none');
-		uploadBtn.removeClass( 'btn__danger' );
-		uploadBtn.addClass( 'btn__primary' );
-		uploadBtn.html( 'Prześlij' );
+	var fileInput = $( parentElementChildren[ 3 ] );
+	var fileName = $( parentElementChildren[ 1 ] );
+	var btn = $( this );
 
+	if ( fileInput[ 0 ].files && fileInput[ 0 ].files[ 0 ] ) {
+		fileInput[ 0 ].value = '';
+
+		fileName.css( 'display', 'none' );
+
+		btn.removeClass( 'btn__danger' );
+		btn.addClass( 'btn__primary' );
+		btn.html( 'Prześlij' );
 	} else {
-		input.trigger( 'click' );
+		fileInput.trigger( 'click' );
 	}
 });
 
+
 $( document ).on( 'change', '#ebook-file-input', function() {
-	var inputName = $( this ).attr( 'name' );
-	let inputId = null;
+	var parentElement = this.parentElement;
+	var parentElementChildren = parentElement.children;
 
-	switch( inputName ) {
-		case 'pdf_file':
-			inputId = 0;
-			break;
-		case 'epub_file':
-			inputId = 1;
-			break;
-		case 'mobi_file':
-			inputId = 2;
-			break;
-		case 'demo_pdf_file':
-			inputId = 3;
-			break;
-	}
+	var fileName = $( parentElementChildren[ 1 ] );
+	var uploadBtn = $( parentElementChildren[ 2 ] );
 
-	var uploadBtn = $( $( 'button#ebook-upload-btn' )[ inputId ] );
-	var fileName = $( $( 'span#file-name' )[ inputId ] );
-	var uploadProgess = $( $( 'div#file-progress-upload' )[ inputId ] );
+	fileName.html( this.files[ 0 ].name );
+	fileName.css( 'display', 'block' );
 
-	fileName.html( $( this )[ 0 ].files[ 0 ].name );
-
-	fileName.css('display', 'block');
 	uploadBtn.addClass( 'btn__danger' );
 	uploadBtn.removeClass( 'btn__primary' );
 	uploadBtn.html( 'Usuń' );

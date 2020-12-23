@@ -6,33 +6,32 @@
 {% block page_class_name %}p-product-detail{% endblock %}
 
 {% block body %}
-{% if show_add_product_info %}
-{% include 'components/add_product_to_cart_info_popup.html' %}
+{% if cart_update_popup %}
+{% include 'components/cart-update-popup.html' %}
 {% endif %}
 {% include 'components/navigation.html' %}
 <div class="wrapper">
 	<div class="container">
-		<img class="product-cover" src="{{ product.cover_img.url }}" />
+		<img class="product-cover" src="{% static product.cover_img.path %}" />
 		<div class="section">
 			<div class="section">
 				<h1 class="product-title">{{ product.title }}</h1>
 				<p class="product-author">{{ product.author }}</p>
 			</div>
 			<div class="section section__age">
-				<!-- {% for age_category in product.age_categories.all %}
-					<span class="product-age">
-						{{ age_category.value }}+
-					</span>
-				{% endfor %} -->
-				<span class="product-age" age="18">
-					18+
+				<span class="product-age">
+					{{ product.age_category }}+
 				</span>
 			</div>
 			<div class="section section__flex">
 				<p class="product-price">{{ product.price }} zł</p>
 				<div>
 					<button class="btn btn__primary">Kup teraz</button>
-					<button class="btn btn__secondary">Dodaj do koszyka</button>
+					<form id="form-action" method="POST" action="{% url 'web:cart-action-add-item' %}">
+						{% csrf_token %}
+						<input type="hidden" name="product_id" value="{{ product.id }}" />
+						<button class="btn btn__secondary">Dodaj do koszyka</button>
+					</form>
 				</div>
 			</div>
 			<div class="section">
@@ -50,22 +49,22 @@
 					</div>
 					<div class="info">
 						<p class="info__key">Oceny</p>
-						<p class="info__value">{{ product.rating }} / 5</p>
+						<p class="info__value">{{ product.average_rating }} / 5</p>
 					</div>
 					<div class="info">
 						<p class="info__key">Rok wydania</p>
-						<p class="info__value">2020</p>
+						<p class="info__value">{{ product.published_at.year }}</p>
 					</div>
 					<div class="info">
 						<p class="info__key">Formaty</p>
 						<p class="info__value">
-							{% if product.pdf %}
+							{% if product.pdf_file %}
 							PDF
 							{% endif %}
-							{% if product.mobi %}
+							{% if product.mobi_file %}
 							MOBI
 							{% endif %}
-							{% if product.epub %}
+							{% if product.epub_file %}
 							EPUB
 							{% endif %}
 						</p>
@@ -78,14 +77,16 @@
 			</div>
 			<div class="section">
 				<div class="section">
-					<button id="show-product-description" class="btn btn__primary">Opis</button>
-					<button id="show-product-contents" class="btn btn__primary btn__primary-outline">Spis treści</button>
+					<button id="show-product-description-btn" class="btn btn__primary">Opis</button>
+					<button id="show-product-contents-btn" class="btn btn__primary btn__primary-outline">Spis
+						treści</button>
 				</div>
 				<div class="section">
 					<div id="product-description" class="product-text-box">
 						<p>{{ product.description }}</p>
 					</div>
 					<div id="product-contents" class="product-text-box">
+						<p>{{ product.contents }}</p>
 					</div>
 				</div>
 			</div>
@@ -93,31 +94,4 @@
 	</div>
 </div>
 {% include 'components/small-footer-light.html' %}
-{% endblock %}
-
-{% block scripts %}
-<script>
-$('#show-product-contents').click(function() {
-	$(this).removeClass('btn__primary-outline');
-	$('#show-product-description').addClass('btn__primary-outline');
-	$('#product-description').hide();
-	$('#product-contents').show();
-});
-
-$('#show-product-description').click(function() {
-	$(this).removeClass('btn__primary-outline');
-	$('#show-product-contents').addClass('btn__primary-outline');
-	$('#product-description').show();
-	$('#product-contents').hide();
-});
-
-// $('#add-product-to-cart-info-popup').removeClass('display-none');
-// $('#close-add-product-to-cart-info-popup').click(function(){
-// 	$('#add-product-to-cart-info-popup').hide();
-// });
-
-// $('#continue-shopping').click(function(){
-// 	$('#add-product-to-cart-info-popup').hide();
-// });
-</script>
 {% endblock %}

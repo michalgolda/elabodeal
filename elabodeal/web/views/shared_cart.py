@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 
-from elabodeal.web.views.base import BaseView
-from elabodeal.models import SharedCart, SharedCartItem
+from elabodeal.web.views import BaseView
+from elabodeal.models import SharedCart
 
 
 class SharedCartView(BaseView):
@@ -10,10 +10,11 @@ class SharedCartView(BaseView):
 		if not shared_cart:
 			return redirect('web:index')
 
-		shared_cart_items = SharedCartItem.objects.filter(shared_cart__id=shared_cart.id).all()
+		shared_cart_items = shared_cart.cart.items.all()
 
 		context = {
-			'shared_cart': shared_cart,
-			'shared_cart_items': shared_cart_items
-		}
+			'cart': shared_cart.cart,
+			'cart_items': shared_cart_items,
+			'shared_cart': shared_cart}
+
 		return self.respond('shared_cart.html', request, context)

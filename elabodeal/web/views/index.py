@@ -1,39 +1,33 @@
-from django.contrib.postgres.search import SearchVector
+from django.shortcuts import redirect
 
-from elabodeal.web.views.base import BaseView
+from elabodeal.web.views import BaseView
 from elabodeal.models import Category, Product
 
 
 class IndexView(BaseView):
 	def get(self, request):
+		current_category = request.GET.get('c')
+
 		categories = Category.objects.all()
 
-		category_param = request.GET.get('category')
-		search_query = request.GET.get('q')
+		if current_category:
+			category_exist = False
+			for c in categories:
+				if c.name.lower() == current_category.lower():
+					category_exist = True
+					break
 
-		use_search = False
+			if not category_exist:
+				return redirect('web:index')
 
-		if category_param:
-			products = Product.objects.filter(category__name=category_param).all()
-		elif search_query:
-			products = Product.objects.annotate(
-				search=SearchVector('author', 'title')
-			).filter(search=search_query.lower()).all()
-
-			use_search = True
+			products = Product.objects.filter(
+				category__name=current_category).all()
 		else:
 			products = Product.objects.all()
 
-		for p in products:
-			p.empty_stars = range(5 - int(p.rating))
-			p.rating = range(int(p.rating))
-
 		context = {
 			'categories': categories,
-			'products': products if len(products) > 0 else False,
-			'use_search': use_search,
-			'search_query': search_query if search_query else "",
-			'category_param': category_param,
-		}
+			'products': products,
+			'current_category': current_category}
 
 		return self.respond('index.html', request, context)

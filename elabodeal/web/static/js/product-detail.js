@@ -1,24 +1,24 @@
-$( '#show-contents-btn' ).click( function() {
-	$( this ).removeClass( 'btn-outline-orange' );
-	$( this ).addClass( 'btn-orange' );
+$( '#show-product-contents-btn' ).click( function() {
+	$( this ).removeClass( 'btn__primary-outline' );
+	$( this ).addClass( 'btn__primary' );
 
-	var showDescriptionBtn = $( '#show-description-btn' );
+	var showDescriptionBtn = $( '#show-product-description-btn' );
 
-	showDescriptionBtn.removeClass( 'btn-orange' );
-	showDescriptionBtn.addClass( 'btn-outline-orange' );
+	showDescriptionBtn.removeClass( 'btn__primary' );
+	showDescriptionBtn.addClass( 'btn__primary-outline' );
 	
 	$( '#product-description' ).hide();
 	$( '#product-contents' ).show();
 });
 
-$( '#show-description-btn' ).click( function() {
-	$( this ).removeClass( 'btn-outline-orange' );
-	$( this ).addClass( 'btn-orange' );
+$( '#show-product-description-btn' ).click( function() {
+	$( this ).removeClass( 'btn__primary-outline' );
+	$( this ).addClass( 'btn__primary' );
 
-	var showContentsBtn = $( '#show-contents-btn' );
+	var showContentsBtn = $( '#show-product-contents-btn' );
 
-	showContentsBtn.removeClass( 'btn-orange' );
-	showContentsBtn.addClass( 'btn-outline-orange' );
+	showContentsBtn.removeClass( 'btn__primary' );
+	showContentsBtn.addClass( 'btn__primary-outline' );
 	
 	$( '#product-description' ).show();
 	$( '#product-contents' ).hide();

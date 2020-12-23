@@ -9,8 +9,11 @@
 {% include 'components/navigation.html' %}
 <div class="wrapper">
 	<div class="form-wrapper">
-		<form class="form" action="/salesmanager/addproduct/" method="POST" enctype="multipart/form-data" autocomplete="off">
+		<form class="form" action="{% url 'web:salesmanager-add-product' %}" method="POST" enctype="multipart/form-data" autocomplete="off">
 			{% csrf_token %}
+
+			{{ form.age_category }}
+
 			<p class="h2">Aby móc wystawić swojego ebooka na sprzedaż musisz wypełnić ponniższy formularz.</p>
 			<div>
 				<label>TYTUŁ</label>
@@ -19,11 +22,7 @@
 			<div class="form__section">
 				<div>
 					<label>KATEGORIA</label>
-					<select name="category">
-						{% for category in categories %}
-							<option>{{ category.name }}</option>
-						{% endfor %}
-					</select>
+				{{ form.category }}
 				</div>
 				<div>
 					<label>WERSJA JĘZYKOWA</label>
@@ -36,7 +35,7 @@
 			</div>
 			<div>
 				<label>SPIS TREŚCI</label>
-				{{ form.table_of_content }}
+				{{ form.contents }}
 			</div>
 			<div class="form__section">
 				<div>
@@ -67,13 +66,13 @@
 					<label>PDF</label>
 					<span id="file-name"></span>
 					<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="0">Prześlij</button>
-					{{ form.pdf_file }}
+					{{ form.ebook_file_pdf }}
 				</div>
 				<div>
 					<label>EPUB</label>
 					<span id="file-name"></span>
 					<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="1">Prześlij</button>
-					{{ form.epub_file }}
+					{{ form.ebook_file_epub }}
 				</div>
 			</div>
 			<div class="form__section">
@@ -81,37 +80,32 @@
 					<label>MOBI</label>
 					<span id="file-name"></span>
 					<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="2">Prześlij</button>
-					{{ form.mobi_file }}
+					{{ form.ebook_file_mobi }}
 				</div>
 				<div>
 					<label>WERSJA DEMO (PDF)</label>
 					<span id="file-name"></span>
 					<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="3">Prześlij</button>
-					{{ form.demo_pdf_file }}
+					{{ form.ebook_file_demo }}
 				</div>
 			</div>
 			<div>
 				<label>Kategoria wiekowa</label>
 				<div class="form__section form__section-blocks">
-					<div id="age-selector" age-input-id="0">
+					<div id="age-selector" age="3">
 						<p>3+</p>
-						{{ form.age_0 }}
 					</div>
-					<div id="age-selector" age-input-id="1">
+					<div id="age-selector" age="7">
 						<p>7+</p>
-						{{ form.age_1 }}
 					</div>
-					<div id="age-selector" age-input-id="2">
+					<div id="age-selector" age="12">
 						<p>12+</p>
-						{{ form.age_2 }}
 					</div>
-					<div id="age-selector" age-input-id="3">
+					<div id="age-selector" age="16">
 						<p>16+</p>
-						{{ form.age_3 }}
 					</div>
-					<div id="age-selector" age-input-id="4">
+					<div id="age-selector" age="18">
 						<p>18+</p>
-						{{ form.age_4 }}
 					</div>
 				</div>
 			</div>
@@ -130,7 +124,7 @@
 								<i class="fas fa-trash-alt font-size-medium color-white"></i>
 							</button>
 						</div>
-						{{ form.file_image_0 }}
+						{{ form.cover_img }}
 					</div>
 					<div class="image">
 						<button id="image-upload-btn" class="image__upload" type="button" file-input-id="1">

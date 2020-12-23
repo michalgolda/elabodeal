@@ -18,8 +18,8 @@ class PaymentAPIView(APIView):
 
 		stripe.api_key = settings.STRIPE_API_KEY
 		
-		delivery = json.dumps(request.session['delivery'])
-		products = json.dumps(request.session['cart']['products'])
+		delivery = json.loads(request.session['delivery'])
+		products = json.loads(request.session['cart']['products'])
 
 		metadata={
 			'delivery': delivery,

@@ -1,100 +1,209 @@
+import stripe
+import json
 
+from django.conf import settings
 from django.shortcuts import redirect
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
-from elabodeal.web.views.base import BaseView
+from elabodeal.web.views import BaseView, BaseAjaxView
+from elabodeal.web.forms import DeliveryForm
 from elabodeal.models import Product, Cart, CartItem
+from elabodeal.utils import SessionCartManager
 
 
 class CartView(BaseView):
-	def get_cart_products(self, request):
-		products = []
+	def get(self, request):
+		cart = SessionCartManager(request)
 		
-		if 'cart' in request.session:
-			for p in request.session['cart']['products']:
-				product = Product.objects.filter(id=p['id']).first()
-				products.append(product)
+		products = []
+		for item in cart.items:
+			product = Product.objects.filter(id=item.id).first()
 
-		return products
+			products.append(product)
 
-	def calculate_total_price(self, products):
-		total_price = 0.00
+		context = {'products': products}
 
-		for product in products:
-			total_price += product['price']
+		return self.respond('cart.html', request, context)
 
-		total_price = '{0:.2f}'.format(round(total_price, 2))
 
-		return total_price
+class CartCheckoutDeliveryView(BaseView):
+	def get_form(self, request = None):
+		return DeliveryForm(request.POST if request else request)
+
+	def get(self, request):
+		session = request.session
+
+		cart = session.get('cart')
+		if not cart or not cart['item_count'] > 0:
+			return redirect('web:cart')
+
+		context = {'form': self.get_form()}
+
+		return self.respond('cart-checkout-delivery.html', request, context)
 
 	def post(self, request):
-		action_type = request.POST.get('action_type')
+		session = request.session
 
-		if not 'cart' in request.session:
-			request.session['cart'] = {
-				'products': [],
-				'item_count': 0,
-				'total_price': 0.00
-			}
+		form = self.get_form(request)
 
-		cart = request.session['cart']
+		if form.is_valid():
+			cart = session['cart']
 
-		if action_type == 'add-product':
-			product_id = int(request.POST.get('product_id'))
+			products = cart['items']
+			total_price = cart['total_price']
+			delivery = form.cleaned_data
 
-			product = Product.objects.filter(id=product_id).first()
-			if not product:
-				return redirect('web:index')
+			session['checkout-payment']	= True
+			session['checkout-data'] = {'delivery': delivery,
+										'products': products, 
+										'total_price': total_price}
 
-			# Check if product does exists in cart
-			for cart_item in cart['products']:
-				if cart_item['id'] == product_id:
-					return redirect('web:product-detail', url_name=product.url_name)
+			request.session = session
 
-			cart['products'].append({'id': product_id, 'price': float(product.price)})
-			cart['total_price'] = self.calculate_total_price(cart['products'])
-			cart['item_count'] += 1
+			return redirect('web:cart-checkout-payment')
 
-			request.session['cart'] = cart
-			request.session['show_add_product_info'] = True
+		context = {'form': form}
 
-			return redirect('web:product-detail', url_name=product.url_name)
+		return self.respond('cart-checkout-delivery.html', request, context)
 
-		if action_type == 'delete-product':
-			product_id = int(request.POST.get('product_id'))
 
-			for product in cart['products']:
-				if product['id'] == product_id:
-					cart['products'].remove(product)
+class CartCheckoutPaymentView(BaseView):
+	def get(self, request):
+		session = request.session
 
-			cart['total_price'] = self.calculate_total_price(cart['products'])
-			cart['item_count'] -= 1
+		checkout_payment = session.get('checkout-payment')
+		if not checkout_payment:
+			return redirect('web:cart-checkout-delivery')
 
-			request.session['cart'] = cart
+		return self.respond('cart-checkout-payment.html', request)
 
-		if action_type == 'save-cart':
-			cart_title = request.POST.get('title')
-			cart_description = request.POST.get('description')
 
-			cart = Cart()
-			cart.user = request.user
-			cart.title = cart_title
-			cart.description = cart_description
-			cart.save()
+class CartCheckoutPaymentAjaxView(BaseAjaxView):	
+	def post(self, request):
+		email = request.POST.get('email')
+		first_name = request.POST.get('first_name')
+		last_name = request.POST.get('last_name')
+		phone_number = request.POST.get('phone_number')
 
-			for obj in request.session['cart']['products']:
-				product = Product.objects.filter(id=obj['id']).first()
+		if (not email or not first_name
+			or not last_name or not phone_number):
+			return self.respond(message='BadRequest',
+								status=400)
 
-				cart_item = CartItem()
-				cart_item.cart = cart
-				cart_item.product = product
-				cart_item.save()
+		stripe.api_key = settings.STRIPE_API_KEY
 
-			return redirect('web:saved-carts')
+		session = request.session
+
+		checkout_data = session['checkout-data']
+		
+		metadata_delivery = json.dumps(checkout_data['delivery'])
+		metadata_products = json.dumps(checkout_data['products'])
+		metadata_payer = json.dumps({'email': email,
+									 'first_name': first_name,
+									 'last_name': last_name,
+									 'phone_number': phone_number})
+
+		metadata = {'delivery': metadata_delivery,
+					'products': metadata_products,
+					'payer': metadata_payer}
+
+		total_price = checkout_data['total_price']
+
+		amount = int(float(total_price) * 100)
+
+		payment_intent = stripe.PaymentIntent.create(amount=amount,
+													 currency='PLN',
+													 metadata=metadata)
+
+		return self.respond(message="Success",
+							data=payment_intent,
+							status=201)
+
+
+class CartCheckoutPaymentSuccessView(BaseView):
+	def get(self, request):
+		session = request.session
+
+		checkout_data = session.get('checkout-data')
+		if not checkout_data:
+			return redirect('web:index')
+
+		delivery = checkout_data['delivery']
+		delivery_email = delivery['email']
+
+		context = {'delivery_email': delivery_email}
+
+		del session['checkout-data']
+		del session['cart']
+
+		return self.respond('cart-checkout-payment-success.html', request, context)
+
+
+class CartAddItemAction(BaseView):
+	def post(self, request):
+		product_id = request.POST.get('product_id')
+		
+		product = Product.objects.filter(id=int(product_id)).first()
+		if not product:
+			return redirect('web:index')
+
+		cart = SessionCartManager(request)
+
+		for item in cart.items:
+			if item.id == product.id:
+				return redirect('web:product-detail', 
+								url_name=product.url_name)
+
+		cart_item = cart.Item(id=product.id, 
+							  price=float(product.price))
+		cart.add_item(cart_item)
+		
+		request.session['cart'] = cart.to_dict()
+
+		request.session['cart_update_popup'] = True
+
+		return redirect('web:product-detail', 
+						url_name=product.url_name)
+
+
+class CartDeleteItemAction(BaseView):
+	def post(self, request):
+		product_id = request.POST.get('product_id')
+
+		cart = SessionCartManager(request)
+		cart.remove_item(int(product_id))
+
+		request.session['cart'] = cart.to_dict()
 
 		return redirect('web:cart')
 
-	def get(self, request):
-		context = {
-			'products': self.get_cart_products(request)
-		}
-		return self.respond('cart.html', request, context)
+
+class CartSaveAjaxView(BaseAjaxView):
+	auth_required = True
+
+	def post(self, request):
+		title = request.POST.get('title')
+		description = request.POST.get('description')
+
+		if not title or not description:
+			return self.respond(message='BadRequest',
+								status=400)
+
+		cart = SessionCartManager(request)
+		
+		user = request.user
+
+		saved_cart = Cart(user=user,
+						  title=title,
+						  description=description)
+		saved_cart.save()
+		
+		for item in cart.items:
+			product = Product.objects.filter(id=item.id).first()
+
+			saved_cart.items.create(product=product)
+
+		return self.respond(message="Success",
+							status=201)
+

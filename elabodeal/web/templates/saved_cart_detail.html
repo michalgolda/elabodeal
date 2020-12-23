@@ -1,31 +1,32 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title-description %}Twój koszyk{% endblock %}
+{% block title-description %}{{ cart.title }}{% endblock %}
 
 {% block page_class_name %}p-saved-cart-detail{% endblock %}
 
 {% block body %}
-<!-- {% include 'components/share_cart_popup.html' %} -->
+{% include 'components/share-cart-popup.html' %}
 {% include 'components/navigation.html' %}
 <div class="wrapper">
 	<div class="cart-information">
 		<div class="section top-content">
 			<p class="section__title">{{ cart.title }}</p>
-			<p>Data zapisu: <strong>{{ cart.created_at.day }}.{{ cart.created_at.month }}.{{ cart.created_at.year }}</strong></p>
+			<p>Data zapisu:
+				<strong>{{ cart.created_at.day }}.{{ cart.created_at.month }}.{{ cart.created_at.year }}</strong></p>
 		</div>
 		<div class="cart-description">
-			awdjawkdjakwdjkawjdakwdkawdjakwdjakw
+			{{ cart.description }}
 		</div>
 	</div>
 	<div class="section">
 		<div class="cart-items section">
-			{% for item in cart_items %}
+			{% for item in items %}
 			<div class="product">
 				<div class="flex-center">
 					<input type="checkbox" checked />
 				</div>
-				<img src="{{ item.product.cover_img.url }}" alt="{{ item.product.title }}" />
+				<img src="{% static item.product.cover_img.path %}" alt="{{ item.product.title }}" />
 				<div class="product__details">
 					<div>
 						<h3 class="product__title">{{ item.product.title }}</h3>
@@ -41,11 +42,12 @@
 		</div>
 		<div class="cart-details">
 			<div>
-				<button id="open-share-cart-popup" class="btn btn__secondary">Udostępnij</button>
+				<button id="show-share-cart-popup" class="btn btn__secondary">Udostępnij</button>
 			</div>
 			<div>
 				<p>Razem: {{ total_price }} zł</p>
 				<a class="btn btn__primary">Dodaj do koszyka</a>
+				<a class="btn btn__primary">Przejdż do płatności</a>
 			</div>
 		</div>
 	</div>

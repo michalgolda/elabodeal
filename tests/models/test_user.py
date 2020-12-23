@@ -5,6 +5,7 @@ from elabodeal.models import User
 
 class TestUserModel(TestCase):
 	def test_fields(self):
+		self.assertEqual(hasattr(User, 'publisher', True))
 		self.assertEqual(hasattr(User, 'username'), True)
 		self.assertEqual(hasattr(User, 'email'), True)
 		self.assertEqual(hasattr(User, 'email_verified'), True)

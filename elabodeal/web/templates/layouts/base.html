@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta_tags %}{% endblock %}
 
     <link rel="stylesheet" href="{% static 'dist/main.css' %}">
 
@@ -20,6 +21,12 @@
     <script>
         window.__stripe_public_key__ = "{% get_stripe_public_api_key %}";
         window.__csrf_token__ = "{{ csrf_token }}";
+
+        window.__actionUrls__ = {
+            'save-cart': "{% url 'web:cart-action-save' %}",
+            'share-cart': "{% url 'web:saved-cart-share' %}",
+            'payment-init': "{% url 'web:cart-checkout-payment-init' %}"
+        };
     </script>
     {% block css %}{% endblock %}
 
@@ -28,7 +35,7 @@
     <title>{% block title %}Elabodeal - {% block title-description %}{% endblock %}{% endblock %}</title>
 </head>
 </head>
-<body class="{% block page_class_name %}{% endblock %}">
+<body id="body" class="{% block page_class_name %}{% endblock %}">
     {% block body %}
     {% endblock %}
 

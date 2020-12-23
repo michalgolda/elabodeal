@@ -1,82 +1,48 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title-description %}{{shared_cart.title}}{% endblock %}
+{% block title-description %}{{cart.title}}{% endblock %}
+
+{% block page_class_name %}p-shared-cart{% endblock %}
 
 {% block meta_tags %}
-<meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
-<meta property="og:type"          content="website" />
-<meta property="og:title"         content="{{ shared_cart.title }}" />
-<meta property="og:description"   content="{{ shared_cart.description }}" />
-{% endblock %}
-
-{% block css %}
-<style>
-	.box {
-		height: 256px;
-	}
-
-	.footer-text {
-		color: var(--green);
-	}
-
-	.footer-link {
-		color: var(--green);
-	}
-
-	button[type="share"] {
-		width: 140px;
-	}
-
-	.flex-start {
-		justify-content: flex-start;
-		width: 50%;
-	}
-
-	.flex-end {
-		width: 50%;
-		justify-content: flex-end;
-	}
-
-</style>
+<meta property="og:url" content="{% url 'web:shared-cart-detail' code=shared_cart.code %}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ cart.title }}" />
+<meta property="og:description" content="{{ cart.description }}" />
 {% endblock %}
 
 {% block body %}
 {% include 'components/navigation.html' %}
-<div class="container">
-	<section class="section">
-		<div class="section flex-center">
-			<div class="flex-start flex-center">
-				<p class="font-size-big font-weight-600 color-green margin-bottom-8px">{{ shared_cart.title }}</p>
-			</div>
-			<div class="flex-end flex-center">
-				<p class="font-size-small color-black font-weight-300"><b class="color-green">Data udostępnienia: </b> {{ shared_cart.created_at.day }}.{{ shared_cart.created_at.month }}.{{ shared_cart.created_at.year }}</p>
-			</div>
+<div class="wrapper">
+	<div class="cart-information">
+		<div class="section top-content">
+			<p class="section__title">{{ cart.title }}</p>
+			<p>Data udostępnienia:
+				<strong>{{ shared_cart.shared_at.day }}.{{ shared_cart.shared_at.month }}.{{ shared_cart.shared_at.year }}</strong></p>
 		</div>
-		<p class="section color-black font-size-small font-weight-300 margin-bottom-32px">{{ shared_cart.description }}</p>
-		<section class="section">
-			{% for item in shared_cart_items %}
-				<div class="box padding-16px margin-bottom-16px">
-					<div class="cart-item float-left">
-						<div class="cart-item-section">
-							<img 
-								class="cart-item-cover"
-								src="{{ item.product.cover_img.url }}"
-								alt="{{ item.product.title }}"
-							/>
-							<div class="float-left">
-								<p class="cart-item-title font-size-medium">{{ item.product.title }}</p>
-								<p class="cart-item-author ">{{ item.product.author }}</p>
-							</div>
-						</div>
+		<div class="cart-description">
+			{{ cart.description }}
+		</div>
+	</div>
+	<div class="section">
+		<div class="cart-items section">
+			{% for item in cart_items %}
+			<div class="product">
+				<img src="{% static item.product.cover_img.path %}" alt="{{ item.product.title }}" />
+				<div class="product__details">
+					<div>
+						<h3 class="product__title">{{ item.product.title }}</h3>
+						<p class="product__author">{{ item.product.author }}</p>
 					</div>
-					<div class="cart-item-section float-right">	
-						<p class="cart-item-price">{{ item.product.price }} zł</p>
+					<div>
+						<p class="product__price">{{ item.product.price }} zł</p>
 					</div>
 				</div>
+			</div>
 			{% endfor %}
-		</section>
-	</section>
+		</div>
+	</div>
 </div>
-{% include 'components/smallfooter.html' %}
+{% include 'components/small-footer-light.html' %}
 {% endblock %}

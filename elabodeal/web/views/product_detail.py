@@ -8,36 +8,31 @@ class ProductDetailView(BaseView):
 		if not product:
 			return self.respond('product_404.html', request)
 
-		products = Product.objects.all()
-		for p in products:
-			if len(p.title) >= 30:
-				p.title = p.title[:30] + '...'
+		session = request.session
 
-		# Count view increment
-		if not 'viewed_products' in request.session:
-			request.session['viewed_products'] = []
+		viewed_products = session.get('viewed_products')
+		if not viewed_products:
+			viewed_products = []
 			
-		viewed_products = request.session['viewed_products']
 		if not product.id in viewed_products:
 			viewed_products.append(product.id)
-			request.session['viewed_products'] = viewed_products
+			session['viewed_products'] = viewed_products
 
-			product.count_views += 1
+			product.views += 1
 			product.save()
 
-		related_products = products[:4]
-		for p in related_products:
-			p.empty_stars = range(5 - int(p.rating))
-			p.rating = range(int(p.rating))
+		related_products = Product.objects.all()
+		related_products = related_products[:4]
 
-		show_add_product_info = False
-		if 'show_add_product_info' in request.session:
-			show_add_product_info = request.session['show_add_product_info']
-			request.session['show_add_product_info'] = False
+		cart_update_popup = session.get('cart_update_popup')
+		if cart_update_popup:
+			session['cart_update_popup'] = False
+
+		request.session = session
 
 		context = {
 			'product': product,
 			'related_products': related_products,
-			'show_add_product_info': show_add_product_info
+			'cart_update_popup': cart_update_popup
 		}
 		return self.respond('product_detail.html', request, context)

@@ -1,0 +1,67 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Płatność{% endblock %}
+
+{% block page_class_name %}p-cart-checkout-payment{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="wrapper">
+	<div class="section flex-center">
+		<div class="checkout-step flex-center">
+			<figure class="flex-center">
+				<span class="h2"><i class="fas fa-check"></i></span>
+			</figure>
+			<span class="h2">Koszyk</span>
+		</div>
+		<div class="checkout-step__separator"></div>
+		<div class="checkout-step flex-center">
+			<figure class="flex-center">
+				<span class="h2"><i class="fas fa-check"></i></span>
+			</figure>
+			<span class="h2">Wysyłka</span>
+		</div>
+		<div class="checkout-step__separator"></div>
+		<div class="checkout-step checkout-step-current flex-center">
+			<figure class="flex-center">
+				<span class="h2">3</span>
+			</figure>
+			<span class="h2">Płatność</span>
+		</div>
+	</div>
+	<div class="section">
+		<div class="form-wrapper">
+			<form id="payment-form" class="form">
+				<p id="payment-error-msg" class="form__error"></p>
+				<div class="form__section">
+					<div>
+						<label>IMIĘ</label>
+						<input type="text" name="first_name" required />
+					</div>
+					<div>
+						<label>NAZWISKO</label>
+						<input type="text" name="last_name" required />
+					</div>
+				</div>
+				<div>
+					<label>E-MAIL</label>
+					<input type="text" name="email" required />
+				</div>
+				<div>
+					<label>NUMER TELEFONU</label>
+					<input type="text" name="phone_number"
+						oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+						required />
+				</div>
+				<div id="card-element" class=""></div>
+				<button class="btn btn__primary btn-block">Przejdź dalej</button>
+				<a class="btn btn__primary btn__primary-outline btn-block"
+					href="{% url 'web:cart-checkout-delivery' %}">Wstecz</a>
+			</form>
+		</div>
+	</div>
+
+</div>
+{% include 'components/small-footer-light.html' %}
+{% endblock %}

@@ -1,48 +1,63 @@
 from django.urls import path, include
 
-from elabodeal.web.views.auth import LoginView, RegisterView
-from elabodeal.web.views.index import IndexView
-from elabodeal.web.views.email_verify import EmailVerifyView
-from elabodeal.web.views.product_detail import ProductDetailView
-from elabodeal.web.views.logout import LogoutView
-from elabodeal.web.views.cart import CartView
-from elabodeal.web.views.saved_carts import SavedCartsView
-from elabodeal.web.views.saved_cart_detail import SavedCartDetailView
-from elabodeal.web.views.salesmanager import SalesManagerView
-from elabodeal.web.views.salesmanager_start import SalesManagerStartView
-from elabodeal.web.views.salesmanager_add_product import SalesManagerAddProductView
-from elabodeal.web.views.delivery import DeliveryView
-from elabodeal.web.views.payment import PaymentView
-from elabodeal.web.views.payment_success import PaymentSuccessView
-from elabodeal.web.views.my_books import MyBooksView
-from elabodeal.web.views.purchased_product_detail import PurchasedProductDetailView
-from elabodeal.web.views.shared_cart import SharedCartView
-from elabodeal.web.views.salesmanager_preview_product import SalesManagerPreviewProductView
+from elabodeal.web.views import (
+	LoginView, RegisterView,
+	IndexView, SalesManagerStartView,
+	LogoutView, SalesManagerIndexView,
+	SalesManagerAddProductView, ProductDetailView,
+	SearchResultsView, CartView,
+	CartAddItemAction, CartDeleteItemAction,
+	EmailVerificationView, CartSaveAjaxView,
+	SavedCartsView, SavedCartDetailView,
+	SavedCartShareAjaxView, PurchasedProductsView,
+	CartCheckoutDeliveryView, CartCheckoutPaymentView,
+	SharedCartView, CartCheckoutPaymentAjaxView,
+	CartCheckoutPaymentSuccessView)
+
 
 app_name = 'web'
 
 urlpatterns = [
 	path('', IndexView.as_view(), name='index'),
-	path('product/<str:url_name>/', ProductDetailView.as_view(), name='product-detail'),
-	path('auth/login/', LoginView.as_view(), name='login'),
-	path('auth/register/', RegisterView.as_view(), name='register'),
-	path('account/verify/', EmailVerifyView.as_view(), name='account-email-verify'),
-	path('logout/', LogoutView.as_view(), name='logout'),
-	path('mybooks/', MyBooksView.as_view(), name='my-books'),
-	path('mybooks/<int:id>/', PurchasedProductDetailView.as_view(), name='purchased-product-detail'),
-	path('cart/', include([
+	path('p/<str:url_name>/', ProductDetailView.as_view(), name='product-detail'),
+	path('zaloguj/', LoginView.as_view(), name='login'),
+	path('zarejestruj/', RegisterView.as_view(), name='register'),
+	path('weryfikacja/', EmailVerificationView.as_view(), name='email-verification'),
+	path('wyloguj/', LogoutView.as_view(), name='logout'),
+	path('s/', SearchResultsView.as_view(), name='search-results'),
+	path('pp/', PurchasedProductsView.as_view(), name='purchased-products'),
+	# path('mybooks/<int:id>/', PurchasedProductDetailView.as_view(), name='purchased-product-detail'),
+	path('c/', include([
 		path('', CartView.as_view(), name='cart'),
-		path('delivery/', DeliveryView.as_view(), name='cart-delivery'),
-		path('payment/', PaymentView.as_view(), name='cart-payment')
+		path('ajax/', include([
+			path('add-item/', CartAddItemAction.as_view(), name='cart-action-add-item'),
+			path('delete-item/', CartDeleteItemAction.as_view(), name='cart-action-delete-item'),
+			path('save/', CartSaveAjaxView.as_view(), name='cart-action-save'),
+		])),
+		path('checkout/', include([
+			path('d/', CartCheckoutDeliveryView.as_view(), name='cart-checkout-delivery'),
+			path('p/', include([
+				path('', CartCheckoutPaymentView.as_view(), name='cart-checkout-payment'),
+				path('ajax/', include([
+					path('payment_init/', CartCheckoutPaymentAjaxView.as_view(), name='cart-checkout-payment-init')
+				])),
+				path('success/', CartCheckoutPaymentSuccessView.as_view(), name='cart-checkout-payment-success')
+			])),
+		])),
 	])),
-	path('success/', PaymentSuccessView.as_view(), name='payment-success'),
-	path('saved/carts/', SavedCartsView.as_view(), name='saved-carts'),
-	path('saved/carts/<int:id>/', SavedCartDetailView.as_view(), name='saved-cart-detail'),
-	path('salesmanager/', include([
-		path('', SalesManagerView.as_view(), name='salesmanager'),
-		path('addproduct/', SalesManagerAddProductView.as_view(), name='salesmanager-add-product'),
+	# path('success/', PaymentSuccessView.as_view(), name='payment-success'),
+	path('sc/', include([
+		path('', SavedCartsView.as_view(), name='saved-carts'),
+		path('<int:id>/', SavedCartDetailView.as_view(), name='saved-cart-detail'),
+		path('ajax/', include([
+			path('share/', SavedCartShareAjaxView.as_view(), name='saved-cart-share'),
+		])),
+	])),
+	path('m/', include([
+		path('', SalesManagerIndexView.as_view(), name='salesmanager'),
+		path('p/', SalesManagerAddProductView.as_view(), name='salesmanager-add-product'),
 		path('start/', SalesManagerStartView.as_view(), name='salesmanager-start'),
-		path('product/<int:id>/', SalesManagerPreviewProductView.as_view(), name='salesmanager-preview-product')
+		# path('product/<int:id>/', SalesManagerPreviewProductView.as_view(), name='salesmanager-preview-product')
 	])),
-	path('shared/carts/<str:code>/', SharedCartView.as_view(), name='shared-cart')
+	path('shc/<str:code>/', SharedCartView.as_view(), name='shared-cart-detail')
 ]

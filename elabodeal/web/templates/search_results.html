@@ -1,0 +1,51 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Wyniki wyszukiwania{% endblock %}
+
+{% block page_class_name %}p-search-results{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="wrapper">
+    {% if results %}
+    <div class="product-list">
+        {% for product in results %}
+        <div class="product">
+            <img src="{% static product.cover_img.path %}" alt="{{ product.title }}" />
+            <div class="product__info">
+                <div class="section">
+                    <h2 class="product__title">{{ product.title }}</h2>
+                    <h4 class="product__author">{{ product.author }}</h4>
+                </div>
+                <div class="section">
+                    <p class="product__price h2">{{ product.price }} zł</p>
+                    <div class="product__stars h2">
+                        {% for _ in product.filled_stars  %}
+                        <i class="fas fa-star"></i>
+                        {% endfor %}
+                        {% for _ in product.empty_stars %}
+                        <i class="far fa-star"></i>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="product__metadata">
+                        <p>Liczba kopii: <strong>{{ product.copies }}</strong></p>
+                        <p>Odsłony: <strong>{{ product.views }}</strong></p>
+                        <p>Opinie: <strong>{{ product.rating_count }}</strong></p>
+                        <p>Data publikacji:
+                            <strong>{{ product.published_at.day }}.{{ product.published_at.month }}.{{ product.published_at.year }}</strong>
+                        </p>
+                    </div>
+                    <a class="btn btn__secondary btn-block" href="{% url 'web:product-detail' url_name=product.url_name %}">Pokaż szczegóły</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h1>Brak wyników wyszukiwania</h1>
+    {% endif %}
+</div>
+{% endblock %}
