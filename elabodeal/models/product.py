@@ -47,8 +47,6 @@ class Product(models.Model):
 	rating_count = models.IntegerField(default=0)
 	views = models.IntegerField(default=0)
 
-	files = OneToMany()
-
 	cover_img = models.ForeignKey('elabodeal.File',
 						   on_delete=models.CASCADE,
 						   related_name='cover_img',
