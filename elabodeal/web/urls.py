@@ -1,19 +1,17 @@
-from django.urls import path, include
-
-from elabodeal.web.views import (
-	LoginView, RegisterView,
-	IndexView, SalesManagerStartView,
-	LogoutView, SalesManagerIndexView,
-	SalesManagerAddProductView, ProductDetailView,
-	SearchResultsView, CartView,
-	CartAddItemAction, CartDeleteItemAction,
-	EmailVerificationView, CartSaveAjaxView,
-	SavedCartsView, SavedCartDetailView,
-	SavedCartShareAjaxView, PurchasedProductsView,
-	CartCheckoutDeliveryView, CartCheckoutPaymentView,
-	SharedCartView, CartCheckoutPaymentAjaxView,
-	CartCheckoutPaymentSuccessView)
-
+from django.urls import include, path
+from elabodeal.web.views import (CartAddItemAction, CartCheckoutDeliveryView,
+                                 CartCheckoutPaymentAjaxView,
+                                 CartCheckoutPaymentSuccessView,
+                                 CartCheckoutPaymentView, CartDeleteItemAction,
+                                 CartSaveAjaxView, CartView,
+                                 EmailVerificationView, IndexView, LoginView,
+                                 LogoutView, ProductDetailView,
+                                 PurchasedProductsView, RegisterView,
+                                 SalesManagerAddProductView,
+                                 SalesManagerIndexView, SalesManagerStartView,
+                                 SavedCartDetailView, SavedCartShareAjaxView,
+                                 SavedCartsView, SearchResultsView,
+                                 SharedCartView)
 
 app_name = 'web'
 
