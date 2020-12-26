@@ -1,4 +1,4 @@
-clean-pycache-files:
+clean-py-files:
 	find . -name '__pycache__' -exec rm -rf {} \;
 
 clean-dist-files:
@@ -6,3 +6,7 @@ clean-dist-files:
 
 clean-migrations-files:
 	find elabodeal/ -name 'migrations' -exec rm -rf {} \;
+
+clean-js-files:
+	find . -name 'package-lock.json' -exec rm -rf {} \;
+	find . -name 'node_modules' -exec rm -rf {} \;
