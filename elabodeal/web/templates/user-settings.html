@@ -1,0 +1,77 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Ustawienia{% endblock %}
+
+{% block page_class_name %}p-user-settings{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="wrapper">
+    <div class="container">
+        <div class="section">
+            <p class="section__title">Ustawienia użytkownika</p>
+            <div class="list">
+                <div class="list__option">
+                    <p class="option-name">Nazwa użytkownika</p>
+                    <div class="option-container">
+                        <input type="text" value="{{ user.username }}" readonly />
+                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="list__option">
+                    <p class="option-name">Email</p>
+                    <div class="option-container">
+                        <input type="text" value="{{ user.email }}" readonly />
+                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="list__option list__option-checkbox">
+                    <input type="checkbox" readonly />
+                    <p class="option-name">Newsletter</p>
+                </div> 
+            </div>
+        </div>
+        {% if user.publisher %}
+        <div class="section">
+            <p class="section__title">Ustawienia sprzedającego</p>
+            <div class="list">
+                <div class="list__option">
+                    <p class="option-name">Imię</p>
+                   <div class="option-container">
+                    <input type="text" value="{{ user.publisher.first_name }}" readonly />
+                    <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                </div>
+                </div>
+                <div class="list__option">
+                    <p class="option-name">Nazwisko</p>
+                    <div class="option-container">
+                        <input type="text" value="{{ user.publisher.last_name }}" readonly />
+                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="list__option">
+                    <p class="option-name">Numer konta</p>
+                    <div class="option-container">
+                        <input type="text" value="{{ user.publisher.account_number }}" readonly />
+                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="list__option">
+                    <p class="option-name">SWIFT</p>
+                    <div class="option-container">
+                        <input type="text" value="{{ user.publisher.swift }}" readonly />
+                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="list__option list__option-checkbox">
+                    <input type="checkbox" readonly checked="{{ user.publisher.sell_notification }}" />
+                    <p class="option-name">Powiadomienie o sprzedanej kopii ebooka</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% include 'components/small-footer-light.html' %}
+{% endblock %}

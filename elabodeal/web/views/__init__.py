@@ -16,3 +16,4 @@ from .saved_carts import SavedCartsView, SavedCartShareAjaxView
 from .saved_cart_detail import SavedCartDetailView
 from .purchased_products import PurchasedProductsView
 from .shared_cart import SharedCartView
+from .user_settings import UserSettingsView

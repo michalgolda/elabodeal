@@ -1,0 +1,52 @@
+.p-user-settings {
+    .list {
+        display: grid;
+        grid-template-rows: auto;
+        grid-row-gap: 1rem;
+        height: auto;
+        margin-top: 1rem;
+
+        &__option {
+            &-checkbox {
+                display: flex;
+                align-items: center;
+
+                .option-name {
+                    margin-bottom: 0;
+                    margin-left: .5rem;
+                }
+            }
+        }
+    }
+
+    .container {
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-columns: auto;
+        grid-row-gap: 1rem;
+
+        @include for-tablet-landscape-up {
+            grid-template-columns: auto auto;
+            grid-column-gap: 1rem;
+        }
+    }
+
+    .option-name {
+        margin-bottom: .5rem;
+        font-weight: bold;
+    }
+
+    .option-container {
+        display: flex;
+        align-items: center;
+
+        & > input {
+            max-width: 358px;
+        }
+
+        & > button {
+            margin-left: 1rem;
+        }
+    }
+}
