@@ -5,10 +5,13 @@ from django.conf import settings
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 from elabodeal.web.views import BaseView, BaseAjaxView
 from elabodeal.web.forms import DeliveryForm
-from elabodeal.models import Product, Cart, CartItem
+from elabodeal.models import Product, Cart, CartItem, PurchasedProduct, User
 from elabodeal.utils import SessionCartManager
 
 
@@ -120,7 +123,7 @@ class CartCheckoutPaymentAjaxView(BaseAjaxView):
 							data=payment_intent,
 							status=201)
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class CartCheckoutPaymentSuccessView(BaseView):
 	def get(self, request):
 		session = request.session
@@ -138,6 +141,63 @@ class CartCheckoutPaymentSuccessView(BaseView):
 		del session['cart']
 
 		return self.respond('cart-checkout-payment-success.html', request, context)
+
+	def post(self, request):
+		try:
+			sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+		except KeyError as e:
+			return Response(status=403)
+
+		secret = settings.STRIPE_WEBHOOK_SECRET
+		payload = request.body
+
+		try:
+			event = stripe.Event.construct_from(json.loads(payload), 
+												sig_header, secret)
+		except ValueError as e:
+			return HttpResponse(status=400)
+		except stripe.error.SignatureVerificationError as e:
+			return HttpResponse(status=400)
+
+		if event.type == 'payment_intent.succeeded':
+			event_metadata = event.data.object.metadata
+
+			delivery = json.loads(event_metadata['delivery'])
+			products = json.loads(event_metadata['products'])
+			payer = json.loads(event_metadata['payer']) 
+
+			delivery_email = delivery['email']
+
+			user = User.objects.filter(email=delivery_email).first()
+
+			product_objects = []
+			for p in products:
+				product_id = p['id']
+
+				product_object = Product.objects.filter(id=product_id).first()
+				product_objects.append(product_object)
+
+				if user:
+					has_purchased_product = PurchasedProduct.objects.filter(product=product_object, user=user).first()
+					if not has_purchased_product:
+						purchased_product = PurchasedProduct(user=user, product=product_object)
+						purchased_product.save()
+
+			# TODO: Dodanie taska celery wysyłającego maila
+			amount = event.data.object.amount
+			total_price = '{0:.2f}'.format(round(amount / 100, 2))
+
+			context_of_email = {'products': product_objects,
+								'total_price': total_price,
+								'payment_method': 'Karta płatnicza'}
+
+			send_mail(subject='Elabodeal - Potwierdzenie zakupu ebooka',
+					  message='Dziękujemy za zakupy',
+					  from_email=settings.EMAIL_HOST_USER,
+					  recipient_list=[delivery_email],
+					  html_message=render_to_string('emails/payment_success.html', context_of_email))
+
+		return HttpResponse(status=200)
 
 
 class CartAddItemAction(BaseView):

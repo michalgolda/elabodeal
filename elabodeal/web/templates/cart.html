@@ -78,11 +78,6 @@ Koszyk
 			</div>
 			<div class="cart-details">
 				<div>
-					{% if products %}
-					<button id="show-share-cart-popup" class="btn btn__primary">Udostępnij</button>
-					{% else %}
-					<button class="btn btn__disabled">Udostępnij</button>
-					{% endif %}
 					{% if request.user.is_authenticated and products %}
 					<button id="show-save-cart-popup" class="btn btn__primary">Zapisz</button>
 					{% endif %}
