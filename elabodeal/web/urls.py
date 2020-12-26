@@ -23,8 +23,7 @@ urlpatterns = [
 	path('weryfikacja/', EmailVerificationView.as_view(), name='email-verification'),
 	path('wyloguj/', LogoutView.as_view(), name='logout'),
 	path('s/', SearchResultsView.as_view(), name='search-results'),
-	path('pp/', PurchasedProductsView.as_view(), name='purchased-products'),
-	# path('mybooks/<int:id>/', PurchasedProductDetailView.as_view(), name='purchased-product-detail'),
+	path('mp/', PurchasedProductsView.as_view(), name='purchased-products'),
 	path('c/', include([
 		path('', CartView.as_view(), name='cart'),
 		path('ajax/', include([
@@ -43,7 +42,6 @@ urlpatterns = [
 			])),
 		])),
 	])),
-	# path('success/', PaymentSuccessView.as_view(), name='payment-success'),
 	path('sc/', include([
 		path('', SavedCartsView.as_view(), name='saved-carts'),
 		path('<int:id>/', SavedCartDetailView.as_view(), name='saved-cart-detail'),
