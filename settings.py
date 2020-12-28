@@ -141,7 +141,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Ebook files and images
+# The directory of ebook files and other images
 MEDIA_ROOT = BASE_DIR + '/elabodeal/web/static/files/'
 
 STATICFILES_DIRS = (
@@ -161,18 +161,20 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
 
-
-# STRIPE
+# Stripe
 
 STRIPE_PUBLIC_API_KEY = os.environ.get('STRIPE_PUBLIC_API_KEY')
 STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY')
 STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
 
+# Sentry initialization
 
-# SENTRY
+# sentry_sdk.init(
+#     dsn='https://9a681512f70b45a6a25b1f1a5dec5753@o320975.ingest.sentry.io/5394238',
+#     integrations=[DjangoIntegration()],
+#     send_default_pii=True
+# )
 
-sentry_sdk.init(
-    dsn='https://9a681512f70b45a6a25b1f1a5dec5753@o320975.ingest.sentry.io/5394238',
-    integrations=[DjangoIntegration()],
-    send_default_pii=True
-)
+# Tests
+
+TEST_RUNNER = 'green.djangorunner.DjangoRunner'
