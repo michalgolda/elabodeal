@@ -11,66 +11,75 @@
     <div class="container">
         <div class="section">
             <p class="section__title">Ustawienia użytkownika</p>
-            <div class="list">
-                <div class="list__option">
-                    <p class="option-name">Nazwa użytkownika</p>
-                    <div class="option-container">
+            <div class="option-list">
+                <div class="option">
+                    <p class="option__name">Nazwa użytkownika</p>
+                    <div class="option__body">
                         <input type="text" value="{{ user.username }}" readonly />
                         <button class="btn btn__primary"><i class="far fa-edit"></i></button>
                     </div>
                 </div>
-                <div class="list__option">
-                    <p class="option-name">Email</p>
-                    <div class="option-container">
+                <div class="option">
+                    <p class="option__name">Email</p>
+                    <div class="option__body">
                         <input type="text" value="{{ user.email }}" readonly />
                         <button class="btn btn__primary"><i class="far fa-edit"></i></button>
                     </div>
                 </div>
-                <div class="list__option list__option-checkbox">
+                <div class="option option-checkbox">
                     <input type="checkbox" readonly />
-                    <p class="option-name">Newsletter</p>
+                    <p class="option__name">Newsletter</p>
                 </div> 
             </div>
         </div>
-        {% if user.publisher %}
-        <div class="section">
-            <p class="section__title">Ustawienia sprzedającego</p>
-            <div class="list">
-                <div class="list__option">
-                    <p class="option-name">Imię</p>
-                   <div class="option-container">
+        <div class="section" style="margin-top: 2rem;">
+            <div id="dropdown-publisher" class="section__dropdown">
+                <p class="section__title">Ustawienia sprzedającego</p>
+                <i class="fas fa-caret-down"></i>
+            </div>
+            <div id="publisher-settings" class="option-list" style="display: none;">
+                {% if user.publisher %}
+                <div class="option">
+                    <p class="option__name">Imię</p>
+                   <div class="option__body">
                     <input type="text" value="{{ user.publisher.first_name }}" readonly />
                     <button class="btn btn__primary"><i class="far fa-edit"></i></button>
                 </div>
                 </div>
-                <div class="list__option">
-                    <p class="option-name">Nazwisko</p>
-                    <div class="option-container">
+                <div class="option">
+                    <p class="option__name">Nazwisko</p>
+                    <div class="option__body">
                         <input type="text" value="{{ user.publisher.last_name }}" readonly />
                         <button class="btn btn__primary"><i class="far fa-edit"></i></button>
                     </div>
                 </div>
-                <div class="list__option">
-                    <p class="option-name">Numer konta</p>
-                    <div class="option-container">
+                <div class="option">
+                    <p class="option__name">Numer konta</p>
+                    <div class="option__body">
                         <input type="text" value="{{ user.publisher.account_number }}" readonly />
                         <button class="btn btn__primary"><i class="far fa-edit"></i></button>
                     </div>
                 </div>
-                <div class="list__option">
-                    <p class="option-name">SWIFT</p>
-                    <div class="option-container">
+                <div class="option">
+                    <p class="option__name">SWIFT</p>
+                    <div class="option__body">
                         <input type="text" value="{{ user.publisher.swift }}" readonly />
                         <button class="btn btn__primary"><i class="far fa-edit"></i></button>
                     </div>
                 </div>
-                <div class="list__option list__option-checkbox">
+                <div class="option option-checkbox">
                     <input type="checkbox" readonly checked="{{ user.publisher.sell_notification }}" />
-                    <p class="option-name">Powiadomienie o sprzedanej kopii ebooka</p>
+                    <p class="option__name">Powiadomienie o sprzedanej kopii ebooka</p>
                 </div>
+                {% else %}
+                <div>
+                    <p>Aby utworzyć konto sprzedającego, kliknij przycisk poniżej</p>
+                    <a href="{% url 'web:salesmanager-start' %}" class="btn btn__primary-outline" style="margin-top: .5rem;">Utwórz</a>
+                </div>
+                {% endif %}
             </div>
         </div>
-        {% endif %}
+        <button class="btn btn__primary btn-block" style="margin-top: 2rem;">Zapisz ustawienia</button>
     </div>
 </div>
 {% include 'components/small-footer-light.html' %}

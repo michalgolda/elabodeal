@@ -15,3 +15,4 @@ import './cart-update-popup.js';
 // import './change-review-product-popup.js';
 // import './review-product-popup.js';
 import './add-product.js';
+import './user-settings.js';
