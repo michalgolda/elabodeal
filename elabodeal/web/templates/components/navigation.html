@@ -41,11 +41,11 @@
 				</p>
 			</a>
 		</div>
-		<div id="nav-menu-open" class="nav__action flex-center">
+		<div id="js-show-menu" class="nav__action flex-center">
 			<div class="nav__avatar"></div>
 			<p class="nav__username">{{ request.user.username }}</p>
-			<i id="nav-arrow-down" class="fas fa-angle-down nav__icon nav__icon-arrow"></i>
-			<i id="nav-arrow-up" class="fas fa-angle-up nav__icon nav__icon-arrow" style="display: none;"></i>
+			<i class="fas fa-angle-down nav__icon nav__icon-arrow"></i>
+			<i class="fas fa-angle-up nav__icon nav__icon-arrow" style="display: none;"></i>
 		</div>
 		{% if not request.path == '/salesmanager/products/add/' %}
 		<div class="nav__action">
@@ -57,7 +57,7 @@
 		{% endif %}
 	</div>
 </nav>
-<div id="nav-menu" class="nav__menu">
+<div id="js-menu" class="nav__menu">
 	<div class="nav__menu-wrapper">
 		<div class="nav__menu-action">
 			<a href="#">Twój profil</a>
