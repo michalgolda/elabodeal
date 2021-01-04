@@ -1,13 +1,13 @@
-( function( document, window ){
+( function( document ){
 	document.addEventListener( 'DOMContentLoaded', function(){
-		var scrollUpBtn = document.getElementById( 'scrollUpBtn' );
+		var scrollUpBtn = document.getElementById( 'js-scrollup-btn' );
 
-		if (!scrollUpBtn) return;
+		if ( !scrollUpBtn ) return;
 
 		scrollUpBtn.addEventListener( 'click', function(){
 			$( 'html, body' ).animate({
 				scrollTop: 0
 			}, 1000);
-		});
-	});
-})( document, window );
+		} );
+	} );
+} )( document );
