@@ -24,6 +24,46 @@ class UserManager(BaseUserManager):
 
 		return user
 
+	def update_settings(self, user: object, settings: dict) -> None:
+		"""Update user specifed settings
+
+		Setting values of user object or publisher object by attributes
+		of settings dictionary. If not any change skip and don't save to db.
+
+		Args:
+			user:
+				A instance of user object
+			settings:
+				A dictionary of attribiutes and values for update
+				instance of user.
+		"""
+
+		has_changed = False
+
+		for attr_name, attr_value in settings.items():
+
+			# Zmiana wartości parametru obiektu User
+			if hasattr(user, attr_name):
+				if getattr(user, atrr_value) != attr_value:
+						setattr(user, attr_name, attr_value)
+
+						has_changed = True
+
+			# Zmiana wartości parametrów obiektu Publisher
+			elif attr_name.startswith('publisher.'):
+				attr_name = attr_name.split('.')[1]
+
+				if hasattr(user.publisher, attr_name):
+					if getattr(user.publisher, attr_name) != attr_value:
+						setattr(user.publisher, attr_name, attr_value)
+
+						has_changed = True
+						
+		if not has_changed: return
+
+		user.save()
+		user.publisher.save()
+
 
 class User(AbstractBaseUser):
 	publisher = models.OneToOneField('elabodeal.Publisher',
