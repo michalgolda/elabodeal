@@ -1,86 +1,115 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/base.html' %} 
 {% load static %}
 
-{% block title-description %}Ustawienia{% endblock %}
+{% block title-description%}Ustawienia{% endblock %} 
 
-{% block page_class_name %}p-user-settings{% endblock %}
+{% block page_class_name%}p-user-settings{% endblock%} 
 
-{% block body %}
+{% block body %} 
 {% include 'components/navigation.html' %}
 <div class="wrapper">
-    <div class="container">
+    <form id="js-settings-form" action="{% url 'web:user-settings-save' %}" class="container">
+        <div class="modal modal-success">
+           <p class="modal__text"></p> 
+        </div>
+
         <div class="section">
             <p class="section__title">Ustawienia użytkownika</p>
             <div class="option-list">
                 <div class="option">
-                    <p class="option__name">Nazwa użytkownika</p>
+                    <label>NAZWA UŻYTKOWNIKA</label>
                     <div class="option__body">
-                        <input type="text" value="{{ user.username }}" readonly />
-                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                        <input id="js-option-input" type="text" name="username" value="{{ user.username }}" readonly />
+                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                            style="display: none"></button>
                     </div>
                 </div>
                 <div class="option">
-                    <p class="option__name">Email</p>
+                    <label>EMAIL</label>
                     <div class="option__body">
-                        <input type="text" value="{{ user.email }}" readonly />
-                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                        <input id="js-option-input" type="text" name="email" value="{{ user.email }}" readonly />
+                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                            style="display: none">
+                        </button>
                     </div>
                 </div>
                 <div class="option option-checkbox">
-                    <input type="checkbox" readonly />
+                    <input id="js-option-input" type="checkbox" readonly />
                     <p class="option__name">Newsletter</p>
-                </div> 
+                </div>
             </div>
         </div>
-        <div class="section" style="margin-top: 2rem;">
-            <div id="dropdown-publisher" class="section__dropdown">
+        <div class="section" style="margin-top: 2rem">
+            <div id="js-trigger-publisher-settings-section" class="section__dropdown">
                 <p class="section__title">Ustawienia sprzedającego</p>
                 <i class="fas fa-caret-down"></i>
             </div>
-            <div id="publisher-settings" class="option-list" style="display: none;">
+            <div id="js-publisher-settings-section" class="option-list option-list-dropdown-animation"
+                style="display: none">
                 {% if user.publisher %}
                 <div class="option">
-                    <p class="option__name">Imię</p>
-                   <div class="option__body">
-                    <input type="text" value="{{ user.publisher.first_name }}" readonly />
-                    <button class="btn btn__primary"><i class="far fa-edit"></i></button>
-                </div>
-                </div>
-                <div class="option">
-                    <p class="option__name">Nazwisko</p>
+                    <label>IMIĘ</label>
                     <div class="option__body">
-                        <input type="text" value="{{ user.publisher.last_name }}" readonly />
-                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                        <input id="js-option-input" type="text" name="publisher.first_name"
+                            value="{{ user.publisher.first_name }}" readonly />
+                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                            style="display: none"></button>
                     </div>
                 </div>
                 <div class="option">
-                    <p class="option__name">Numer konta</p>
+                    <label>NAZWISKO</label>
                     <div class="option__body">
-                        <input type="text" value="{{ user.publisher.account_number }}" readonly />
-                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                        <input id="js-option-input" type="text" name="publisher.last_name"
+                            value="{{ user.publisher.last_name }}" readonly />
+                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                            style="display: none"></button>
                     </div>
                 </div>
                 <div class="option">
-                    <p class="option__name">SWIFT</p>
+                    <label>NUMER KONTA</label>
                     <div class="option__body">
-                        <input type="text" value="{{ user.publisher.swift }}" readonly />
-                        <button class="btn btn__primary"><i class="far fa-edit"></i></button>
+                        <input id="js-option-input" type="text" name="publisher.account_number"
+                            value="{{ user.publisher.account_number }}" readonly />
+                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                            style="display: none"></button>
+                    </div>
+                </div>
+                <div class="option">
+                    <label>SWIFT</label>
+                    <div class="option__body">
+                        <input id="js-option-input" type="text" name="publisher.swift"
+                            value="{{ user.publisher.swift }}" readonly />
+                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                            style="display: none"></button>
                     </div>
                 </div>
                 <div class="option option-checkbox">
-                    <input type="checkbox" readonly checked="{{ user.publisher.sell_notification }}" />
+                    <input type="hidden" name="publisher.sell_notification" value="False" />
+                    <input type="checkbox" name="publisher.sell_notification"
+                        value="True" 
+                        {% if user.publisher.sell_notification %}
+                        checked="checked"
+                        {% endif %}/>
                     <p class="option__name">Powiadomienie o sprzedanej kopii ebooka</p>
                 </div>
                 {% else %}
                 <div>
                     <p>Aby utworzyć konto sprzedającego, kliknij przycisk poniżej</p>
-                    <a href="{% url 'web:salesmanager-start' %}" class="btn btn__primary-outline" style="margin-top: .5rem;">Utwórz</a>
+                    <a href="{% url 'web:salesmanager-start' %}" class="btn btn__primary-outline"
+                        style="margin-top: 0.5rem">Utwórz</a>
                 </div>
                 {% endif %}
             </div>
         </div>
-        <button class="btn btn__primary btn-block" style="margin-top: 2rem;">Zapisz ustawienia</button>
-    </div>
+        <button type="submit" class="btn btn__primary-outline btn-block" style="margin-top: 2rem">
+            Zapisz ustawienia
+        </button>
+    </form>
 </div>
-{% include 'components/small-footer-light.html' %}
-{% endblock %}
+{% include 'components/small-footer-light.html' %} {% endblock %}

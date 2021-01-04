@@ -62,4 +62,27 @@
     input {
         color: $color-grey;
     }
+
+    .current-editing-input {
+        color: $color-black;
+        border-color: $color-black;
+    }
+
+    .option-list-dropdown-animation {
+        @include dropdown-animation;
+    }
+
+    #js-edit-option-btn {
+        &:after {
+            font-family: FontAwesome;
+            content: '\f044';
+        }
+    }
+
+    #js-cancel-edit-option-btn {
+        &:after {
+            font-family: FontAwesome;
+            content: '\f00d';
+        }
+    }
 }
