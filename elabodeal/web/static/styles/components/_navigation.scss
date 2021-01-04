@@ -77,6 +77,7 @@
         display: none;
         right: 0;
         margin-right: 125px;
+        @include dropdown-animation;
 
         &-wrapper {
             background: white;
