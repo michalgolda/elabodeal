@@ -10,6 +10,9 @@
     "build": "webpack --config webpack.prod.config.js"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
     "chromedriver": "^84.0.1",
     "css-loader": "^4.3.0",
     "css-minimizer-webpack-plugin": "^1.1.5",
@@ -22,5 +25,7 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
 }
