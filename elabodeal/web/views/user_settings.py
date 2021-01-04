@@ -1,4 +1,7 @@
-from elabodeal.web.views import BaseView
+import json
+
+from elabodeal.models import User
+from elabodeal.web.views import BaseView, BaseAjaxView
 
 
 class UserSettingsView(BaseView):
@@ -10,3 +13,15 @@ class UserSettingsView(BaseView):
         context = {'user': user}
 
         return self.respond('user-settings.html', request, context)
+
+
+class UserUpdateSettingsAjaxView(BaseAjaxView):
+    auth_required = True
+
+    def post(self, request):
+        user = request.user
+        data = request.POST
+
+        User.objects.update_settings(user, data)
+
+        return self.respond(status=201)

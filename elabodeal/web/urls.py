@@ -11,7 +11,8 @@ from elabodeal.web.views import (CartAddItemAction, CartCheckoutDeliveryView,
                                  SalesManagerIndexView, SalesManagerStartView,
                                  SavedCartDetailView, SavedCartShareAjaxView,
                                  SavedCartsView, SearchResultsView,
-                                 SharedCartView, UserSettingsView)
+                                 SharedCartView, UserSettingsView,
+								 UserUpdateSettingsAjaxView)
 
 app_name = 'web'
 
@@ -25,6 +26,7 @@ urlpatterns = [
 	path('s/', SearchResultsView.as_view(), name='search-results'),
 	path('mp/', PurchasedProductsView.as_view(), name='purchased-products'),
 	path('settings/', UserSettingsView.as_view(), name='user-settings'),
+	path('settings/ajax/save/', UserUpdateSettingsAjaxView.as_view(), name='user-settings-save'),
 	path('c/', include([
 		path('', CartView.as_view(), name='cart'),
 		path('ajax/', include([
