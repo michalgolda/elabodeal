@@ -13,7 +13,7 @@ const paths = {
 	'mainEntrances': [
 		path.resolve(
 			__dirname, 
-			'elabodeal/web/static/js/index.js'
+			'elabodeal/web/static/js/main.js'
 		),
 		path.resolve(
 			__dirname,
@@ -29,7 +29,7 @@ module.exports = {
 		app: paths.mainEntrances
 	},
 	output: {
-		filename: 'app.js',
+		filename: 'main.js',
 		path: paths.dist
 	},
 	plugins: [
@@ -56,6 +56,16 @@ module.exports = {
         				},
         			}
         		], 
+			},
+			{
+				test: /\.m?js$/,
+				exclude: /node_modules/,
+				use: {
+					loader: "babel-loader",
+					options: {
+						presets: ['@babel/preset-env']
+					}
+				}
 			}
 		],
 	},
