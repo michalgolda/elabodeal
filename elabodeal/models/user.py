@@ -44,7 +44,7 @@ class UserManager(BaseUserManager):
 
 			# Zmiana wartości parametru obiektu User
 			if hasattr(user, attr_name):
-				if getattr(user, atrr_value) != attr_value:
+				if getattr(user, attr_name) != attr_value:
 						setattr(user, attr_name, attr_value)
 
 						has_changed = True
