@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import alert from '../../alert';
+
 
 export const SaveSettingsListener = ( e ) => {
     e.preventDefault();
@@ -35,6 +37,9 @@ export const SaveSettingsListener = ( e ) => {
             'X-CSRFtoken': window.__csrf_token__
         }
     })
+        .then( ( response ) => {
+            alert( 'Ustawienia zostały poprawnie zapisane', 'success' );
+        } )
         .catch( ( error ) => {
             console.error(error);
         } )
