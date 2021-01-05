@@ -69,7 +69,7 @@
     }
 
     .option-list-dropdown-animation {
-        @include dropdown-animation;
+        @include fadein-animation;
     }
 
     #js-edit-option-btn {

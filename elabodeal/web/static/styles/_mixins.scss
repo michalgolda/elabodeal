@@ -36,8 +36,8 @@
     transition: $delay ease-in;
 }
 
-@mixin dropdown-animation($duration: 0.25s) {
-    @keyframes dropdown {
+@mixin fadein-animation($duration: 0.25s) {
+    @keyframes fadeIn {
         from {
             opacity: 0;
         }
@@ -46,6 +46,20 @@
         }
     }
 
-    animation: dropdown ease-in-out forwards;
+    animation: fadeIn ease-in;
+    animation-duration: $duration;
+}
+
+@mixin fadeout-animation($duration: 0.25s) {
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opactiy: 0;
+        }
+    }
+
+    animation: fadeOut ease-out;
     animation-duration: $duration;
 }
