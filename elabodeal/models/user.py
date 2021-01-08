@@ -24,7 +24,7 @@ class UserManager(BaseUserManager):
 
 		return user
 
-	def update_settings(self, user: object, settings: dict) -> None:
+	def update_settings(self, user: object, settings: dict) -> object:
 		"""Update user specifed settings
 
 		Setting values of user object or publisher object by attributes
@@ -36,20 +36,29 @@ class UserManager(BaseUserManager):
 			settings:
 				A dictionary of attribiutes and values for update
 				instance of user.
+		Returns:
+			Updated instance of User object
 		"""
+		
+		if len(settings) == 0:
+			raise ValueError("The settings dictionary mustn't empty")
 
 		has_changed = False
 
 		for attr_name, attr_value in settings.items():
 
-			# Zmiana wartości parametru obiektu User
+			# Change attributes of user instance
 			if hasattr(user, attr_name):
 				if getattr(user, attr_name) != attr_value:
 						setattr(user, attr_name, attr_value)
+						
+						if attr_name == 'email':
+							# Change email_verified attribute for enforce again verification
+							user.email_verified = False
 
 						has_changed = True
 
-			# Zmiana wartości parametrów obiektu Publisher
+			# Change attributes of publisher instance
 			elif attr_name.startswith('publisher.'):
 				attr_name = attr_name.split('.')[1]
 
@@ -59,10 +68,13 @@ class UserManager(BaseUserManager):
 
 						has_changed = True
 						
-		if not has_changed: return
+		if has_changed:
+			user.save()
 
-		user.save()
-		user.publisher.save()
+			if user.publisher is not None:
+				user.publisher.save()
+
+		return user
 
 
 class User(AbstractBaseUser):
