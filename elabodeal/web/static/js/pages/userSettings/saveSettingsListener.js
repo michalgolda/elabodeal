@@ -7,7 +7,6 @@ export const SaveSettingsListener = ( e ) => {
     e.preventDefault();
 
     var form = $( e.target );
-    var submitBtn = $( e.submitter );
     
     var actionURL = form.attr( 'action' );
 
