@@ -2,14 +2,21 @@ import random
 import datetime
 
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
+from elabodeal.models import User
+
 
 class VerificationCodeManager(models.Manager):
-	def generate(self, email, expires = 86400):		
-		
+	def generate(self, email: str, expires: int = 86400) -> object:		
+		# Delete exist code and generate new
+		verification_code = self.model.objects.filter(email=email).first()
+		if verification_code:
+			verification_code.delete()
+
 		expiration = timezone.now() + datetime.timedelta(seconds=expires)
 
 		verification_code = self.model(email=email, 
@@ -17,44 +24,49 @@ class VerificationCodeManager(models.Manager):
 		verification_code.code = ''.join(str(random.randint(0, 9)) for _ in range(6))
 		verification_code.save()
 
-		# TODO: Dodanie taska wysyłającego email (Celery)
-		# Wysłanie wygenerowanego kodu weryfikacyjnego na podany email
-        # TODO: Przepisanie wysyłania maila używając sygnałów
-		send_mail(
-			subject='Elabodeal - Weryfikacja konta',
-			message=f'To jest twój kod weryfikacyjny {verification_code.code}',
-			from_email=settings.EMAIL_HOST_USER,
-			recipient_list=[verification_code.email],
-			html_message=render_to_string('emails/verification.html', 
-										  {'code': verification_code.code})
-		)
+		code = verification_code.code
+		recipient = verification_code.email
+		from_email = settings.EMAIL_HOST_USER
+		subject = 'Elabodeal - Weryfikacja konta'
+		message = f'To jest twój kod weryfikacyjny {code}'
+		html_message = render_to_string('emails/verification.html', 
+										{'code': code})
+
+		send_mail(subject=subject,
+				  message=message,
+				  from_email=from_email,
+				  recipient_list=[recipient],
+				  html_message=html_message)
 
 		return verification_code
 
-	def verify(self, user, code):
+	def verify(self, email: str, code: int) -> object:
+		user = User.objects.filter(email=email).first()
+
+		if not user:
+			raise ValueError('Not found user by email for verification')
+
 		verify_code = self.model.objects.filter(email=user.email).first()
-
+	
 		if not verify_code:
-			return False
-
-		if verify_code.code != code:
-			return False
+			raise ValueError('Not found verification code')
+		elif verify_code.code != code:
+			raise ValueError('Verification code is invalid')
 		
 		curr_datetime = timezone.now()
+	
 		if curr_datetime > verify_code.expiration_at:
-			# Usunięcie kodu z bazy danych, który stracił ważność
 			verify_code.delete()
 			
-			return False
+			raise ValueError('Verification code is expired')
 
 		user.email_verified = True
 		user.email_verified_at = timezone.now()
 		user.save()
 
-		# Jeżeli kod został zweryfikowany, zostaje usunięty z bazy danych
 		verify_code.delete()
 
-		return True
+		return user
 
 
 class VerificationCode(models.Model):
