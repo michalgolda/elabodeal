@@ -12,6 +12,10 @@ from elabodeal.models import User
 
 class VerificationCodeManager(models.Manager):
 	def generate(self, email: str, expires: int = 86400) -> object:		
+		user = User.objects.filter(email=email).first()
+		if not user:
+			raise ValueError('Not found candidate for verification.')
+		
 		# Delete exist code and generate new
 		verification_code = self.model.objects.filter(email=email).first()
 		if verification_code:

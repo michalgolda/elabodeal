@@ -18,18 +18,31 @@ class TestVerificationCodeModel(TestCase):
 		self.assertEqual(hasattr(VerificationCode, 'created_at'), True)
 
 	def test_manager_generate_method(self):
-		generated_verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
+		user = User.objects.create_user(email='xyz@xyz.pl', 
+										username='xyz',
+										password='xyz')
+		
+		generated_verify_code = VerificationCode.objects.generate(email=user.email)
 		
 		self.assertEqual(len(generated_verify_code.code), 6)
 		self.assertIsInstance(generated_verify_code, VerificationCode)
 
-		verify_code = VerificationCode.objects.filter(email='xyz@xyz.pl').first()
+		verify_code = VerificationCode.objects.filter(email=user.email).first()
 		
 		self.assertEqual(generated_verify_code.code, verify_code.code)
 
+	def test_manager_generate_method_not_found_candiate(self):
+		with self.assertRaises(ValueError):
+			 VerificationCode.objects.generate(email='xyz@xyz.pl')
+
 	def test_manager_generate_method_clear_exist_code(self):
-		generated_verify_code_one = VerificationCode.objects.generate('xyz@xyz.pl')
-		generated_verify_code_two = VerificationCode.objects.generate('xyz@xyz.pl')
+		user = User.objects.create_user(email='xyz@xyz.pl', 
+										username='xyz',
+										password='xyz')
+		
+
+		generated_verify_code_one = VerificationCode.objects.generate(email=user.email)
+		generated_verify_code_two = VerificationCode.objects.generate(email=user.email)
 
 		verify_codes = VerificationCode.objects.filter(email=generated_verify_code_one.email).all()
 
@@ -38,7 +51,11 @@ class TestVerificationCodeModel(TestCase):
 	def test_manager_generate_method_send_email(self):
 		settings.EMAIL_HOST_USER = 'xyz@xyz.pl'
 		
-		verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
+		user = User.objects.create_user(email='xyz@xyz.pl', 
+										username='xyz',
+										password='xyz')
+		
+		verify_code = VerificationCode.objects.generate(email=user.email)
 
 		outbox = mail.outbox
 
@@ -86,7 +103,12 @@ class TestVerificationCodeModel(TestCase):
 			VerificationCode.objects.verify(email=user.email, code=123)
 
 	def test_manager_verify_method_expired_code(self):
-		verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
+		user = User.objects.create_user(email='xyz@xyz.pl', 
+										username='xyz',
+										password='xyz')
+		
+
+		verify_code = VerificationCode.objects.generate(email=user.email)
 		
 		verify_code.expiration_at = timezone.now() - datetime.timedelta(hours=24)
 		verify_code.save()
