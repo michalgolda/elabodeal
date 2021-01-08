@@ -11,9 +11,10 @@ from .cart import (CartView, CartAddItemAction,
                    CartDeleteItemAction, CartSaveAjaxView,
                    CartCheckoutDeliveryView, CartCheckoutPaymentView,
                    CartCheckoutPaymentAjaxView, CartCheckoutPaymentSuccessView)
-from .email_verification import EmailVerificationView
+from .email_verification import (EmailVerificationView, EmailVerificationAjaxView,
+                                 ResendEmailVerificationAjaxView)
 from .saved_carts import SavedCartsView, SavedCartShareAjaxView
 from .saved_cart_detail import SavedCartDetailView
 from .purchased_products import PurchasedProductsView
 from .shared_cart import SharedCartView
-from .user_settings import UserSettingsView, UserUpdateSettingsAjaxView
+from .user_settings import UserSettingsView, UserSaveSettingsAjaxView
