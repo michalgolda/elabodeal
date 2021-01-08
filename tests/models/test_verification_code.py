@@ -1,4 +1,5 @@
 import datetime
+from unittest import skip
 
 from tests.base import TestCase
 
@@ -6,7 +7,7 @@ from django.core import mail
 from django.conf import settings
 from django.utils import timezone
 
-from elabodeal.models import VerificationCode
+from elabodeal.models import VerificationCode, User
 
 
 class TestVerificationCodeModel(TestCase):
@@ -17,50 +18,79 @@ class TestVerificationCodeModel(TestCase):
 		self.assertEqual(hasattr(VerificationCode, 'created_at'), True)
 
 	def test_manager_generate_method(self):
-		verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
-
-		__verify_code = VerificationCode.objects.filter(email='xyz@xyz.pl').first()
+		generated_verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
 		
-		self.assertNotEqual(__verify_code, None)
-		self.assertEqual(__verify_code.code, verify_code.code)
-		self.assertEqual(len(verify_code.code), 6)
+		self.assertEqual(len(generated_verify_code.code), 6)
+		self.assertIsInstance(generated_verify_code, VerificationCode)
+
+		verify_code = VerificationCode.objects.filter(email='xyz@xyz.pl').first()
+		
+		self.assertEqual(generated_verify_code.code, verify_code.code)
+
+	def test_manager_generate_method_clear_exist_code(self):
+		generated_verify_code_one = VerificationCode.objects.generate('xyz@xyz.pl')
+		generated_verify_code_two = VerificationCode.objects.generate('xyz@xyz.pl')
+
+		verify_codes = VerificationCode.objects.filter(email=generated_verify_code_one.email).all()
+
+		self.assertEqual(len(verify_codes), 1)
 
 	def test_manager_generate_method_send_email(self):
-		settings.EMAIL_HOST_USER = 'abc@abc.pl'
+		settings.EMAIL_HOST_USER = 'xyz@xyz.pl'
 		
 		verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
 
-		self.assertEqual(len(mail.outbox), 1)
-		self.assertEqual(mail.outbox[0].subject , 'Elabodeal - Weryfikacja konta')
-		self.assertIn(verify_code.code, mail.outbox[0].body)
+		outbox = mail.outbox
+
+		mail_obj = outbox[0]
+		mail_subject = mail_obj.subject
+		mail_body = mail_obj.body
+
+		self.assertEqual(len(outbox), 1)
+		self.assertEqual(mail_subject , 'Elabodeal - Weryfikacja konta')
+		self.assertIn(verify_code.code, mail_body)
 
 	def test_manager_verify_method(self):
+		user = User.objects.create_user(email='xyz@xyz.pl', 
+										username='xyz',
+										password='xyz')
+		
+		verify_code = VerificationCode.objects.generate(email=user.email)
+
+		verified_user = VerificationCode.objects.verify(email=verify_code.email, 
+														code=verify_code.code)
+		
+		self.assertIsInstance(verified_user, User)
+		self.assertEqual(verified_user.email_verified, True)	
+
+	def test_manager_verify_method_not_found_user(self):
+		with self.assertRaises(ValueError):
+			VerificationCode.objects.verify(email='xyz@xyz.pl', code=123)
+
+	def test_manager_verify_method_not_found_code(self):
+		user = User.objects.create_user(email='xyz@xyz.pl', 
+										username='xyz',
+										password='xyz')
+		
+		with self.assertRaises(ValueError):
+			VerificationCode.objects.verify(email='xyz@xyz.pl', code=123)
+
+	def test_manager_verify_method_invalid_code(self):
+		user = User.objects.create_user(email='xyz@xyz.pl', 
+										username='xyz',
+										password='xyz')
+
+		verify_code = VerificationCode.objects.generate(email=user.email)
+
+		with self.assertRaises(ValueError):
+			VerificationCode.objects.verify(email=user.email, code=123)
+
+	def test_manager_verify_method_expired_code(self):
 		verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
-
-		is_verified = VerificationCode.objects.verify(code=verify_code.code, email=verify_code.email)
-		self.assertEqual(is_verified, True)
-
-	def test_manager_verify_method_if_email_does_not_valid(self):
-		verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
-
-		is_verified = VerificationCode.objects.verify(code=verify_code.code, email='')
-		self.assertEqual(is_verified, False)
-
-	def test_manager_verify_method_if_code_does_not_valid(self):
-		verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
-
-		is_verified = VerificationCode.objects.verify(code='', email='xyz@xyz.pl')
-		self.assertEqual(is_verified, False)
-
-	def test_manager_verify_method_if_code_is_expired(self):
-		verify_code = VerificationCode.objects.generate(email='xyz@xyz.pl')
-
+		
 		verify_code.expiration_at = timezone.now() - datetime.timedelta(hours=24)
 		verify_code.save()
 
-		is_verified = VerificationCode.objects.verify(code=verify_code.code, email=verify_code.email)
-		self.assertEqual(is_verified, False)
-
-		# Sprawdzenie czy kod, który stracił ważność został usunięty z bazy danych
-		__verify_code = VerificationCode.objects.filter(email=verify_code.email).first()
-		self.assertEqual(__verify_code, None)
+		with self.assertRaises(ValueError):
+			VerificationCode.objects.verify(email=verify_code.email, 
+											code=verify_code.code)
