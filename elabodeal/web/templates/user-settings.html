@@ -5,7 +5,12 @@
 
 {% block page_class_name%}p-user-settings{% endblock%} 
 
-{% block body %} 
+{% block body %}
+<!-- Modals -->
+{% if not user.email_verified %}
+{% include 'components/modals/email-verification-modal.html' %}
+{% endif %}
+
 {% include 'components/navigation.html' %}
 <div class="wrapper">
     <form id="js-settings-form" action="{% url 'web:user-settings-save' %}" class="container">
@@ -23,6 +28,7 @@
                 </div>
                 <div class="option">
                     <label>EMAIL</label>
+                    <p class="option__information" style="margin-bottom: .5rem;">Po zmianie adresu email, w najbliższym czasie będzie wymagana weryfikacjia.</p>
                     <div class="option__body">
                         <input id="js-option-input" type="text" name="email" value="{{ user.email }}" readonly />
                         <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
@@ -30,10 +36,12 @@
                             style="display: none">
                         </button>
                     </div>
-                </div>
-                <div class="option option-checkbox">
-                    <input id="js-option-input" type="checkbox" readonly />
-                    <p class="option__name">Newsletter</p>
+                    {% if not user.email_verified %}
+                    <div style="margin-top: 1rem;">
+                        <p class="option__information" style="margin-bottom: .5rem;">Aby móc w pełni korzystać z funkcjonalnośći platformy musisz zweryfikować swój adres email.</p>
+                        <button id="js-start-email-verification-btn" type="button" class="btn btn__secondary">Zweryfikuj</button>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
