@@ -1,0 +1,29 @@
+{% extends 'components/modals/base.html' %}
+
+{% block modal-title %}Weryfikacja adresu email{% endblock %}
+
+{% block modal-id %}js-email-verification-modal{% endblock %}
+{% block modal-close-btn-id %}js-close-email-verification-modal{% endblock %}
+
+{% block modal-body %}
+<form id="js-email-verification" action="{% url 'web:verify-email' %}">    
+    <p>Na adres email <strong>{{ user.email }}</strong> został wysłany kod weryfikacyjny.</p>
+    <div style="margin-top: 1rem; text-align: center;">
+        <p id="js-email-verification-msg" style="margin-bottom: 1rem; display: none;"></p>
+        <input type="hidden" name="email" value="{{ user.email }}" />
+        <input type="text" name="code" placeholder="Podaj kod weryfikacyjny" style="max-width: 256px;" required/>
+        <div class="flex-center" style="margin-top: .5rem;">
+            <button class="btn btn__secondary" style="margin-right: .25rem;">Zweryfikuj</button>
+            <button 
+                id="js-resend-email-verification-code-btn" 
+                class="btn btn__secondary-outline" 
+                type="button" 
+                data-action-url="{% url 'web:resend-email-verification-code' %}" 
+                style="margin-left: .25rem;"
+            >
+                Wyślij kod ponownie
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}

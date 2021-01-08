@@ -21,6 +21,12 @@
             margin-bottom: .5rem;
         }
 
+        &__information {
+            font-size: $font-size-small;
+            color: $color-black;
+            font-weight: 400;
+        }
+
         &__body {
             display: grid;
             grid-template-columns: auto 4rem;
@@ -38,6 +44,10 @@
             & > input {
                 margin-right: .5rem;
             }
+        }
+
+        input {
+            color: $color-grey;
         }
     }
 
@@ -59,12 +69,8 @@
         }
     }
 
-    input {
-        color: $color-grey;
-    }
-
     .current-editing-input {
-        color: $color-black;
+        color: $color-black !important;
         border-color: $color-black;
     }
 
@@ -83,6 +89,17 @@
         &:after {
             font-family: FontAwesome;
             content: '\f00d';
+        }
+    }
+
+    #js-email-verification-modal {
+        .success-msg {
+            text-align: center;
+            color: $color-green;
+        }
+
+        .error-msg {
+            color: $color-red;
         }
     }
 }
