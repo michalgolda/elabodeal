@@ -1,11 +1,11 @@
-from tests.base import TestCase
+from tests import TestCase
 
 from elabodeal.models import User
 
 
 class TestUserModel(TestCase):
 	def test_fields(self):
-		self.assertEqual(hasattr(User, 'publisher', True))
+		self.assertEqual(hasattr(User, 'publisher'), True)
 		self.assertEqual(hasattr(User, 'username'), True)
 		self.assertEqual(hasattr(User, 'email'), True)
 		self.assertEqual(hasattr(User, 'email_verified'), True)
@@ -29,27 +29,13 @@ class TestUserModel(TestCase):
 			email='xyz@xyz.pl', 
 			username='xyz', 
 			password='xyz')
-
-		__user = User.objects.filter(id=user.id).first()
-
+			
 		self.assertNotEqual(user, None)	
-		self.assertNotEqual(__user, None)
-		self.assertEqual(__user.email, user.email)
-		self.assertEqual(__user.username, user.username)
 
-	def test_manager_create_user_method_if_email_is_empty(self):
-		with self.assertRaises(ValueError):
-					user = User.objects.create_user(
-						email='',
-						username='xyz', 
-						password='xyz')
+		created_user = User.objects.get(id=user.id)
 
-	def test_manager_create_user_method_if_username_is_empty(self):
-		with self.assertRaises(ValueError):
-					user = User.objects.create_user( 
-						email='xyz@xyz.pl', 
-						username='',
-						password='xyz')
+		self.assertEqual(created_user.email, user.email)
+		self.assertEqual(created_user.username, user.username)
 
 	def test_manager_create_superuser_method(self):
 		user = User.objects.create_superuser(
@@ -57,16 +43,44 @@ class TestUserModel(TestCase):
 			username='xyz', 
 			password='xyz')
 
-		__user = User.objects.filter(id=user.id).first()
-		
 		self.assertNotEqual(user, None)
-		self.assertNotEqual(__user, None)
-		self.assertEqual(__user.is_superuser, True)
-		self.assertEqual(__user.email, user.email)
-		self.assertEqual(__user.username, user.username)
 
-
-
+		created_user = User.objects.get(id=user.id)
 		
+		self.assertEqual(created_user.is_superuser, True)
 
-		
+	def test_manager_update_settings_method(self):
+		user = User.objects.create_user(email='xyz@xyz.pl',
+										username='xyz',
+										password='xyz')
+
+		settings_for_update = {'username': 'zyx'}
+	
+		updated_user = User.objects.update_settings(user, settings_for_update)
+
+		self.assertEqual(updated_user.username, 'zyx')
+		self.assertIsInstance(updated_user, User)
+
+	def test_manager_update_settings_method_if_settings_is_empty(self):
+		user = User.objects.create_user(email='xyz@xyz.pl',
+										username='xyz',
+										password='xyz')
+
+		settings_for_update = {}
+
+		with self.assertRaises(ValueError):
+			User.objects.update_settings(user, settings_for_update)
+
+	def test_manager_update_settings_method_if_updated_email(self):
+		user = User.objects.create_user(email='xyz@xyz.pl',
+										username='xyz',
+										password='xyz')
+		user.email_verified = True
+		user.save()
+
+		settings_for_update = {'email': 'zyx@xyz.pl'}
+
+		updated_user = User.objects.update_settings(user, settings_for_update)
+
+		self.assertEqual(updated_user.email_verified, False)
+			
