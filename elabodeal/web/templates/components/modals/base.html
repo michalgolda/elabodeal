@@ -1,0 +1,15 @@
+{% load static %}
+
+<div id="{% block modal-id %}{% endblock %}" style="display: none;">
+	<div class="modal-wrapper flex-center">
+		<div class="modal">
+			<div class="modal__header">
+				<p class="modal__title">{% block modal-title %}{% endblock %}</p>
+				<i id="{% block modal-close-btn-id %}{% endblock %}" class="fas fa-times modal__close-btn"></i>
+			</div>
+			<div class="modal__body">
+				{% block modal-body %}{% endblock %}
+			</div>
+		</div>
+	</div>
+</div>
