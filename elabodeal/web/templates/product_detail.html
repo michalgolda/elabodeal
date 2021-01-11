@@ -6,9 +6,11 @@
 {% block page_class_name %}p-product-detail{% endblock %}
 
 {% block body %}
+<!-- Modals -->
 {% if cart_update_popup %}
-{% include 'components/cart-update-popup.html' %}
+{% include 'components/modals/cart-update-modal.html' %}
 {% endif %}
+
 {% include 'components/navigation.html' %}
 <div class="wrapper">
 	<div class="container">
