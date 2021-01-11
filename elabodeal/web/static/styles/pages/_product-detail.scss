@@ -121,4 +121,49 @@
     #form-action {
         display: inline-block;
     }
+
+    #js-cart-update-modal {
+        display: block !important;
+
+        .item-list {
+            display: grid;
+            grid-template-rows: 80px;
+        }
+    
+        .item {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            height: 80px;
+    
+            &__cover {
+                height: 80px;
+                width: 60px;
+                border-radius: 2px;
+            }
+    
+            &__container {
+                padding-left: 1rem;
+            }
+    
+            &__title {
+                font-weight: bold;
+                width: 128px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+    
+            &__author {
+                font-weight: 400;
+                font-size: $font-size-small;
+                color: $color-grey;
+            }
+    
+            &__price {
+                font-weight: bold;
+                color: $color-green;
+            }
+        }
+    }
 }
