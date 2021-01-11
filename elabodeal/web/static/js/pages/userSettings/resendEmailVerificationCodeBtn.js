@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', function(){
         var resendBtn = document.getElementById( 'js-resend-email-verification-code-btn' );

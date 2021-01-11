@@ -1,6 +1,3 @@
-import axios from 'axios';
-
-
 export const EmailVerificationListener = ( e ) => {
     e.preventDefault();
 
