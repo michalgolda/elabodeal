@@ -1,1 +1,2 @@
 import './userSettings';
+import './productDetails';
