@@ -1,14 +1,15 @@
 ( function( document ){
-    document.addEventListener( 'click', function(){
-        var closeButtons = document.querySelectorAll( '#js-close-cart-update-modal' );
-        
-        if ( !closeButtons ) return;
+    document.addEventListener( 'click', () => {
+        var closeButtons = document.querySelectorAll( '#js-hide-cart-update-modal' );
+        var modal = document.getElementById( 'js-cart-update-modal' );
 
-        var modal = $( '#js-cart-update-modal' );
+        if ( !closeButtons || !modal ) return;
+
+        var $modal = $( modal );
 
         closeButtons.forEach( ( btn ) => {
-            btn.addEventListener( 'click', function(){
-                modal.remove();
+            btn.addEventListener( 'click', () => {
+                $modal.remove();
             } );
         } );
     } );

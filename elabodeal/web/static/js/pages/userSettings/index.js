@@ -3,6 +3,6 @@ import './saveSettingsForm';
 import './editOptionButtons';
 import './cancelEditOptionButtons';
 import './startEmailVerificationBtn';
-import './closeEmailVerificationModalBtn';
+import './hideEmailVerificationModalBtn';
 import './verificationEmailForm';
 import './resendEmailVerificationCodeBtn';
