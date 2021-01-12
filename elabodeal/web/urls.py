@@ -35,7 +35,7 @@ urlpatterns = [
 		path('ajax/', include([
 			path('add-item/', CartAddItemAction.as_view(), name='cart-action-add-item'),
 			path('delete-item/', CartDeleteItemAction.as_view(), name='cart-action-delete-item'),
-			path('save/', CartSaveAjaxView.as_view(), name='cart-action-save'),
+			path('save/', CartSaveAjaxView.as_view(), name='save-cart'),
 		])),
 		path('checkout/', include([
 			path('d/', CartCheckoutDeliveryView.as_view(), name='cart-checkout-delivery'),
