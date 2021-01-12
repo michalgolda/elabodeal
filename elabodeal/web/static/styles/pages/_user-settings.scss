@@ -31,6 +31,15 @@
             display: grid;
             grid-template-columns: auto 4rem;
             grid-column-gap: .5rem;
+        
+            &-editing {
+                grid-template-columns: auto 4rem 4rem;
+                
+                input {
+                    color: $color-black !important;
+                    border-color: $color-black;        
+                }
+            }
         }
 
         &-checkbox {
@@ -51,33 +60,6 @@
         }
     }
 
-    .section {
-        &__dropdown {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            &:hover {
-                cursor: pointer;
-                border-radius: 2px;
-            }
-
-            & > i {
-                font-size: 1.5rem;
-                color: $color-grey;
-            }
-        }
-    }
-
-    .current-editing-input {
-        color: $color-black !important;
-        border-color: $color-black;
-    }
-
-    .option-list-dropdown-animation {
-        @include fadein-animation;
-    }
-
     #js-edit-option-btn {
         &:after {
             font-family: FontAwesome;
@@ -89,6 +71,13 @@
         &:after {
             font-family: FontAwesome;
             content: '\f00d';
+        }
+    }
+
+    #js-accept-edit-option-btn {
+        &:after {
+            font-family: FontAwesome;
+            content: '\f00c';
         }
     }
 
