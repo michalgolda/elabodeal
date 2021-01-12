@@ -24,7 +24,7 @@
                     msg.addClass( 'success-msg' );
                     msg.html( 'Nowy kod został wysłany' );
 
-                    var seconds = 19;
+                    var seconds = 59;
                     function disableResendTimer() {
                         btn.html( `Ponów próbę za ${seconds}s` );
                         btn.addClass( 'btn-disabled' );
@@ -43,7 +43,7 @@
                         btn.removeClass( 'btn-disabled' );
                         btn.removeAttr( 'disabled' );
                         btn.addClass( 'btn__secondary-outline' );
-                    }, 20000 );
+                    }, 60000 );
 
                     setTimeout( function(){
                         msg.hide();
