@@ -1,0 +1,20 @@
+{% extends 'components/modals/base.html' %}
+
+{% block modal-title %}Zapisywanie koszyka{% endblock %}
+
+{% block modal-id %}js-save-cart-modal{% endblock %}
+{% block modal-hide-btn-id %}js-hide-save-cart-modal{% endblock %}
+
+{% block modal-body %}
+    <form id="js-save-cart" action="{% url 'web:save-cart' %}" autocomplete="off">
+        <div>
+            <label>TYTUŁ</label>
+            <input type="text" name="title" required />
+        </div>
+        <div style="margin-top: .5rem; margin-bottom: .5rem;">
+            <label>OPIS</label>
+            <textarea name="description"></textarea>
+        </div>
+        <button class="btn btn__secondary-outline btn-block">Zapisz koszyk</button>
+    </form>
+{% endblock %}
