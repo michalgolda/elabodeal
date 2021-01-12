@@ -13,7 +13,7 @@
     &:hover {
         cursor: pointer;
     }
-
+    
     &__disabled {
         background-color: $color-grey !important;
         color: $color-light-grey !important;
@@ -28,7 +28,7 @@
         background-color: $color-red;
 
         &-outline {
-            background-color: transparent;
+            background-color: white;
             color: $color-red;
             border: 1px solid $color-red;
 
@@ -44,7 +44,7 @@
         background-color: $color-orange;
 
         &-outline {
-            background-color: transparent;
+            background-color: white;
             color: $color-orange;
             border: 1px solid $color-orange;
         
@@ -65,7 +65,7 @@
         background-color: $color-green;
 
         &-outline {
-            background-color: transparent;
+            background-color: white;
             color: $color-green;
             border: 1px solid $color-green;
         
