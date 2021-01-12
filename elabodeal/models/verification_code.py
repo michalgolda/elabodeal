@@ -36,11 +36,14 @@ class VerificationCodeManager(models.Manager):
 		html_message = render_to_string('emails/verification.html', 
 										{'code': code})
 
-		send_mail(subject=subject,
-				  message=message,
-				  from_email=from_email,
-				  recipient_list=[recipient],
-				  html_message=html_message)
+		try:
+			send_mail(subject=subject,
+					message=message,
+					from_email=from_email,
+					recipient_list=[recipient],
+					html_message=html_message)
+		except:
+			pass
 
 		return verification_code
 
