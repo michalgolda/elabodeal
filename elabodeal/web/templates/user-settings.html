@@ -6,114 +6,117 @@
 {% block page_class_name%}p-user-settings{% endblock%} 
 
 {% block body %}
-<!-- Modals -->
-{% if not user.email_verified %}
-{% include 'components/modals/email-verification-modal.html' %}
-{% endif %}
+    <!-- Modals -->
+    {% if not user.email_verified %}
+        {% include 'components/modals/email-verification-modal.html' %}
+    {% endif %}
 
-{% include 'components/navigation.html' %}
-<div class="wrapper">
-    <form id="js-settings-form" action="{% url 'web:user-settings-save' %}" class="container">
-        <div class="section">
-            <p class="section__title">Ustawienia użytkownika</p>
-            <div class="option-list">
-                <div class="option">
-                    <label>NAZWA UŻYTKOWNIKA</label>
-                    <div class="option__body">
-                        <input id="js-option-input" type="text" name="username" value="{{ user.username }}" readonly />
-                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
-                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
-                            style="display: none"></button>
+    {% include 'components/navigation.html' %}
+    <div class="wrapper">
+        <form id="js-settings-form" action="{% url 'web:user-settings-save' %}" class="container" autocomplete="off">
+            <div class="section">
+                <p class="section__title">Ustawienia użytkownika</p>
+                <div class="option-list">
+                    <div class="option">
+                        <label>NAZWA UŻYTKOWNIKA</label>
+                        <div class="option__body">
+                            <input id="js-option-input" type="text" name="username" value="{{ user.username }}" readonly />
+                            <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                            <button id="js-accept-edit-option-btn" type="button" class="btn btn__secondary" style="display: none;"></button>
+                            <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                                style="display: none"></button>
+                        </div>
+                    </div>
+                    <div class="option">
+                        <label>EMAIL</label>
+                        <p class="option__information" style="margin-bottom: .5rem;">Po zmianie adresu email, w najbliższym czasie będzie wymagana weryfikacjia.</p>
+                        <div class="option__body">
+                            <input id="js-option-input" type="text" name="email" value="{{ user.email }}" readonly />
+                            <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                            <button id="js-accept-edit-option-btn" type="button" class="btn btn__secondary" style="display: none;"></button>
+                            <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                                style="display: none">
+                            </button>
+                        </div>
+                        {% if not user.email_verified %}
+                            <div style="margin-top: 1rem; text-align: center;">
+                                <p class="option__information" style="margin-bottom: .5rem;">Aby móc w pełni korzystać z funkcjonalnośći platformy musisz zweryfikować swój adres email.</p>
+                                <button id="js-start-email-verification-btn" type="button" class="btn btn__secondary">Zweryfikuj</button>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="option">
-                    <label>EMAIL</label>
-                    <p class="option__information" style="margin-bottom: .5rem;">Po zmianie adresu email, w najbliższym czasie będzie wymagana weryfikacjia.</p>
-                    <div class="option__body">
-                        <input id="js-option-input" type="text" name="email" value="{{ user.email }}" readonly />
-                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
-                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
-                            style="display: none">
-                        </button>
-                    </div>
-                    {% if not user.email_verified %}
-                    <div style="margin-top: 1rem;">
-                        <p class="option__information" style="margin-bottom: .5rem;">Aby móc w pełni korzystać z funkcjonalnośći platformy musisz zweryfikować swój adres email.</p>
-                        <button id="js-start-email-verification-btn" type="button" class="btn btn__secondary">Zweryfikuj</button>
-                    </div>
+            </div>
+            <div class="section" style="margin-top: 2rem">
+                <p class="section__title">Ustawienia sprzedającego</p>
+                <div id="js-publisher-settings-section" class="option-list">
+                    {% if user.publisher %}
+                        <div class="option">
+                            <label>IMIĘ</label>
+                            <div class="option__body">
+                                <input id="js-option-input" type="text" name="publisher.first_name"
+                                    value="{{ user.publisher.first_name }}" readonly />
+                                <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                                <button id="js-accept-edit-option-btn" type="button" class="btn btn__secondary" style="display: none;"></button>
+                                <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                                style="display: none"></button>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <label>NAZWISKO</label>
+                            <div class="option__body">
+                                <input id="js-option-input" type="text" name="publisher.last_name"
+                                    value="{{ user.publisher.last_name }}" readonly />
+                                <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                                <button id="js-accept-edit-option-btn" type="button" class="btn btn__secondary" style="display: none;"></button>
+                                <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                                    style="display: none"></button>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <label>NUMER KONTA</label>
+                            <div class="option__body">
+                                <input id="js-option-input" type="text" name="publisher.account_number"
+                                    value="{{ user.publisher.account_number }}" readonly />
+                                <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                                <button id="js-accept-edit-option-btn" type="button" class="btn btn__secondary" style="display: none;"></button>
+                                <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                                    style="display: none"></button>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <label>SWIFT</label>
+                            <div class="option__body">
+                                <input id="js-option-input" type="text" name="publisher.swift"
+                                    value="{{ user.publisher.swift }}" readonly />
+                                <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
+                                <button id="js-accept-edit-option-btn" type="button" class="btn btn__secondary" style="display: none;"></button>
+                                <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
+                                style="display: none"></button>
+                            </div>
+                        </div>
+                        <div class="option option-checkbox">
+                            <input type="hidden" name="publisher.sell_notification" value="False" />
+                            <input type="checkbox" name="publisher.sell_notification"
+                                value="True" 
+                                {% if user.publisher.sell_notification %}
+                                checked="checked"
+                                {% endif %}/>
+                            <p class="option__name">Powiadomienie o sprzedanej kopii ebooka</p>
+                        </div>
+                    {% else %}
+                        <div style="text-align: center;">
+                            <p>Aby utworzyć konto sprzedającego, kliknij przycisk poniżej</p>
+                            <a href="{% url 'web:salesmanager-start' %}" class="btn btn__primary-outline"
+                                style="margin-top: 0.5rem;">Utwórz</a>
+                        </div>
                     {% endif %}
                 </div>
             </div>
-        </div>
-        <div class="section" style="margin-top: 2rem">
-            <div id="js-trigger-publisher-settings-section" class="section__dropdown">
-                <p class="section__title">Ustawienia sprzedającego</p>
-                <i class="fas fa-caret-down"></i>
-            </div>
-            <div id="js-publisher-settings-section" class="option-list option-list-dropdown-animation"
-                style="display: none">
-                {% if user.publisher %}
-                <div class="option">
-                    <label>IMIĘ</label>
-                    <div class="option__body">
-                        <input id="js-option-input" type="text" name="publisher.first_name"
-                            value="{{ user.publisher.first_name }}" readonly />
-                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
-                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
-                            style="display: none"></button>
-                    </div>
-                </div>
-                <div class="option">
-                    <label>NAZWISKO</label>
-                    <div class="option__body">
-                        <input id="js-option-input" type="text" name="publisher.last_name"
-                            value="{{ user.publisher.last_name }}" readonly />
-                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
-                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
-                            style="display: none"></button>
-                    </div>
-                </div>
-                <div class="option">
-                    <label>NUMER KONTA</label>
-                    <div class="option__body">
-                        <input id="js-option-input" type="text" name="publisher.account_number"
-                            value="{{ user.publisher.account_number }}" readonly />
-                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
-                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
-                            style="display: none"></button>
-                    </div>
-                </div>
-                <div class="option">
-                    <label>SWIFT</label>
-                    <div class="option__body">
-                        <input id="js-option-input" type="text" name="publisher.swift"
-                            value="{{ user.publisher.swift }}" readonly />
-                        <button id="js-edit-option-btn" type="button" class="btn btn__primary"></button>
-                        <button id="js-cancel-edit-option-btn" type="button" class="btn btn__danger"
-                            style="display: none"></button>
-                    </div>
-                </div>
-                <div class="option option-checkbox">
-                    <input type="hidden" name="publisher.sell_notification" value="False" />
-                    <input type="checkbox" name="publisher.sell_notification"
-                        value="True" 
-                        {% if user.publisher.sell_notification %}
-                        checked="checked"
-                        {% endif %}/>
-                    <p class="option__name">Powiadomienie o sprzedanej kopii ebooka</p>
-                </div>
-                {% else %}
-                <div>
-                    <p>Aby utworzyć konto sprzedającego, kliknij przycisk poniżej</p>
-                    <a href="{% url 'web:salesmanager-start' %}" class="btn btn__primary-outline"
-                        style="margin-top: 0.5rem">Utwórz</a>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        <button type="submit" class="btn btn__primary-outline btn-block" style="margin-top: 2rem">
-            Zapisz ustawienia
-        </button>
-    </form>
-</div>
-{% include 'components/small-footer-light.html' %} {% endblock %}
+            <button type="submit" class="btn btn__primary-outline btn-block" style="margin-top: 2rem">
+                Zapisz ustawienia
+            </button>
+        </form>
+    </div>
+    {% include 'components/small-footer-light.html' %} 
+{% endblock %}
