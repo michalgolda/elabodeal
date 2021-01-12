@@ -1,8 +1,9 @@
-import './publisherSettingsSection';
 import './saveSettingsForm';
-import './editOptionButtons';
-import './cancelEditOptionButtons';
+import './toggleEditModeOptionButtons';
+import './disableEditModeOptionButtons';
 import './startEmailVerificationBtn';
 import './hideEmailVerificationModalBtn';
 import './verificationEmailForm';
 import './resendEmailVerificationCodeBtn';
+import './acceptEditOptionButtons';
+import './toggleEditOptionModeInputs';
