@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf_token" content="{{ csrf_token }}">
     {% block meta_tags %}{% endblock %}
 
     <link rel="stylesheet" href="{% static 'dist/main.css' %}">
@@ -22,12 +23,6 @@
     <script>
         window.__stripe_public_key__ = "{% get_stripe_public_api_key %}";
         window.__csrf_token__ = "{{ csrf_token }}";
-
-        window.__actionUrls__ = {
-            'save-cart': "{% url 'web:cart-action-save' %}",
-            'share-cart': "{% url 'web:saved-cart-share' %}",
-            'payment-init': "{% url 'web:cart-checkout-payment-init' %}"
-        };
     </script>
 
     <script src="{% static 'dist/main.js' %}" defer="defer"></script>
