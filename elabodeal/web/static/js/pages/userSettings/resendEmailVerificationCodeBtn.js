@@ -24,14 +24,14 @@
                     msg.addClass( 'success-msg' );
                     msg.html( 'Nowy kod został wysłany' );
 
-                    var seconds = 1;
+                    var seconds = 19;
                     function disableResendTimer() {
                         btn.html( `Ponów próbę za ${seconds}s` );
                         btn.addClass( 'btn-disabled' );
                         btn.attr( 'disabled', 'disabled' );
                         btn.removeClass( 'btn__secondary-outline' );
 
-                        seconds++;
+                        seconds--;
                     }
 
                     var disableResendTimerInverval = setInterval(disableResendTimer, 1000);
