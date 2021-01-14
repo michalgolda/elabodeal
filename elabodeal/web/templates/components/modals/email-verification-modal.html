@@ -6,20 +6,34 @@
 {% block modal-hide-btn-id %}js-hide-email-verification-modal{% endblock %}
 
 {% block modal-body %}
-<form id="js-email-verification" action="{% url 'web:verify-email' %}">    
-    <p>Na adres email <strong>{{ user.email }}</strong> został wysłany kod weryfikacyjny.</p>
+<p>Na adres email <strong>{{ user.email }}</strong> został wysłany kod weryfikacyjny.</p>
+<form id="js-email-verification" action="{% url 'web:verify-email' %}" autocomplete="off">    
     <div style="margin-top: 1rem; text-align: center;">
-        <p id="js-email-verification-msg" style="margin-bottom: 1rem; display: none;"></p>
         <input type="hidden" name="email" value="{{ user.email }}" />
-        <input type="text" name="code" placeholder="Podaj kod weryfikacyjny" style="max-width: 256px;" required/>
-        <div class="flex-center" style="margin-top: .5rem;">
+        <input type="hidden" name="code" value="" />
+
+        <div class="code">
+            <div class="code__group">
+                <input aria-label="0" class="code__input" type="text" maxlength="1" />
+                <input aria-label="1"class="code__input" type="text" maxlength="1" />
+                <input aria-label="2" class="code__input" type="text" maxlength="1" />
+            </div>
+            <span class="code__group-separator"></span>
+            <div>
+                <input aria-label="3" class="code__input" type="text" maxlength="1" />
+                <input aria-label="4" class="code__input" type="text" maxlength="1" />
+                <input aria-label="5" class="code__input" type="text" maxlength="1" />
+            </div>
+        </div>
+
+        <div class="flex-center" style="margin-top: 1rem;">
             <button class="btn btn__secondary" style="margin-right: .25rem;">Zweryfikuj</button>
             <button 
-                id="js-resend-email-verification-code-btn" 
+                id="js-resend-email-verification-code" 
                 class="btn btn__secondary-outline" 
                 type="button" 
                 data-action-url="{% url 'web:resend-email-verification-code' %}" 
-                style="margin-left: .25rem;"
+                style="margin-left: .25rem; width: 190px;"
             >
                 Wyślij kod ponownie
             </button>
