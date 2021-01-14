@@ -1,5 +1,2 @@
 import './pages';
-
-// Another scripts
-import './scrollup';
-import './nav';
+import './ui';
