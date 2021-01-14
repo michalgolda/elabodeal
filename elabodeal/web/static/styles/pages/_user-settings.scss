@@ -60,21 +60,21 @@
         }
     }
 
-    #js-edit-option-btn {
+    .js-edit-option[type="button"] {
         &:after {
             font-family: FontAwesome;
             content: '\f044';
         }
     }
 
-    #js-cancel-edit-option-btn {
+    .js-cancel-edit-option {
         &:after {
             font-family: FontAwesome;
             content: '\f00d';
         }
     }
 
-    #js-accept-edit-option-btn {
+    .js-accept-edit-option {
         &:after {
             font-family: FontAwesome;
             content: '\f00c';
@@ -89,6 +89,40 @@
 
         .error-msg {
             color: $color-red;
+        }
+
+        .code {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &__group {
+                display: grid;
+                grid-template-columns: 40px 40px 40px;
+                column-gap: .5rem;
+
+                &-separator {
+                    width: 20px;
+                    height: 1px;
+                    background: $color-black;
+                    margin-left: .5rem;
+                    margin-right: .5rem;
+                }
+            }
+
+            &__input {
+                width: 40px;
+                height: 40px;
+                padding-left: 0;
+                padding-right: 0;
+                text-align: center;
+
+                &-error {
+                    border: 1px solid $color-red;
+                    color: $color-red;
+                }
+            }
         }
     }
 }
