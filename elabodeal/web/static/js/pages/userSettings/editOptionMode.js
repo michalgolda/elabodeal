@@ -16,10 +16,10 @@ function ToggleEditOptionMode ( trigger ){
     window.currentEditingOption = currentEditingOption;
 
     var $optionContainer = $( optionContainer );
-    var $optionInput = $optionContainer.find( '#js-option-input' );
-    var $optionToggleModeBtn = $optionContainer.find( '#js-edit-option-btn' );
-    var $optionCancelEditBtn = $optionContainer.find( '#js-cancel-edit-option-btn' );
-    var $optionAcceptEditBtn = $optionContainer.find( '#js-accept-edit-option-btn' );
+    var $optionInput = $optionContainer.find( '.js-option-input' );
+    var $optionToggleModeBtn = $optionContainer.find( 'button.js-edit-option' );
+    var $optionCancelEditBtn = $optionContainer.find( '.js-cancel-edit-option' );
+    var $optionAcceptEditBtn = $optionContainer.find( '.js-accept-edit-option' );
 
     $optionToggleModeBtn.hide();
 
@@ -50,10 +50,10 @@ function DisableEditOptionMode ( trigger, keepInputValue = false ){
     var optionContainer = trigger.parentNode;
 
     var $optionContainer = $( optionContainer );
-    var $optionInput = $optionContainer.find( '#js-option-input' );
-    var $optionToggleModeBtn = $optionContainer.find( '#js-edit-option-btn' );
-    var $optionCancelEditBtn = $optionContainer.find( '#js-cancel-edit-option-btn' );
-    var $optionAcceptEditBtn = $optionContainer.find( '#js-accept-edit-option-btn' );
+    var $optionInput = $optionContainer.find( '.js-option-input' );
+    var $optionToggleModeBtn = $optionContainer.find( 'button.js-edit-option' );
+    var $optionCancelEditBtn = $optionContainer.find( '.js-cancel-edit-option' );
+    var $optionAcceptEditBtn = $optionContainer.find( '.js-accept-edit-option' );
 
     $optionAcceptEditBtn.hide();
     $optionCancelEditBtn.hide();

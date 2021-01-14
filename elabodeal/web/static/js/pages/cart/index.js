@@ -1,3 +1,7 @@
-import './showSaveCartModalBtn';
-import './hideSaveCartModalBtn';
-import './saveCartForm';
+import SaveCartModalUIComponent from './saveCartModal';
+
+( function( document ){
+    document.addEventListener( 'DOMContentLoaded', () => {
+        new SaveCartModalUIComponent();
+    } );
+} )( document );

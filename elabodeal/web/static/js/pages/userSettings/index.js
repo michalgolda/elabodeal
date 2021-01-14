@@ -1,9 +1,9 @@
-import './saveSettingsForm';
-import './toggleEditModeOptionButtons';
-import './disableEditModeOptionButtons';
-import './startEmailVerificationBtn';
-import './hideEmailVerificationModalBtn';
-import './verificationEmailForm';
-import './resendEmailVerificationCodeBtn';
-import './acceptEditOptionButtons';
-import './toggleEditOptionModeInputs';
+import OptionsFormUIComponent from './optionsForm';
+import EmailVerificationModalUIComponent from './emailVerificationModal';
+
+( function( document ){
+    document.addEventListener( 'DOMContentLoaded', () => {
+        new OptionsFormUIComponent();
+        new EmailVerificationModalUIComponent();
+    } );
+} )( document );
