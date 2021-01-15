@@ -3,97 +3,97 @@
 
 {% block title-description %}{{ product.title }}{% endblock %}
 
-{% block page_class_name %}p-product-detail{% endblock %}
+{% block page-id %}p-product-detail{% endblock %}
 
 {% block body %}
-<!-- Modals -->
-{% if cart_update_popup %}
-{% include 'components/modals/cart-update-modal.html' %}
-{% endif %}
+	<!-- Modals -->
+	{% if cart_update_popup %}
+		{% include 'components/modals/cart-update-modal.html' %}
+	{% endif %}
 
-{% include 'components/navigation.html' %}
-<div class="wrapper">
-	<div class="container">
-		<img class="product-cover" src="{% static product.cover_img.path %}" />
-		<div class="section">
-			<div class="section">
-				<h1 class="product-title">{{ product.title }}</h1>
-				<p class="product-author">{{ product.author }}</p>
-			</div>
-			<div class="section section__age">
-				<span class="product-age">
-					{{ product.age_category }}+
-				</span>
-			</div>
-			<div class="section section__flex">
-				<p class="product-price">{{ product.price }} zł</p>
-				<div>
-					<button class="btn btn__primary">Kup teraz</button>
-					<form id="form-action" method="POST" action="{% url 'web:cart-action-add-item' %}">
-						{% csrf_token %}
-						<input type="hidden" name="product_id" value="{{ product.id }}" />
-						<button class="btn btn__secondary">Dodaj do koszyka</button>
-					</form>
-				</div>
-			</div>
-			<div class="section">
-				<h4>Szczegółowe informacje: </h4>
-			</div>
-			<div class="section section__subsection">
-				<div class="product-information">
-					<div class="info">
-						<p class="info__key">Kategoria</p>
-						<p class="info__value">{{ product.category }}</p>
-					</div>
-					<div class="info">
-						<p class="info__key">Ilość stron</p>
-						<p class="info__value">{{ product.page_count }}</p>
-					</div>
-					<div class="info">
-						<p class="info__key">Oceny</p>
-						<p class="info__value">{{ product.average_rating }} / 5</p>
-					</div>
-					<div class="info">
-						<p class="info__key">Rok wydania</p>
-						<p class="info__value">{{ product.published_at.year }}</p>
-					</div>
-					<div class="info">
-						<p class="info__key">Formaty</p>
-						<p class="info__value">
-							{% if product.pdf_file %}
-							PDF
-							{% endif %}
-							{% if product.mobi_file %}
-							MOBI
-							{% endif %}
-							{% if product.epub_file %}
-							EPUB
-							{% endif %}
-						</p>
-					</div>
-					<div class="info">
-						<p class="info__key">Numer ISBN</p>
-						<p class="info__value">{{ product.isbn }}</p>
-					</div>
-				</div>
-			</div>
+	{% include 'components/navigation.html' %}
+	<div class="wrapper">
+		<div class="container">
+			<img class="product-cover" src="{% static product.cover_img.path %}" />
 			<div class="section">
 				<div class="section">
-					<button id="show-product-description-btn" class="btn btn__primary">Opis</button>
-					<button id="show-product-contents-btn" class="btn btn__primary btn__primary-outline">Spis
-						treści</button>
+					<h1 class="product-title">{{ product.title }}</h1>
+					<p class="product-author">{{ product.author }}</p>
+				</div>
+				<div class="section section__age">
+					<span class="product-age">
+						{{ product.age_category }}+
+					</span>
+				</div>
+				<div class="section section__flex">
+					<p class="product-price">{{ product.price }} zł</p>
+					<div>
+						<button class="btn btn__primary">Kup teraz</button>
+						<form id="form-action" method="POST" action="{% url 'web:cart-action-add-item' %}">
+							{% csrf_token %}
+							<input type="hidden" name="product_id" value="{{ product.id }}" />
+							<button class="btn btn__secondary">Dodaj do koszyka</button>
+						</form>
+					</div>
 				</div>
 				<div class="section">
-					<div id="product-description" class="product-text-box">
-						<p>{{ product.description }}</p>
+					<h4>Szczegółowe informacje: </h4>
+				</div>
+				<div class="section section__subsection">
+					<div class="product-information">
+						<div class="info">
+							<p class="info__key">Kategoria</p>
+							<p class="info__value">{{ product.category }}</p>
+						</div>
+						<div class="info">
+							<p class="info__key">Ilość stron</p>
+							<p class="info__value">{{ product.page_count }}</p>
+						</div>
+						<div class="info">
+							<p class="info__key">Oceny</p>
+							<p class="info__value">{{ product.average_rating }} / 5</p>
+						</div>
+						<div class="info">
+							<p class="info__key">Rok wydania</p>
+							<p class="info__value">{{ product.published_at.year }}</p>
+						</div>
+						<div class="info">
+							<p class="info__key">Formaty</p>
+							<p class="info__value">
+								{% if product.pdf_file %}
+								PDF
+								{% endif %}
+								{% if product.mobi_file %}
+								MOBI
+								{% endif %}
+								{% if product.epub_file %}
+								EPUB
+								{% endif %}
+							</p>
+						</div>
+						<div class="info">
+							<p class="info__key">Numer ISBN</p>
+							<p class="info__value">{{ product.isbn }}</p>
+						</div>
 					</div>
-					<div id="product-contents" class="product-text-box">
-						<p>{{ product.contents }}</p>
+				</div>
+				<div class="section">
+					<div class="section">
+						<button id="show-product-description-btn" class="btn btn__primary">Opis</button>
+						<button id="show-product-contents-btn" class="btn btn__primary btn__primary-outline">Spis
+							treści</button>
+					</div>
+					<div class="section">
+						<div id="product-description" class="product-text-box">
+							<p>{{ product.description }}</p>
+						</div>
+						<div id="product-contents" class="product-text-box">
+							<p>{{ product.contents }}</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-{% include 'components/small-footer-light.html' %}
+	{% include 'components/small-footer-light.html' %}
 {% endblock %}

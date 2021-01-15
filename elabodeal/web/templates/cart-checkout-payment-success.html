@@ -3,17 +3,17 @@
 
 {% block title-description %}Transkacja zakończona sukcesem{% endblock %}
 
-{% block page_class_name %}p-cart-checkout-payment-success{% endblock %}
+{% block page-id %}p-cart-checkout-payment-success{% endblock %}
 
 {% block body %}
-{% include 'components/navigation.html' %}
-<div class="wrapper flex-center">
-	<div>
-		<h1>Dziękuje za zakupy!</h1>
-		<h4>Po zaakceptowaniu transakcji e-book zostanie wysłany na <b>{{ delivery_email }}</b>
-		</h4>
-		<a class="btn btn__primary" style="margin-top: 1rem;" href="{% url 'web:index' %}">Strona główna</a>
+	{% include 'components/navigation.html' %}
+	<div class="wrapper flex-center">
+		<div>
+			<h1>Dziękuje za zakupy!</h1>
+			<h4>Po zaakceptowaniu transakcji e-book zostanie wysłany na <b>{{ delivery_email }}</b>
+			</h4>
+			<a class="btn btn__primary" style="margin-top: 1rem;" href="{% url 'web:index' %}">Strona główna</a>
+		</div>
 	</div>
-</div>
-{% include 'components/small-footer-light.html' %}
+	{% include 'components/small-footer-light.html' %}
 {% endblock %}

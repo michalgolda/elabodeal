@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf_token" content="{{ csrf_token }}">
-    {% block meta_tags %}{% endblock %}
+    {% block meta-tags %}{% endblock %}
 
     <link rel="stylesheet" href="{% static 'dist/main.css' %}">
 
@@ -29,10 +29,10 @@
     <title>{% block title %}Elabodeal - {% block title-description %}{% endblock %}{% endblock %}</title>
 </head>
 </head>
-<body id="body" class="{% block page_class_name %}{% endblock %}">
+<body id="{% block page-id %}{% endblock %}">
     {% block body %}
     {% endblock %}
 
-    {% block bottom_scripts %}{% endblock %}
+    {% block bottom-scripts %}{% endblock %}
 </body>
 </html>

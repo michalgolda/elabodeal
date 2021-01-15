@@ -2,70 +2,70 @@
 {% load static %}
 {% load stripe %}
 
-{% block meta_tags %}
+{% block meta-tags %}
 	<meta name="stripe_public_key" content="{% get_stripe_public_api_key %}">
 {% endblock %}
 
 {% block title-description %}Płatność{% endblock %}
 
-{% block page_class_name %}p-cart-checkout-payment{% endblock %}
+{% block page-id %}p-cart-checkout-payment{% endblock %}
 
 {% block body %}
-{% include 'components/navigation.html' %}
-<div class="wrapper">
-	<div class="section flex-center">
-		<div class="checkout-step flex-center">
-			<figure class="flex-center">
-				<span class="h2"><i class="fas fa-check"></i></span>
-			</figure>
-			<span class="h2">Koszyk</span>
+	{% include 'components/navigation.html' %}
+	<div class="wrapper">
+		<div class="section flex-center">
+			<div class="checkout-step flex-center">
+				<figure class="flex-center">
+					<span class="h2"><i class="fas fa-check"></i></span>
+				</figure>
+				<span class="h2">Koszyk</span>
+			</div>
+			<div class="checkout-step__separator"></div>
+			<div class="checkout-step flex-center">
+				<figure class="flex-center">
+					<span class="h2"><i class="fas fa-check"></i></span>
+				</figure>
+				<span class="h2">Wysyłka</span>
+			</div>
+			<div class="checkout-step__separator"></div>
+			<div class="checkout-step checkout-step-current flex-center">
+				<figure class="flex-center">
+					<span class="h2">3</span>
+				</figure>
+				<span class="h2">Płatność</span>
+			</div>
 		</div>
-		<div class="checkout-step__separator"></div>
-		<div class="checkout-step flex-center">
-			<figure class="flex-center">
-				<span class="h2"><i class="fas fa-check"></i></span>
-			</figure>
-			<span class="h2">Wysyłka</span>
-		</div>
-		<div class="checkout-step__separator"></div>
-		<div class="checkout-step checkout-step-current flex-center">
-			<figure class="flex-center">
-				<span class="h2">3</span>
-			</figure>
-			<span class="h2">Płatność</span>
-		</div>
-	</div>
-	<div class="section">
-		<div class="form-wrapper">
-			<form id="js-payment" class="form" action="{% url 'web:cart-checkout-payment-init' %}" success-url="{% url 'web:cart-checkout-payment-success' %}">
-				<div class="form__section">
-					<div>
-						<label>IMIĘ</label>
-						<input type="text" name="first_name" required />
+		<div class="section">
+			<div class="form-wrapper">
+				<form id="js-payment" class="form" action="{% url 'web:cart-checkout-payment-init' %}" success-url="{% url 'web:cart-checkout-payment-success' %}">
+					<div class="form__section">
+						<div>
+							<label>IMIĘ</label>
+							<input type="text" name="first_name" required />
+						</div>
+						<div>
+							<label>NAZWISKO</label>
+							<input type="text" name="last_name" required />
+						</div>
 					</div>
 					<div>
-						<label>NAZWISKO</label>
-						<input type="text" name="last_name" required />
+						<label>E-MAIL</label>
+						<input type="text" name="email" required />
 					</div>
-				</div>
-				<div>
-					<label>E-MAIL</label>
-					<input type="text" name="email" required />
-				</div>
-				<div>
-					<label>NUMER TELEFONU</label>
-					<input type="text" name="phone_number"
-						oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-						required />
-				</div>
-				<div id="card-element"></div>
-				<button class="btn btn__primary btn-block">Przejdź dalej</button>
-				<a class="btn btn__primary btn__primary-outline btn-block"
-					href="{% url 'web:cart-checkout-delivery' %}">Wstecz</a>
-			</form>
+					<div>
+						<label>NUMER TELEFONU</label>
+						<input type="text" name="phone_number"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+							required />
+					</div>
+					<div id="card-element"></div>
+					<button class="btn btn__primary btn-block">Przejdź dalej</button>
+					<a class="btn btn__primary btn__primary-outline btn-block"
+						href="{% url 'web:cart-checkout-delivery' %}">Wstecz</a>
+				</form>
+			</div>
 		</div>
-	</div>
 
-</div>
-{% include 'components/small-footer-light.html' %}
+	</div>
+	{% include 'components/small-footer-light.html' %}
 {% endblock %}

@@ -3,35 +3,36 @@
 
 {% block title-description %}Weryfikacja konta{% endblock %}
 
-
-{% block page_class_name %}p-email-verification{% endblock %}
+{% block page-id %}p-email-verification{% endblock %}
 
 {% block body %}
-<div class="wrapper flex-center">
-	<div class="section">
-		<div class="logo">
-			<a href="{% url 'web:index' %}">
-				<img src="{% static 'images/blue-logo.png' %}">
-			</a>
-		</div>
-		<h3 class="greeting">Dziękujemy za rejestrację</h3>
-		<p class="information">
-			Na podany email <strong>{{ email }}</strong> został wysłany kod weryfikacyjny.
-		</p>
-		<form class="form" method="POST" action="{% url 'web:email-verification' %}" autocomplete="off">
-			{% csrf_token %}
-			{% if form.errors %}
-			{% for error in form.code.errors %}
-			<p class="form__error">{{ error }}</p>
-			{% endfor %}
-			{% endif %}
-			<div class="form__section">
-				{{ form.code }}
-				<button class="btn btn__primary" type="submit">Zweryfikuj</button>
-				<button class="btn btn__primary" disabled>Wyślij kod ponownie</button>
+	<div class="wrapper flex-center">
+		<div class="section">
+			<div class="logo">
+				<a href="{% url 'web:index' %}">
+					<img src="{% static 'images/blue-logo.png' %}">
+				</a>
 			</div>
-		</form>
+			<h3 class="greeting">Dziękujemy za rejestrację</h3>
+			<p class="information">
+				Na podany email <strong>{{ email }}</strong> został wysłany kod weryfikacyjny.
+			</p>
+			<form class="form" method="POST" action="{% url 'web:email-verification' %}" autocomplete="off">
+				{% csrf_token %}
+				
+				{% if form.errors %}
+					{% for error in form.code.errors %}
+						<p class="form__error">{{ error }}</p>
+					{% endfor %}
+				{% endif %}
+
+				<div class="form__section">
+					{{ form.code }}
+					<button class="btn btn__primary" type="submit">Zweryfikuj</button>
+					<button class="btn btn__primary" disabled>Wyślij kod ponownie</button>
+				</div>
+			</form>
+		</div>
 	</div>
-</div>
-{% include 'components/small-footer-light.html' %}
+	{% include 'components/small-footer-light.html' %}
 {% endblock %}

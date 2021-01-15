@@ -3,44 +3,44 @@
 
 {% block title-description %}Menedżer sprzedaży{% endblock %}
 
-{% block page_class_name %}p-salesmanger-index{% endblock %}
+{% block page-id %}p-salesmanger-index{% endblock %}
 
 {% block body %}
-{% include 'components/navigation.html' %}
-<div class="wrapper">
-	<div class="section">
-		<p class="section__title">Menedżer sprzedaży</p>
-		<div class="record-list">
-			{% if products %}
-			<div class="record-list__options">
-				<form class="search-form">
-					<input type="text" placeholder="Wyszukaj.." />
-					<button class="btn btn__primary">Szukaj</button>
-				</form>
-				<select class="sort-selection">
-					<option>Sortowanie</option>
-				</select>
+	{% include 'components/navigation.html' %}
+	<div class="wrapper">
+		<div class="section">
+			<p class="section__title">Menedżer sprzedaży</p>
+			<div class="record-list">
+				{% if products %}
+					<div class="record-list__options">
+						<form class="search-form">
+							<input type="text" placeholder="Wyszukaj.." />
+							<button class="btn btn__primary">Szukaj</button>
+						</form>
+						<select class="sort-selection">
+							<option>Sortowanie</option>
+						</select>
+					</div>
+					{% for product in products %}
+						<div class="record">
+							<div>
+								<p class="record__title">{{ product.title }}</p>
+								<p class="record__subtitle">Data opublikowania -
+									{{ product.published_at.day }}.{{ product.published_at.month}}.{{ product.published_at.year }}</p>
+							</div>
+							<div>
+								<a href="#" class="btn btn__primary">Podgląd</a>
+								<a href="#" class="btn btn__secondary">Statystyki</a>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="section flex-center">
+						<h2>Nie posiadasz produktów wystawionych na sprzedaż</h2>
+					</div>
+				{% endif %}
 			</div>
-			{% for product in products %}
-			<div class="record">
-				<div>
-					<p class="record__title">{{ product.title }}</p>
-					<p class="record__subtitle">Data opublikowania -
-						{{ product.published_at.day }}.{{ product.published_at.month}}.{{ product.published_at.year }}</p>
-				</div>
-				<div>
-					<a href="#" class="btn btn__primary">Podgląd</a>
-					<a href="#" class="btn btn__secondary">Statystyki</a>
-				</div>
-			</div>
-			{% endfor %}
-			{% else %}
-			<div class="section flex-center">
-				<h2>Nie posiadasz produktów wystawionych na sprzedaż</h2>
-			</div>
-			{% endif %}
 		</div>
 	</div>
-</div>
-{% include 'components/small-footer-light.html' %}
+	{% include 'components/small-footer-light.html' %}
 {% endblock %}

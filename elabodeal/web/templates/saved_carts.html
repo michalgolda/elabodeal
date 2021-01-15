@@ -3,43 +3,43 @@
 
 {% block title-description %}Zapisane koszyki{% endblock %}
 
-{% block page_class_name %}p-saved-carts{% endblock %}
+{% block page-id %}p-saved-carts{% endblock %}
 
 {% block body %}
-{% include 'components/navigation.html' %}
-<div class="wrapper">
-	<div class="section">
-		<p class="section__title">Zapisane koszyki</p>
-		<div class="record-list">
-			{% if carts %}
-			<div class="record-list__options">
-				<form class="search-form">
-					<input type="text" placeholder="Wyszukaj.." />
-					<button class="btn btn__primary">Szukaj</button>
-				</form>
-				<select class="sort-selection">
-					<option>Sortowanie</option>
-				</select>
+	{% include 'components/navigation.html' %}
+	<div class="wrapper">
+		<div class="section">
+			<p class="section__title">Zapisane koszyki</p>
+			<div class="record-list">
+				{% if carts %}
+					<div class="record-list__options">
+						<form class="search-form">
+							<input type="text" placeholder="Wyszukaj.." />
+							<button class="btn btn__primary">Szukaj</button>
+						</form>
+						<select class="sort-selection">
+							<option>Sortowanie</option>
+						</select>
+					</div>
+				{% for cart in carts %}
+					<div class="record">
+						<div>
+							<p class="record__title">{{ cart.title }}</p>
+							<p class="record__subtitle">Data zapisu -
+								{{ cart.created_at.day }}.{{ cart.created_at.month}}.{{ cart.created_at.year }}</p>
+						</div>
+						<div>
+							<a href="{% url 'web:saved-cart-detail' id=cart.id %}" class="btn btn__primary">Otwórz</a>
+						</div>
+					</div>
+				{% endfor %}
+				{% else %}
+					<div class="section flex-center">
+						<h2>Lista zapisanych koszyków jest pusta.</h2>
+					</div>
+				{% endif %}
 			</div>
-			{% for cart in carts %}
-			<div class="record">
-				<div>
-					<p class="record__title">{{ cart.title }}</p>
-					<p class="record__subtitle">Data zapisu -
-						{{ cart.created_at.day }}.{{ cart.created_at.month}}.{{ cart.created_at.year }}</p>
-				</div>
-				<div>
-					<a href="{% url 'web:saved-cart-detail' id=cart.id %}" class="btn btn__primary">Otwórz</a>
-				</div>
-			</div>
-			{% endfor %}
-			{% else %}
-			<div class="section flex-center">
-				<h2>Lista zapisanych koszyków jest pusta.</h2>
-			</div>
-			{% endif %}
 		</div>
 	</div>
-</div>
-{% include 'components/small-footer-light.html' %}
+	{% include 'components/small-footer-light.html' %}
 {% endblock %}

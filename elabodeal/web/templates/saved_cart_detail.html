@@ -3,13 +3,13 @@
 
 {% block title-description %}{{ cart.title }}{% endblock %}
 
-{% block page_class_name %}p-saved-cart-detail{% endblock %}
+{% block page-id %}p-saved-cart-detail{% endblock %}
 
 {% block body %}
+	<!-- Modals -->
 	{% include 'components/modals/share-cart-modal.html' %}
 	
 	{% include 'components/navigation.html' %}
-
 	<div class="wrapper">
 		<div class="cart-information">
 			<div class="section top-content">

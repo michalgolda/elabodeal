@@ -10,9 +10,10 @@
 	{% endif %}
 {% endblock %}
 
-{% block page_class_name %}p-cart{% endblock %}
+{% block page-id %}p-cart{% endblock %}
 
 {% block body %}
+	<!-- Modals -->
 	{% if request.user.is_authenticated and products %}
 		{% include 'components/modals/save-cart-modal.html' %}
 	{% endif %}
@@ -47,30 +48,30 @@
 				<div class="section" style="margin-top: 2rem;">
 					{% if products %}
 						{% for product in products %}
-						<div class="cart-items">
-							<div class="product">
-								<div class="flex-center">
-									<input type="checkbox" checked />
-								</div>
-								<img src="{% static product.cover_img.path %}" style="width:100%;" />
-								<div class="product__details">
-									<div>
-										<h3 class="product__title">{{ product.title }}</h3>
-										<p class="product__author">{{ product.author }}</p>
+							<div class="cart-items">
+								<div class="product">
+									<div class="flex-center">
+										<input type="checkbox" checked />
 									</div>
-									<div>
-										<p class="product__price">{{ product.price }} zł</p>
+									<img src="{% static product.cover_img.path %}" style="width:100%;" />
+									<div class="product__details">
+										<div>
+											<h3 class="product__title">{{ product.title }}</h3>
+											<p class="product__author">{{ product.author }}</p>
+										</div>
+										<div>
+											<p class="product__price">{{ product.price }} zł</p>
+										</div>
 									</div>
+									<form method="POST" action="{% url 'web:cart-action-delete-item' %}">
+										{% csrf_token %}
+										<input type="hidden" name="product_id" value="{{ product.id }}" />
+										<button style="background-color: transparent; border: none; outline: none;">
+											<i class="fas fa-times h2 product__delete"></i>
+										</button>
+									</form>
 								</div>
-								<form method="POST" action="{% url 'web:cart-action-delete-item' %}">
-									{% csrf_token %}
-									<input type="hidden" name="product_id" value="{{ product.id }}" />
-									<button style="background-color: transparent; border: none; outline: none;">
-										<i class="fas fa-times h2 product__delete"></i>
-									</button>
-								</form>
 							</div>
-						</div>
 						{% endfor %}
 					{% else %}
 						<div class="empty-cart flex-center">
