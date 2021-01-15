@@ -83,4 +83,16 @@
 		<a class="btn btn__primary nav__menu-btn" href="{% url 'web:logout' %}">Wyloguj się</a>
 	</div>
 </div>
+{% if request.user.is_online and request.resolver_match.url_name != 'user-settings' %}
+	{% if not request.user.email_verified %}
+		<div class="infoBox infoBox-black flex-center">
+			<div>
+				<p class="infoBox__msg">
+					Aby korzystać ze wszystkich funkcjonalnośći,
+					<a class="infoBox__msg-link" href="{% url 'web:user-settings' %}">zweryfikuj swój adres email</a>
+				</p>
+			</div>
+	</div>
+	{% endif %}
+{% endif %}
 <div id="js-alert" class="alert" style="display: none;"></div>

@@ -1,0 +1,20 @@
+.infoBox {
+    width: 100%;
+    padding: .5rem;
+    text-align: center;
+
+    &-black {
+        background-color: $color-black;
+    }
+
+    &__msg {
+        color: white;
+
+        &-link {
+            font-weight: bold;
+            text-decoration: underline;
+            color: white;
+            font-size: $font-size-small;
+        }
+    }
+}
