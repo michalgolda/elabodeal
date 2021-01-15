@@ -93,9 +93,8 @@ export default class EmailVerificationModalUIComponent {
                     success: () => {
                         alert( 'Weryfikacja powiodła się', 'success' );
 
-                        window.location.reload();
-
-                        this.elements.modal.hide();
+                        this.elements.modal.remove();
+                        this.elements.infoAboutEmailVerification.remove();             
                     },
                     error: () => {
                         alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
@@ -135,7 +134,8 @@ export default class EmailVerificationModalUIComponent {
             showModalBtn: $( '#js-show-email-verification-modal' ),
             hideModalBtn: $( '#js-hide-email-verification-modal' ),
             resendCodeBtn: $( '#js-resend-email-verification-code' ),
-            codeInputElements: $( '.code__input' )
+            codeInputElements: $( '.code__input' ),
+            infoAboutEmailVerification: $( '#js-show-email-verification-modal' ).parent( 'div' )
         }
     }
 }
