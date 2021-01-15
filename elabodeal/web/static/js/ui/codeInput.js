@@ -98,7 +98,7 @@ export default class CodeInputUIComponent {
                 const pasteData = e.clipboardData.getData( 'text' ).slice(0, 6);
 
                 for ( var i = 0; i <= 5; i++ )
-                    this.elements.inputs[ i ].val( pasteData[ i ] || '' );
+                    this.elements.inputs[ i ].value =  pasteData[ i ] || '';
             },
             handleInput: ( e ) => {
                 var input = e.target;
