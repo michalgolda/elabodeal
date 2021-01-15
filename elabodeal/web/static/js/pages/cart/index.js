@@ -2,6 +2,8 @@ import SaveCartModalUIComponent from './saveCartModal';
 
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', () => {
-        new SaveCartModalUIComponent();
+        $( 'p-cart' ).ready( () => {
+            new SaveCartModalUIComponent();
+        } );
     } );
 } )( document );

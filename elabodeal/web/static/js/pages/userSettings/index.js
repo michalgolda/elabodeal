@@ -1,9 +1,13 @@
 import OptionsFormUIComponent from './optionsForm';
+import CodeInputUIComponent from '../../ui/codeInput';
 import EmailVerificationModalUIComponent from './emailVerificationModal';
 
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', () => {
-        new OptionsFormUIComponent();
-        new EmailVerificationModalUIComponent();
+        $( 'p-user-settings' ).ready( () => {
+            new OptionsFormUIComponent();
+            new EmailVerificationModalUIComponent();
+            new CodeInputUIComponent();
+        } );
     } );
 } )( document );

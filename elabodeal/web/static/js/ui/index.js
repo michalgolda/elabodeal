@@ -1,4 +1,3 @@
-import CodeInputUIComponent from './codeInput';
 import ScrollUpBtnUIComponent from './scrollupBtn';
 import NavigationUIComponent from './navigation';
 
@@ -6,6 +5,5 @@ import NavigationUIComponent from './navigation';
     document.addEventListener( 'DOMContentLoaded', () => {
         new NavigationUIComponent();
         new ScrollUpBtnUIComponent();
-        new CodeInputUIComponent();
     } );
 } )( document );

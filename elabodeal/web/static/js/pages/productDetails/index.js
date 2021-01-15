@@ -2,6 +2,8 @@ import CartUpdateModalUIComponent from './cartUpdateModal';
 
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', () => {
-        new CartUpdateModalUIComponent();
+        $( 'p-product-detail' ).ready( () => {
+            new CartUpdateModalUIComponent();
+        } );
     } );
 } )( document );

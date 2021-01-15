@@ -3,6 +3,8 @@ import ShareCartModalUIComponent from './shareCartModal';
 
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', () => {
-        new ShareCartModalUIComponent();
+        $( 'p-saved-cart-detail' ).ready( () => {
+            new ShareCartModalUIComponent();
+        } );
     } );
 } )( document );

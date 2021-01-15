@@ -2,6 +2,8 @@ import PaymentFormUIComponent from './paymentForm';
 
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', () => {
-        new PaymentFormUIComponent();
+        $( 'p-cart-checkout-payment' ).ready( () => {
+            new PaymentFormUIComponent();
+        } );
     } );
 } )( document );
