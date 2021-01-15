@@ -13,17 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700;900&display=swap" rel="stylesheet">
     {% block styles %}{% endblock %}
 
-
+    {% block scripts %}{% endblock %}
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
     <script src="https://kit.fontawesome.com/e27ac0eb6e.js" crossorigin="anonymous"></script>
-
-    <script>
-        window.__stripe_public_key__ = "{% get_stripe_public_api_key %}";
-        window.__csrf_token__ = "{{ csrf_token }}";
-    </script>
 
     <script src="{% static 'dist/main.js' %}" defer="defer"></script>
 
@@ -34,6 +28,6 @@
     {% block body %}
     {% endblock %}
 
-    {% block scripts %}{% endblock %}
+    {% block bottom_scripts %}{% endblock %}
 </body>
 </html>

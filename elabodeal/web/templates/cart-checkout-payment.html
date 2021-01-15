@@ -1,5 +1,10 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
+{% load stripe %}
+
+{% block meta_tags %}
+	<meta name="stripe_public_key" content="{% get_stripe_public_api_key %}"/>
+{% endblock %}
 
 {% block title-description %}Płatność{% endblock %}
 
@@ -32,8 +37,7 @@
 	</div>
 	<div class="section">
 		<div class="form-wrapper">
-			<form id="payment-form" class="form">
-				<p id="payment-error-msg" class="form__error"></p>
+			<form id="js-payment" class="form" action="{% url 'web:cart-checkout-payment-init' %}" success-url="{% url 'web:cart-checkout-payment-success' %}">
 				<div class="form__section">
 					<div>
 						<label>IMIĘ</label>
@@ -54,7 +58,7 @@
 						oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 						required />
 				</div>
-				<div id="card-element" class=""></div>
+				<div id="card-element"></div>
 				<button class="btn btn__primary btn-block">Przejdź dalej</button>
 				<a class="btn btn__primary btn__primary-outline btn-block"
 					href="{% url 'web:cart-checkout-delivery' %}">Wstecz</a>
