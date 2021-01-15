@@ -29,7 +29,6 @@ function ToggleEditOptionMode ( trigger ){
     $optionContainer.addClass( 'option__body-editing' );
 
     $optionInput.focus();
-    $optionInput.select();
     $optionInput.attr( 'readOnly', false );
 }
 
@@ -66,9 +65,6 @@ function DisableEditOptionMode ( trigger, keepInputValue = false ){
 
     if ( !keepInputValue )
         $optionInput.val( $optionInput.attr( 'value' ) );
-
-    // Clear selection of text
-    window.getSelection().removeAllRanges();
 }
 
 export { DisableEditOptionMode, ToggleEditOptionMode };
