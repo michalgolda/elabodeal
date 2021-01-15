@@ -22,8 +22,8 @@ export default class NavigationUIComponent {
             menu: $( '#js-menu' ),
             showMenuBtn: $( '#js-show-menu' ),
             arrowIcon: {
-                up: $( $( '#js-show-menu' )[ 0 ].children[ 2 ] ),
-                down: $( $( '#js-show-menu' )[ 0 ].children[ 3 ])
+                up: $( '#js-show-menu' ).children( 'fa-angle-down' ),
+                down: $( '#js-show-menu').children( 'fa-angle-up' )
             }
         }
     }
