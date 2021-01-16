@@ -3,17 +3,24 @@ const isEnabled = true;
 const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 const isDebug = env === 'development' ? true : false;
 
-try {
-    Sentry.init( {
-        dsn: dsn,
-        enabled: isEnabled,
-        debug: isDebug,
-        environment: env
+
+Sentry.init( {
+    dsn: dsn,
+    enabled: isEnabled,
+    debug: isDebug,
+    environment: env
+} );
+
+$( document ).ajaxError( ( _, jqXHR, ajaxSettings, thrownError ) => {
+    Sentry.captureException( new Error( thrownError || jqXHR.statusText ), {
+        extra: {
+            type: ajaxSettings.type,
+            url: ajaxSettings.url,
+            data: ajaxSettings.data,
+            headers: ajaxSettings.headers,
+            status: jqXHR.status,
+            error: thrownError || jqXHR.statusText,
+            response: jqXHR.responseText.substring( 0, 100 ),
+        }
     } );
-} catch( error ) {
-    
-    // Ignore error if sentry is not loaded
-    if ( error instanceof ReferenceError ) {
-        ( function() { return true } );
-    }
-}
+} );
