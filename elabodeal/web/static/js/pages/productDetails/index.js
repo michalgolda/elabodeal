@@ -1,8 +1,10 @@
+import isExistElement from '../../utils/isExistElement';
+
 import CartUpdateModalUIComponent from './cartUpdateModal';
 
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', () => {
-        $( 'p-product-detail' ).ready( () => {
+        isExistElement( 'p-product-detail', () => {
             new CartUpdateModalUIComponent();
         } );
     } );

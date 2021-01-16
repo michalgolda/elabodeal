@@ -1,9 +1,11 @@
+import isExistElement from '../../utils/isExistElement';
+
 import ShareCartModalUIComponent from './shareCartModal';
 
 
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', () => {
-        $( 'p-saved-cart-detail' ).ready( () => {
+        isExistElement( 'p-saved-cart-detail', () => {
             new ShareCartModalUIComponent();
         } );
     } );

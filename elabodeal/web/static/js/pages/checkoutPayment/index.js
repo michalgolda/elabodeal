@@ -1,8 +1,11 @@
+import isExistElement from '../../utils/isExistElement';
+
 import PaymentFormUIComponent from './paymentForm';
+
 
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', () => {
-        $( 'p-cart-checkout-payment' ).ready( () => {
+        isExistElement( 'p-cart-checkout-payment', () => {
             new PaymentFormUIComponent();
         } );
     } );

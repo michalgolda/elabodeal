@@ -1,11 +1,15 @@
-import OptionsFormUIComponent from './optionsForm';
+import isExistElement from '../../utils/isExistElement';
+
 import CodeInputUIComponent from '../../ui/codeInput';
+
+import OptionsFormUIComponent from './optionsForm';
 import EmailVerificationModalUIComponent from './emailVerificationModal';
+
 
 ( function( document ){
     document.addEventListener( 'DOMContentLoaded', () => {
-        $( 'p-user-settings' ).ready( () => {
-            new OptionsFormUIComponent();
+        isExistElement( 'p-user-settings', () => {
+            new OptionsFormUIComponent();            
             new EmailVerificationModalUIComponent();
             new CodeInputUIComponent();
         } );
