@@ -3,9 +3,17 @@ const isEnabled = true;
 const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 const isDebug = env === 'development' ? true : false;
 
-Sentry.init( {
-    dsn: dsn,
-    enabled: isEnabled,
-    debug: isDebug,
-    environment: env
-} );
+try {
+    Sentry.init( {
+        dsn: dsn,
+        enabled: isEnabled,
+        debug: isDebug,
+        environment: env
+    } );
+} catch( error ) {
+    
+    // Ignore error if sentry is not loaded
+    if ( error instanceof ReferenceError ) {
+        ( function() { return true } );
+    }
+}
