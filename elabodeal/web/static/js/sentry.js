@@ -10,17 +10,3 @@ Sentry.init( {
     debug: isDebug,
     environment: env
 } );
-
-$( document ).ajaxError( ( _, jqXHR, ajaxSettings, thrownError ) => {
-    Sentry.captureException( new Error( thrownError || jqXHR.statusText ), {
-        extra: {
-            type: ajaxSettings.type,
-            url: ajaxSettings.url,
-            data: ajaxSettings.data,
-            headers: ajaxSettings.headers,
-            status: jqXHR.status,
-            error: thrownError || jqXHR.statusText,
-            response: jqXHR.responseText.substring( 0, 100 ),
-        }
-    } );
-} );
