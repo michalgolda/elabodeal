@@ -14,7 +14,6 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,6 +26,23 @@ SECRET_KEY = 'u_qo0bocfcg4aj4n#nw4%4a^8%cxs+&brh1#)6q0iqd5#a0e=w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# Sentry
+
+ENVIRONMENT = os.environ.get('ELABODEAL_ENV')
+if not ENVIRONMENT:
+    ENVIRONMENT = 'development'
+elif ENVIRONMENT:
+    if ENVIRONMENT != 'production':
+        ENVIRONMENT = 'development'
+
+sentry_sdk.init(
+    dsn="https://9a681512f70b45a6a25b1f1a5dec5753@o320975.ingest.sentry.io/5394238",
+    integrations=[DjangoIntegration()],
+    send_default_pii=True,
+    debug=DEBUG,
+    environment=ENVIRONMENT
+)
 
 ALLOWED_HOSTS = ['*']
 
@@ -178,14 +194,6 @@ EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
 STRIPE_PUBLIC_API_KEY = os.environ.get('STRIPE_PUBLIC_API_KEY')
 STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY')
 STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
-
-# Sentry initialization
-
-# sentry_sdk.init(
-#     dsn='https://9a681512f70b45a6a25b1f1a5dec5753@o320975.ingest.sentry.io/5394238',
-#     integrations=[DjangoIntegration()],
-#     send_default_pii=True
-# )
 
 # Tests
 
