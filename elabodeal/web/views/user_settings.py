@@ -1,7 +1,4 @@
-import json
-
-from elabodeal.models import User, VerificationCode
-from elabodeal.web.views import BaseView, BaseAjaxView
+from elabodeal.web.views import BaseView
 
 
 class UserSettingsView(BaseView):
