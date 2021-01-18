@@ -18,24 +18,27 @@
 								<p>{{ category.name }}</p>
 							</a>
 						</div>
-						<div class="link flex-center">
-							<a href="{% url 'web:index' %}">
-								<p>Wszystkie</p>
-							</a>
-						</div>
 					{% else %}
 						<div class="link flex-center">
 							<a href="{% url 'web:index' %}?c={{ category.name }}">
 								<p>{{ category.name }}</p>
 							</a>
 						</div>
-						<div class="link link__current flex-center">
-							<a href="{% url 'web:index' %}">
-								<p>Wszystkie</p>
-							</a>
-						</div>
 					{% endif %}
 				{% endfor %}
+				{% if not current_category %}
+					<div class="link link__current flex-center">
+						<a href="{% url 'web:index' %}">
+							<p>Wszystkie</p>
+						</a>
+					</div>
+				{% else %}
+					<div class="link flex-center">
+						<a href="{% url 'web:index' %}">
+							<p>Wszystkie</p>
+						</a>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 		<div class="section">
