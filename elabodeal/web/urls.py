@@ -6,14 +6,12 @@ from elabodeal.web.views import (CartAddItemAction, CartCheckoutDeliveryView,
                                  CartSaveAjaxView, CartView,
                                  EmailVerificationView, IndexView, LoginView,
                                  LogoutView, ProductDetailView,
-                                 PurchasedProductsView, RegisterView,
-                                 SalesManagerAddProductView,
+                                 PublisherSettingsView, PurchasedProductsView,
+                                 RegisterView, SalesManagerAddProductView,
                                  SalesManagerIndexView, SalesManagerStartView,
                                  SavedCartDetailView, SavedCartShareAjaxView,
                                  SavedCartsView, SearchResultsView,
-                                 SharedCartView, UserSettingsView,
-								 UserSaveSettingsAjaxView, EmailVerificationAjaxView,
-								 ResendEmailVerificationAjaxView)
+                                 SharedCartView, UserSettingsView)
 
 app_name = 'web'
 
@@ -23,13 +21,11 @@ urlpatterns = [
 	path('zaloguj/', LoginView.as_view(), name='login'),
 	path('zarejestruj/', RegisterView.as_view(), name='register'),
 	path('weryfikacja/', EmailVerificationView.as_view(), name='email-verification'),
-	path('verify/ajax/email/', EmailVerificationAjaxView.as_view(), name='verify-email'),
-	path('verify/ajax/email/resend/', ResendEmailVerificationAjaxView.as_view(), name='resend-email-verification-code'),
 	path('wyloguj/', LogoutView.as_view(), name='logout'),
 	path('s/', SearchResultsView.as_view(), name='search-results'),
 	path('mp/', PurchasedProductsView.as_view(), name='purchased-products'),
 	path('settings/', UserSettingsView.as_view(), name='user-settings'),
-	path('settings/ajax/save/', UserSaveSettingsAjaxView.as_view(), name='user-settings-save'),
+	path('settings/publisher/', PublisherSettingsView.as_view(), name='publisher-settings'),
 	path('c/', include([
 		path('', CartView.as_view(), name='cart'),
 		path('ajax/', include([

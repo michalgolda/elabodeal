@@ -1,0 +1,95 @@
+{% extends 'layouts/base.html' %} 
+{% load static %}
+
+{% block title-description%}Ustawienia{% endblock %} 
+
+{% block page-id %}p-publisher-settings{% endblock %}
+{% block page-class %}p-settings{% endblock %}
+
+{% block body %}
+    {% include 'components/navigation.html' %}
+    <div class="wrapper">
+        <div class="section">
+            <p class="section__title">Ustawienia</p>
+            <div class="link-list" style="margin-top: 1rem;">
+                <div class="link flex-center">
+                    <a href="{% url 'web:user-settings' %}">
+                        <p>Użytkownik</p>
+                    </a>
+                </div>
+                <div class="link link__current flex-center">
+                    <a href="{% url 'web:publisher-settings' %}">
+                        <p>Sprzedający</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <form id="js-settings-form" action="{% url 'api:update-publisher-settings' %}" class="container" autocomplete="off">
+            <div class="section">
+                <p class="section__title">Ustawienia sprzedającego</p>
+                <div id="js-publisher-settings-section" class="option-list">
+                    {% if user.publisher %}
+                        <div class="option">
+                            <label>IMIĘ</label>
+                            <div class="option__body">
+                                <input class="js-edit-option js-option-input" type="text" name="first_name" value="{{ user.publisher.first_name }}" readonly />
+                                <button class="btn btn__primary js-edit-option" type="button"></button>
+                                <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
+                                <button class="btn btn__danger js-cancel-edit-option" type="button"  style="display: none"></button>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <label>NAZWISKO</label>
+                            <div class="option__body">
+                                <input class="js-edit-option js-option-input" type="text" name="last_name"
+                                    value="{{ user.publisher.last_name }}" readonly />
+                                <button class="btn btn__primary js-edit-option" type="button"></button>
+                                <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
+                                <button class="btn btn__danger js-cancel-edit-option" type="button"  style="display: none"></button>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <label>NUMER KONTA</label>
+                            <div class="option__body">
+                                <input class="js-edit-option js-option-input" type="text" name="account_number"
+                                    value="{{ user.publisher.account_number }}" readonly />
+                                <button class="btn btn__primary js-edit-option" type="button"></button>
+                                <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
+                                <button class="btn btn__danger js-cancel-edit-option" type="button"  style="display: none"></button>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <label>SWIFT</label>
+                            <div class="option__body">
+                                <input class="js-edit-option js-option-input" type="text" name="swift"
+                                    value="{{ user.publisher.swift }}" readonly />
+                                <button class="btn btn__primary js-edit-option" type="button"></button>
+                                <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
+                                <button class="btn btn__danger js-cancel-edit-option" type="button"  style="display: none"></button>
+                            </div>
+                        </div>
+                        <div class="option option-checkbox">
+                            <input type="hidden" name="sell_notification" value="False" />
+                            <input type="checkbox" name="sell_notification"
+                                value="True" 
+                                {% if user.publisher.sell_notification %}
+                                checked="checked"
+                                {% endif %}/>
+                            <p class="option__name">Powiadomienie o sprzedanej kopii ebooka</p>
+                        </div>
+                        <button type="submit" class="btn btn__primary-outline btn-block">
+                            Zapisz ustawienia</button>
+                    {% else %}
+                        <div style="text-align: center;">
+                            <p>Aby utworzyć konto sprzedającego, kliknij przycisk poniżej</p>
+                            <a href="{% url 'web:salesmanager-start' %}" class="btn btn__primary-outline"
+                                style="margin-top: 0.5rem;">Utwórz</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </button>
+            </div>
+        </form>
+    </div>
+    {% include 'components/small-footer-light.html' %} 
+{% endblock %}

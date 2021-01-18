@@ -83,7 +83,7 @@
 		<a class="btn btn__primary nav__menu-btn" href="{% url 'web:logout' %}">Wyloguj się</a>
 	</div>
 </div>
-{% if request.user.is_online and request.resolver_match.url_name != 'user-settings' %}
+{% if request.user.is_online %}
 	{% if not request.user.email_verified %}
 		<div class="infoBox infoBox-black flex-center">
 			<div>

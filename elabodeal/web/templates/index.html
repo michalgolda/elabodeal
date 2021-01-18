@@ -10,26 +10,26 @@
 	<div class="wrapper">
 		<div class="section">
 			<p class="section__title">Kategorie</p>
-			<div class="category-list">
+			<div class="link-list" style="margin-top: 1rem;">
 				{% for category in categories %}
 					{% if current_category == category.name %}
-						<div class="category category__current flex-center">
+						<div class="link link__current flex-center">
 							<a href="{% url 'web:index' %}?c={{ category.name }}">
 								<p>{{ category.name }}</p>
 							</a>
 						</div>
-						<div class="category flex-center">
+						<div class="link flex-center">
 							<a href="{% url 'web:index' %}">
 								<p>Wszystkie</p>
 							</a>
 						</div>
 					{% else %}
-						<div class="category flex-center">
+						<div class="link flex-center">
 							<a href="{% url 'web:index' %}?c={{ category.name }}">
 								<p>{{ category.name }}</p>
 							</a>
 						</div>
-						<div class="category category__current flex-center">
+						<div class="link link__current flex-center">
 							<a href="{% url 'web:index' %}">
 								<p>Wszystkie</p>
 							</a>

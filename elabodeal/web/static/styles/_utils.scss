@@ -32,10 +32,7 @@
     min-height: calc(100vh - 60px); 
 }
 
-.hide { 
-    display: none;
-}
-
-.show {
-    display: block;
+.input-error {
+    border: 1px solid $color-red;
+    color: $color-red;
 }
