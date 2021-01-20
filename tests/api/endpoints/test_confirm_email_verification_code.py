@@ -5,24 +5,24 @@ from elabodeal.models import VerificationCode, User
 
 
 class TestConfirmEmailVerificationCodeEndpoint(APITestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(
+    def test_simple_response(self):
+        user = User.objects.create_user(
             email='xyz@xyz.pl',
             username='xyz',
             password='xyz'
         )
         
-        self.code = VerificationCode.objects.generate(
-            self.user.email
+        code = VerificationCode.objects.generate(
+            user.email
         )
-
-    def test_simple_request(self):
+    
         url = reverse(
             'api:confirm-email-verification-code'
         )
+        
         data = {
-            'email': self.user.email,
-            'code': self.code.code
+            'email': user.email,
+            'code': code.code
         }
 
         response = self.client.post(
@@ -33,6 +33,30 @@ class TestConfirmEmailVerificationCodeEndpoint(APITestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        verified_user = User.objects.filter(id=self.user.id).first()
+        verified_user = User.objects.filter(id=user.id).first()
 
         self.assertEqual(verified_user.email_verified, True)
+
+    def test_response_if_code_is_invalid(self):
+        user = User.objects.create_user(
+            email='xyz@xyz.pl',
+            username='xyz',
+            password='xyz'
+        )
+        
+        url = reverse(
+            'api:confirm-email-verification-code'
+        )
+        
+        data = {
+            'email': user.email,
+            'code': ''
+        }
+
+        response = self.client.post(
+            url, 
+            data, 
+            format='json'
+        )
+
+        self.assertEqual(response.status_code, 400)
