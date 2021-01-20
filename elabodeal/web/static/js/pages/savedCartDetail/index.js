@@ -1,4 +1,4 @@
-import isExistElement from '../../utils/isExistElement';
+import { isExistElement } from '../../utils/exist';
 
 import ShareCartModalUIComponent from './shareCartModal';
 

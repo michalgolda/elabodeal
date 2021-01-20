@@ -6,8 +6,8 @@
 {% block modal-hide-btn-id %}js-hide-email-verification-modal{% endblock %}
 
 {% block modal-body %}
-<p>Na adres email <strong>{{ user.email }}</strong> został wysłany kod weryfikacyjny.</p>
-<form id="js-email-verification" action="{% url 'web:verify-email' %}" autocomplete="off">    
+<p style="text-align: center;">Na adres email <strong>{{ user.email }}</strong> został wysłany 6 cyfrowy kod weryfikacyjny.</p>
+<form id="js-email-verification" action="{% url 'api:confirm-email-verification-code' %}" autocomplete="off">    
     <div style="margin-top: 1rem; text-align: center;">
         <input type="hidden" name="email" value="{{ user.email }}" />
         <input type="hidden" name="code" value="" />
@@ -32,7 +32,7 @@
                 id="js-resend-email-verification-code" 
                 class="btn btn__secondary-outline" 
                 type="button" 
-                data-action-url="{% url 'web:resend-email-verification-code' %}" 
+                data-action-url="{% url 'api:resend-email-verification-code' %}" 
                 style="margin-left: .25rem; width: 190px;"
             >
                 Wyślij kod ponownie

@@ -38,7 +38,7 @@ export default class CodeInputUIComponent {
             },
             clearCodeInputElementsError: () => {
                 for ( var element of this.elements.inputs )
-                    element.classList.remove( 'code__input-error' );
+                    element.classList.remove( 'input-error' );
             }
         }
     }
@@ -48,7 +48,8 @@ export default class CodeInputUIComponent {
             keys: {
                 backspace: 8,
                 arrowLeft: 37,
-                arrowRight: 39
+                arrowRight: 39,
+                enter: 13
             }
         }
     }
@@ -89,6 +90,9 @@ export default class CodeInputUIComponent {
                         break;
                     case this.constants.keys.arrowRight:
                         this.handlers.handleArrowRight( e );
+                        break;
+                    case this.constants.keys.enter:
+                        e.preventDefault();
                         break;
                 }
             },

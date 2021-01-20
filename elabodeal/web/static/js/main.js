@@ -1,4 +1,4 @@
-import './sentry';
-
-import './pages';
 import './ui';
+import './pages';
+
+import './sentry';
