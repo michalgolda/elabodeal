@@ -12,9 +12,15 @@ class TestResendEmailVerificationCodeEndpoint(APITestCase):
             password='xyz'
         )
 
+        self.client.login(
+            email=user.email,
+            password='xyz'
+        )
+
         url = reverse(
             'api:resend-email-verification-code'
         )
+        
         data = {
             'email': user.email
         }
@@ -28,6 +34,17 @@ class TestResendEmailVerificationCodeEndpoint(APITestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_response_if_email_is_empty(self):
+        user = User.objects.create_user(
+            email='zyx@zyx.pl',
+            username='xyz',
+            password='xyz'
+        )
+
+        self.client.login(
+            email=user.email,
+            password='xyz'
+        )
+
         url = reverse(
             'api:resend-email-verification-code'
         )

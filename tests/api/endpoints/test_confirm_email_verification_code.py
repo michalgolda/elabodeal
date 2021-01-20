@@ -7,8 +7,13 @@ from elabodeal.models import VerificationCode, User
 class TestConfirmEmailVerificationCodeEndpoint(APITestCase):
     def test_simple_response(self):
         user = User.objects.create_user(
-            email='xyz@xyz.pl',
+            email='zyx@zyx.pl',
             username='xyz',
+            password='xyz'
+        )
+
+        self.client.login(
+            email=user.email,
             password='xyz'
         )
         
@@ -39,11 +44,16 @@ class TestConfirmEmailVerificationCodeEndpoint(APITestCase):
 
     def test_response_if_code_is_invalid(self):
         user = User.objects.create_user(
-            email='xyz@xyz.pl',
+            email='zyx@zyx.pl',
             username='xyz',
             password='xyz'
         )
-        
+
+        self.client.login(
+            email=user.email,
+            password='xyz'
+        )
+
         url = reverse(
             'api:confirm-email-verification-code'
         )
