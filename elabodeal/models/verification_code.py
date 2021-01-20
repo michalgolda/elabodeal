@@ -10,22 +10,31 @@ from django.template.loader import render_to_string
 from elabodeal.models import User
 
 
+class VerificationCodeException(Exception):
+	pass
+
+
 class VerificationCodeManager(models.Manager):
-	def generate(self, email: str, expires: int = 86400) -> object:		
+	def generate(self, email, expires=86400):		
 		user = User.objects.filter(email=email).first()
 		if not user:
-			raise ValueError('Not found candidate for verification.')
+			raise VerificationCodeException(
+				'Not found candidate for that email address'
+			)
 		
-		# Delete exist code and generate new
+		# Delete code if exist
 		verification_code = self.model.objects.filter(email=email).first()
 		if verification_code:
 			verification_code.delete()
 
+		code = ''.join(str(random.randint(0, 9)) for _ in range(6))
 		expiration = timezone.now() + datetime.timedelta(seconds=expires)
 
-		verification_code = self.model(email=email, 
-									   expiration_at=expiration)
-		verification_code.code = ''.join(str(random.randint(0, 9)) for _ in range(6))
+		verification_code = self.model(
+			code=code,
+			email=email,
+			expiration_at=expiration
+		)
 		verification_code.save()
 
 		code = verification_code.code
@@ -33,45 +42,59 @@ class VerificationCodeManager(models.Manager):
 		from_email = settings.EMAIL_HOST_USER
 		subject = 'Elabodeal - Weryfikacja konta'
 		message = f'To jest twój kod weryfikacyjny {code}'
-		html_message = render_to_string('emails/verification.html', 
-										{'code': code})
+		html_message = render_to_string(
+			'emails/verification.html', 
+			{
+				'code': code
+			}
+		)
 
 		try:
-			send_mail(subject=subject,
-					message=message,
-					from_email=from_email,
-					recipient_list=[recipient],
-					html_message=html_message)
+			send_mail(
+				subject=subject,
+				message=message,
+				from_email=from_email,
+				recipient_list=[recipient],
+				html_message=html_message
+			)
 		except:
 			pass
 
 		return verification_code
 
-	def verify(self, email: str, code: int) -> object:
-		user = User.objects.filter(email=email).first()
-
-		if not user:
-			raise ValueError('Not found user by email for verification')
-
-		verify_code = self.model.objects.filter(email=user.email).first()
+	def verify(self, email, code):
+		verification_code = self.model.objects.filter(email=email).first()
 	
-		if not verify_code:
-			raise ValueError('Not found verification code')
-		elif verify_code.code != code:
-			raise ValueError('Verification code is invalid')
+		# Check whether verification code is exist for that email address
+		if not verification_code:
+			raise VerificationCodeException(
+				'Not found verification code for that email address'
+			)
 		
-		curr_datetime = timezone.now()
-	
-		if curr_datetime > verify_code.expiration_at:
-			verify_code.delete()
-			
-			raise ValueError('Verification code is expired')
+		current_datetime = timezone.now()
+		expiration_datetime = verification_code.expiration_at
 
+		# Check code is valid
+		if verification_code.code != code:
+			raise VerificationCodeException(
+				'Verification code is invalid'
+			)
+
+		# Check expiration
+		if current_datetime > expiration_datetime:
+			verification_code.delete()
+
+			raise VerificationCodeException(
+				'Verification code is expired'
+			)
+
+		user = User.objects.filter(email=email).first()
 		user.email_verified = True
 		user.email_verified_at = timezone.now()
 		user.save()
 
-		verify_code.delete()
+		# Delete code after verification
+		verification_code.delete()
 
 		return user
 
@@ -80,7 +103,6 @@ class VerificationCode(models.Model):
 	code = models.CharField(max_length=6)
 	email = models.EmailField()
 	expiration_at = models.DateTimeField()
-
 	created_at = models.DateTimeField(auto_now_add=True)
 	
 	objects = VerificationCodeManager()

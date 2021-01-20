@@ -3,6 +3,7 @@ const isEnabled = true;
 const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 const isDebug = env === 'development' ? true : false;
 
+
 Sentry.init( {
     dsn: dsn,
     enabled: isEnabled,

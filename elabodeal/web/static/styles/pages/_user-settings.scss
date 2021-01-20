@@ -1,96 +1,5 @@
-#p-user-settings {
-    .container {
-        width: 512px;
-        height: auto;
-        display: grid;
-        grid-template-columns: auto;
-        grid-row-gap: 1rem;
-        margin: 0 auto;
-    }
-    
-    .option-list {
-        display: grid;
-        grid-template-columns: auto;
-        grid-row-gap: 1rem;
-        margin-top: 1rem;
-    }
-
-    .option {
-        &__name {
-            font-weight: bold;
-            margin-bottom: .5rem;
-        }
-
-        &__information {
-            font-size: $font-size-small;
-            color: $color-black;
-            font-weight: 400;
-        }
-
-        &__body {
-            display: grid;
-            grid-template-columns: auto 4rem;
-            grid-column-gap: .5rem;
-        
-            &-editing {
-                grid-template-columns: auto 4rem 4rem;
-                
-                input {
-                    color: $color-black !important;
-                    border-color: $color-black;        
-                }
-            }
-        }
-
-        &-checkbox {
-            display: flex;
-            align-items: center;
-
-            & > p {
-                margin-bottom: 0;
-            }
-
-            & > input {
-                margin-right: .5rem;
-            }
-        }
-
-        input {
-            color: $color-grey;
-        }
-    }
-
-    .js-edit-option[type="button"] {
-        &:after {
-            font-family: FontAwesome;
-            content: '\f044';
-        }
-    }
-
-    .js-cancel-edit-option {
-        &:after {
-            font-family: FontAwesome;
-            content: '\f00d';
-        }
-    }
-
-    .js-accept-edit-option {
-        &:after {
-            font-family: FontAwesome;
-            content: '\f00c';
-        }
-    }
-
+#p-user-settings {   
     #js-email-verification-modal {
-        .success-msg {
-            text-align: center;
-            color: $color-green;
-        }
-
-        .error-msg {
-            color: $color-red;
-        }
-
         .code {
             width: 100%;
             display: flex;
@@ -117,11 +26,6 @@
                 padding-left: 0;
                 padding-right: 0;
                 text-align: center;
-
-                &-error {
-                    border: 1px solid $color-red;
-                    color: $color-red;
-                }
             }
         }
     }

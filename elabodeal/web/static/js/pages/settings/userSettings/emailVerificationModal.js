@@ -1,14 +1,13 @@
-import alert from '../../alert';
-import { setCodeInputValue } from '../../utils/setCodeInputValue';
+import alert from '../../../alert';
+import { setCodeInputValue } from '../../../utils/setCodeInputValue';
 
+import httpClient from '../../../utils/httpClient';
 
 export default class EmailVerificationModalUIComponent {
     constructor() {
         this.elements = this.loadElements();
-        this.constants = this.loadConstants();
         this.helpers = this.loadHelpers();
         this.handlers = this.loadHandlers();
-        this.constants = this.loadConstants();
 
         this.bindUIActions();
     }
@@ -30,12 +29,6 @@ export default class EmailVerificationModalUIComponent {
             'click',
             this.handlers.handleResendCode
         );
-    }
-
-    loadConstants() {
-        return {
-            csrfToken: $( 'meta[name="csrf_token"]' ).attr( 'content' )
-        }
     }
 
     loadHelpers() {
@@ -63,66 +56,64 @@ export default class EmailVerificationModalUIComponent {
             },
             showCodeInputElementsError: () => {
                 for ( var element of this.elements.codeInputElements )
-                    element.classList.add( 'code__input-error' );
+                    element.classList.add( 'input-error' );
             }
         }
     }
 
     loadHandlers() {
         return {
-            handleShowModal: () => this.elements.modal.show(),
+            handleShowModal: () => {
+                var actionURL = this.elements.resendCodeBtn.attr( 'data-action-url' );
+                var formData = new FormData( this.elements.form.get( 0 ) );
+                var data = Object.fromEntries( formData );
+
+                httpClient.post( actionURL, data );
+
+                this.elements.modal.show();
+            },
             handleHideModal: () => this.elements.modal.hide(),
             handleSubmitVerification: ( e ) => {
                 e.preventDefault();
 
                 setCodeInputValue( e.target );
 
-                var formData = this.elements.form.serializeArray();
-
-                if ( formData[ 1 ].value === '' || formData[ 1 ].value.length < 6 ) return;
-
                 var actionURL = this.elements.form.attr( 'action' );
+                var formData = new FormData( this.elements.form.get( 0 ) );
+                var data = Object.fromEntries( formData );
 
-                $.ajax( {
-                    url: actionURL,
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFtoken': this.constants.csrfToken
-                    },
-                    data: formData,
-                    success: () => {
+                if ( data[ 'code' ].length < 6 || data[ 'code' ].length > 6)
+                    return;
+
+                httpClient.post( actionURL, data )
+                    .then( response => {
                         alert( 'Weryfikacja powiodła się', 'success' );
-
+                        
                         this.elements.modal.remove();
-                        this.elements.infoAboutEmailVerification.remove();             
-                    },
-                    error: () => {
-                        alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
+                        this.elements.infoAboutEmailVerification.remove();
 
+                        window.location.reload();
+                    } )
+                    .catch( error => {
+                        alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
+                        
                         this.helpers.showCodeInputElementsError();
-                    }
-                } );
+                    } )
             },
             handleResendCode: ( e ) => {
-                var formData = this.elements.form.serializeArray();
                 var actionURL = this.elements.resendCodeBtn.attr( 'data-action-url' );
-                
-                $.ajax( {
-                    url: actionURL,
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFtoken': this.constants.csrfToken
-                    },
-                    data: formData,
-                    success: () => {
+                var formData = new FormData( this.elements.form.get( 0 ) );
+                var data = Object.fromEntries( formData );
+
+                httpClient.post( actionURL, data )
+                    .then( response => {
                         alert( 'Nowy kod został wysłany', 'success' );
                         
                         this.helpers.disableResendCodeBtn();
-                    },
-                    error: () => {
+                    } )
+                    .catch( error => {
                         alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
-                    }
-                } );
+                    } )
             }
         }
     }

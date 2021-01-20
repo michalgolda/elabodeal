@@ -18,6 +18,21 @@ class PublisherManager(models.Manager):
 
 		return publisher
 
+	def update_settings(self, publisher, options):
+		has_changed = False
+
+		for attr_name, attr_value in options.items():
+			if getattr(publisher, attr_name) != attr_value:
+				setattr(publisher, attr_name, attr_value)
+
+				has_changed = True
+
+		if not has_changed:
+			return
+
+		publisher.save()
+
+		return publisher
 
 class Publisher(models.Model):
 	first_name = models.CharField(max_length=30)
