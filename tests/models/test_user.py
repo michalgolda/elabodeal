@@ -50,37 +50,35 @@ class TestUserModel(TestCase):
 		self.assertEqual(created_user.is_superuser, True)
 
 	def test_manager_update_settings_method(self):
-		user = User.objects.create_user(email='xyz@xyz.pl',
-										username='xyz',
-										password='xyz')
+		user = User.objects.create_user(
+			email='xyz@xyz.pl',
+			username='xyz',
+			password='xyz'
+		)
 
-		settings_for_update = {'username': 'zyx'}
+		options = {
+			'username': 'zyx'
+		}
 	
-		updated_user = User.objects.update_settings(user, settings_for_update)
+		updated_user = User.objects.update_settings(user, options)
 
-		self.assertEqual(updated_user.username, 'zyx')
 		self.assertIsInstance(updated_user, User)
+		self.assertEqual(updated_user.username, 'zyx')
 
-	def test_manager_update_settings_method_if_settings_is_empty(self):
-		user = User.objects.create_user(email='xyz@xyz.pl',
-										username='xyz',
-										password='xyz')
+	def test_manager_update_settings_method_force_email_verification(self):
+		user = User.objects.create_user(
+			email='xyz@xyz.pl',
+			username='xyz',
+			password='xyz'
+		)
 
-		settings_for_update = {}
+		options = {
+			'email': 'zyx@zyx.pl'
+		}
 
-		with self.assertRaises(ValueError):
-			User.objects.update_settings(user, settings_for_update)
+		updated_user = User.objects.update_settings(user, options)
 
-	def test_manager_update_settings_method_if_updated_email(self):
-		user = User.objects.create_user(email='xyz@xyz.pl',
-										username='xyz',
-										password='xyz')
-		user.email_verified = True
-		user.save()
-
-		settings_for_update = {'email': 'zyx@xyz.pl'}
-
-		updated_user = User.objects.update_settings(user, settings_for_update)
-
+		self.assertEqual(updated_user.email, options['email'])
 		self.assertEqual(updated_user.email_verified, False)
-			
+		self.assertIsInstance(updated_user, User)
+		
