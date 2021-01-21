@@ -22,6 +22,11 @@
                         <p>Sprzedający</p>
                     </a>
                 </div>
+                <div class="link-subsection">
+                    <p class="link link__current">Dane do wypłat</p>
+                    <p class="link">Wiadomości</p>
+                    <p class="link">Inne</p>
+                </div>
             </div>
         </div>
         <form id="js-settings-form" action="{% url 'api:update-publisher-settings' %}" class="container" autocomplete="off">
@@ -77,8 +82,6 @@
                                 {% endif %}/>
                             <p class="option__name">Powiadomienie o sprzedanej kopii ebooka</p>
                         </div>
-                        <button type="submit" class="btn btn__primary-outline btn-block">
-                            Zapisz ustawienia</button>
                     {% else %}
                         <div style="text-align: left;">
                             <p>Aby utworzyć konto sprzedającego, kliknij przycisk poniżej</p>
@@ -87,6 +90,8 @@
                         </div>
                     {% endif %}
                 </div>
+                <button type="submit" class="btn btn__primary-outline" style="margin-top: 2rem;">
+                    Zapisz ustawienia</button>
             </button>
             </div>
         </form>
