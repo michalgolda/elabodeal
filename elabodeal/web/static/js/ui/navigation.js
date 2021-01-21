@@ -3,6 +3,8 @@ export default class NavigationUIComponent {
         this.elements = this.loadElements();
         this.handlers = this.loadHandlers();
 
+        console.log(this.elements);
+
         this.bindUIActions();
     }
 
@@ -22,8 +24,8 @@ export default class NavigationUIComponent {
             menu: $( '#js-menu' ),
             showMenuBtn: $( '#js-show-menu' ),
             arrowIcon: {
-                up: $( '#js-show-menu' ).children( 'fa-angle-down' ),
-                down: $( '#js-show-menu').children( 'fa-angle-up' )
+                up: $( '#js-show-menu' ).children( '.fa-angle-down' ),
+                down: $( '#js-show-menu').children( '.fa-angle-up' )
             }
         }
     }
