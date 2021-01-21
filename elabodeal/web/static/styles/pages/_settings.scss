@@ -65,6 +65,49 @@
         }
     }
 
+    .link-list {
+        .link-subsection {
+            padding-left: 1rem;
+            display: grid;
+            grid-template-rows: auto;
+            row-gap: .5rem;
+
+            .link {
+                border: none;
+                padding: 0;
+                height: auto;
+                
+                &:hover {
+                    cursor: pointer;
+                    @include fadein-animation(.5s);
+
+                    &::before {
+                        color: $color-orange;
+                    }
+                }
+                
+                &::before {
+                    content: '\f054';
+                    font-family: FontAwesome;
+                    padding-right: .25rem;
+                    color: $color-black;
+                }
+
+                &__current {
+                    background: none;
+                    font-weight: bold;
+
+                    &::before {
+                        content: '\f054';
+                        font-family: FontAwesome;
+                        padding-right: .25rem;
+                        color: $color-orange;
+                    }
+                }
+            }
+        }
+    }
+
     .js-edit-option[type="button"] {
         &:after {
             font-family: FontAwesome;
