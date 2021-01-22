@@ -54,6 +54,7 @@
                                 </button>
                             </div>
                         {% else %}
+                            <input type="hidden" name="email" value="{{ user.email }}" />
                             <div style="margin-top: 1rem;">
                                 <p class="option__information" style="margin-bottom: .5rem;">Aby móc w pełni korzystać z funkcjonalnośći platformy musisz zweryfikować swój adres email.</p>
                                 <button id="js-show-email-verification-modal" type="button" class="btn btn__secondary">Zweryfikuj</button>
