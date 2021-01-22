@@ -37,6 +37,13 @@ export default class OptionsFormUIComponent {
                 this.helpers.clearInputErrors();
             } );
         }
+        
+        for ( var input of this.elements.optionInputs ) {
+            input.addEventListener( 
+                'change', 
+                this.handlers.handleChangeOptionInput 
+            );
+        }
 
         this.elements.form.on( 'submit', this.handlers.handleSubmitSaveSettings );
         this.elements.form.on( 'keypress', this.handlers.handleFormKeypress );
@@ -47,7 +54,8 @@ export default class OptionsFormUIComponent {
             form: $( '#js-settings-form' ),
             acceptEditOptionButtons: $( '.js-accept-edit-option' ),
             cancelEditOptionButtons: $( '.js-cancel-edit-option' ),
-            toggleEditModeElements: $( '.js-edit-option' )
+            toggleEditModeElements: $( '.js-edit-option' ),
+            optionInputs: $( '.js-option-input' )
         }
     }
 
@@ -106,9 +114,18 @@ export default class OptionsFormUIComponent {
                     e.preventDefault();
 
                     DisableEditOptionMode( undefined, true );
+                    
+                    var changeEvent = new Event( 'change' );
+                    e.target.dispatchEvent( changeEvent );
 
                     this.helpers.clearInputErrors();
                 }
+            },
+            handleChangeOptionInput: ( e ) => {
+                var targetValue = e.target.value;
+                
+                if ( targetValue.length === 0 )
+                    DisableEditOptionMode( e.target );
             }
         }
     }
