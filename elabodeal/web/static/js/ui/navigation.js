@@ -3,8 +3,6 @@ export default class NavigationUIComponent {
         this.elements = this.loadElements();
         this.handlers = this.loadHandlers();
 
-        console.log(this.elements);
-
         this.bindUIActions();
     }
 
