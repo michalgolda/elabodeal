@@ -50,13 +50,14 @@
         &-checkbox {
             display: flex;
             align-items: center;
+            justify-content: space-between;
 
             & > p {
                 margin-bottom: 0;
             }
 
             & > input {
-                margin-right: .5rem;
+                margin-left: .5rem;
             }
         }
 

@@ -22,11 +22,11 @@
                         <p>Sprzedający</p>
                     </a>
                 </div>
-                <div class="link-subsection">
+                <!-- <div class="link-subsection">
                     <p class="link link__current">Dane do wypłat</p>
                     <p class="link">Wiadomości</p>
                     <p class="link">Inne</p>
-                </div>
+                </div> -->
             </div>
         </div>
         <form id="js-settings-form" action="{% url 'api:update-publisher-settings' %}" class="container" autocomplete="off">
@@ -75,12 +75,12 @@
                         </div>
                         <div class="option option-checkbox">
                             <input type="hidden" name="sell_notification" value="False" />
-                            <input type="checkbox" name="sell_notification"
+                            <p class="option__name">Powiadomienie o sprzedanej kopii ebooka</p>
+                            <input class="switch" type="checkbox" name="sell_notification"
                                 value="True" 
                                 {% if user.publisher.sell_notification %}
                                 checked="checked"
                                 {% endif %}/>
-                            <p class="option__name">Powiadomienie o sprzedanej kopii ebooka</p>
                         </div>
                     {% else %}
                         <div style="text-align: left;">
@@ -90,8 +90,10 @@
                         </div>
                     {% endif %}
                 </div>
-                <button type="submit" class="btn btn__primary-outline" style="margin-top: 2rem;">
-                    Zapisz ustawienia</button>
+                {% if user.publisher %}
+                    <button type="submit" class="btn btn__primary-outline" style="margin-top: 2rem;">
+                        Zapisz ustawienia</button>
+                {% endif %}
             </button>
             </div>
         </form>
