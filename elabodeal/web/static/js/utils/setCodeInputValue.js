@@ -1,5 +1,3 @@
-import './setCodeInputValue';
-
 /**
  * This function getting code from all inputs which has class of "code__input"
  * and setting main input of code value

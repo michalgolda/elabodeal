@@ -14,4 +14,7 @@ clean-js-files:
 py-tests:
 	python manage.py test
 
-tests: py-tests
+js-tests:
+	npm run test
+
+tests: py-tests js-tests
