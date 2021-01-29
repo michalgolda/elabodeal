@@ -10,12 +10,14 @@ DATABASES = {
         'NAME': 'elabodeal',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'db',
+        'HOST': 'postgres',
         'PORT': 5432
     }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+CELERY_BROKER_URL = 'redis://redis'
+
+EMAIL_HOST = 'maildev'
 
 STRIPE_PUBLIC_API_KEY = config('STRIPE_PUBLIC_API_KEY', default=None)
 STRIPE_API_KEY = config('STRIPE_API_KEY', default=None)
