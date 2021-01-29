@@ -8,7 +8,7 @@
 
             &__group {
                 display: grid;
-                grid-template-columns: 40px 40px 40px;
+                grid-template-columns: 46px 46px 46px;
                 column-gap: .5rem;
 
                 &-separator {
@@ -22,7 +22,7 @@
 
             &__input {
                 width: 40px;
-                height: 40px;
+                height: 46px;
                 padding-left: 0;
                 padding-right: 0;
                 text-align: center;
