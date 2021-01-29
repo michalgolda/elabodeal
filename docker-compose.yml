@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  postgres:
     image: postgres
     ports:
       - "5432:5432"
@@ -9,6 +9,10 @@ services:
       - POSTGRES_DB=elabodeal
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
   app:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -19,4 +23,20 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - postgres
+      - redis
+      - maildev
+  celery_worker:
+    command: sh -c "celery -A elabodeal worker -l info -E" 
+    image: elabodeal_app
+    volumes:
+      - .:/usr/bin/app    
+    depends_on: 
+      - app
+      - redis
+      - postgres
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "1080:80"
+      - "1025:25"
