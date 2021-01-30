@@ -4,10 +4,10 @@ import datetime
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
 
 from elabodeal.models import User
+from elabodeal.emails import ConfirmChangeEmail
+from elabodeal.celery.tasks import send_email
 
 
 class VerificationCodeException(Exception):
@@ -38,27 +38,17 @@ class VerificationCodeManager(models.Manager):
 		verification_code.save()
 
 		code = verification_code.code
-		recipient = verification_code.email
-		from_email = settings.EMAIL_HOST_USER
-		subject = 'Elabodeal - Weryfikacja konta'
-		message = f'To jest twój kod weryfikacyjny {code}'
-		html_message = render_to_string(
-			'emails/verification.html', 
-			{
-				'code': code
-			}
-		)
 
-		try:
-			send_mail(
-				subject=subject,
-				message=message,
-				from_email=from_email,
-				recipient_list=[recipient],
-				html_message=html_message
+		confirm_change_email = ConfirmChangeEmail(
+			to=verification_code.email,
+			context=dict(
+				code=verification_code.code
 			)
-		except:
-			pass
+		)
+		
+		send_email.delay(
+			email=confirm_change_email.asdict()
+		)
 
 		return verification_code
 
