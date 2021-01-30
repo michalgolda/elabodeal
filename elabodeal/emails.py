@@ -5,9 +5,9 @@ from dataclasses import dataclass, field
 class Email:
     to: str
     context: dict
-    text_message: str = None
-    subject: str = field(init=False)
-    template: str = field(init=False)
+    text_message: str = field(init=False, default=None)
+    subject: str = field(init=False, default=None)
+    template: str = field(init=False, default=None)
 
     def asdict(self) -> dict:
         return {
