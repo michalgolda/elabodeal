@@ -1,20 +1,20 @@
 from elabodeal.api.endpoints import Endpoint
-from elabodeal.api.serializers import UpdatePublisherSettingsSerializer
-
-from elabodeal.models import Publisher
+from elabodeal.api.serializers import UpdatePublisherSettingsRequestSerializer
+from elabodeal.api.interactors import UpdatePublisherSettingsInteractor
 
 
 class UpdatePublisherSettingsEndpoint(Endpoint):
     def put(self, request):
-        serializer = UpdatePublisherSettingsSerializer(
+        serializer = UpdatePublisherSettingsRequestSerializer(
             data=request.data
         )
         serializer.is_valid(raise_exception=True)
 
-        publisher = request.user.publisher
-        options = serializer.data
-
-        Publisher.objects.update_settings(publisher, options)
+        with UpdatePublisherSettingsInteractor() as interactor:
+            interactor.execute(
+                request.user,
+                serializer.data
+            )
 
         return self.respond(status=200)
 
