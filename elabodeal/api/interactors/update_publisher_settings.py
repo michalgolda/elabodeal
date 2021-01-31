@@ -3,6 +3,9 @@ from elabodeal.api.exceptions import ErrorRegistry
 
 
 class UpdatePublisherSettingsInteractor(Interactor):
+    def __init__(self, publisher_repo: object):
+        self.publisher_repo = publisher_repo
+
     def execute(self, user: object, options: dict) -> None:
         publisher = user.publisher
         if not publisher:
@@ -19,4 +22,4 @@ class UpdatePublisherSettingsInteractor(Interactor):
                 has_changed = True
 
         if has_changed:
-            publisher.save()
+            self.publisher_repo.save(publisher)

@@ -9,16 +9,20 @@ from elabodeal.api.exceptions import ErrorRegistry
 
 
 class ResendConfirmEmailInteractor(Interactor):
+    def __init__(self, user_repo: object, code_repo: object):
+        self.user_repo = user_repo
+        self.code_repo = code_repo
+
     def execute(self, email: str) -> None:
-        existing_user = User.objects.filter(email=email).first()
+        existing_user = self.user_repo.find_by_email(email)
         if not existing_user:
             raise ErrorRegistry.RESEND_CONFIRM_EMAIL(
                 f'Not found user for that {email} email address'
             )
 
-        existing_code = VerificationCode.objects.filter(email=email).first()
+        existing_code = self.code_repo.find_by_email(email)
         if existing_code:
-            existing_code.delete()
+            self.code_repo.delete(existing_code)
 
         new_verification_code = VerificationCode.objects.create_code(
             email=email

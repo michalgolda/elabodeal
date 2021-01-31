@@ -3,6 +3,9 @@ from elabodeal.api.exceptions import ErrorRegistry
 
 
 class UpdateUserSettingsInteractor(Interactor):
+    def __init__(self, user_repo: object):
+        self.user_repo = user_repo
+
     def execute(self, user: object, options: dict) -> None:
         has_changed = False
 
@@ -16,4 +19,4 @@ class UpdateUserSettingsInteractor(Interactor):
                 has_changed = True
 
         if has_changed:
-            user.save()
+            self.user_repo.save(user)
