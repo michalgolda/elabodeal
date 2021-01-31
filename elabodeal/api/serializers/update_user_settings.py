@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
 
-class UpdateUserSettingsSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=20)
-    email = serializers.EmailField()
+class UpdateUserSettingsRequestSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=20, required=True)
+    email = serializers.EmailField(required=True)
