@@ -1,8 +1,8 @@
 from django.urls import path
 
 from elabodeal.api.endpoints import (
-    ConfirmEmailVerificationCodeEndpoint,
-    ResendEmailVerificationCodeEndpoint,
+    ConfirmEmailEndpoint,
+    ResendConfirmEmailEndpoint,
     UpdateUserSettingsEndpoint,
     UpdatePublisherSettingsEndpoint
 )
@@ -12,12 +12,12 @@ app_name = 'api'
 urlpatterns = [
     path(
         'verify/email/',
-        ConfirmEmailVerificationCodeEndpoint.as_view(),
+        ConfirmEmailEndpoint.as_view(),
         name='confirm-email-verification-code'
     ),
     path(
         'verify/email/resend/',
-        ResendEmailVerificationCodeEndpoint.as_view(),
+        ResendConfirmEmailEndpoint.as_view(),
         name='resend-email-verification-code'
     ),
     path(
