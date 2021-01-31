@@ -103,7 +103,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    'EXCEPTION_HANDLER': 'elabodeal.api.exceptions.exception_handler'
 }
 
 CELERY_IMPORTS = 'elabodeal.celery.tasks'
