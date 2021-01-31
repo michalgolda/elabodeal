@@ -1,6 +1,7 @@
 from elabodeal.api.endpoints import Endpoint
 from elabodeal.api.serializers import UpdatePublisherSettingsRequestSerializer
 from elabodeal.api.interactors import UpdatePublisherSettingsInteractor
+from elabodeal.api.repositories import PublisherRepository
 
 
 class UpdatePublisherSettingsEndpoint(Endpoint):
@@ -10,7 +11,11 @@ class UpdatePublisherSettingsEndpoint(Endpoint):
         )
         serializer.is_valid(raise_exception=True)
 
-        with UpdatePublisherSettingsInteractor() as interactor:
+        publisher_repository = PublisherRepository()
+
+        with UpdatePublisherSettingsInteractor(
+            publisher_repo=publisher_repository
+        ) as interactor:
             interactor.execute(
                 request.user,
                 serializer.data
