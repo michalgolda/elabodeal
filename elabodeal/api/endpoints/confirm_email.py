@@ -3,6 +3,7 @@ from django.utils import timezone
 from elabodeal.api.endpoints import Endpoint
 from elabodeal.api.serializers import ConfirmEmailRequestSerializer
 from elabodeal.api.interactors import ConfirmEmailInteractor
+from elabodeal.api.repositories import UserRepository, VerificationCodeRepository
 
 
 class ConfirmEmailEndpoint(Endpoint):
@@ -12,7 +13,13 @@ class ConfirmEmailEndpoint(Endpoint):
         )
         serializer.is_valid(raise_exception=True)
 
-        with ConfirmEmailInteractor() as interactor:
+        code_repository = VerificationCodeRepository()
+        user_repository = UserRepository()
+
+        with ConfirmEmailInteractor(
+            user_repo=user_repository,
+            code_repo=code_repository
+        ) as interactor:
             interactor.execute(**serializer.data)       
 
         return self.respond(status=200)
