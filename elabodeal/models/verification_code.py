@@ -17,7 +17,6 @@ class VerificationCodeManager(models.Manager):
 			code=code,
 			expiration_at=expiration_datetime
 		)
-		verification_code.save()
 
 		return verification_code
 
