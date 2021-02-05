@@ -4,7 +4,8 @@ from elabodeal.api.endpoints import (
     ConfirmEmailEndpoint,
     ResendConfirmEmailEndpoint,
     UpdateUserSettingsEndpoint,
-    UpdatePublisherSettingsEndpoint
+    UpdatePublisherSettingsEndpoint,
+    SaveCartEndpoint
 )
 
 app_name = 'api'
@@ -29,5 +30,10 @@ urlpatterns = [
         'users/me/settings/publisher/',
         UpdatePublisherSettingsEndpoint.as_view(),
         name='update-publisher-settings'
+    ),
+    path(
+        'users/me/carts/',
+        SaveCartEndpoint.as_view(),
+        name='save-cart'
     )
 ]
