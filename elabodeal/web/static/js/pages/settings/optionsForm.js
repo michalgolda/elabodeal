@@ -1,4 +1,6 @@
-import alert from '../../alert';
+import Alert from '../../alert';
+import { ALERT_MESSAGES } from '../../constants';
+
 import { DisableEditOptionMode, ToggleEditOptionMode } from './editOptionMode';
 
 import httpClient from '../../utils/httpClient';
@@ -98,15 +100,20 @@ export default class OptionsFormUIComponent {
                 var data = Object.fromEntries( formData );
 
                 httpClient.put( actionURL, data )
-                    .then( ( response ) => {
+                    .then( response => {
                         this.helpers.updateNavigationUsername( data.username );
 
-                        alert( 'Ustawienia zostały pomyślnie zapisane', 'success' );
+                        Alert.success( ALERT_MESSAGES.SETTINGS_SAVE_SUCCESS );
                     } )
-                    .catch( ( error ) => {
-                        this.helpers.showInputErrors( error );
-
-                        alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
+                    .catch( error => {
+                        if ( error.response ) {
+                            switch ( error.response.status ) {
+                                case 400:
+                                    Alert.info( ALERT_MESSAGES.BAD_REQUEST );
+                                default:
+                                    Alert.error( ALERT_MESSAGES.SERVER_ERROR );
+                            }
+                        }
                     } )
             },
             handleFormKeypress: ( e ) => {

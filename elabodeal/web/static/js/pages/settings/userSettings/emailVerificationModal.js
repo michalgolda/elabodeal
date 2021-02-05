@@ -1,4 +1,6 @@
-import alert from '../../../alert';
+import Alert from '../../../alert';
+import { ALERT_MESSAGES } from '../../../constants';
+
 import { setCodeInputValue } from '../../../utils/setCodeInputValue';
 
 import httpClient from '../../../utils/httpClient';
@@ -87,17 +89,24 @@ export default class EmailVerificationModalUIComponent {
 
                 httpClient.post( actionURL, data )
                     .then( response => {
-                        alert( 'Weryfikacja powiodła się', 'success' );
+                        Alert.success( ALERT_MESSAGES.CONFIRM_EMAIL_SUCCESS );
                         
                         this.elements.modal.remove();
                         this.elements.infoAboutEmailVerification.remove();
 
-                        window.location.reload();
+                        const timer = setTimeout( window.location.reload, 2000 );                        
                     } )
                     .catch( error => {
-                        alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
-                        
-                        this.helpers.showCodeInputElementsError();
+                        if ( error.response ) {
+                            switch( error.response.status ) {
+                                case 400:
+                                    Alert.info( ALERT_MESSAGES.BAD_REQUEST );
+                                    
+                                    break;
+                                default:
+                                    Alert.error( ALERT_MESSAGES.SERVER_ERROR );
+                            }
+                        }
                     } )
             },
             handleResendCode: ( e ) => {
@@ -107,12 +116,13 @@ export default class EmailVerificationModalUIComponent {
 
                 httpClient.post( actionURL, data )
                     .then( response => {
-                        alert( 'Nowy kod został wysłany', 'success' );
+                        Alert.success( ALERT_MESSAGES.RESEND_CONFIRM_EMAIL_SUCCESS );
                         
                         this.helpers.disableResendCodeBtn();
                     } )
                     .catch( error => {
-                        alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
+                        if ( error.response )
+                            Alert.error( ALERT_MESSAGES.SERVER_ERROR );
                     } )
             }
         }

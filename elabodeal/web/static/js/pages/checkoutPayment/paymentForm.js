@@ -1,5 +1,7 @@
-import alert from '../../alert';
+import Alert from '../../alert';
+import { ALERT_MESSAGES } from '../../constants';
 
+import httpClient from '../../utils/httpClient';
 
 export default class PaymentFormUIComponent {
     constructor() {
@@ -42,18 +44,13 @@ export default class PaymentFormUIComponent {
             handleSubmitPayment: ( e ) => {
                 e.preventDefault();
 
-                var formData = this.elements.form.serializeArray();
                 var actionURL = this.elements.form.attr( 'action' );
+                var formData = new FormData( this.elements.form.get( 0 ) );
+                var data = Object.fromEntries( formData );
 
-                $.ajax( {
-                    url: actionURL,
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFtoken': this.constants.csrfToken
-                    },
-                    data: formData,
-                    success: ( result ) => {
-                        var data = result.data;
+                httpClient.post( actionURL, data )
+                    .then( response => {
+                        var data = response.data;
                   
                         var clientSecret = data.client_secret;
 
@@ -65,11 +62,11 @@ export default class PaymentFormUIComponent {
                         };
 
                         this.handlers.handleConfirmCardPayment( clientSecret, billingDetailsData  );
-                    },
-                    error: () => {
-                        alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
-                    }
-                } );
+                    } )
+                    .catch( error => {
+                        if ( error.response )
+                            Alert.error( ALERT_MESSAGES.SERVER_ERROR );
+                    } )
             },
             handleConfirmCardPayment: ( clientSecret, billingDetailsData ) => {
                 this.dependencies.stripe
@@ -82,7 +79,7 @@ export default class PaymentFormUIComponent {
                     .then( ( result ) => {
                         if ( result.paymentIntent )
                             window.location = this.elements.form.attr( 'success-url' );
-                        else alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
+                        else Alert.error( ALERT_MESSAGES.SERVER_ERROR );
                     } )
             }
         }
@@ -90,7 +87,6 @@ export default class PaymentFormUIComponent {
 
     loadConstants() {
         return {
-            csrfToken: $( 'meta[name="csrf_token"]' ).attr( 'content' ),
             stripePublicKey: $( 'meta[name="stripe_public_key"]' ).attr( 'content' )
         }
     }

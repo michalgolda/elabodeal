@@ -1,10 +1,11 @@
-import alert from '../../alert';
+import Alert from '../../alert';
+import { ALERT_MESSAGES } from '../../constants';
 
+import httpClient from '../../utils/httpClient';
 
 export default class ShareCartModalUIComponent {
     constructor() {
         this.elements = this.loadElements();
-        this.constants = this.loadConstants();
         this.helpers = this.loadHelpers();
         this.handlers = this.loadHandlers();
 
@@ -33,12 +34,6 @@ export default class ShareCartModalUIComponent {
         }
     }
 
-    loadConstants() {
-        return {
-            csrfToken: $( 'meta[name="csrf_token"]' ).attr( 'content' )
-        }
-    }
-
     loadHelpers() {
         return {
             prepareSharedCartURL: ( endpoint ) => {
@@ -52,18 +47,13 @@ export default class ShareCartModalUIComponent {
             handleSubmitShare: ( e ) => {
                 e.preventDefault();
 
-                var formData = this.elements.form.serializeArray();
                 var actionURL = this.elements.form.attr( 'action' );
+                var formData = new FormData( this.elements.form.get( 0 ) );
+                var data = Object.fromEntries( formData );
 
-                $.ajax( {
-                    url: actionURL,
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFtoken': this.constants.csrfToken
-                    },
-                    data: formData,
-                    success: ( response ) => {
-                        alert( 'Koszyk został pomyślnie udostępniony.', 'success' );
+                httpClient.post( actionURL, data )
+                    .then( response => {
+                        Alert.success( ALERT_MESSAGES.CART_SAVE_SUCCESS );
 
                         var url = this.helpers.prepareSharedCartURL( response.data.url );
                         var urlInput = this.elements.sharedDetails.children( 'input' );
@@ -85,11 +75,11 @@ export default class ShareCartModalUIComponent {
 
                         this.elements.form.hide();
                         this.elements.sharedDetails.show();
-                    },
-                    error: () => {
-                        alert( 'Coś poszło nie tak. Spróbuj ponownie.', 'error' );
-                    }
-                } );
+                    } )
+                .catch( error => {
+                    if ( error.response )
+                        Alert.error( ALERT_MESSAGES.SERVER_ERROR );
+                } )
             }
         }
     }
