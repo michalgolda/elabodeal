@@ -1,8 +1,8 @@
 #alert-container {
 	right: .5rem;
-	bottom: .5rem;
+	bottom: 0;
 	position: fixed;
-	z-index: 9998;
+	z-index: 999;
 
 	.alert {
 		width: 400px;
@@ -28,8 +28,8 @@
 				cursor: pointer;
 			}
 		}
-	
-		&__icon {
+
+		&__title:before {
 			padding-right: .5rem;
 		}
 	
@@ -47,37 +47,40 @@
 	
 		&-success {
 			border-left: 5px solid #55FF8F;
-	
-			.alert__icon {
-				color: #55FF8F;
-			}
-	
+
 			.alert__title {
 				color: #55FF8F;
+				
+				&:before {
+					font-family: FontAwesome;
+					content: '\f058'
+				}
 			}
 		}
 	
 		&-error {
 			border-left: 5px solid $color-red;
 	
-			.alert__icon {
-				color: $color-red;
-			}
-	
 			.alert__title {
 				color: $color-red;
+
+				&:before {
+					font-family: FontAwesome;
+					content: '\f06a'
+				}
 			}
 		}
 	
 		&-info {
 			border-left: 5px solid $color-orange;
-	
-			.alert__icon {
-				color: $color-orange;
-			}
-	
+
 			.alert__title {
 				color: $color-orange;
+
+				&:before {
+					font-family: FontAwesome;
+					content: '\f059'
+				}
 			}
 		}
 	}
