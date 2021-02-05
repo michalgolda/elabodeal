@@ -47,7 +47,7 @@
                         {% if user.email_verified %}
                             <p class="option__information" style="margin-bottom: .5rem;">Po zmianie adresu email, w najbliższym czasie będzie wymagana weryfikacjia.</p>
                             <div class="option__body">
-                                <input class="js-edit-option js-option-input" type="text" name="email" value="{{ user.email }}" readonly />
+                                <input class="js-edit-option js-option-input" type="email" name="email" value="{{ user.email }}" readonly />
                                 <button class="btn btn__primary js-edit-option" type="button"></button>
                                 <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
                                 <button class="btn btn__danger js-cancel-edit-option" type="button" style="display: none">
