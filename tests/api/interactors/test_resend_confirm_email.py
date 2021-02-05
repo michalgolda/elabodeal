@@ -30,6 +30,7 @@ class ResendConfirmEmailInteractorTest(BaseTestCase):
             ) as interactor:
                 interactor.execute(email='test')
 
+        self.assertEqual( self.mock_code_repo.save.called, True )
         self.assertEqual(len(outbox), 1)
 
     def test_execute_if_user_does_not_exist(self):

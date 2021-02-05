@@ -27,6 +27,8 @@ class ResendConfirmEmailInteractor(Interactor):
         new_verification_code = VerificationCode.objects.create_code(
             email=email
         )
+        
+        self.code_repo.save( new_verification_code )
 
         confirm_change_email = ConfirmChangeEmail(
             to=email,
