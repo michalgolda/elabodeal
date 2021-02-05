@@ -29,12 +29,18 @@ class UpdateUserSettingsException(LogicException):
     type = 'update_user_settings_error'
 
 
+class SaveCartException(LogicException):
+    status_code = 400
+    type = 'save_cart_error'
+
+
 class ErrorRegistry:
     LOGIC = LogicException
     CONFIRM_EMAIL = ConfirmEmailException
     RESEND_CONFIRM_EMAIL = ResendConfirmEmailException
     UPDATE_PUBLISHER_SETTINGS = UpdatePublisherSettingsException
     UPDATE_USER_SETTINGS = UpdateUserSettingsException
+    SAVE_CART = SaveCartException
 
 
 def exception_handler(exc, context):
