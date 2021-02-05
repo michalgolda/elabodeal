@@ -8,12 +8,12 @@ from .salesmanager import (SalesManagerIndexView,
 from .product_detail import ProductDetailView
 from .search_results import SearchResultsView
 from .cart import (CartView, CartAddItemAction,
-                   CartDeleteItemAction, CartSaveAjaxView,
+                   CartDeleteItemAction,
                    CartCheckoutDeliveryView, CartCheckoutPaymentView,
                    CartCheckoutPaymentAjaxView, CartCheckoutPaymentSuccessView)
 from .email_verification import EmailVerificationView
-from .saved_carts import SavedCartsView, SavedCartShareAjaxView
-from .saved_cart_detail import SavedCartDetailView
+# from .saved_carts import SavedCartsView, SavedCartShareAjaxView
+# from .saved_cart_detail import SavedCartDetailView
 from .purchased_products import PurchasedProductsView
 from .shared_cart import SharedCartView
 from .user_settings import UserSettingsView

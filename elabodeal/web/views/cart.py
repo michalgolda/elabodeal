@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 
 from elabodeal.web.views import BaseView, BaseAjaxView
 from elabodeal.web.forms import DeliveryForm
-from elabodeal.models import Product, Cart, CartItem, PurchasedProduct, User
+from elabodeal.models import Product, Cart, PurchasedProduct, User
 from elabodeal.utils import SessionCartManager
 
 
@@ -237,33 +237,4 @@ class CartDeleteItemAction(BaseView):
 		request.session['cart'] = cart.to_dict()
 
 		return redirect('web:cart')
-
-
-class CartSaveAjaxView(BaseAjaxView):
-	auth_required = True
-
-	def post(self, request):
-		title = request.POST.get('title')
-		description = request.POST.get('description')
-
-		if not title or not description:
-			return self.respond(message='BadRequest',
-								status=400)
-
-		cart = SessionCartManager(request)
-		
-		user = request.user
-
-		saved_cart = Cart(user=user,
-						  title=title,
-						  description=description)
-		saved_cart.save()
-		
-		for item in cart.items:
-			product = Product.objects.filter(id=item.id).first()
-
-			saved_cart.items.create(product=product)
-
-		return self.respond(message="Success",
-							status=201)
 
