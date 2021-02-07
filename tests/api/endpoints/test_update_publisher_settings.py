@@ -1,20 +1,19 @@
 from tests import APITestCase
 from django.urls import reverse
-
 from elabodeal.models import Publisher, User
 
 
-class TestUpdatePublisherSettingsEndpoint(APITestCase):
-    def test_simple_response(self):
+class UpdatePublisherSettingsEndpointTest(APITestCase):
+    def test_simple(self):
         user = User.objects.create_user(
-            email='xyz@xyz.pl',
-            username='xyz',
-            password='xyz'
+            email='test@test.pl',
+            username='test',
+            password='test'
         )
 
         self.client.login(
-            email=user.email,
-            password='xyz'
+            email='test@test.pl',
+            password='test'
         )
         
         publisher = Publisher.objects.create_publisher(
@@ -27,27 +26,24 @@ class TestUpdatePublisherSettingsEndpoint(APITestCase):
         
         user.publisher = publisher
         user.save()
-    
-        url = reverse(
-            'api:update-publisher-settings'
-        )
-
-        data = {
-            'first_name': 'test',
-            'last_name': publisher.last_name,
-            'account_number': publisher.account_number,
-            'swift': publisher.swift,
-            'sell_notification': publisher.sell_notification
-        }
 
         response = self.client.put(
-            url, 
-            data, 
+            reverse('api:update-publisher-settings'), 
+            data=dict(
+                first_name=publisher.first_name,
+                last_name=publisher.last_name,
+                account_number=publisher.account_number,
+                swift=publisher.swift,
+                sell_notification=publisher.sell_notification
+            ),
             format='json'
         )
 
         self.assertEqual(response.status_code, 200)
 
-        updated_publisher = Publisher.objects.filter(id=publisher.id).first()
+    def test_if_user_is_not_authenticated(self):
+        response = self.client.put(
+            reverse('api:update-publisher-settings')
+        )
 
-        self.assertEqual(updated_publisher.first_name, 'test')
+        self.assertEqual(response.status_code, 401)
