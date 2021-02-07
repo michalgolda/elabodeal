@@ -3,14 +3,13 @@ from elabodeal.web.views import (CartAddItemAction, CartCheckoutDeliveryView,
                                  CartCheckoutPaymentAjaxView,
                                  CartCheckoutPaymentSuccessView,
                                  CartCheckoutPaymentView, CartDeleteItemAction,
-                                 CartSaveAjaxView, CartView,
+                                 CartView,
                                  EmailVerificationView, IndexView, LoginView,
                                  LogoutView, ProductDetailView,
                                  PublisherSettingsView, PurchasedProductsView,
                                  RegisterView, SalesManagerAddProductView,
                                  SalesManagerIndexView, SalesManagerStartView,
-                                 SavedCartDetailView, SavedCartShareAjaxView,
-                                 SavedCartsView, SearchResultsView,
+                                 SearchResultsView,
                                  SharedCartView, UserSettingsView)
 
 app_name = 'web'
@@ -31,7 +30,7 @@ urlpatterns = [
 		path('ajax/', include([
 			path('add-item/', CartAddItemAction.as_view(), name='cart-action-add-item'),
 			path('delete-item/', CartDeleteItemAction.as_view(), name='cart-action-delete-item'),
-			path('save/', CartSaveAjaxView.as_view(), name='save-cart'),
+			# path('save/', CartSaveAjaxView.as_view(), name='save-cart'),
 		])),
 		path('checkout/', include([
 			path('d/', CartCheckoutDeliveryView.as_view(), name='cart-checkout-delivery'),
@@ -44,13 +43,13 @@ urlpatterns = [
 			])),
 		])),
 	])),
-	path('sc/', include([
-		path('', SavedCartsView.as_view(), name='saved-carts'),
-		path('<int:id>/', SavedCartDetailView.as_view(), name='saved-cart-detail'),
-		path('ajax/', include([
-			path('share/', SavedCartShareAjaxView.as_view(), name='saved-cart-share'),
-		])),
-	])),
+	# path('sc/', include([
+	# 	path('', SavedCartsView.as_view(), name='saved-carts'),
+	# 	path('<int:id>/', SavedCartDetailView.as_view(), name='saved-cart-detail'),
+	# 	path('ajax/', include([
+	# 		path('share/', SavedCartShareAjaxView.as_view(), name='saved-cart-share'),
+	# 	])),
+	# ])),
 	path('m/', include([
 		path('', SalesManagerIndexView.as_view(), name='salesmanager'),
 		path('p/', SalesManagerAddProductView.as_view(), name='salesmanager-add-product'),
