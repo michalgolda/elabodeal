@@ -4,3 +4,4 @@ from .verification_code import VerificationCodeRepository
 from .publisher import PublisherRepository
 from .cart import CartRepository
 from .product import ProductRepository
+from .shared_cart import SharedCartRepository
