@@ -25,3 +25,5 @@ class SaveCartEndpoint(Endpoint):
 				user=request.user,
 				**serializer.data
 			)
+
+		return self.respond(status=200)
