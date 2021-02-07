@@ -4,3 +4,4 @@ from .resend_confirm_email import ResendConfirmEmailInteractor
 from .update_publisher_settings import UpdatePublisherSettingsInteractor
 from .update_user_settings import UpdateUserSettingsInteractor
 from .save_cart import SaveCartInteractor
+from .share_cart import ShareCartInteractor
