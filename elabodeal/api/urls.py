@@ -5,7 +5,8 @@ from elabodeal.api.endpoints import (
     ResendConfirmEmailEndpoint,
     UpdateUserSettingsEndpoint,
     UpdatePublisherSettingsEndpoint,
-    SaveCartEndpoint
+    SaveCartEndpoint,
+    ShareCartEndpoint
 )
 
 app_name = 'api'
@@ -35,5 +36,10 @@ urlpatterns = [
         'users/me/carts/',
         SaveCartEndpoint.as_view(),
         name='save-cart'
+    ),
+    path(
+        'users/me/carts/<int:id>/share/',
+        ShareCartEndpoint.as_view(),
+        name='share-cart'
     )
 ]
