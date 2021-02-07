@@ -7,6 +7,9 @@ from elabodeal.api.repositories import UserRepository, VerificationCodeRepositor
 
 
 class ConfirmEmailEndpoint(Endpoint):
+    authentication_classes = []
+    permission_classes = []
+
     def post(self, request):
         serializer = ConfirmEmailRequestSerializer(
             data=request.data
