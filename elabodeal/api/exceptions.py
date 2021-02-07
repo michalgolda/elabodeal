@@ -34,6 +34,11 @@ class SaveCartException(LogicException):
     type = 'save_cart_error'
 
 
+class ShareCartException(LogicException):
+    status_code = 400
+    type = 'share_cart_error'
+
+
 class ErrorRegistry:
     LOGIC = LogicException
     CONFIRM_EMAIL = ConfirmEmailException
@@ -41,6 +46,7 @@ class ErrorRegistry:
     UPDATE_PUBLISHER_SETTINGS = UpdatePublisherSettingsException
     UPDATE_USER_SETTINGS = UpdateUserSettingsException
     SAVE_CART = SaveCartException
+    SHARE_CART = ShareCartException
 
 
 def exception_handler(exc, context):
