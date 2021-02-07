@@ -1,39 +1,35 @@
 from tests import APITestCase
 from django.urls import reverse
-
 from elabodeal.models import User
 
 
-class TestUpdateUserSettingsEndpoint(APITestCase):
-    def test_simple_response(self):
+class UpdateUserSettingsEndpointTest(APITestCase):
+    def test_simple(self):
         user = User.objects.create_user(
-            email='xyz@xyz.pl',
-            username='xyz',
-            password='xyz'
+            email='test@test.pl',
+            username='test',
+            password='test'
         )
 
         self.client.login(
-            email=user.email,
-            password='xyz'
+            email='test@test.pl',
+            password='test'
         )
-
-        url = reverse(
-            'api:update-user-settings'
-        )
-
-        data = {
-            'username': 'test',
-            'email': user.email
-        }
-
+        
         response = self.client.put(
-            url, 
-            data, 
+            reverse('api:update-user-settings'),
+            data=dict(
+                username=user.username,
+                email=user.email
+            ),
             format='json'
         )
 
         self.assertEqual(response.status_code, 200)
 
-        updated_user = User.objects.filter(id=user.id).first()
+    def test_if_user_is_not_authenticated(self):
+        response = self.client.put(
+            reverse('api:update-user-settings')
+        )
 
-        self.assertEqual(updated_user.username, 'test')
+        self.assertEqual(response.status_code, 401)
