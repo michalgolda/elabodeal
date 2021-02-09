@@ -1,5 +1,8 @@
 from .base import *
 
+
+SECRET_KEY = 'im@-i-&3*(0(w46gjp%3770$8j+y%9cwzkrram)sb@_o^6(1@('
+
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
