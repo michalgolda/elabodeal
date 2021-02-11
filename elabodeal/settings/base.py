@@ -2,7 +2,7 @@ from pathlib import Path
 from decouple import config
 
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'im@-i-&3*(0(w46gjp%3770$8j+y%9cwzkrram)sb@_o^6(1@('
 
 BASE_DIR = str(Path(__file__).parents[2])
 
