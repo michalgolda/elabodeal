@@ -70,6 +70,10 @@ module.exports = {
 	optimization: {
 		runtimeChunk: {
 			name: 'runtime'
+		},
+		splitChunks: {
+			name: 'vendor',
+			chunks: 'all'
 		}
 	},
 	watch: true
