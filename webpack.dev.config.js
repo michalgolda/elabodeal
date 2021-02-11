@@ -3,39 +3,40 @@ const webpack = require( 'webpack' );
 
 // Plugins
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-	
+
+// Entrances
+const pageEntrances = require('./elabodeal/web/static/js/pages');
 
 const paths = {
-	'dist': path.resolve(
-		__dirname, 
+	dist: path.resolve(
+		__dirname,
 		'elabodeal/web/static/dist/'
 	),
-	'mainEntrances': [
-		path.resolve(
-			__dirname, 
-			'elabodeal/web/static/js/main.js'
-		),
-		path.resolve(
-			__dirname,
-			'elabodeal/web/static/styles/main.scss'
-		),
-	]
-}
+	globals: path.resolve(
+		__dirname,
+		'elabodeal/web/static/js/globals/index.js'
+	),
+	styles: path.resolve(
+		__dirname,
+		'elabodeal/web/static/styles/main.scss'
+	),
+	pages: pageEntrances
+};
 
 module.exports = {
 	mode: 'development',
 	devtool: 'cheap-module-eval-source-map',
 	entry: {
-		app: paths.mainEntrances
+		...paths.pages,
+		globals: paths.globals,
+		styles: paths.styles
 	},
 	output: {
-		filename: 'main.js',
+		filename: '[name].bundle.js',
 		path: paths.dist
 	},
 	plugins: [
-		new MiniCssExtractPlugin({
-			filename: 'main.css',
-		}),
+		new MiniCssExtractPlugin(),
 	],
 	module: {
 		rules: [
@@ -65,6 +66,11 @@ module.exports = {
 				}
 			}
 		],
+	},
+	optimization: {
+		runtimeChunk: {
+			name: 'runtime'
+		}
 	},
 	watch: true
 };

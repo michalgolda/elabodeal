@@ -5,6 +5,10 @@
 
 {% block page-id %}p-user-settings{% endblock %} 
 {% block page-class %}p-settings{% endblock %}
+{% block page-scripts %}
+    <scirpt defer src="{% static 'dist/settings.bundle.js' %}"></scirpt>
+    <script defer src="{% static 'dist/userSettings.bundle.js' %}"></script>
+{% endblock %}
 
 {% block body %}
     <!-- Modals -->

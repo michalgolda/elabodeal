@@ -5,6 +5,9 @@
 
 {% block page-id %}p-publisher-settings{% endblock %}
 {% block page-class %}p-settings{% endblock %}
+{% block page-scripts %}
+    <script defer src="{% static 'dist/settings.bundle.js' %}"></script>
+{% endblock %}
 
 {% block body %}
     {% include 'components/navigation.html' %}
