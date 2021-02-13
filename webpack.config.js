@@ -3,6 +3,7 @@ const webpack = require( 'webpack' );
 
 // Plugins
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 // Entrances
 const pageEntrances = require('./elabodeal/web/static/js/pages');
@@ -35,6 +36,7 @@ module.exports = {
 	},
 	plugins: [
 		new MiniCssExtractPlugin(),
+		new VueLoaderPlugin()
 	],
 	module: {
 		rules: [
@@ -62,6 +64,10 @@ module.exports = {
 				use: {
 					loader: "babel-loader"
 				}
+			},
+			{
+				test: /\.vue$/,
+				loader: 'vue-loader'
 			}
 		],
 	},

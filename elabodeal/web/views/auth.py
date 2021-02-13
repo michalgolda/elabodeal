@@ -11,6 +11,9 @@ class LoginView(BaseView):
 		return LoginForm(request.POST if request else request)
 
 	def get(self, request):
+		if request.user.is_authenticated:
+			return redirect('web:index')
+
 		form = self.get_form()
 
 		context = {'form': form}
@@ -59,13 +62,14 @@ class RegisterView(BaseView):
 		return RegisterForm(request.POST if request else request)
 
 	def get(self, request):
+		if request.user.is_authenticated:
+			return redirect('web:index')
+
 		form = self.get_form()
 		
 		context = {'form': form}
 
-		return self.respond('auth/register.html', 
-							request, 
-							context)
+		return self.respond('auth/register.html', request, context)
 
 	def post(self, request):
 		form = self.get_form(request)
@@ -81,6 +85,4 @@ class RegisterView(BaseView):
 
 		context = {'form': form}
 
-		return self.respond('auth/register.html', 
-							request, 
-							context)
+		return self.respond('auth/register.html', request, context)
