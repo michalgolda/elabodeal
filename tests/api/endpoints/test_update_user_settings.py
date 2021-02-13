@@ -19,8 +19,8 @@ class UpdateUserSettingsEndpointTest(APITestCase):
         response = self.client.put(
             reverse('api:update-user-settings'),
             data=dict(
-                username=user.username,
-                email=user.email
+                username='test123',
+                email='test123@test.pl'
             ),
             format='json'
         )
