@@ -1,6 +1,8 @@
 from django import forms
 
 from elabodeal.models import User, VerificationCode
+from elabodeal.emails import ConfirmNewUserEmail
+from elabodeal.celery.tasks import send_email
 
 
 class LoginForm(forms.Form):
@@ -57,7 +59,8 @@ class RegisterForm(forms.Form):
 		email = self.cleaned_data.get('email')
 	
 		user = User.objects.filter(email=email).first()
-	
+		print(user)
+
 		if user:
 			self.add_error(
 				'email', 
@@ -72,4 +75,20 @@ class RegisterForm(forms.Form):
 
 		User.objects.create_user(email, username, password)
 
-		VerificationCode.objects.generate(email)
+		verification_code = VerificationCode.objects.create_code(
+			email=email
+		)
+		verification_code.save()
+
+		confirm_new_user_email = ConfirmNewUserEmail(
+			to=email,
+			context=dict(
+				code=verification_code.code
+			)
+		)
+
+		send_email(
+			email=confirm_new_user_email.asdict()
+		)
+
+

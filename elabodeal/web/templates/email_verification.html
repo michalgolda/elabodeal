@@ -4,6 +4,9 @@
 {% block title-description %}Weryfikacja konta{% endblock %}
 
 {% block page-id %}p-email-verification{% endblock %}
+{% block page-scripts %}
+	<script defer src="{% static 'dist/emailVerification.bundle.js' %}"></script>
+{% endblock  %}
 
 {% block body %}
 	<div class="wrapper flex-center">
@@ -17,21 +20,13 @@
 			<p class="information">
 				Na podany email <strong>{{ email }}</strong> został wysłany kod weryfikacyjny.
 			</p>
-			<form class="form" method="POST" action="{% url 'web:email-verification' %}" autocomplete="off">
-				{% csrf_token %}
-				
-				{% if form.errors %}
-					{% for error in form.code.errors %}
-						<p class="form__error">{{ error }}</p>
-					{% endfor %}
-				{% endif %}
-
-				<div class="form__section">
-					{{ form.code }}
-					<button class="btn btn__primary" type="submit">Zweryfikuj</button>
-					<button class="btn btn__primary" disabled>Wyślij kod ponownie</button>
-				</div>
-			</form>
+			<div
+				id="js-mount-form-component"
+				data-email="{{ email }}"
+				data-login-page="{% url 'web:login' %}"
+				data-confirm-action="{% url 'api:confirm-email-verification-code' %}"
+				data-resend-action="{% url 'api:resend-email-verification-code' %}"
+			></div>
 		</div>
 	</div>
 	{% include 'components/small-footer-light.html' %}

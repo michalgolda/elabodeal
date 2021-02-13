@@ -24,5 +24,11 @@ module.exports = {
             __dirname,
             'cart/index.js'
         )
+    ],
+    emailVerification: [
+        path.resolve(
+            __dirname,
+            'emailVerification/index.js'
+        )
     ]
 }

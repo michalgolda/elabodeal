@@ -4,11 +4,11 @@ from tests import BaseTestCase
 from django.test import override_settings
 from django.core import mail
 
-from elabodeal.api.interactors import ResendConfirmEmailInteractor
+from elabodeal.api.interactors import ResendConfirmChangeEmailInteractor
 from elabodeal.api.exceptions import ErrorRegistry
 
 
-class ResendConfirmEmailInteractorTest(BaseTestCase):
+class ResendConfirmChangeEmailInteractorTest(BaseTestCase):
     
     @mock.patch('elabodeal.api.repositories.UserRepository')
     @mock.patch('elabodeal.api.repositories.VerificationCodeRepository')
@@ -26,7 +26,7 @@ class ResendConfirmEmailInteractorTest(BaseTestCase):
         self.mock_user_repo.find_by_email.return_value = True
         self.mock_code_repo.find_by_email.return_value = None
         
-        with ResendConfirmEmailInteractor(
+        with ResendConfirmChangeEmailInteractor(
                 user_repo=self.mock_user_repo,
                 code_repo=self.mock_code_repo
             ) as interactor:
@@ -39,7 +39,7 @@ class ResendConfirmEmailInteractorTest(BaseTestCase):
         self.mock_user_repo.find_by_email.return_value = None
 
         with self.assertRaises(ErrorRegistry.RESEND_CONFIRM_EMAIL):
-            with ResendConfirmEmailInteractor(
+            with ResendConfirmChangeEmailInteractor(
                 user_repo=self.mock_user_repo,
                 code_repo=self.mock_code_repo
             ) as interactor:
@@ -50,7 +50,7 @@ class ResendConfirmEmailInteractorTest(BaseTestCase):
         self.mock_user_repo.find_by_email.return_value = True
         self.mock_code_repo.find_by_email.return_value = True
 
-        with ResendConfirmEmailInteractor(
+        with ResendConfirmChangeEmailInteractor(
             user_repo=self.mock_user_repo,
             code_repo=self.mock_code_repo
         ) as interactor:

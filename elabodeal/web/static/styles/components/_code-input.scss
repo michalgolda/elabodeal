@@ -1,0 +1,36 @@
+.code {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__group {
+        display: grid;
+        grid-template-columns: 46px 46px 46px;
+        column-gap: .5rem;
+
+        &-separator {
+            width: 20px;
+            height: 1px;
+            background: $color-black;
+            margin-left: .5rem;
+            margin-right: .5rem;
+        }
+    }
+
+    &__input {
+        width: 40px;
+        height: 46px;
+        padding-left: 0;
+        padding-right: 0;
+        text-align: center;
+        border-width: 2px;
+        font-size: $font-size-large;
+    }
+
+    &-invalid {
+        .code__input {
+            border: 2px solid $color-red;
+        }
+    }
+}

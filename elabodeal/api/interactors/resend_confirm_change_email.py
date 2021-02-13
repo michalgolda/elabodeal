@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from elabodeal.emails import ConfirmNewUserEmail
+from elabodeal.emails import ConfirmChangeEmail
 from elabodeal.models import VerificationCode, User
 from elabodeal.celery.tasks import send_email
 
@@ -8,7 +8,7 @@ from elabodeal.api.interactors import Interactor
 from elabodeal.api.exceptions import ErrorRegistry
 
 
-class ResendConfirmEmailInteractor(Interactor):
+class ResendConfirmChangeEmailInteractor(Interactor):
     def __init__(self, user_repo: object, code_repo: object):
         self.user_repo = user_repo
         self.code_repo = code_repo
@@ -28,9 +28,9 @@ class ResendConfirmEmailInteractor(Interactor):
             email=email
         )
         
-        self.code_repo.save( new_verification_code )
+        self.code_repo.save(new_verification_code)
 
-        confirm_new_user_email = ConfirmNewUserEmail(
+        confirm_change_email = ConfirmChangeEmail(
             to=email,
             context=dict(
                 code=new_verification_code.code
@@ -38,5 +38,5 @@ class ResendConfirmEmailInteractor(Interactor):
         ) 
 
         send_email.delay(
-            email=confirm_new_user_email.asdict()
+            email=confirm_change_email.asdict()
         )

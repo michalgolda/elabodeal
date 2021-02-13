@@ -3,6 +3,7 @@ from django.urls import path
 from elabodeal.api.endpoints import (
     ConfirmEmailEndpoint,
     ResendConfirmEmailEndpoint,
+    ResendConfirmChangeEmailEndpoint,
     UpdateUserSettingsEndpoint,
     UpdatePublisherSettingsEndpoint,
     SaveCartEndpoint,
@@ -21,6 +22,11 @@ urlpatterns = [
         'verify/email/resend/',
         ResendConfirmEmailEndpoint.as_view(),
         name='resend-email-verification-code'
+    ),
+    path(
+        'verify/email/change/resend/',
+        ResendConfirmChangeEmailEndpoint.as_view(),
+        name='resend-change-email-confirmation'
     ),
     path(
         'users/me/settings/',
