@@ -27,4 +27,10 @@
         border-width: 2px;
         font-size: $font-size-large;
     }
+
+    &-invalid {
+        .code__input {
+            border: 2px solid $color-red;
+        }
+    }
 }
