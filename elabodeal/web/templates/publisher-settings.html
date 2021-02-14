@@ -32,7 +32,14 @@
                 </div> -->
             </div>
         </div>
-        <form id="js-settings-form" action="{% url 'api:update-publisher-settings' %}" class="container" autocomplete="off">
+        <form 
+            id="js-mount-settings-form" 
+            data-save-settings-action="{% url 'api:update-publisher-settings' %}"
+            data-settings-for="publisher"
+            autocomplete="off"
+            @submit.prevent="handleSaveSettings"
+            @keypress.enter.prevent="() => null"
+        >
             <div class="section">
                 <p class="section__title">Ustawienia sprzedającego</p>
                 <div id="js-publisher-settings-section" class="option-list">
@@ -40,62 +47,167 @@
                         <div class="option">
                             <label>IMIĘ</label>
                             <div class="option__body">
-                                <input class="js-edit-option js-option-input" type="text" name="first_name" value="{{ user.publisher.first_name }}" readonly />
-                                <button class="btn btn__primary js-edit-option" type="button"></button>
-                                <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
-                                <button class="btn btn__danger js-cancel-edit-option" type="button"  style="display: none"></button>
+                                <input 
+                                    class="option__input" 
+                                    type="text" 
+                                    name="first_name" 
+                                    value="{{ user.publisher.first_name }}" readonly
+                                    @click="handleEnableEditMode"
+                                    @change="handleChangeOption" 
+                                />
+                                <button 
+                                    class="btn btn__primary edit-icon" 
+                                    type="button"
+                                    @click="handleEnableEditMode"
+                                ></button>
+                                <button 
+                                    class="btn btn__secondary check-icon" 
+                                    type="button" 
+                                    style="display: none;"
+                                    @click="handleDisableEditMode($event, true)"
+                                ></button>
+                                <button 
+                                    class="btn btn__danger cancel-icon" 
+                                    type="button"  
+                                    style="display: none"
+                                    @click="handleDisableEditMode"
+                                ></button>
                             </div>
                         </div>
                         <div class="option">
                             <label>NAZWISKO</label>
                             <div class="option__body">
-                                <input class="js-edit-option js-option-input" type="text" name="last_name"
-                                    value="{{ user.publisher.last_name }}" readonly />
-                                <button class="btn btn__primary js-edit-option" type="button"></button>
-                                <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
-                                <button class="btn btn__danger js-cancel-edit-option" type="button"  style="display: none"></button>
+                                <input 
+                                    class="option__input" 
+                                    type="text" 
+                                    name="last_name"
+                                    value="{{ user.publisher.last_name }}" readonly
+                                    @click="handleEnableEditMode"
+                                    @change="handleChangeOption" 
+                                />
+                                <button 
+                                    class="btn btn__primary edit-icon" 
+                                    type="button"
+                                    @click="handleEnableEditMode"
+                                ></button>
+                                <button 
+                                    class="btn btn__secondary check-icon" 
+                                    type="button" 
+                                    style="display: none;"
+                                    @click="handleDisableEditMode($event, true)"
+                                ></button>
+                                <button 
+                                    class="btn btn__danger cancel-icon" 
+                                    type="button"  
+                                    style="display: none"
+                                    @click="handleDisableEditMode"
+                                ></button>
                             </div>
                         </div>
                         <div class="option">
                             <label>NUMER KONTA</label>
                             <div class="option__body">
-                                <input class="js-edit-option js-option-input" type="text" name="account_number"
-                                    value="{{ user.publisher.account_number }}" readonly />
-                                <button class="btn btn__primary js-edit-option" type="button"></button>
-                                <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
-                                <button class="btn btn__danger js-cancel-edit-option" type="button"  style="display: none"></button>
+                                <input 
+                                    class="option__input" 
+                                    type="text" 
+                                    name="account_number"
+                                    value="{{ user.publisher.account_number }}" readonly
+                                    @click="handleEnableEditMode"
+                                    @change="handleChangeOption" 
+                                />
+                                <button 
+                                    class="btn btn__primary edit-icon"
+                                    type="button"
+                                    @click="handleEnableEditMode"
+                                ></button>
+                                <button 
+                                    class="btn btn__secondary check-icon" 
+                                    type="button" 
+                                    style="display: none;"
+                                    @click="handleEnableEditMode($event, true)"
+                                ></button>
+                                <button 
+                                    class="btn btn__danger cancel-icon" 
+                                    type="button"  
+                                    style="display: none"
+                                    @click="handleDisableEditMode"
+                                ></button>
                             </div>
                         </div>
                         <div class="option">
                             <label>SWIFT</label>
                             <div class="option__body">
-                                <input class="js-edit-option js-option-input" type="text" name="swift"
-                                    value="{{ user.publisher.swift }}" readonly />
-                                <button class="btn btn__primary js-edit-option" type="button"></button>
-                                <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
-                                <button class="btn btn__danger js-cancel-edit-option" type="button"  style="display: none"></button>
+                                <input 
+                                    class="option__input" 
+                                    type="text" 
+                                    name="swift"
+                                    value="{{ user.publisher.swift }}"readonly 
+                                    @click="handleEnableEditMode"
+                                    @change="handleChangeOption"
+                                />
+                                <button 
+                                    class="btn btn__primary edit-icon"
+                                    type="button"
+                                    @click="handleEnableEditMode"
+                                ></button>
+                                <button 
+                                    class="btn btn__secondary check-icon" 
+                                    type="button" 
+                                    style="display: none;"
+                                    @click="handleDisableEditMode($event, true)"
+                                ></button>
+                                <button 
+                                    class="btn btn__danger cancel-icon" 
+                                    type="button"  
+                                    style="display: none"
+                                    @click="handleDisableEditMode"
+                                ></button>
                             </div>
                         </div>
                         <div class="option option-checkbox">
-                            <input type="hidden" name="sell_notification" value="False" />
-                            <p class="option__name">Powiadomienie o sprzedanej kopii ebooka</p>
-                            <input class="switch" type="checkbox" name="sell_notification"
+                            <input 
+                                type="hidden" 
+                                name="sell_notification" 
+                                value="False" 
+                            />
+                            <p class="option__name">
+                                Powiadomienie o sprzedanej kopii ebooka
+                            </p>
+                            <input 
+                                class="switch" 
+                                type="checkbox" 
+                                name="sell_notification"
                                 value="True" 
                                 {% if user.publisher.sell_notification %}
-                                checked="checked"
-                                {% endif %}/>
+                                    checked="checked"
+                                {% endif %}
+                            />
                         </div>
                     {% else %}
-                        <div style="text-align: left;">
-                            <p>Aby utworzyć konto sprzedającego, kliknij przycisk poniżej</p>
-                            <a href="{% url 'web:salesmanager-start' %}" class="btn btn__primary-outline"
-                                style="margin-top: 0.5rem;">Utwórz</a>
+                        <div 
+                            style="text-align: left;"
+                        >
+                            <p>
+                                Aby utworzyć konto sprzedającego, kliknij przycisk poniżej
+                            </p>
+                            <a 
+                                href="{% url 'web:salesmanager-start' %}" 
+                                class="btn btn__primary-outline"
+                                style="margin-top: 0.5rem;"
+                            >
+                                Utwórz
+                            </a>
                         </div>
                     {% endif %}
                 </div>
                 {% if user.publisher %}
-                    <button type="submit" class="btn btn__primary-outline" style="margin-top: 2rem;">
-                        Zapisz ustawienia</button>
+                    <button 
+                        type="submit" 
+                        class="btn btn__primary-outline" 
+                        style="margin-top: 2rem;"
+                    >
+                        Zapisz ustawienia
+                    </button>
                 {% endif %}
             </button>
             </div>
