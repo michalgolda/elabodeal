@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    settings: [
+    publisherSettings: [
         path.resolve(
             __dirname,
-            'settings/index.js'
+            'settings/publisherSettings/index.js'
         )
     ],
     userSettings: [

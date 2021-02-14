@@ -1,12 +1,21 @@
-import EmailVerificationModalUIComponent from './emailVerificationModal';
+import Vue from "vue";
+import Form from '../form';
 
-import { isExistElement } from '../../../utils/exist';
+// Plugins
+import Modal from '../../../modal';
+
+// Components
+import EmailConfirmationModal from './components/EmailConfirmationModal.vue';
+
+// Load plugins
+Vue.use( Modal );
 
 
-( function( window ){
-    window.addEventListener( 'DOMContentLoaded', () => {
-        isExistElement( 'p-user-settings', () => {        
-            new EmailVerificationModalUIComponent();
-        } );
-    } );
-} )( window );
+const mountElement = Form.extendOptions.defaultMountElement;
+
+const formInstance = new Form( {
+	components: {
+		EmailConfirmationModal
+	}
+} );
+formInstance.$mount( mountElement );

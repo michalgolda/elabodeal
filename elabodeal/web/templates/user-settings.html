@@ -6,16 +6,10 @@
 {% block page-id %}p-user-settings{% endblock %} 
 {% block page-class %}p-settings{% endblock %}
 {% block page-scripts %}
-    <script defer src="{% static 'dist/settings.bundle.js' %}"></script>
     <script defer src="{% static 'dist/userSettings.bundle.js' %}"></script>
 {% endblock %}
 
 {% block body %}
-    <!-- Modals -->
-    {% if not user.email_verified %}
-        {% include 'components/modals/email-verification-modal.html' %}
-    {% endif %}
-
     {% include 'components/navigation.html' %}
     <div class="wrapper">
         <div class="section">
@@ -33,40 +27,116 @@
                 </div>
             </div>
         </div>
-        <form id="js-settings-form" action="{% url 'api:update-user-settings' %}"  autocomplete="off">
+        <form 
+            id="js-mount-settings-form" 
+            data-save-settings-action="{% url 'api:update-user-settings' %}"
+            data-settings-for="user" 
+            autocomplete="off"
+            @submit.prevent="handleSaveSettings"
+            @keypress.enter.prevent="() => null"
+        >
             <div class="section">
                 <p class="section__title">Ustawienia użytkownika</p>
                 <div class="option-list">
                     <div class="option">
                         <label>NAZWA UŻYTKOWNIKA</label>
                         <div class="option__body">
-                            <input class="js-edit-option js-option-input" type="text" name="username" value="{{ user.username }}" readonly />
-                            <button class="btn btn__primary js-edit-option" type="button"></button>
-                            <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
-                            <button class="btn btn__danger js-cancel-edit-option" type="button" style="display: none"></button>
+                            <input
+                                class="option__input"
+                                type="text" 
+                                name="username" 
+                                value="{{ user.username }}" 
+                                ref="username"
+                                readonly
+                                @click="handleEnableEditMode"
+                                @change="handleChangeOption"
+                            />
+                            <button 
+                                class="btn btn__primary edit-icon" 
+                                type="button"
+                                @click="handleEnableEditMode"
+                            ></button>
+                            <button 
+                                class="btn btn__secondary check-icon" 
+                                type="button" 
+                                style="display: none;"
+                                @click="handleDisableEditMode($event, true)"
+                            ></button>
+                            <button 
+                                class="btn btn__danger cancel-icon" 
+                                type="button" 
+                                style="display: none"
+                                @click="handleDisableEditMode"
+                            >        
+                            </button>
                         </div>
                     </div>
                     <div class="option">
                         <label>EMAIL</label>
                         {% if user.email_verified %}
-                            <p class="option__information" style="margin-bottom: .5rem;">Po zmianie adresu email, w najbliższym czasie będzie wymagana weryfikacjia.</p>
+                            <p 
+                                class="option__information" 
+                                style="margin-bottom: .5rem;"
+                            >
+                                Po zmianie adresu email, w najbliższym czasie będzie wymagana weryfikacjia.
+                            </p>
                             <div class="option__body">
-                                <input class="js-edit-option js-option-input" type="email" name="email" value="{{ user.email }}" readonly />
-                                <button class="btn btn__primary js-edit-option" type="button"></button>
-                                <button class="btn btn__secondary js-accept-edit-option" type="button" style="display: none;"></button>
-                                <button class="btn btn__danger js-cancel-edit-option" type="button" style="display: none">
+                                <input
+                                    class="option__input"
+                                    type="email" 
+                                    name="email" 
+                                    value="{{ user.email }}"
+                                    ref="email"
+                                    readonly
+                                    @click="handleEnableEditMode"
+                                    @change="handleChangeOption"
+                                />
+                                <button 
+                                    class="btn btn__primary edit-icon"
+                                    type="button"
+                                    @click="handleEnableEditMode"
+                                ></button>
+                                <button 
+                                    class="btn btn__secondary check-icon" 
+                                    type="button" 
+                                    style="display: none;"
+                                    @click="handleDisableEditMode($event, true)"
+                                ></button>
+                                <button 
+                                    class="btn btn__danger cancel-icon" 
+                                    type="button" 
+                                    style="display: none"
+                                    @click="handleDisableEditMode"
+                                >
                                 </button>
                             </div>
                         {% else %}
-                            <input type="hidden" name="email" value="{{ user.email }}" />
                             <div style="margin-top: 1rem;">
-                                <p class="option__information" style="margin-bottom: .5rem;">Aby móc w pełni korzystać z funkcjonalnośći platformy musisz zweryfikować swój adres email.</p>
-                                <button id="js-show-email-verification-modal" type="button" class="btn btn__secondary">Zweryfikuj</button>
+                                <p 
+                                    class="option__information" 
+                                    style="margin-bottom: .5rem;"
+                                >
+                                    Aby móc w pełni korzystać z funkcjonalnośći platformy musisz zweryfikować swój adres email.
+                                </p>
+                                <button 
+                                    type="button" 
+                                    class="btn btn__secondary"
+                                    @click="$modal.show( $event, $options.components.EmailConfirmationModal )"
+                                    data-email="{{ request.user.email }}"
+                                    data-confirm-action="{% url 'api:confirm-email-verification-code' %}"
+                                    data-resend-action="{% url 'api:resend-change-email-confirmation' %}"
+                                >
+                                    Zweryfikuj
+                                </button>
                             </div>
                         {% endif %}
                     </div>
                 </div>
-                <button type="submit" class="btn btn__primary-outline" style="margin-top: 2rem">
+                <button 
+                    type="submit" 
+                    class="btn btn__primary-outline" 
+                    style="margin-top: 2rem"
+                >
                     Zapisz ustawienia
                 </button>
             </div>
