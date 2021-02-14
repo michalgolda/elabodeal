@@ -32,10 +32,6 @@ import emailService from '../services/email';
 
 export default {
     props: {
-        loginPage: {
-            type: String,
-            required: true
-        },
         email: {
             type: String,
             required: true,
@@ -60,7 +56,7 @@ export default {
     },
     methods: {
         handleSubmit() {
-            var { email, code, confirmAction, loginPage } = this;
+            var { email, code, confirmAction } = this;
 
             if ( code.length === 0 ) return;
 
@@ -68,7 +64,7 @@ export default {
                 confirmAction, 
                 { email, code },
                 {
-                    successHandler: () => window.location = loginPage,
+                    successHandler: () => this.$emit( "success" ),
                     errorHandler: () => this.invalidCode = true
                 }
             )
