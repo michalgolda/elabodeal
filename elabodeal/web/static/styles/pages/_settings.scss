@@ -5,7 +5,7 @@
         column-gap: 2rem;
     }
 
-    #js-settings-form {
+    #js-mount-settings-form {
         max-width: 512px;
         height: auto;
         display: grid;
@@ -61,8 +61,12 @@
             }
         }
 
-        input {
+        &__input {
             color: $color-grey;
+
+            &-error {
+                border: 1px solid $color-red !important;
+            }
         }
     }
 
@@ -109,24 +113,24 @@
         }
     }
 
-    .js-edit-option[type="button"] {
+    .edit-icon {
         &:after {
             font-family: FontAwesome;
             content: '\f044';
         }
     }
 
-    .js-cancel-edit-option {
-        &:after {
-            font-family: FontAwesome;
-            content: '\f00d';
-        }
-    }
-
-    .js-accept-edit-option {
+    .check-icon {
         &:after {
             font-family: FontAwesome;
             content: '\f00c';
+        }
+    }
+
+    .cancel-icon {
+        &:after {
+            font-family: FontAwesome;
+            content: '\f00d';
         }
     }
 }
