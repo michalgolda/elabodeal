@@ -1,35 +1,71 @@
-from tests.base import BaseTestCase
+import uuid
+from tests.base import TestCase
 
 from elabodeal.models import Publisher
 
 
-class TestPublisherModel(BaseTestCase):
-    def setUp(self):
-        self.publisher = Publisher.objects.create_publisher(
-            first_name='test',
-            last_name='test',
-            account_number='123',
-            country='PL',
-            swift='123'
-        ) 
+class PublisherModelTest(TestCase):
     
     def test_fields(self):
+        self.assertEqual(hasattr(Publisher, 'id'), True)
+        self.assertEqual(
+            Publisher._meta.get_field('id').primary_key,
+            True
+        )
+        self.assertEqual(
+            Publisher._meta.get_field('id').default,
+            uuid.uuid4
+        )
+        self.assertEqual(
+            Publisher._meta.get_field('id').editable,
+            False
+        )
+
         self.assertEqual(hasattr(Publisher, 'first_name'), True)
+        self.assertEqual(
+            Publisher._meta.get_field('first_name').max_length, 
+            Publisher.MAX_FIRST_NAME_LENGTH
+        )
+
         self.assertEqual(hasattr(Publisher, 'last_name'), True)
+        self.assertEqual(
+            Publisher._meta.get_field('last_name').max_length,
+            Publisher.MAX_LAST_NAME_LENGTH
+        )
+
         self.assertEqual(hasattr(Publisher, 'account_number'), True)
-        self.assertEqual(hasattr(Publisher, 'country'), True)
+        self.assertEqual(
+            Publisher._meta.get_field('account_number').max_length,
+            Publisher.MAX_ACCOUNT_NUMBER_LENGTH
+        )
+
         self.assertEqual(hasattr(Publisher, 'swift'), True)
-        self.assertEqual(hasattr(Publisher, 'sell_notification'), True)
+        self.assertEqual(
+            Publisher._meta.get_field('swift').max_length,
+            Publisher.MAX_SWIFT_LENGHT
+        )
 
-    def test_manager_create_publisher_method(self):
-        self.assertIsInstance(self.publisher, Publisher)
+        self.assertEqual(hasattr(Publisher, 'created_at'), True)
+        self.assertEqual(
+            Publisher._meta.get_field('created_at').auto_now_add,
+            True
+        )
 
-    def test_manager_update_settings_method(self):
-        options = {
-            'first_name': 'test123'
-        }
+        self.assertEqual(hasattr(Publisher, 'updated_at'), True)
+        self.assertEqual(
+            Publisher._meta.get_field('updated_at').auto_now,
+            True
+        )
 
-        updated_publisher = Publisher.objects.update_settings(self.publisher, options)
+    def test_manager_create_Publisher_method(self):
+        created_Publisher = Publisher.objects.create_publisher(
+            first_name='Test',
+            last_name='Test',
+            account_number='123',
+            swift='123'
+        )
 
-        self.assertIsInstance(self.publisher, Publisher)
-        self.assertEqual(updated_publisher.first_name, 'test123')
+        self.assertEqual(created_Publisher.first_name, 'Test')
+        self.assertEqual(created_Publisher.last_name, 'Test')
+        self.assertEqual(created_Publisher.account_number, '123')
+        self.assertEqual(created_Publisher.swift, '123')

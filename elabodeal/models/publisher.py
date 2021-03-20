@@ -1,20 +1,17 @@
+import uuid
 from django.db import models
 
 
 class PublisherManager(models.Manager):
 	def create_publisher(
 		self, first_name, 
-		last_name, account_number, 
-		 country, swift, sell_notification = False
-	) -> object:
-
+		last_name, account_number, swift
+	):
 		publisher = self.model(
 			first_name=first_name, 
 			last_name=last_name,
-			account_number=account_number, 
-			country=country,
 			swift=swift, 
-			sell_notification=sell_notification
+			account_number=account_number, 
 		)
 		publisher.save()
 
@@ -22,14 +19,20 @@ class PublisherManager(models.Manager):
 
 
 class Publisher(models.Model):
-	first_name = models.CharField(max_length=30)
-	last_name = models.CharField(max_length=30)
-	account_number = models.CharField(max_length=26)
-	country = models.CharField(max_length=3)
-	swift = models.CharField(max_length=8)
+	MAX_FIRST_NAME_LENGTH = 30
+	MAX_LAST_NAME_LENGTH = 30
+	MAX_ACCOUNT_NUMBER_LENGTH = 26
+	MAX_SWIFT_LENGHT = 8
 
-	sell_notification = models.BooleanField(default=False)
-
+	id = models.UUIDField(
+		primary_key=True,
+		default=uuid.uuid4,
+		editable=False
+	)
+	first_name = models.CharField(max_length=MAX_FIRST_NAME_LENGTH)
+	last_name = models.CharField(max_length=MAX_LAST_NAME_LENGTH)
+	account_number = models.CharField(max_length=MAX_ACCOUNT_NUMBER_LENGTH)
+	swift = models.CharField(max_length=MAX_SWIFT_LENGHT)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	
