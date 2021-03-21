@@ -9,44 +9,9 @@ class LogicException(APIException):
         super().__init__(detail=message)
 
 
-class ConfirmEmailException(LogicException):
+class ResourceIsAlreadyExists(LogicException):
     status_code = 400
-    type = 'email_confirmation_error'
-
-
-class ResendConfirmEmailException(LogicException):
-    status_code = 400
-    type = 'resend_confirmation_email_error'
-
-
-class UpdatePublisherSettingsException(LogicException):
-    status_code = 400
-    type = 'update_publisher_settings_error'
-
-
-class UpdateUserSettingsException(LogicException):
-    status_code = 400
-    type = 'update_user_settings_error'
-
-
-class SaveCartException(LogicException):
-    status_code = 400
-    type = 'save_cart_error'
-
-
-class ShareCartException(LogicException):
-    status_code = 400
-    type = 'share_cart_error'
-
-
-class ErrorRegistry:
-    LOGIC = LogicException
-    CONFIRM_EMAIL = ConfirmEmailException
-    RESEND_CONFIRM_EMAIL = ResendConfirmEmailException
-    UPDATE_PUBLISHER_SETTINGS = UpdatePublisherSettingsException
-    UPDATE_USER_SETTINGS = UpdateUserSettingsException
-    SAVE_CART = SaveCartException
-    SHARE_CART = ShareCartException
+    type = 'resource_is_already_exists'
 
 
 def exception_handler(exc, context):
