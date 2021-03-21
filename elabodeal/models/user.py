@@ -63,6 +63,10 @@ class User(AbstractBaseUser):
 
 	objects = UserManager()
 
+	@property
+	def is_publisher(self):
+		return self.publisher != None	
+
 	def has_perm(self, perm, obj=None):
 		return self.is_superuser
 
