@@ -5,3 +5,4 @@ from .publisher import PublisherRepository
 from .cart import CartRepository
 from .product import ProductRepository
 from .shared_cart import SharedCartRepository
+from .product_group import ProductGroupRepository
