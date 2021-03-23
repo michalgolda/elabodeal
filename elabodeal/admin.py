@@ -3,7 +3,10 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from elabodeal.models import User, Publisher, ProductGroup
+from elabodeal.models import (
+	User, Publisher, ProductGroup,
+	Category, ProductLanguage
+)
 
 
 class UserAdmin(BaseUserAdmin):
@@ -113,126 +116,67 @@ class ProductGroupAdmin(admin.ModelAdmin):
 
 	search_fields = ['id', 'name']
 
+
+class CategoryAdmin(admin.ModelAdmin):
+	list_display = ['id', 'name']
+
+	fieldsets = [
+		[
+			None,
+			{
+				'fields': ['id', 'name']
+			}
+		]
+	]
+
+	add_fieldsets = [
+		[
+			None,
+			{
+				'fields': ['name']
+			}
+		]
+	]
+
+	readonly_fields = ['id']
+
+	search_fields = ['id', 'name']
+
+
+class ProductLanguageAdmin(admin.ModelAdmin):
+	list_display = ['id', 'code', 'name']
+
+	fieldsets = [
+		[
+			None,
+			{
+				'fields': ['id', 'name', 'code']
+			}
+		]
+	]
+
+	add_fieldsets = [
+		[
+			None,
+			{
+				'fields': ['name', 'code']
+			}
+		]
+	]
+
+	readonly_fields = ['id']
+
+	search_fields = ['name', 'code']
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Publisher, PublisherAdmin)
 admin.site.register(ProductGroup, ProductGroupAdmin)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(ProductLanguage, ProductLanguageAdmin)
 
 # The group model is not used to.
 admin.site.unregister(Group)
 
 # Site settings
 admin.site.site_header = _('Elabodeal - Panel administracyjny')
-
-
-# class CategoryAdmin(admin.ModelAdmin):
-# 	list_display = ('name', )
-
-# 	list_filter = ('name', )
-	
-# 	fieldsets = ((None, {'fields': ('name', )}), )
-	
-# 	add_fieldsets = (
-# 		(None, {
-# 			'classes': ('wide', ),
-# 			'fields': ('name', )}
-# 		),
-# 	)
-	
-# 	search_fields = ('name', )
-	
-# 	ordering = ('name', )	
-
-
-# class ProductAdmin(admin.ModelAdmin):
-# 	list_display = (
-# 		'title', 'category',
-# 		'publisher', 'price')
-	
-# 	list_filter = ('category', 'author', 'title')
-	
-# 	fieldsets = (
-# 		(None, {
-# 			'fields': (
-# 				'publisher', 'category',
-# 				'labels', 'opinions',
-# 				'title', 'description',
-# 				'price', 'author',
-# 				'page_count', 'isbn',
-# 				'contents', 'age_category',
-# 				'url_name', 'average_rating',
-# 				'rating_count', 'cover_img',
-# 				'pdf_file', 'epub_file', 
-# 				'mobi_file', 'published_at',
-# 				'updated_at', 'demo_file')
-# 		}),
-# 	)
-
-# 	readonly_fields = (
-# 		'published_at', 'updated_at',
-# 		'pdf_file', 'mobi_file',
-# 		'epub_file', 'age_category',
-# 		'price', 'rating_count',
-# 		'average_rating', 'cover_img',
-# 		'isbn', 'contents', 'page_count',
-# 		'url_name', 'author',
-# 		'publisher', 'demo_file')
-
-# 	add_fieldsets = (
-# 		(None, {
-# 			'fields': (
-# 				'publisher', 'category',
-# 				'labels', 'opinions',
-# 				'title', 'description',
-# 				'price', 'author',
-# 				'page_count', 'isbn',
-# 				'contents', 'age_category',
-# 				'url_name', 'epub_file', 
-# 				'pdf_file', 'mobi_file')
-# 		})
-# 	)
-
-# 	search_fields = (
-# 		'category', 'author',
-# 		'title', 'price',
-# 		'author', 'publisher')
-	
-# 	ordering = (
-# 		'category', 'author',
-# 		'price', 'published_at')
-
-
-# class FileAdmin(admin.ModelAdmin):
-# 	fieldsets = (
-# 		(None, {
-# 			'fields': (
-# 				'uuid', 'uploaded_at',
-# 				'size', 'path',
-# 				'extension')
-# 		}),
-# 	)
-
-# 	readonly_fields = (
-# 		'uploaded_at', 'size', 
-# 		'extension', 'uuid',
-# 		'path')
-
-
-# class SharedCartAdmin(admin.ModelAdmin):
-# 	list_display = ('code', 'shared_at')
-
-# 	fieldsets = (
-# 		(None, {
-# 			'fields': ('code', 'shared_at',
-# 					   'cart')
-# 		}),
-# 	)
-	
-# 	readonly_fields = ('code', 'shared_at', 'cart')
-
-
-# class ProductLabelAdmin(admin.ModelAdmin):
-# 	fieldsets = (
-# 		(None, {
-# 			'fields': ('name', 'color')
-# 		}),
-# 	)
