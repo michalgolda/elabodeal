@@ -14,6 +14,11 @@ class ResourceIsAlreadyExists(LogicException):
     type = 'resource_is_already_exists'
 
 
+class ResourceDoesNotExists(LogicException):
+    status_code = 404
+    type = 'resource_does_not_exists'
+
+
 def exception_handler(exc, context):
     response = rest_framework_exception_handler(exc, context)
 
