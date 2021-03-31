@@ -10,3 +10,7 @@ from .product_group import (
 	MeProductsGroupsEndpoint,
 	MeProductsGroupsDetailsEndpoint
 )
+from .product import (
+	MeProductsEndpoint,
+	MeProductsDetailsEndpoint
+)
