@@ -82,7 +82,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = f'{BASE_DIR}/elabodeal/web/static/files/'
+MEDIA_ROOT = f'{BASE_DIR}/elabodeal/web/static/media/'
 
 STATICFILES_DIRS = (
     f'{BASE_DIR}/elabodeal/web/static/',
