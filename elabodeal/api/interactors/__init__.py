@@ -12,3 +12,9 @@ from .product_group import (
 	CreateProductGroupInteractor,
 	DeleteProductGroupInteractor
 )
+from .product import (
+	GetProductInteractor,
+	DeleteProductInteractor,
+	GetProductListInteractor,
+	CreateProductInteractor
+)
