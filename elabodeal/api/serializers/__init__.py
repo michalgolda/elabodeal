@@ -7,3 +7,9 @@ from .product_group import (
 	ProductGroupSerializer,
 	CreateProductGroupRequestSerializer
 )
+from .product import (
+	ProductSerializer,
+	CreateProductRequestSerializer
+)
+from .file import FileSerializer
+from .product_language import ProductLanguageSerializer
