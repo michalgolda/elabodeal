@@ -1,5 +1,13 @@
 import uuid
+import json
+
+from itertools import chain
+
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import pre_delete
+
+from elabodeal.celery.tasks import clear_product_files
 
 
 class Product(models.Model):
@@ -36,6 +44,10 @@ class Product(models.Model):
 		'elabodeal.Category',
 		on_delete=models.CASCADE
 	)
+	language = models.ForeignKey(
+		'elabodeal.ProductLanguage',
+		on_delete=models.CASCADE
+	)
 	title = models.CharField(max_length=MAX_TITLE_LENGTH)
 	description = models.CharField(max_length=MAX_DESCRIPTION_LENGTH)
 	contents = models.CharField(
@@ -54,7 +66,10 @@ class Product(models.Model):
 		on_delete=models.CASCADE,
 		related_name='cover_img'
 	)
-	other_images = models.ManyToManyField('elabodeal.File'),
+	other_images = models.ManyToManyField(
+		'elabodeal.File',
+		related_name='other_images'
+	)
 	files = models.ManyToManyField('elabodeal.File')
 	age_category = models.IntegerField(choices=AgeCategory.choices)
 	average_rating = models.FloatField(default=0)
@@ -69,3 +84,24 @@ class Product(models.Model):
 	@property
 	def empty_stars(self):
 		return range(int(5 - self.average_rating))
+
+
+@receiver(pre_delete, sender=Product)
+def clear_product_files_handler(sender, instance, *args, **kwargs):
+	other_images_queryset = instance.other_images.all()
+	files_queryset = instance.files.all()
+	cover_img = instance.cover_img
+
+	file_objects = list(chain(other_images_queryset, files_queryset))
+	file_objects.append(cover_img)
+
+	file_list = []
+	for file in file_objects:
+		file_id = str(file.id)
+		file_extension = file.extension
+		file_name = f'{file_id}.{file_extension}'
+
+		file_list.append({'id': file_id, 'name': file_name})
+
+	clear_product_files.delay(json.dumps(file_list))
+
