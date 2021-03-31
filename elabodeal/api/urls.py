@@ -9,7 +9,9 @@ from elabodeal.api.endpoints import (
     # SaveCartEndpoint,
     # ShareCartEndpoint,
     MeProductsGroupsEndpoint,
-    MeProductsGroupsDetailsEndpoint
+    MeProductsGroupsDetailsEndpoint,
+    MeProductsEndpoint,
+    MeProductsDetailsEndpoint
 )
 
 app_name = 'api'
@@ -53,16 +55,16 @@ urlpatterns = [
     path(
         'me/',
         include([
-            # path(
-            #     'products/',
-            #     MeProductsEndpoint.as_view(),
-            #     name='me-products'
-            # ),
-            # path(
-            #     'products/<int:product_id>/',
-            #     MeProductDetailsEndpoint.as_view(),
-            #     name='me-product-details'
-            # ),
+            path(
+                'products/',
+                MeProductsEndpoint.as_view(),
+                name='me-products'
+            ),
+            path(
+                'products/<uuid:product_id>/',
+                MeProductsDetailsEndpoint.as_view(),
+                name='me-product-details'
+            ),
             path(
                 'products/groups/',
                 MeProductsGroupsEndpoint.as_view(),
