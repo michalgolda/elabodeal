@@ -43,13 +43,20 @@ class CreateProductInteractor(BaseProductInteractor):
 		author, isbn, price, age_category, 
 		cover_img, other_images, files
 	):
-		existing_product_group = self.product_group_repo.get_one_by(
-			id=product_group_id
-		)
-		if not existing_product_group:
-			raise ResourceDoesNotExists(
-				'The product group with this id does not exists.'
+		if product_group_id:
+			existing_product_group = self.product_group_repo.get_one_by(
+				id=product_group_id
 			)
+			if not existing_product_group:
+				raise ResourceDoesNotExists(
+					'The product group with this id does not exists.'
+				)
+		else:
+			created_product_group = self.product_group_repo.add(
+				publisher=publisher
+			)
+
+			existing_product_group = created_product_group
 
 		existing_category = self.category_repo.get_one_by(id=category_id)
 		if not existing_category:

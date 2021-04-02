@@ -101,13 +101,13 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 	def test_execute(self):
 		self.mock_product_repo.add.return_value = True
 		self.mock_file_repo.add.return_value = True
-		self.mock_product_group_repo.get_one_by.return_value = True
+		self.mock_product_group_repo.add.return_value = True
 		self.mock_category_repo.get_one_by.return_value = True
 		self.mock_product_language_repo.get_one_by.return_value = True
 
 		mock_publisher = mock.MagicMock()
 		mock_cover_img = mock.MagicMock()
-		product_group_id = 1
+		product_group_id = None
 		category_id = 1
 		product_language_id = 1
 		title = 'test'
@@ -143,8 +143,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 			files=files
 		)
 
-		self.mock_product_group_repo.get_one_by.assert_called_once_with(
-			id=product_group_id
+		self.mock_product_group_repo.add.assert_called_once_with(
+			publisher=mock_publisher
 		)
 
 		self.mock_category_repo.get_one_by.assert_called_once_with(
@@ -157,7 +157,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 
 		self.mock_product_repo.add.assert_called_once_with(
 			publisher=mock_publisher,
-			group=product_group_id,
+			group=True,
 			category=category_id,
 			language=product_language_id,
 			age_category=age_category,

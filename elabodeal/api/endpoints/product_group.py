@@ -8,10 +8,7 @@ from elabodeal.api.interactors import (
 	CreateProductGroupInteractor,
 	DeleteProductGroupInteractor
 )
-from elabodeal.api.serializers import (
-	ProductGroupSerializer,
-	CreateProductGroupRequestSerializer
-)
+from elabodeal.api.serializers import ProductGroupSerializer
 from elabodeal.api.repositories import ProductGroupRepository
 
 
@@ -39,12 +36,6 @@ class MeProductsGroupsEndpoint(Endpoint):
 		)
 
 	def post(self, request):
-		serialized_request = CreateProductGroupRequestSerializer(
-			data=request.data
-		)
-		serialized_request.is_valid(raise_exception=True)
-
-		name = serialized_request.validated_data['name']
 		publisher = request.user.publisher
 
 		product_group_repo = ProductGroupRepository()
@@ -52,7 +43,7 @@ class MeProductsGroupsEndpoint(Endpoint):
 		interactor = CreateProductGroupInteractor(
 			product_group_repo=product_group_repo
 		)
-		created_product_group = interactor.execute(publisher, name)
+		created_product_group = interactor.execute(publisher)
 
 		serialized_product_group = ProductGroupSerializer(created_product_group)
 

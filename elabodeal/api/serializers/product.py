@@ -18,7 +18,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CreateProductRequestSerializer(serializers.Serializer):
-	product_group_id = serializers.UUIDField()
+	product_group_id = serializers.UUIDField(default=None)
 	category_id = serializers.UUIDField()
 	product_language_id = serializers.UUIDField()
 	title = serializers.CharField(

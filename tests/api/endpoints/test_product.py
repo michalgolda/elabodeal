@@ -70,9 +70,60 @@ class MeProductsEndpointTest(APITestCase):
 
 	@override_settings(MEDIA_ROOT=TEMPORARY_MEDIA_ROOT)
 	def test_create_product(self):
-		product_group = ProductGroup.objects.create(
-			publisher=self.publisher,
+		product_language = ProductLanguage.objects.create(
+			name='english',
+			code='EN'
+		)
+		category = Category.objects.create(
 			name='test'
+		)
+
+		ebook_file_io = BytesIO(b'ajwdawjdaw')
+		image_file_io = BytesIO()
+
+		pillow_image = Image.new('RGB', size=(100, 100), color='white')
+		pillow_image.save(image_file_io, format='jpeg')
+		
+		image_file_io.seek(0)
+		
+		cover_img = File(
+			deepcopy(image_file_io), 
+			name='test.jpg'
+		)
+		ebook_file = File(
+			deepcopy(ebook_file_io), 
+			name='test.epub'
+		)
+		other_image_file = File(
+			deepcopy(image_file_io), 
+			name='test.png'
+		)
+	
+		response = self.client.post(
+			reverse('api:me-products'),
+			data={
+				'product_language_id': str(product_language.id),
+				'category_id': str(category.id),
+				'title': 'test',
+				'description': 'test',
+				'contents': 'test',
+				'author': 'test',
+				'isbn': '1231231231231',
+				'price': 12.00,
+				'age_category': 7,
+				'cover_img': cover_img,
+				'files': [ebook_file],
+				'other_images': [other_image_file]
+			}
+		)
+		response_data = response.json()
+
+		self.assertEqual(response.status_code, 201)
+
+	@override_settings(MEDIA_ROOT=TEMPORARY_MEDIA_ROOT)
+	def test_create_product_with_product_group_id(self):
+		product_group = ProductGroup.objects.create(
+			publisher=self.publisher
 		)
 		product_language = ProductLanguage.objects.create(
 			name='english',
@@ -123,8 +174,10 @@ class MeProductsEndpointTest(APITestCase):
 		)
 		response_data = response.json()
 
-		self.assertEqual(response_data['title'], 'test')
+		print(response_data)
+
 		self.assertEqual(response.status_code, 201)
+
 
 	def test_create_product_auth_required(self):
 		self.client.logout()

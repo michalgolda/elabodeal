@@ -28,10 +28,7 @@ class MeProductsGroupsEndpointTest(APITestCase):
 		)
 
 	def test_get_product_groups_list(self):
-		product_group = ProductGroup(
-			publisher=self.publisher,
-			name='test'
-		)
+		product_group = ProductGroup(publisher=self.publisher)
 		product_group.save()
 
 		response = self.client.get(reverse('api:me-products-groups'))
@@ -56,16 +53,10 @@ class MeProductsGroupsEndpointTest(APITestCase):
 		self.assertEqual(response.status_code, 403)
 
 	def test_create_product_group(self):
-		response = self.client.post(
-			reverse('api:me-products-groups'),
-			data={
-				'name': 'test1'
-			}
-		)
+		response = self.client.post(reverse('api:me-products-groups'))
 		response_data = response.json()
 
 		self.assertEqual(response.status_code, 201)
-		self.assertEqual(response_data['name'], 'test1')
 
 	def test_create_product_group_auth_required(self):
 		self.client.logout()
@@ -108,10 +99,7 @@ class MeProductsGroupsDetailsEndpointTest(APITestCase):
 		)
 
 	def test_get_product_group_details(self):
-		product_group = ProductGroup(
-			publisher=self.publisher,
-			name='test'
-		)
+		product_group = ProductGroup(publisher=self.publisher)
 		product_group.save()
 
 		response = self.client.get(
@@ -123,7 +111,6 @@ class MeProductsGroupsDetailsEndpointTest(APITestCase):
 		response_data = response.json()
 
 		self.assertEqual(response.status_code, 200)
-		self.assertEqual(response_data['name'], 'test')
 
 	def test_get_product_group_details_if_product_group_does_not_exists(self):
 		response = self.client.get(
@@ -161,10 +148,7 @@ class MeProductsGroupsDetailsEndpointTest(APITestCase):
 		self.assertEqual(response.status_code, 403)
 
 	def test_delete_product_group(self):
-		product_group = ProductGroup(
-			publisher=self.publisher,
-			name='test'
-		)
+		product_group = ProductGroup(publisher=self.publisher)
 		product_group.save()
 
 		response = self.client.delete(

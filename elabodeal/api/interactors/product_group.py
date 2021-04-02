@@ -1,6 +1,5 @@
 from elabodeal.models import ProductGroup
 from elabodeal.api.interactors import Interactor
-from elabodeal.api.exceptions import ResourceIsAlreadyExists
 
 
 class BaseProductGroupInteractor(Interactor):
@@ -26,18 +25,8 @@ class GetProductGroupInteractor(BaseProductGroupInteractor):
 
 class CreateProductGroupInteractor(BaseProductGroupInteractor):
 
-	def execute(self, publisher, name):
-		existing_product_group = self.product_group_repo.get_one_by(
-			name=name,
-			publisher=publisher
-		)
-		if existing_product_group:
-			raise ResourceIsAlreadyExists('The product group with this name is already exists.')
-
-		return self.product_group_repo.add(
-			publisher=publisher,
-			name=name
-		)
+	def execute(self, publisher):
+		return self.product_group_repo.add(publisher=publisher)
 
 
 class DeleteProductGroupInteractor(BaseProductGroupInteractor):

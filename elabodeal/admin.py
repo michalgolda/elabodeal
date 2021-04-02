@@ -88,16 +88,15 @@ class PublisherAdmin(admin.ModelAdmin):
 
 
 class ProductGroupAdmin(admin.ModelAdmin):
-	list_display = ['id', 'name', 'publisher']
+	list_display = ['id', 'publisher']
 
 	fieldsets = [
 		[
 			None,
 			{
 				'fields': [
-					'id', 'publisher', 
-					'name', 'created_at',
-					'updated_at'
+					'id', 'publisher',
+					'created_at', 'updated_at'
 				]
 			}
 		]
@@ -107,14 +106,14 @@ class ProductGroupAdmin(admin.ModelAdmin):
 		[
 			None,
 			{
-				'fields': ['publisher', 'name']
+				'fields': ['publisher']
 			}
 		]
 	]
 
 	readonly_fields = ['id', 'created_at', 'updated_at']
 
-	search_fields = ['id', 'name']
+	search_fields = ['id']
 
 
 class CategoryAdmin(admin.ModelAdmin):
