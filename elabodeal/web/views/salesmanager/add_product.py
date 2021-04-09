@@ -1,47 +1,61 @@
-import uuid
+import json
 
-from django.conf import settings
-from django.shortcuts import redirect
-from django.core.files.storage import FileSystemStorage
+from django.core.serializers import serialize
 
 from elabodeal.web.views import BaseView
-from elabodeal.web.forms import AddProductForm
+from elabodeal.models import ProductLanguage, Category
 
 
 class SalesManagerAddProductView(BaseView):
 	auth_required = True
 	publisher_required = True
 
-	def get_form(self, request = None):
-		data, files = (request.POST, request.FILES) if request else (None, request)
-		
-		return AddProductForm(data, files)
+	def _getSupportedLanguages(self):
+		product_languages_queryset = ProductLanguage.objects.all()
+
+		supported_languages = []
+		for product_language in product_languages_queryset:
+			product_language_id = str(product_language.id)
+			product_language_name = product_language.name
+			product_language_code = product_language.code
+
+			supported_languages.append(
+				dict(
+					id=product_language_id,
+					name=product_language_name,
+					code=product_language_code
+				)
+			)
+
+		return supported_languages
+
+	def _getCategories(self):
+		categories_queryset = Category.objects.all()
+		categories = []
+
+		for category in categories_queryset:
+			category_id = str(category.id)
+			category_name = str(category.name)
+
+			categories.append(
+				dict(
+					id=category_id,
+					name=category_name
+				)
+			)
+
+		return categories
+
+	def _getContextData(self):
+		return json.dumps(
+			dict(
+				categories=self._getCategories(),
+				supportedLanguages=self._getSupportedLanguages()
+			)
+		)
 
 	def get(self, request):
-		form = self.get_form()
+		context = {}
+		context['data'] = self._getContextData()
 
-		context = {'form': form}
-
-		return self.respond(
-			'salesmanager/add_product.html', 
-			request, context)
-
-	def post(self, request):
-		form = self.get_form(request)
-
-		if form.is_valid():
-			user = request.user
-			publisher = user.publisher
-
-			form.save(publisher)
-
-			return redirect('web:salesmanager')
-
-		context = {
-			'form': form
-		}
-		
-		return self.respond(
-			'salesmanager/add_product.html', 
-			request, context)
-		
+		return self.respond('salesmanager/add_product.html', request, context)
