@@ -1,171 +1,421 @@
 #p-salesmanager-add-product {
+    .wrapper {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+    }
+
+    .pageHeader {
+        max-width: 75%;
+        min-width: 512px;
+        height: auto;
+        margin-bottom: 2rem;
+        text-align: left;
+
+        &__title {
+            margin-bottom: 1rem;
+            color: $color-green;
+        }
+    }
+
+    .productVersionsList {
+        &__empty {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 256px;
+        }
+
+        &__actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 256px;
+
+            &-box {
+                max-width: 256px;
+            }
+        }
+    }
+
+    .form {
+        max-width: 512px;
+        height: auto;
+        display: grid;
+        grid-template-rows: auto;
+        grid-row-gap: 1rem;
+        margin: 0 auto;
+
+        &__group {
+            width: 100%;
+
+            &-grid {
+                display: grid;
+                grid-column-gap: .5rem;
+             
+                &-2 {
+                    grid-template-columns: repeat(2, minmax(128px, 256px));
+                }
+
+                &-3 {
+                    grid-template-columns: repeat(3, minmax(128px, 256px));
+                }
+            }
+
+            &-textarea {
+                & > p {
+                    color: $color-grey;
+                }
+            }
+
+            &-checkbox {
+                display: flex;
+                align-items: center;
+                justify-content: left;
+
+                & > label {
+                    margin-bottom: 0;
+                    margin-left: .5rem;
+                }
+            }
+            &-details {
+                text-align: left;
+                margin-bottom: 1rem;
+
+                &-cover {
+                    margin-left: 1rem;
+                }
+            }
+        }
+    }
+
+    // .lv-selector {
+    //     width: 100%;
+    //     height: auto;
+    //     text-align: center;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     margin-bottom: 2rem;
+
+    //     &__options {
+    //         display: grid;
+    //         grid-template-columns: auto auto auto auto;
+    //         grid-column-gap: .25rem;
+    //     }
+
+    //     &__option {
+    //         height: 32px;
+    //         letter-spacing: .125rem;
+    //         font-size: $font-size-medium;
+    //         min-width: 150px;
+    //         cursor: pointer;
+    //         padding-top: .25rem;
+
+    //         &-current {
+    //             color: $color-orange;
+    //             border-bottom: 2.5px solid $color-green;
+    //         }
+
+    //         &:hover {
+    //             @include transition-animation(.1s);
+    //             border-bottom: 2.5px solid $color-green;
+    //         }
+    //     }
+
+    //     &__add {
+    //         width: 32px;
+    //         height: 32px;
+    //         padding: 0;
+    //         margin-left: .5rem;
+
+    //         &:before {
+    //             font-family: FontAwesome;
+    //             content: '\f067';
+    //         }
+    //     }
+    // }
+
+    .age-categories {
+        display: grid;
+        grid-template-columns: repeat(5, 99.2px);
+        grid-column-gap: .25rem;
+
+        .age-category {
+            width: 100%;
+            height: 99.2px;
+            background-color: white;
+            border-radius: 2px;
+            border: 1px solid $color-grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+
+            & > p {
+                pointer-events: none;
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &[age="3"], &[age="7"] {
+                border: 1px solid #00FF57;
+            }
+
+            &[age="12"] {
+                border: 1px solid #2EC461;
+            }
+
+            &[age="16"] {
+                border: 1px solid $color-orange;
+            }
+
+            &[age="18"] {
+                border: 1px solid $color-red;
+            }
+
+            &[age="3"]:hover, &[age="7"]:hover {
+                color: white;
+                background-color: #00FF57;
+                border: none;
+            }
+
+            &[age="12"]:hover {
+                color: white;
+                background-color: #2EC461;
+                border: none;
+            }
+
+            &[age="16"]:hover {
+                color: white;
+                background-color: $color-orange;
+                border: none;
+            }
+
+            &[age="18"]:hover {
+                color: white;
+                background-color: $color-red;
+                border: none;
+            }
+
+            &:hover ~ .age-category[age="3"] {
+                color: white;
+                background-color: #00FF57;
+                border: none;
+            }
+
+            &:hover ~ .age-category[age="7"] {
+                color: white;
+                background-color: #00FF57;
+                border: none;
+            }
+
+            &:hover ~ .age-category[age="12"] {
+                color: white;
+                background-color: #2EC461;
+                border: none;
+            }
+
+            &:hover ~ .age-category[age="16"] {
+                color: white;
+                background-color: $color-orange;
+                border: none;
+            }
+
+            &:hover ~ .age-category[age="18"] {
+                color: white;
+                background-color: $color-red;
+                border: none;
+            }
+
+            &-selected {
+                &[age="3"], &[age="7"] {
+                    color: white;
+                    background-color: #00FF57;
+                    border: none;
+                }
+
+                &[age="12"] {
+                    color: white;
+                    background-color: #2EC461;
+                    border: none;
+                }
+
+                &[age="16"] {
+                    color: white;
+                    background-color: $color-orange;
+                    border: none;
+                }
+
+                &[age="18"] {
+                    color: white;
+                    background-color: $color-red;
+                    border: none;
+                }
+
+                & ~ .age-category[age="3"] {
+                    color: white;
+                    background-color: #00FF57;
+                    border: none;
+                }
+
+                & ~ .age-category[age="7"] {
+                    color: white;
+                    background-color: #00FF57;
+                    border: none;
+                }
+
+                & ~ .age-category[age="12"] {
+                    color: white;
+                    background-color: #2EC461;
+                    border: none;
+                }
+
+                & ~ .age-category[age="16"] {
+                    color: white;
+                    background-color: $color-orange;
+                    border: none;
+                }
+
+                & ~ .age-category[age="18"] {
+                    color: white;
+                    background-color: $color-red;
+                    border: none;
+                }
+            }
+        }
+    }
+
+    .files {
+        &__grid {
+            display: grid;
+
+
+            &-3 {
+                grid-template-columns: 168px 168px 168px;
+                grid-column-gap: .25rem;
+            }
+
+            &-4 {
+                grid-template-columns: repeat(4, 125px);
+                grid-template-rows: repeat(2, auto);
+                grid-column-gap: .25rem;
+                grid-row-gap: .25rem;
+            }
+        }
+
+        &-ebook {
+            .file {
+                &__upload {
+                    &-type {
+                        text-align: center;
+                        font-weight: bold;
+                        padding-top: .25rem;
+                        padding-bottom: .25rem;
+                    }
+                }
+            }
+        }
+
+        &-image {
+            .file {
+                &__upload {
+                    width: 125px;
+                    height: 160px;
+                    background-color: $color-white;
+                    border-radius: 2px;
+                    border: 1px solid $color-grey;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 2rem;
+                    color: $color-grey;
+
+                    &:hover {
+                        cursor: pointer;
+                        color: white;
+                        background-color: $color-green;
+                        border: 1px solid $color-green;
+                    }
+
+                    &-cover {
+                        width: 220px;
+                        height: 320px;
+
+                        & > img {
+                            width: 220px !important;
+                            height: 320px !important;
+                        }
+
+                        .file__upload-actions {
+                            width: 220px;
+                            height: 320px;
+                        }
+                    }
+
+                    &-actions {
+                        height: 160px;
+                        width: 125px;
+                        display: none;
+                        position: absolute;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: rgba(1, 22, 39, 0.5);
+
+                        &:hover {
+                            cursor: default;
+                        }
+
+                        & > button {
+                            width: 32px;
+                            height: 32px;
+                            padding: 0;
+                        }
+                    }
+
+                    &-preview {
+                        width: 100%;
+                        height: 100%;
+                        border: none;
+
+                        & > img {
+                            width: 125px;
+                            height: 160px;
+                        }
+
+                        &:hover {
+                            border: none;
+
+                            & > .file__upload-actions {
+                                display: flex;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-cover {
+                display: flex;
+                justify-content: left;
+            }
+        }
+    }
+
+    .input-information {
+        color: $color-orange;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
     textarea {
         min-height: 128px;
         max-height: 256px;
         padding: 1rem;
     }
 
-    input[type="file"] {
-        display: none;
-    }
-
-    .form-wrapper {
-        height: auto;
-        max-width: 512px;
-        margin: 2rem auto;
-    }
-
-    .form {
-        width: 100%;
-        height: auto;
-        display: grid;
-        grid-template-rows: auto;
-        grid-row-gap: 1rem;
-
-        &__section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-column-gap: 1rem;
-
-            &-xl {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-
-            &-blocks {
-                grid-template-columns: repeat(auto-fill, minmax(89.6px, 1fr));
-            }
-        }
-
-        &__information {
-            font-size: $font-size-small;
-            font-weight: 500;
-            color: $color-grey;
-            padding-bottom: 1rem;
-        }
-
-        &__error {
-            color: $color-red;
-            font-size: $font-size-small;
-        }
-
-        
-        &__option {
-            display: flex;
-            justify-content: left;
-            align-items: center;
-
-            & > p {
-                padding-left: 1rem;
-                font-weight: 500;
-                font-size: $font-size-small;
-            }
-        }
-    }
-
-    #age-selector {
-        min-height: 89.6px; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: $color-white;
-        border: 1px solid $color-grey;
-        @include transition-animation;
-
-        & > p {
-            color: $color-grey;
-            font-weight: 500;
-        }
-
-        & > input {
-            display: none;
-        }
-
-        &:hover {
-            background-color: $color-green;
-            cursor: pointer;
-
-            & > p {
-                color: $color-white;
-            }
-        }
-    }
-
-    .age-checked {
-        background-color: $color-green !important;
-        color: $color-white;
-    }
-
-    .image {
-        width: 100%;
-        min-height: 89.6px;
-    
-        &__preview {
-            display: none;
-            width: 89.6px;
-            height: 89.6px;
-            text-align: center;
-            background-color: $color-green;
-            justify-content: center;
-            align-items: center;
-
-            & > img {
-                height: 89.6px;
-                max-width: 89.6px;
-                position: relative;
-            }
-
-            & > button {
-                width: 89.6px;
-                height: 89.6px;
-                position: absolute;
-                color: $color-white;
-                font-size: $font-size-medium;
-                border: none;
-                background-color: transparent;
-                outline: none;
-
-                & > i {
-                    display: none;
-                }
-
-                &:hover {
-                    background-color: rgba(1, 22, 39, 0.30);
-                    cursor: pointer;
-
-                    & > i {
-                        display: block;
-                    }
-                }
-            }
-        }
-
-        &__upload {
-            width: 89.6px;
-            height: 89.6px;
-            background: $color-white;
-            border-radius: 2px;
-            border: 1px solid $color-grey;
-            color: $color-grey;
-            @include transition-animation;
-            outline: none;
-            
-            &:hover {
-                background-color: $color-green;
-                color: $color-white;
-                cursor: pointer;
-            }
-         }
-    }
-
-    #file-name {
-        width: 248px;
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        font-size: $font-size-small;
-        font-weight: bold;
-        display: none;
-    }
 }
