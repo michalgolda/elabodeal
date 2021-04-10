@@ -5,8 +5,8 @@ import Alert from "../alert";
 function createProduct(
 		actionURL,
 		data,
-		errorHandler = () => null,
-		successHandler = () => null
+		successHandler = () => null,
+		errorHandler = () => null
 	) {
 	return apiClient.post( actionURL, data )
 		.then( response => {
