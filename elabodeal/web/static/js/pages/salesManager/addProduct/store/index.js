@@ -9,21 +9,80 @@ const store = createStore( {
 		return {
 			categories,
 			supportedLanguages,
-			formData: {
-				category_id: '',
-				age_category: 3,
-				product_language_id: '',
-				page_count: null,
-				published_year: null,
-				title: '',
-				author: '',
-				price: 0.00,
-				description: '',
-				contents: '',
-				isbn: '',
-				files: [],
-				other_images: [],
-				cover_img: null
+			form: {
+				isValid: false,
+				fields: {
+					category_id: {
+						value: null,
+						required: true,
+						error: false
+					},
+					product_language_id: {
+						value: null,
+						required: true,
+						error: false
+					},
+					age_category: {
+						value: 3,
+						required: true,
+						error: false
+					},
+					page_count: {
+						value: null,
+						required: true,
+						error: false
+					},
+					published_year: {
+						value: null,
+						required: true,
+						error: false
+					},
+					title: {
+						value: null,
+						required: true,
+						error: false
+					},
+					author: {
+						value: null,
+						required: true,
+						error: false
+					},
+					price: {
+						value: null,
+						required: true,
+						error: false
+					},
+					description: {
+						value: null,
+						required: true,
+						error: false
+					},
+					contents: {
+						value: null,
+						required: false,
+						error: false
+					},
+					isbn: {
+						value: null,
+						required: true,
+						error: false
+					},
+					cover_img: {
+						value: null,
+						required: true,
+						error: false
+					},
+					files: {
+						value: [],
+						required: true,
+						error: false
+					},
+					other_images: {
+						value: [],
+						required: false,
+						error: false
+					}
+				}
 			}
 		}
 	},
