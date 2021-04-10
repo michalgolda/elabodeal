@@ -16,6 +16,7 @@
 <script>
 import { mapState } from "vuex";
 
+import Alert from "../../../../alert";
 import publisherService from "../../../../services/publisher";
 
 import StandardDataSection from "./StandardDataSection.vue";
@@ -33,14 +34,24 @@ export default {
 		ImagesSection,
 		ConsentsSection
 	},
-	computed: mapState( [ "formData" ] ),
+	computed: mapState( [ "form" ] ),
 	methods: {
 		handleSubmitForm: function ( e ) {
 			e.preventDefault();
 
+			this.$store.commit( "validateFormData" );
+
+			if ( !this.form.isValid ) {
+				window.scrollTo( 0, 0 );
+
+				Alert.info( "Popraw błędy w formularzu." );
+
+				return;
+			}
+
 			const formData = new FormData();
-			for ( var key of Object.keys( this.formData ) ) {
-				const value = this.formData[ key ];
+			for ( var key of Object.keys( this.form.fields ) ) {
+				const value = this.form.fields[ key ].value;
 
 				if ( key === "files" || key === "other_images" ) {
 					value.forEach(
@@ -54,7 +65,20 @@ export default {
 			publisherService.createProduct( 
 				'/api/me/products/', 
 				formData,
-				successHandler = () => window.locaton = '/'
+				() => window.locaton = '/',
+				( error ) => {
+					const { data } = error.response;
+
+					const fieldNames = Object.keys( data );
+
+					for ( var fieldName of fieldNames ) {
+						const field = this.form.fields[ fieldName ];
+
+						field.error = true;
+
+						window.scrollTo( 0, 0 );
+					}
+				}
 			);
 		}
 	}
