@@ -50,7 +50,7 @@ export default {
 			type: Boolean
 		}
 	},
-	computed: mapState( [ "formData" ] ),
+	computed: mapState( [ "form" ] ),
 	methods: {
 		handleChooseFile: function ( { file, e } ) {
 			const { imagePreview } = this.$refs;
@@ -69,14 +69,14 @@ export default {
 			if ( this.isCover ) {
 				value = file;
 			} else { 
-				value = this.formData[ 'other_images' ];
+				value = this.form.fields[ "other_images" ].value;
 				value.push( file );
 			}
 
 			this.$store.commit(
-				'updateFormData',
+				"updateFormData",
 				{
-					fieldName: this.isCover ? 'cover_img' : 'other_images',
+					fieldName: this.isCover ? "cover_img" : "other_images",
 					fieldValue: value
 				}
 			)
@@ -91,15 +91,15 @@ export default {
 			if ( this.isCover ) {
 				value = null;
 			} else {
-				value = this.form.data[ 'other_images' ].filter(
+				value = this.form.fields[ "other_images" ].value.filter(
 					( element ) => element.id !== file.id
 				)
 			}
 
 			this.$store.commit(
-				'updateFormData',
+				"updateFormData",
 				{
-					fieldName: this.isCover ? 'cover_img' : 'other_images',
+					fieldName: this.isCover ? "cover_img" : "other_images",
 					fieldValue: value
 				}
 			)

@@ -4,6 +4,12 @@
 			PRZEŚLIJ EBOOKA 
 			<i class="fas fa-question-circle input-information"></i>
 		</label>
+		<p 
+			class="error-text"
+			v-if="this.form.fields.files.error"
+		>
+			Wymagane jest przesłanie przynajmniej jednego pliku
+		</p>
 		<div class="files files-ebook files__grid files__grid-3">
 			<template v-for="type in ['PDF', 'MOBI', 'EPUB']">
 				<ebook-file-input :type="type" />
@@ -23,12 +29,14 @@
 	</div>
 </template>
 <script>
+import { mapState } from "vuex";
 import EbookFileInput from "./EbookFileInput.vue";
 
 
 export default {
 	components: {
 		EbookFileInput
-	}
+	},
+	computed: mapState( [ "form" ] )
 }
 </script>

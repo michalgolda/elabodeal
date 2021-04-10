@@ -4,7 +4,8 @@
 			<label>KATEGORIA</label>
 			<select 
 				name="category"
-				@change="handleChangeCategory" 
+				:class="{ 'form__input-error': this.form.fields.category_id.error }"
+				@change="handleChangeCategory"
 			>
 				<option selected disabled>Wybierz kategorie</option>
 				<template v-for="category in categories">
@@ -16,6 +17,7 @@
 			<label>JĘZYK</label>
 			<select 
 				name="language"
+				:class="{ 'form__input-error': this.form.fields.product_language_id.error }"
 				@change="handleChangeLanguage"
 			>
 				<option selected disabled>Wybierz język</option>
@@ -31,8 +33,9 @@
 			<input 
 				type="number" 
 				name="page_count"
-				required 
+				:class="{ 'form__input-error': this.form.fields.page_count.error }"
 				@change="handleChangePageCount"
+				@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'page_count' } )"
 			/>
 		</div>
 		<div>
@@ -40,8 +43,9 @@
 			<input 
 				type="number" 
 				name="published_year" 
-				required 
+				:class="{ 'form__input-error': this.form.fields.published_year.error }"
 				@change="handleChangePublishedYear"
+				@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'published_year' } )"
 			/>
 		</div>
 		<div>
@@ -52,8 +56,9 @@
 				min="0.00" 
 				max="1000.00" 
 				step="0.01"
-				required 
+				:class="{ 'form__input-error': this.form.fields.price.error }"
 				@change="handleChangePrice"
+				@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'price' } )"
 			/>
 		</div>
 	</div>
@@ -62,8 +67,9 @@
 		<input 
 			type="text" 
 			name="title"
-			required 
+			:class="{ 'form__input-error': this.form.fields.title.error }"
 			@change="handleChangeTitle"
+			@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'title' } )"
 		/>
 	</div>
 	<div class="form__group">
@@ -71,16 +77,18 @@
 		<input 
 			type="text" 
 			name="author"
-			required
+			:class="{ 'form__input-error': this.form.fields.author.error }"
 			@change="handleChangeAuthor"
+			@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'author' } )"
 		/>
 	</div>
 	<div class="form__group form__group-textarea">
 		<label>OPIS <i class="fas fa-question-circle input-information"></i></label>
 		<textarea
 			name="description"
-			required 
+			:class="{ 'form__input-error': this.form.fields.description.error }"
 			@change="handleChangeDescription"
+			@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'description' } )"
 		>
 		</textarea>
 		<p>Pozostało znaków: 9000</p>
@@ -89,7 +97,6 @@
 		<label>SPIS TREŚCI</label>
 		<textarea 
 			name="contents"
-			required 
 			@change="handleChangeContents"
 		>
 		</textarea>
@@ -100,8 +107,9 @@
 		<input
 			 type="text" 
 			 name="isbn"
-			 required 
+			 :class="{ 'form__input-error': this.form.fields.isbn.error }"
 			 @change="handleChangeIsbn"
+			 @keyup="this.$store.commit( 'clearFieldError', { fieldName: 'isbn' } )"
 		/>
 	</div>
 </template>
@@ -110,7 +118,7 @@ import { mapState } from "vuex";
 
 
 export default {
-	computed: mapState( [ 'categories', 'supportedLanguages' ] ),
+	computed: mapState( [ "categories", "supportedLanguages", "form" ] ),
 	methods: {
 		handleChangeCategory: function ( e ) {
 			const { value } = e.target;
@@ -118,7 +126,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'category_id',
+					fieldName: "category_id",
 					fieldValue: this.categories.find(
 						( category ) => category.name === value
 					).id
@@ -131,7 +139,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'product_language_id',
+					fieldName: "product_language_id",
 					fieldValue: this.supportedLanguages.find(
 						( language ) => language.name === value
 					).id
@@ -144,7 +152,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'page_count',
+					fieldName: "page_count",
 					fieldValue: value
 				}
 			)
@@ -155,7 +163,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'published_year',
+					fieldName: "published_year",
 					fieldValue: value
 				}
 			)
@@ -166,7 +174,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'price',
+					fieldName: "price",
 					fieldValue: value
 				}
 			)
@@ -177,7 +185,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'author',
+					fieldName: "author",
 					fieldValue: value
 				}
 			)
@@ -188,7 +196,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'title',
+					fieldName: "title",
 					fieldValue: value
 				}
 			)
@@ -199,7 +207,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'description',
+					fieldName: "description",
 					fieldValue: value
 				}
 			)
@@ -210,7 +218,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'contents',
+					fieldName: "contents",
 					fieldValue: value
 				}
 			)
@@ -221,7 +229,7 @@ export default {
 			this.$store.commit(
 				"updateFormData",
 				{
-					fieldName: 'isbn',
+					fieldName: "isbn",
 					fieldValue: value
 				}
 			)

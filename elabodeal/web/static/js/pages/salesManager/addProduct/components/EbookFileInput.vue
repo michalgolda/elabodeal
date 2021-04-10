@@ -43,10 +43,10 @@ export default {
 	components: {
 		FileInput
 	},
-	computed: mapState( [ "formData" ] ),
+	computed: mapState( [ "form" ] ),
 	methods: {
 		handleChooseFile: function ( { file, e } ) {
-			var value = this.formData.files;
+			var value = this.form.fields[ "files" ].value;
 
 			file.id = String( Math.random() );
 
@@ -61,7 +61,7 @@ export default {
 			)
 		},
 		handleDeleteFile: function( { file, e } ) {
-			var value = this.formData.files.filter(
+			var value = this.form.fields[ "files" ].value.filter(
 				( element ) => element.id !== file.id
 			)
 

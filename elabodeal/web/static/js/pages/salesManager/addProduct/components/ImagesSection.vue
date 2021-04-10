@@ -1,6 +1,12 @@
 <template>
 	<div class="form__group">
 		<label>OKŁADKA</label>
+		<p 
+			class="error-text" 
+			v-if="this.form.fields.cover_img.error"
+		>
+			Okładka jest obowiązkowa
+		</p>
 		<div class="files files-image files-image-cover">
 			<image-file-input :isCover=true />
 			<p class="form__group-details form__group-details-cover">ajwdjhajwdhajwdhajwdhajwhdjawhdajwdhajwdhajwdhawjdhajwdhajwdhajwdhajwdhawjdhawjdhajwdhajwdh</p>
@@ -17,12 +23,14 @@
 	</div>
 </template>
 <script>
+import { mapState } from "vuex";
 import ImageFileInput from "./ImageFileInput.vue";
 
 
 export default {
 	components: {
 		ImageFileInput
-	}
+	},
+	computed: mapState( [ "form" ] )
 }
 </script>
