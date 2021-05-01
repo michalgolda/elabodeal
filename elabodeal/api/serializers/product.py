@@ -22,7 +22,8 @@ class CreateProductRequestSerializer(serializers.Serializer):
 	category_id = serializers.UUIDField()
 	product_language_id = serializers.UUIDField()
 	title = serializers.CharField(
-		max_length=Product.MAX_TITLE_LENGTH
+		max_length=Product.MAX_TITLE_LENGTH,
+		min_length=Product.MIN_TITLE_LENGTH
 	)
 	description = serializers.CharField(
 		max_length=Product.MAX_DESCRIPTION_LENGTH
