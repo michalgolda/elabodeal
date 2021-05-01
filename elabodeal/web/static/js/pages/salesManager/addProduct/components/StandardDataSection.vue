@@ -33,6 +33,8 @@
 			<input 
 				type="number" 
 				name="page_count"
+				min="10"
+				max="1500"
 				:class="{ 'form__input-error': this.form.fields.page_count.error }"
 				@change="handleChangePageCount"
 				@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'page_count' } )"
@@ -43,6 +45,8 @@
 			<input 
 				type="number" 
 				name="published_year" 
+				min="900"
+				max="2200"
 				:class="{ 'form__input-error': this.form.fields.published_year.error }"
 				@change="handleChangePublishedYear"
 				@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'published_year' } )"
@@ -50,16 +54,7 @@
 		</div>
 		<div>
 			<label>CENA</label>
-			<input 
-				type="number" 
-				name="price"
-				min="0.00" 
-				max="1000.00" 
-				step="0.01"
-				:class="{ 'form__input-error': this.form.fields.price.error }"
-				@change="handleChangePrice"
-				@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'price' } )"
-			/>
+			<price-input />
 		</div>
 	</div>
 	<div class="form__group">
@@ -116,8 +111,13 @@
 <script>
 import { mapState } from "vuex";
 
+import PriceInput from "./PriceInput.vue";
+
 
 export default {
+	components: {
+		PriceInput
+	},
 	computed: mapState( [ "categories", "supportedLanguages", "form" ] ),
 	methods: {
 		handleChangeCategory: function ( e ) {
@@ -164,17 +164,6 @@ export default {
 				"updateFormData",
 				{
 					fieldName: "published_year",
-					fieldValue: value
-				}
-			)
-		},
-		handleChangePrice: function ( e ) {
-			const { value } = e.target;
-
-			this.$store.commit(
-				"updateFormData",
-				{
-					fieldName: "price",
 					fieldValue: value
 				}
 			)
