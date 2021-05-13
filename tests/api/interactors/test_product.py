@@ -1,3 +1,4 @@
+import datetime
 from unittest import mock
 from tests import BaseTestCase
 
@@ -17,16 +18,18 @@ class BaseProductInteractorTest(BaseTestCase):
 	@mock.patch('elabodeal.api.repositories.CategoryRepository')
 	@mock.patch('elabodeal.api.repositories.ProductGroupRepository')
 	@mock.patch('elabodeal.api.repositories.ProductLanguageRepository')
+	@mock.patch('elabodeal.api.repositories.ProductPremiereRepository')
 	def setUp(
 		self, mock_file_repo, mock_product_repo, 
 		mock_category_repo, mock_product_group_repo, 
-		mock_product_language_repo
+		mock_product_language_repo, mock_product_premiere_repo
 	):
 		self.mock_file_repo = mock_file_repo
 		self.mock_product_repo = mock_product_repo
 		self.mock_category_repo = mock_category_repo
 		self.mock_product_group_repo = mock_product_group_repo
 		self.mock_product_language_repo = mock_product_language_repo
+		self.mock_product_premiere_repo = mock_product_premiere_repo
 
 
 class GetProductListInteractorTest(BaseProductInteractorTest):
@@ -104,6 +107,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		self.mock_product_group_repo.add.return_value = True
 		self.mock_category_repo.get_one_by.return_value = True
 		self.mock_product_language_repo.get_one_by.return_value = True
+		self.mock_product_premiere_repo.add.return_value = True
 
 		mock_publisher = mock.MagicMock()
 		mock_cover_img = mock.MagicMock()
@@ -118,13 +122,15 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		price = 12.00
 		age_category = 7
 		other_images, files = [True], [True]
+		premiere_date = datetime.datetime.now()
 
 		interactor = CreateProductInteractor(
 			product_repo=self.mock_product_repo,
 			file_repo=self.mock_file_repo,
 			category_repo=self.mock_category_repo,
 			product_group_repo=self.mock_product_group_repo,
-			product_language_repo=self.mock_product_language_repo
+			product_language_repo=self.mock_product_language_repo,
+			product_premiere_repo=self.mock_product_premiere_repo
 		)
 		interactor_returned_value = interactor.execute(
 			publisher=mock_publisher,
@@ -140,7 +146,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 			age_category=age_category,
 			cover_img=mock_cover_img,
 			other_images=other_images,
-			files=files
+			files=files,
+			premiere_date=premiere_date
 		)
 
 		self.mock_product_group_repo.add.assert_called_once_with(
@@ -153,6 +160,10 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 
 		self.mock_product_language_repo.get_one_by.assert_called_once_with(
 			id=product_language_id
+		)
+
+		self.mock_product_premiere_repo.add.assert_called_once_with(
+			date=premiere_date
 		)
 
 		self.mock_product_repo.add.assert_called_once_with(
@@ -169,7 +180,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 			price=price,
 			cover_img=True,
 			files=[True],
-			other_images=[True]
+			other_images=[True],
+			premiere=True
 		)
 
 		self.assertEqual(interactor_returned_value, True)
@@ -190,6 +202,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		price = 12.00
 		age_category = 7
 		other_images, files = [True], [True]
+		premiere_date = None
 
 		with self.assertRaises(ResourceDoesNotExists):
 			interactor = CreateProductInteractor(
@@ -197,7 +210,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				file_repo=self.mock_file_repo,
 				category_repo=self.mock_category_repo,
 				product_group_repo=self.mock_product_group_repo,
-				product_language_repo=self.mock_product_language_repo
+				product_language_repo=self.mock_product_language_repo,
+				product_premiere_repo=self.mock_product_premiere_repo
 			)
 			interactor.execute(
 				publisher=mock_publisher,
@@ -213,7 +227,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				age_category=age_category,
 				cover_img=mock_cover_img,
 				other_images=other_images,
-				files=files
+				files=files,
+				premiere_date=premiere_date
 			)
 
 	def test_execute_if_category_does_not_exists(self):
@@ -233,6 +248,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		price = 12.00
 		age_category = 7
 		other_images, files = [True], [True]
+		premiere_date = None
 
 		with self.assertRaises(ResourceDoesNotExists):
 			interactor = CreateProductInteractor(
@@ -240,7 +256,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				file_repo=self.mock_file_repo,
 				category_repo=self.mock_category_repo,
 				product_group_repo=self.mock_product_group_repo,
-				product_language_repo=self.mock_product_language_repo
+				product_language_repo=self.mock_product_language_repo,
+				product_premiere_repo=self.mock_product_premiere_repo
 			)
 			interactor.execute(
 				publisher=mock_publisher,
@@ -256,7 +273,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				age_category=age_category,
 				cover_img=mock_cover_img,
 				other_images=other_images,
-				files=files
+				files=files,
+				premiere_date=premiere_date
 			)
 
 	def test_execute_if_product_language_does_not_exists(self):
@@ -277,6 +295,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		price = 12.00
 		age_category = 7
 		other_images, files = [True], [True]
+		premiere_date = None
 
 		with self.assertRaises(ResourceDoesNotExists):
 			interactor = CreateProductInteractor(
@@ -284,7 +303,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				file_repo=self.mock_file_repo,
 				category_repo=self.mock_category_repo,
 				product_group_repo=self.mock_product_group_repo,
-				product_language_repo=self.mock_product_language_repo
+				product_language_repo=self.mock_product_language_repo,
+				product_premiere_repo=self.mock_product_premiere_repo
 			)
 			interactor.execute(
 				publisher=mock_publisher,
@@ -300,5 +320,6 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				age_category=age_category,
 				cover_img=mock_cover_img,
 				other_images=other_images,
-				files=files
+				files=files,
+				premiere_date=premiere_date
 			)

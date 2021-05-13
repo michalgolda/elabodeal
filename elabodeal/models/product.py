@@ -75,6 +75,13 @@ class Product(models.Model):
 	age_category = models.IntegerField(choices=AgeCategory.choices)
 	average_rating = models.FloatField(default=0)
 	rating_count = models.IntegerField(default=0)
+	
+	premiere = models.OneToOneField(
+		'elabodeal.ProductPremiere',
+		on_delete=models.CASCADE,
+		null=True
+	)
+
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

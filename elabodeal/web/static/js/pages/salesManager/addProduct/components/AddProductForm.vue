@@ -8,6 +8,7 @@
 		<ebook-files-section />
 		<age-category-section />
 		<images-section />
+		<additional-data-section />
 		<consents-section />
 		<button class="btn btn__primary">Dodaj produkt</button>
 		<button class="btn btn__secondary" type="button">Dodaj wersje językowe</button>
@@ -23,16 +24,18 @@ import StandardDataSection from "./StandardDataSection.vue";
 import EbookFilesSection from "./EbookFilesSection.vue";
 import AgeCategorySection from "./AgeCategorySection.vue";
 import ImagesSection from "./ImagesSection.vue";
+import AdditionalDataSection from "./AdditionalDataSection.vue";
 import ConsentsSection from "./ConsentsSection.vue";
 
 
 export default {
 	components: {
-		StandardDataSection,
-		AgeCategorySection,
-		EbookFilesSection,
 		ImagesSection,
-		ConsentsSection
+		ConsentsSection,
+		EbookFilesSection,
+		AgeCategorySection,
+		StandardDataSection,
+		AdditionalDataSection
 	},
 	computed: mapState( [ "form" ] ),
 	methods: {

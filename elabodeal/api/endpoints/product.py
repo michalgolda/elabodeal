@@ -13,11 +13,12 @@ from elabodeal.api.serializers import (
 	CreateProductRequestSerializer
 )
 from elabodeal.api.repositories import (
-	ProductRepository,
-	ProductGroupRepository,
-	CategoryRepository,
 	FileRepository,
-	ProductLanguageRepository
+	ProductRepository,
+	CategoryRepository,
+	ProductGroupRepository,
+	ProductLanguageRepository,
+	ProductPremiereRepository
 )
 
 
@@ -55,13 +56,15 @@ class MeProductsEndpoint(Endpoint):
 		product_repo = ProductRepository()
 		product_group_repo = ProductGroupRepository()
 		product_language_repo = ProductLanguageRepository()
+		product_premiere_repo = ProductPremiereRepository()
 
 		interactor = CreateProductInteractor(
 			file_repo=file_repo,
 			product_repo=product_repo,
 			category_repo=category_repo,
 			product_group_repo=product_group_repo,
-			product_language_repo=product_language_repo
+			product_language_repo=product_language_repo,
+			product_premiere_repo=product_premiere_repo
 		)
 		created_product = interactor.execute(
 			publisher,

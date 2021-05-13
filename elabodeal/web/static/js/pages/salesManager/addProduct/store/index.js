@@ -81,6 +81,11 @@ const store = createStore( {
 						value: [],
 						required: false,
 						error: false
+					},
+					premiere_date: {
+						value: null,
+						required: false,
+						error: false
 					}
 				}
 			}

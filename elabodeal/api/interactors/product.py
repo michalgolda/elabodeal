@@ -27,7 +27,8 @@ class CreateProductInteractor(BaseProductInteractor):
 
 	def __init__(
 		self, product_group_repo, category_repo, 
-		file_repo, product_language_repo, *args, **kwargs
+		file_repo, product_language_repo, product_premiere_repo,
+		*args, **kwargs
 	):
 		super().__init__(*args, **kwargs)
 
@@ -35,13 +36,15 @@ class CreateProductInteractor(BaseProductInteractor):
 		self.category_repo = category_repo
 		self.product_group_repo = product_group_repo
 		self.product_language_repo = product_language_repo
+		self.product_premiere_repo = product_premiere_repo
 
 	def execute(
 		self, publisher, product_group_id,
 		category_id, product_language_id, 
 		title, description, contents, 
 		author, isbn, price, age_category, 
-		cover_img, other_images, files
+		cover_img, other_images, files,
+		premiere_date
 	):
 		if product_group_id:
 			existing_product_group = self.product_group_repo.get_one_by(
@@ -80,6 +83,8 @@ class CreateProductInteractor(BaseProductInteractor):
 			self.file_repo.add(file, type='ebook') for file in files
 		]
 
+		premiere = self.product_premiere_repo.add(date=premiere_date) if premiere_date else None
+
 		return self.product_repo.add(
 			publisher=publisher,
 			group=existing_product_group,
@@ -94,8 +99,10 @@ class CreateProductInteractor(BaseProductInteractor):
 			price=price,
 			cover_img=uploaded_cover_img,
 			files=uploaded_files,
-			other_images=uploaded_other_images
+			other_images=uploaded_other_images,
+			premiere=premiere
 		)
+
 
 class DeleteProductInteractor(BaseProductInteractor):
 

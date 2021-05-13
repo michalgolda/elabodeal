@@ -4,6 +4,7 @@ from elabodeal.models import Product, File
 
 from .file import FileSerializer
 from .product_language import ProductLanguageSerializer
+from .product_premiere import ProductPremiereSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -11,6 +12,7 @@ class ProductSerializer(serializers.ModelSerializer):
 	files = FileSerializer(many=True, read_only=True)
 	cover_img = FileSerializer(read_only=True)
 	language = ProductLanguageSerializer(read_only=True)
+	premiere = ProductPremiereSerializer(read_only=True)
 
 	class Meta:
 		model = Product
@@ -64,3 +66,4 @@ class CreateProductRequestSerializer(serializers.Serializer):
 		min_length=1,
 		max_length=3
 	)
+	premiere_date = serializers.DateField(default=None)

@@ -6,6 +6,7 @@ from .category import Category
 from .publisher import Publisher
 from .shared_cart import SharedCart
 from .product_group import ProductGroup
+from .product_premiere import ProductPremiere
 from .product_language import ProductLanguage
 from .purchased_product import PurchasedProduct
 from .verification_code import VerificationCode

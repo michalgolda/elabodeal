@@ -95,6 +95,12 @@ class ProductModelTest(BaseTestCase):
 			0
 		)
 
+		self.assertEqual(hasattr(Product, 'premiere'), True)
+		self.assertEqual(
+			Product._meta.get_field('premiere').null,
+			True
+		)
+
 		self.assertEqual(hasattr(Product, 'created_at'), True)
 		self.assertEqual(
 			Product._meta.get_field('created_at').auto_now_add,

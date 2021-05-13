@@ -104,7 +104,7 @@ class MeProductsEndpointTest(APITestCase):
 			data={
 				'product_language_id': str(product_language.id),
 				'category_id': str(category.id),
-				'title': 'test',
+				'title': 'testtesttest',
 				'description': 'test',
 				'contents': 'test',
 				'author': 'test',
@@ -160,7 +160,7 @@ class MeProductsEndpointTest(APITestCase):
 				'product_group_id': str(product_group.id),
 				'product_language_id': str(product_language.id),
 				'category_id': str(category.id),
-				'title': 'test',
+				'title': 'testtesttest',
 				'description': 'test',
 				'contents': 'test',
 				'author': 'test',
@@ -173,8 +173,6 @@ class MeProductsEndpointTest(APITestCase):
 			}
 		)
 		response_data = response.json()
-
-		print(response_data)
 
 		self.assertEqual(response.status_code, 201)
 
