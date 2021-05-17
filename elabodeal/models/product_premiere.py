@@ -10,7 +10,7 @@ class ProductPremiere(models.Model):
 		editable=False
 	)
 
-	date = models.DateField()
+	datetime = models.DateTimeField()
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

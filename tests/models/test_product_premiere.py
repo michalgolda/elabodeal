@@ -20,7 +20,7 @@ class ProductPremiereModelTest(BaseTestCase):
 			False
 		)
 
-		self.assertEqual(hasattr(ProductPremiere, 'date'), True)
+		self.assertEqual(hasattr(ProductPremiere, 'datetime'), True)
 
 		self.assertEqual(hasattr(ProductPremiere, 'created_at'), True)
 		self.assertEqual(

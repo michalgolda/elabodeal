@@ -44,7 +44,7 @@ class CreateProductInteractor(BaseProductInteractor):
 		title, description, contents, 
 		author, isbn, price, age_category, 
 		cover_img, other_images, files,
-		premiere_date
+		premiere_datetime
 	):
 		if product_group_id:
 			existing_product_group = self.product_group_repo.get_one_by(
@@ -83,7 +83,11 @@ class CreateProductInteractor(BaseProductInteractor):
 			self.file_repo.add(file, type='ebook') for file in files
 		]
 
-		premiere = self.product_premiere_repo.add(date=premiere_date) if premiere_date else None
+		premiere = premiere_datetime
+		if premiere_datetime:
+			premiere = self.product_premiere_repo.add(
+				datetime=premiere_datetime
+			)
 
 		return self.product_repo.add(
 			publisher=publisher,

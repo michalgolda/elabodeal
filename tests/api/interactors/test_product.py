@@ -122,7 +122,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		price = 12.00
 		age_category = 7
 		other_images, files = [True], [True]
-		premiere_date = datetime.datetime.now()
+		premiere_datetime = datetime.datetime.now()
 
 		interactor = CreateProductInteractor(
 			product_repo=self.mock_product_repo,
@@ -147,7 +147,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 			cover_img=mock_cover_img,
 			other_images=other_images,
 			files=files,
-			premiere_date=premiere_date
+			premiere_datetime=premiere_datetime
 		)
 
 		self.mock_product_group_repo.add.assert_called_once_with(
@@ -163,7 +163,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		)
 
 		self.mock_product_premiere_repo.add.assert_called_once_with(
-			date=premiere_date
+			datetime=premiere_datetime
 		)
 
 		self.mock_product_repo.add.assert_called_once_with(
@@ -202,7 +202,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		price = 12.00
 		age_category = 7
 		other_images, files = [True], [True]
-		premiere_date = None
+		premiere_datetime = None
 
 		with self.assertRaises(ResourceDoesNotExists):
 			interactor = CreateProductInteractor(
@@ -228,7 +228,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				cover_img=mock_cover_img,
 				other_images=other_images,
 				files=files,
-				premiere_date=premiere_date
+				premiere_datetime=premiere_datetime
 			)
 
 	def test_execute_if_category_does_not_exists(self):
@@ -248,7 +248,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		price = 12.00
 		age_category = 7
 		other_images, files = [True], [True]
-		premiere_date = None
+		premiere_datetime = None
 
 		with self.assertRaises(ResourceDoesNotExists):
 			interactor = CreateProductInteractor(
@@ -274,7 +274,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				cover_img=mock_cover_img,
 				other_images=other_images,
 				files=files,
-				premiere_date=premiere_date
+				premiere_datetime=premiere_datetime
 			)
 
 	def test_execute_if_product_language_does_not_exists(self):
@@ -295,7 +295,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		price = 12.00
 		age_category = 7
 		other_images, files = [True], [True]
-		premiere_date = None
+		premiere_datetime = None
 
 		with self.assertRaises(ResourceDoesNotExists):
 			interactor = CreateProductInteractor(
@@ -321,5 +321,5 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				cover_img=mock_cover_img,
 				other_images=other_images,
 				files=files,
-				premiere_date=premiere_date
+				premiere_datetime=premiere_datetime
 			)

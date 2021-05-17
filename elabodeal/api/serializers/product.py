@@ -1,5 +1,7 @@
+from django.utils import timezone
 from django.core.validators import FileExtensionValidator
 from rest_framework import serializers
+
 from elabodeal.models import Product, File
 
 from .file import FileSerializer
@@ -66,4 +68,15 @@ class CreateProductRequestSerializer(serializers.Serializer):
 		min_length=1,
 		max_length=3
 	)
-	premiere_date = serializers.DateField(default=None)
+	premiere_datetime = serializers.DateTimeField(default=None)
+
+	def validate_premiere_datetime(self, value):
+		if value:
+			current_datetime = timezone.now()
+
+			if value < current_datetime:
+				return serializers.ValidationError(
+					"Premiere date and time must not be a smaller than current date and time"
+				)
+
+		return value
