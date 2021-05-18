@@ -50,6 +50,13 @@
         &__group {
             width: 100%;
 
+            &-title {
+                text-align: center;
+                color: $color-green;
+                font-size: $font-size-medium;
+                font-weight: bold;
+            }
+
             &-grid {
                 display: grid;
                 grid-column-gap: .5rem;
