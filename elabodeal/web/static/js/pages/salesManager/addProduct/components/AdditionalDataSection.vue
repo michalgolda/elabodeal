@@ -42,6 +42,13 @@ export default {
 					}
 				)
 			}
+
+			this.$store.commit( 
+				'clearFieldError', 
+				{ 
+					fieldName: 'premiere_datetime' 
+				} 
+			);
 		},
 		handleChangePremiereTime: function ( e ) {
 			const { value } = e.target;
@@ -57,6 +64,13 @@ export default {
 					}
 				)
 			}
+
+			this.$store.commit( 
+				'clearFieldError', 
+				{ 
+					fieldName: 'premiere_datetime' 
+				} 
+			);
 		},
 		_prepareDatetimeString: function () {
 			const dateString = `${this.premiereDate} ${this.premiereTime}`;
