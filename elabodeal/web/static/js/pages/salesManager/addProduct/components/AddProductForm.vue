@@ -8,6 +8,16 @@
 		<ebook-files-section />
 		<age-category-section />
 		<images-section />
+		<div class="form__group">
+			<div>
+				<label>CENA</label>
+				<div class="flex-center" style="width: 100%;">
+					<div>
+						<price-input />
+					</div>
+				</div>
+			</div>			
+		</div>
 		<additional-data-section />
 		<consents-section />
 		<button class="btn btn__primary">Dodaj produkt</button>
@@ -27,9 +37,12 @@ import ImagesSection from "./ImagesSection.vue";
 import AdditionalDataSection from "./AdditionalDataSection.vue";
 import ConsentsSection from "./ConsentsSection.vue";
 
+import PriceInput from "./PriceInput.vue";
+
 
 export default {
 	components: {
+		PriceInput,
 		ImagesSection,
 		ConsentsSection,
 		EbookFilesSection,

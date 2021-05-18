@@ -27,7 +27,7 @@
 			</select>
 		</div>
 	</div>
-	<div class="form__group form__group-grid form__group-grid-3">
+	<div class="form__group form__group-grid form__group-grid-2">
 		<div>
 			<label>ILOŚĆ STRON</label>
 			<input 
@@ -51,10 +51,6 @@
 				@change="handleChangePublishedYear"
 				@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'published_year' } )"
 			/>
-		</div>
-		<div>
-			<label>CENA</label>
-			<price-input />
 		</div>
 	</div>
 	<div class="form__group">
