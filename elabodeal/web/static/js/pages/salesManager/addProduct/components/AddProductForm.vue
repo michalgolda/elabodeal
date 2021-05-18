@@ -68,7 +68,7 @@ export default {
 			publisherService.createProduct( 
 				'/api/me/products/', 
 				formData,
-				() => window.locaton = '/',
+				() => window.location = '/',
 				( error ) => {
 					const { data } = error.response;
 
