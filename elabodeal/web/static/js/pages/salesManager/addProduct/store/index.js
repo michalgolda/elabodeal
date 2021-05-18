@@ -82,7 +82,7 @@ const store = createStore( {
 						required: false,
 						error: false
 					},
-					premiere_date: {
+					premiere_datetime: {
 						value: null,
 						required: false,
 						error: false
