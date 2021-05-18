@@ -53,7 +53,7 @@ class CreateProductRequestSerializer(serializers.Serializer):
 	cover_img = serializers.ImageField()
 	other_images = serializers.ListField(
 		child=serializers.ImageField(),
-		default=None
+		default=[]
 	)
 	files = serializers.ListField(
 		child=serializers.FileField(
@@ -70,13 +70,12 @@ class CreateProductRequestSerializer(serializers.Serializer):
 	)
 	premiere_datetime = serializers.DateTimeField(default=None)
 
-	def validate_premiere_datetime(self, value):
-		if value:
-			current_datetime = timezone.now()
+	def validate_premiere_datetime(self, premiere_datetime):
+		current_datetime = timezone.now()
 
-			if value < current_datetime:
-				return serializers.ValidationError(
-					"Premiere date and time must not be a smaller than current date and time"
-				)
+		if premiere_datetime < current_datetime:
+			raise serializers.ValidationError(
+				"Premiere date and time must be in the future"
+			)
 
-		return value
+		return premiere_datetime
