@@ -1,0 +1,16 @@
+.number-input-controls {
+	width: 100%;
+	height: 32px;
+	display: flex;
+	justify-content: space-between;
+
+	.input-wrapper {
+		margin-left: .25rem;
+		margin-right: .25rem;
+	}
+
+	.btn {
+		min-width: 32px;
+		padding: 0;
+	}
+}
