@@ -73,8 +73,17 @@ export default {
 		handleDecrementValue: function ( e ) {
 			const value = this.price.value ? this.price.value : 0;
 
-			if ( value <= 0 )
+			if ( value <= 0 ) {
+				this.$store.commit(
+					"updateFormData",
+					{
+						fieldName: "price",
+						fieldValue: null
+					}
+				);
+
 				return;
+			}
 
 			const updatedValue = value - (1 + this.fee);
 
