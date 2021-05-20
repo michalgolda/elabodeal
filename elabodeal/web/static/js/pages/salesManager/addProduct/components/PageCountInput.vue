@@ -68,6 +68,18 @@ export default {
 			const input = e.target;
 			const inputValue = Number.parseInt( input.value );
 
+			if ( inputValue <= 0 ) {
+				this.$store.commit(
+					"updateFormData",
+					{
+						fieldName: "page_count",
+						fieldValue: 1
+					}
+				);
+
+				return;
+			}
+
 			this.$store.commit(
 				"updateFormData",
 				{
