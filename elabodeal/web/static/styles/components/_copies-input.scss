@@ -1,0 +1,13 @@
+.copies {
+	&__input {
+		&-infinity {
+			@extend input;
+
+			font-family: "Font Awesome";
+			color: $color-black;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}

@@ -1,16 +1,20 @@
-from typing import List
 from abc import ABC, abstractmethod
 
 
 class Repository(ABC):
-    @abstractmethod
-    def get(self, id: int) -> object:
-        raise NotImplementedError()
 
     @abstractmethod
-    def delete(self, object: object) -> None:
-        raise NotImplementedError()
+    def add(self, *args, **kwargs):
+        raise NotImplementedError
 
     @abstractmethod
-    def save(self, object: object) -> object:
-        raise NotImplementedError()
+    def get_all_by(self, *args, **kwargs):
+    	raise NotImplementedError
+
+    @abstractmethod
+    def get_one_by(self, *args, **kwargs):
+    	raise NotImplementedError
+
+    @abstractmethod
+    def delete_by(self, *args, **kwargs):
+        raise NotImplementedError

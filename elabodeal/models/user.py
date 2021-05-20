@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import (
@@ -7,7 +9,7 @@ from django.contrib.auth.models import (
 
 
 class UserManager(BaseUserManager):
-	def create_user(self, email: str, username: str, password: str) -> object:
+	def create_user(self, email, username, password):
 		user = self.model(
 			email=BaseUserManager.normalize_email(email),
 			username=username
@@ -17,7 +19,7 @@ class UserManager(BaseUserManager):
 
 		return user
 
-	def create_superuser(self, email: str, username: str, password: str) -> object:
+	def create_superuser(self, email, username, password):
 		user = self.create_user(email, username, password)
 		user.is_staff = True
 		user.is_superuser = True
@@ -30,22 +32,26 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+	MAX_USERNAME_LENGTH = 15
+
+	id = models.UUIDField(
+		primary_key=True,
+		default=uuid.uuid4,
+		editable=False
+	)
 	publisher = models.OneToOneField(
 		'elabodeal.Publisher',
 		on_delete=models.CASCADE,
-		null=True
+		null=True,
+		blank=True
 	)
-
-	username = models.CharField(max_length=15)
+	username = models.CharField(max_length=MAX_USERNAME_LENGTH)
 	email = models.EmailField(unique=True)
 	email_verified = models.BooleanField(default=False)
-	email_verified_at = models.DateTimeField(null=True)
-
-	is_active = models.BooleanField(default=True)
+	email_verified_at = models.DateTimeField(null=True, blank=True)
 	is_staff = models.BooleanField(default=False)
 	is_online = models.BooleanField(default=False)
 	is_superuser = models.BooleanField(default=False)
-
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -56,6 +62,10 @@ class User(AbstractBaseUser):
 	REQUIRED_FIELDS = ['username']
 
 	objects = UserManager()
+
+	@property
+	def is_publisher(self):
+		return self.publisher != None	
 
 	def has_perm(self, perm, obj=None):
 		return self.is_superuser

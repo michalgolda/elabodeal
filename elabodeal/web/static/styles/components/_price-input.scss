@@ -1,0 +1,37 @@
+.price {
+	&__input { 
+		width: calc(100% - 64px);
+	    height: 32px;
+	    float: left;
+	    border-top-right-radius: 0;
+	    border-bottom-right-radius: 0;
+	    -webkit-appearance: none;
+	    -moz-appearance: textfield;
+	    padding-left: 0;
+	    padding-right: 0;
+	    text-align: center;
+
+	    &::-webkit-inner-spin-button, 
+	    &::-webkit-outer-spin-button {
+	        -webkit-appearance: none; 
+	        margin: 0;
+	    }
+	}
+
+    &__currency {
+    	width: 64px;
+        height: 32px;
+        border-top: 1px solid $color-grey;
+        border-bottom: 1px solid $color-grey;
+        border-right: 1px solid $color-grey;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        float: left;
+        font-weight: bold;
+        background-color: white;
+        color: $color-grey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
