@@ -3,13 +3,21 @@
 		@incrementValue="handleIncrementValue"
 		@decrementValue="handleDecrementValue"
 	>
-		<input 
-			type="number"
-			name="copies"
-			:class="{ 'form__input-error': copies.error }"
-			:value="copies.value"
-			@change="handleChangeValue"
-		/>
+		<template v-if="!showInfinity">
+			<input 
+				class="copies__input"
+				type="number"
+				name="copies"
+				:class="{ 'form__input-error': copies.error }"
+				:value="copies.value"
+				@change="handleChangeValue"
+			/>
+		</template>
+		<template v-else>
+			<span class="copies__input-infinity">
+				<i class="fas fa-infinity"></i>
+			</span>
+		</template>
 	</number-input-controls>
 </template>
 <script>
@@ -19,7 +27,8 @@ import NumberInputControls from "../../../../components/NumberInputControls.vue"
 
 export default {
 	computed: mapState( {
-		copies: state => state.form.fields.copies
+		copies: state => state.form.fields.copies,
+		showInfinity: state => state.form.fields.copies.value == 0 ? true : false
 	} ),
 	components: {
 		NumberInputControls
