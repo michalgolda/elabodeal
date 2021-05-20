@@ -96,6 +96,10 @@ class Product(models.Model):
 	def empty_stars(self):
 		return range(int(5 - self.average_rating))
 
+	@property
+	def has_infinity_copies(self):
+		return self.copies == 0
+
 
 @receiver(pre_delete, sender=Product)
 def clear_product_files_handler(sender, instance, *args, **kwargs):
