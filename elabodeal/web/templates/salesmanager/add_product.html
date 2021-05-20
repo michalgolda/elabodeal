@@ -4,191 +4,28 @@
 {% block title-description %}Dodaj swojego e-booka i zacznij zarabiać{% endblock %}
 
 {% block page-id %}p-salesmanager-add-product{% endblock %}
+{% block page-scripts %}
+    <link ref="preload" href="{% static 'dist/salesManager~addProductPage.bundle.js' %}" as="script">
+    <script defer src="{% static 'dist/salesManager~addProductPage.bundle.js' %}"></script>
+{% endblock %}
 
 {% block body %}
 	{% include 'components/navigation.html' %}
-	<div class="wrapper">
-		<div class="form-wrapper">
-			<form class="form" action="{% url 'web:salesmanager-add-product' %}" method="POST" enctype="multipart/form-data" autocomplete="off">
-				{% csrf_token %}
-
-				{{ form.age_category }}
-
-				<p class="h2">Aby móc wystawić swojego ebooka na sprzedaż musisz wypełnić ponniższy formularz.</p>
-				<div>
-					<label>TYTUŁ</label>
-					{{ form.title }}
-				</div>
-				<div class="form__section">
-					<div>
-						<label>KATEGORIA</label>
-					{{ form.category }}
-					</div>
-					<div>
-						<label>WERSJA JĘZYKOWA</label>
-						{{ form.lang }}
-					</div>
-				</div>
-				<div>
-					<label>OPIS</label>
-					{{ form.description }}
-				</div>
-				<div>
-					<label>SPIS TREŚCI</label>
-					{{ form.contents }}
-				</div>
-				<div class="form__section">
-					<div>
-						<label>AUTOR</label>
-						{{ form.author }}
-					</div>
-					<div>
-						<label>ISBN</label>
-						{{ form.isbn }}
-					</div>
-				</div>
-				<div class="form__section form__section-xl">
-					<div>
-						<label>ILOŚĆ STRON</label>
-						{{ form.page_count }}
-					</div>
-					<div>
-						<label>CENA</label>
-						{{ form.price }}
-					</div>
-					<div>
-						<label>ILOŚĆ KOPII</label>
-						{{ form.copies }}
-					</div>
-				</div>
-				<div class="form__section">
-					<div>
-						<label>PDF</label>
-						<span id="file-name"></span>
-						<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="0">Prześlij</button>
-						{{ form.ebook_file_pdf }}
-					</div>
-					<div>
-						<label>EPUB</label>
-						<span id="file-name"></span>
-						<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="1">Prześlij</button>
-						{{ form.ebook_file_epub }}
-					</div>
-				</div>
-				<div class="form__section">
-					<div>
-						<label>MOBI</label>
-						<span id="file-name"></span>
-						<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="2">Prześlij</button>
-						{{ form.ebook_file_mobi }}
-					</div>
-					<div>
-						<label>WERSJA DEMO (PDF)</label>
-						<span id="file-name"></span>
-						<button id="ebook-upload-btn" class="btn btn__primary btn-block" type="button" file-input-id="3">Prześlij</button>
-						{{ form.ebook_file_demo }}
-					</div>
-				</div>
-				<div>
-					<label>Kategoria wiekowa</label>
-					<div class="form__section form__section-blocks">
-						<div id="age-selector" age="3">
-							<p>3+</p>
-						</div>
-						<div id="age-selector" age="7">
-							<p>7+</p>
-						</div>
-						<div id="age-selector" age="12">
-							<p>12+</p>
-						</div>
-						<div id="age-selector" age="16">
-							<p>16+</p>
-						</div>
-						<div id="age-selector" age="18">
-							<p>18+</p>
-						</div>
-					</div>
-				</div>
-				<div>
-					<label>Zdjęcia</label>
-					<div class="form__section form__section-blocks">
-						<div class="image">
-							<button id="image-upload-btn" class="image__upload" type="button" file-input-id="0">
-								<span>Okładka</span>
-								<i id="upload" class="fas fa-upload font-size-medium"></i>
-							</button>
-							<div id="image-preview" class="image__preview">
-								<img src="#">
-								</img>
-								<button id="image-delete-btn" type="button" file-input-id="0">
-									<i class="fas fa-trash-alt font-size-medium color-white"></i>
-								</button>
-							</div>
-							{{ form.cover_img }}
-						</div>
-						<div class="image">
-							<button id="image-upload-btn" class="image__upload" type="button" file-input-id="1">
-								<i id="upload" class="fas fa-upload font-size-medium"></i>
-							</button>
-							<div id="image-preview" class="image__preview">
-								<img src="#">
-								</img>
-								<button id="image-delete-btn" type="button" file-input-id="1">
-									<i class="fas fa-trash-alt font-size-medium color-white"></i>
-								</button>
-							</div>
-							{{ form.file_image_1 }}
-						</div>
-						<div class="image">
-							<button id="image-upload-btn" class="image__upload" type="button" file-input-id="2">
-								<i id="upload" class="fas fa-upload font-size-medium"></i>
-							</button>
-							<div id="image-preview" class="image__preview">
-								<img src="#">
-								</img>
-								<button id="image-delete-btn" type="button" file-input-id="2">
-									<i class="fas fa-trash-alt font-size-medium color-white"></i>
-								</button>
-							</div>
-							{{ form.file_image_2 }}
-						</div>
-						<div class="image">
-							<button id="image-upload-btn" class="image__upload" type="button" file-input-id="3">
-								<span></span>
-								<i id="upload" class="fas fa-upload font-size-medium"></i>
-							</button>
-							<div id="image-preview" class="image__preview">
-								<img src="#">
-								</img>
-								<button id="image-delete-btn" type="button" file-input-id="3">
-									<i class="fas fa-trash-alt font-size-medium color-white"></i>
-								</button>
-							</div>
-							{{ form.file_image_3 }}
-						</div>
-						<div class="image">
-							<button id="image-upload-btn" class="image__upload" type="button" file-input-id="4">
-								<i id="upload" class="fas fa-upload font-size-medium"></i>
-							</button>
-							<div id="image-preview" class="image__preview">
-								<img src="#">
-								</img>
-								<button id="image-delete-btn" type="button" file-input-id="4">
-									<i class="fas fa-trash-alt font-size-medium color-white"></i>
-								</button>
-							</div>
-							{{ form.file_image_4 }}
-						</div>
-						</div>
-					</div>
-					<div class="form__option">
-						{{ form.accept_rules }}
-						<p>Akceptuję regulamin</p>
-					</div>
-					<button class="btn btn__primary btn-block">Wystaw produkt</button>
-				</div>
-			</div>
+	<div id="mount0_0">
+		<div class="loader">
+			<svg viewBox="0 0 50 50" class="loader__spinner">
+				<circle class="loader__spinner-line" cx="25" cy="25" r="22.5" />
+				<circle class="loader__spinner-ring" cx="25" cy="25" r="22.5" />
+			</svg>
 		</div>
 	</div>
 	{% include 'components/big-footer.html' %}
+{% endblock %}
+
+{% block bottom-scripts %}
+<script type="text/javascript">
+	window.__APP_CONTEXT__ = {
+		data: JSON.parse( '{{ data|safe }}' )
+	};
+</script>
 {% endblock %}

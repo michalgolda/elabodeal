@@ -1,58 +1,76 @@
-import os
 import uuid
+import hashlib
+
+from pathlib import Path
 
 from django.db import models
-from django.dispatch import receiver
-from django.core.files.storage import FileSystemStorage
+from django.templatetags.static import static
+from django.core.files.storage import DefaultStorage
 
 
 class FileManager(models.Manager):
-	def upload_file(self, file_object):
-		if not file_object:
-			return
 
-		_uuid = uuid.uuid4()
-		size = file_object.size
-		
-		file_name = file_object.name
-		
-		extension = os.path.splitext(file_name)[1]
-		path = f'/files/{_uuid}{extension}'
+	def create_file(self, uploaded_memory_file, type):
+		storage = DefaultStorage()
 
-		file_name = f'{_uuid}{extension}'
+		extension = Path(uploaded_memory_file.name).suffix.replace('.', '') 
+		size = uploaded_memory_file.size
+		hash = hashlib.md5(uploaded_memory_file.read()).hexdigest()
 
-		fs_manager = FileSystemStorage()
-		fs_manager.save(file_name, file_object)
+		file = self.model(
+			size=size,
+			hash=hash,
+			type=type,
+			extension=extension
+		)
 
-		file = self.model(uuid=_uuid,
-						  size=size,
-						  path=path,
-						  extension=extension)
+		name = f'{str(file.id)}.{extension}'
+
+		file.path = static(f'media/{name}')
 		file.save()
+
+		storage.save(
+			name,
+			uploaded_memory_file 
+		)
 
 		return file
 
 
 class File(models.Model):
-	uuid = models.CharField(max_length=36)
+
+	class Extension(models.TextChoices):
+		JPG = 'jpg'
+		PNG = 'png'
+		EPUB = 'epub'
+		MOBI = 'mobi'
+		PDF = 'pdf'
+
+	class Type(models.TextChoices):
+		IMAGE = 'img'
+		COVER = 'cover'
+		EBOOK = 'ebook'
+
+	MAX_EXTENSION_LENGTH = 4
+	MAX_TYPE_LENGTH = 5
+	MAX_HASH_LENGTH = 32
+
+	id = models.UUIDField(
+		primary_key=True,
+		default=uuid.uuid4,
+		editable=False
+	)
 	size = models.IntegerField()
 	path = models.URLField()
-	extension = models.CharField(max_length=4)
-
+	extension = models.CharField(
+		max_length=MAX_EXTENSION_LENGTH,
+		choices=Extension.choices
+	)
+	type = models.CharField(
+		max_length=MAX_TYPE_LENGTH,
+		choices=Type.choices
+	)
+	hash = models.CharField(max_length=MAX_HASH_LENGTH)
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 
 	objects = FileManager()
-	
-	@property
-	def file_name(self):
-		return f'{self.uuid}{self.extension}'
-
-	def __str__(self):
-		return self.uuid
-
-
-@receiver(models.signals.post_delete, sender=File)
-def delete_file_from_storage(sender, instance, **kwargs):
-	fs_manager = FileSystemStorage()
-
-	fs_manager.delete(instance.file_name)

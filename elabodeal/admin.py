@@ -1,171 +1,181 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.utils.translation import gettext_lazy as _
 
-from elabodeal.models import (User, Category, Product, File, 
-							  SharedCart, ProductLabel)
+from elabodeal.models import (
+	User, Publisher, ProductGroup,
+	Category, ProductLanguage
+)
 
 
 class UserAdmin(BaseUserAdmin):
-	list_display = (
-		'email', 'username', 
-		'is_active', 'is_superuser',
-		'is_online')
+	list_display = ['id', 'username', 'email']
 
-	list_filter = (
-		'is_active', 'is_online',
-		'is_superuser')
+	fieldsets = [
+		[
+			None,
+			{
+				'fields': [
+					'id', 'publisher', 'username',
+					'email', 'email_verified', 'email_verified_at',
+					'is_staff', 'is_online', 'is_superuser',
+					'created_at', 'updated_at'
+				]
+			}
+		]
+	]
 
-	fieldsets = (
-		(None, {
-			'fields': (
-				'username', 'email', 
-				'email_verified', 'email_verified_at',
-				'is_active', 'is_online',
-				'is_staff', 'publisher')
-		}),
-	)
+	add_fieldsets = [
+		[
+			None,
+			{
+				'fields': [
+					'email', 'username', 
+					'password1', 'password2'
+				]
+			}
+		]
+	]
 
-	readonly_fields=(
-		'publisher', 
-		'is_online', 
-		'email')
+	readonly_fields = [
+		'id', 'created_at', 
+		'updated_at', 'is_online'
+	]
 
-	add_fieldsets = (
-		(None, {
-			'classes': ('wide', ),
-			'fields': (
-				'email', 'username',
-				'password1', 'password2')
-		}),
-	)
+	search_fields = ['id', 'username', 'email']
 
-	search_fields = ('email', 'username')
+	list_filter = ['is_online', 'is_superuser', 'is_staff']
+	
+	filter_horizontal = []
 
-	ordering = ('is_active', 'is_online', 'email_verified')
 
-	filter_horizontal = ()
+class PublisherAdmin(admin.ModelAdmin):
+	list_display = ['id', 'first_name', 'last_name']
+
+	fieldsets = [
+		[
+			None,
+			{
+				'fields': [
+					'id', 'first_name', 
+					'last_name', 'account_number', 
+					'swift', 'created_at',
+					'updated_at'
+				]
+			}
+		]
+	]
+
+	add_fieldsets = [
+		[
+			None,
+			{
+				'fields': [
+					'first_name', 'last_name', 
+					'account_number', 'swift'
+				]
+			}
+		]
+	]
+
+	readonly_fields = ['id', 'created_at', 'updated_at']
+
+	search_fields = [
+		'id', 'first_name', 'last_name',
+		'account_number'
+	]
+
+
+class ProductGroupAdmin(admin.ModelAdmin):
+	list_display = ['id', 'publisher']
+
+	fieldsets = [
+		[
+			None,
+			{
+				'fields': [
+					'id', 'publisher',
+					'created_at', 'updated_at'
+				]
+			}
+		]
+	]
+
+	add_fieldsets = [
+		[
+			None,
+			{
+				'fields': ['publisher']
+			}
+		]
+	]
+
+	readonly_fields = ['id', 'created_at', 'updated_at']
+
+	search_fields = ['id']
 
 
 class CategoryAdmin(admin.ModelAdmin):
-	list_display = ('name', )
+	list_display = ['id', 'name']
 
-	list_filter = ('name', )
-	
-	fieldsets = ((None, {'fields': ('name', )}), )
-	
-	add_fieldsets = (
-		(None, {
-			'classes': ('wide', ),
-			'fields': ('name', )}
-		),
-	)
-	
-	search_fields = ('name', )
-	
-	ordering = ('name', )	
+	fieldsets = [
+		[
+			None,
+			{
+				'fields': ['id', 'name']
+			}
+		]
+	]
 
+	add_fieldsets = [
+		[
+			None,
+			{
+				'fields': ['name']
+			}
+		]
+	]
 
-class ProductAdmin(admin.ModelAdmin):
-	list_display = (
-		'title', 'category',
-		'publisher', 'price')
-	
-	list_filter = ('category', 'author', 'title')
-	
-	fieldsets = (
-		(None, {
-			'fields': (
-				'publisher', 'category',
-				'labels', 'opinions',
-				'title', 'description',
-				'price', 'author',
-				'page_count', 'isbn',
-				'contents', 'age_category',
-				'url_name', 'average_rating',
-				'rating_count', 'cover_img',
-				'pdf_file', 'epub_file', 
-				'mobi_file', 'published_at',
-				'updated_at', 'demo_file')
-		}),
-	)
+	readonly_fields = ['id']
 
-	readonly_fields = (
-		'published_at', 'updated_at',
-		'pdf_file', 'mobi_file',
-		'epub_file', 'age_category',
-		'price', 'rating_count',
-		'average_rating', 'cover_img',
-		'isbn', 'contents', 'page_count',
-		'url_name', 'author',
-		'publisher', 'demo_file')
-
-	add_fieldsets = (
-		(None, {
-			'fields': (
-				'publisher', 'category',
-				'labels', 'opinions',
-				'title', 'description',
-				'price', 'author',
-				'page_count', 'isbn',
-				'contents', 'age_category',
-				'url_name', 'epub_file', 
-				'pdf_file', 'mobi_file')
-		})
-	)
-
-	search_fields = (
-		'category', 'author',
-		'title', 'price',
-		'author', 'publisher')
-	
-	ordering = (
-		'category', 'author',
-		'price', 'published_at')
+	search_fields = ['id', 'name']
 
 
-class FileAdmin(admin.ModelAdmin):
-	fieldsets = (
-		(None, {
-			'fields': (
-				'uuid', 'uploaded_at',
-				'size', 'path',
-				'extension')
-		}),
-	)
+class ProductLanguageAdmin(admin.ModelAdmin):
+	list_display = ['id', 'code', 'name']
 
-	readonly_fields = (
-		'uploaded_at', 'size', 
-		'extension', 'uuid',
-		'path')
+	fieldsets = [
+		[
+			None,
+			{
+				'fields': ['id', 'name', 'code']
+			}
+		]
+	]
 
+	add_fieldsets = [
+		[
+			None,
+			{
+				'fields': ['name', 'code']
+			}
+		]
+	]
 
-class SharedCartAdmin(admin.ModelAdmin):
-	list_display = ('code', 'shared_at')
+	readonly_fields = ['id']
 
-	fieldsets = (
-		(None, {
-			'fields': ('code', 'shared_at',
-					   'cart')
-		}),
-	)
-	
-	readonly_fields = ('code', 'shared_at', 'cart')
-
-
-class ProductLabelAdmin(admin.ModelAdmin):
-	fieldsets = (
-		(None, {
-			'fields': ('name', 'color')
-		}),
-	)
+	search_fields = ['name', 'code']
 
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Publisher, PublisherAdmin)
+admin.site.register(ProductGroup, ProductGroupAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(Product, ProductAdmin)
-admin.site.register(File, FileAdmin)
-admin.site.register(SharedCart, SharedCartAdmin)
-admin.site.register(ProductLabel, ProductLabelAdmin)
+admin.site.register(ProductLanguage, ProductLanguageAdmin)
 
+# The group model is not used to.
 admin.site.unregister(Group)
+
+# Site settings
+admin.site.site_header = _('Elabodeal - Panel administracyjny')

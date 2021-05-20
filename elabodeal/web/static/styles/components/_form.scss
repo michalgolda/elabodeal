@@ -1,0 +1,7 @@
+.form {
+	&__input {
+		&-error {
+			border: 1px solid $color-red;
+		}
+	}
+}

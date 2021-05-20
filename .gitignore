@@ -1,7 +1,7 @@
 
 __pycache__
 .env
-.venv
+.venv/
 migrations
 media/
 cover_images/
