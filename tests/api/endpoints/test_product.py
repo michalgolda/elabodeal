@@ -1,5 +1,5 @@
 from io import BytesIO
-from unittest import mock
+from unittest import mock, skip
 from copy import deepcopy
 from shutil import rmtree
 from tempfile import mkdtemp
@@ -110,7 +110,8 @@ class MeProductsEndpointTest(APITestCase):
 				'author': 'test',
 				'isbn': '1231231231231',
 				'price': 12.00,
-				'page_count': 100, 
+				'page_count': 100,
+				'published_year': 1999,
 				'age_category': 7,
 				'cover_img': cover_img,
 				'files': [ebook_file],
@@ -167,6 +168,7 @@ class MeProductsEndpointTest(APITestCase):
 				'author': 'test',
 				'isbn': '1231231231231',
 				'price': 12.00,
+				'published_year': 1999,
 				'page_count': 100,
 				'age_category': 7,
 				'cover_img': cover_img,
@@ -246,7 +248,10 @@ class MeProductsDetailsEndpointTest(APITestCase):
 
 		self.assertEqual(response.status_code, 403)
 
-	# def test_delete_product(self):
+
+	@skip('Not implemented')
+	def test_delete_product(self):
+		pass
 
 	def test_delete_product_auth_required(self):
 		self.client.logout()

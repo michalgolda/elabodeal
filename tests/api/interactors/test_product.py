@@ -121,6 +121,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		isbn = 'test'
 		price = 12.00
 		copies = 200
+		published_year = 1999
 		page_count = 100
 		age_category = 7
 		other_images, files = [True], [True]
@@ -146,6 +147,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 			isbn=isbn,
 			price=price,
 			copies=copies,
+			published_year=published_year,
 			page_count=page_count,
 			age_category=age_category,
 			cover_img=mock_cover_img,
@@ -183,6 +185,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 			isbn=isbn,
 			price=price,
 			copies=copies,
+			published_year=published_year,
 			page_count=page_count,
 			cover_img=True,
 			files=[True],
@@ -207,6 +210,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		isbn = 'test'
 		price = 12.00
 		copies = 200
+		published_year = 1999
 		page_count = 100
 		age_category = 7
 		other_images, files = [True], [True]
@@ -233,6 +237,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				isbn=isbn,
 				price=price,
 				copies=200,
+				published_year=published_year,
 				page_count=100,
 				age_category=age_category,
 				cover_img=mock_cover_img,
@@ -257,6 +262,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		isbn = 'test'
 		price = 12.00
 		copies = 200
+		published_year = 1999
 		page_count = 100
 		age_category = 7
 		other_images, files = [True], [True]
@@ -283,6 +289,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				isbn=isbn,
 				price=price,
 				copies = copies,
+				published_year=published_year,
 				page_count = page_count,
 				age_category=age_category,
 				cover_img=mock_cover_img,
@@ -308,6 +315,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		isbn = 'test'
 		price = 12.00
 		copies = 200
+		published_year = 1999
 		page_count = 100
 		age_category = 7
 		other_images, files = [True], [True]
@@ -334,6 +342,7 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				isbn=isbn,
 				price=price,
 				copies = copies,
+				published_year = published_year,
 				page_count = page_count,
 				age_category=age_category,
 				cover_img=mock_cover_img,

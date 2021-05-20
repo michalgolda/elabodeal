@@ -63,6 +63,7 @@ class Product(models.Model):
 		decimal_places=PRICE_DECIMALS_PLACES
 	)
 	copies = models.IntegerField(default=0)
+	published_year = models.IntegerField()
 	page_count = models.IntegerField()
 	cover_img = models.ForeignKey(
 		'elabodeal.File',

@@ -58,6 +58,7 @@ class CreateProductRequestSerializer(serializers.Serializer):
 		min_value=0,
 		default=0
 	)
+	published_year = serializers.IntegerField()
 	page_count = serializers.IntegerField(min_value=1)
 	age_category = serializers.ChoiceField(
 		choices=Product.AgeCategory.choices

@@ -79,8 +79,8 @@ class ProductModelTest(BaseTestCase):
 			0
 		)
 
+		self.assertEqual(hasattr(Product, 'published_year'), True)
 		self.assertEqual(hasattr(Product, 'page_count'), True)
-
 		self.assertEqual(hasattr(Product, 'cover_img'), True)
 		self.assertEqual(hasattr(Product, 'other_images'), True)
 		self.assertEqual(hasattr(Product, 'files'), True)
