@@ -1,3 +1,5 @@
+import datetime
+
 from django.utils import timezone
 from django.core.validators import FileExtensionValidator
 from rest_framework import serializers
@@ -7,6 +9,11 @@ from elabodeal.models import Product, File
 from .file import FileSerializer
 from .product_language import ProductLanguageSerializer
 from .product_premiere import ProductPremiereSerializer
+
+
+EBOOK_FILE_EXTENSIONS = [
+	ext[0] for ext in File.Extension.choices[2:5]
+] 
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -64,23 +71,23 @@ class CreateProductRequestSerializer(serializers.Serializer):
 		child=serializers.FileField(
 			validators=[
 				FileExtensionValidator(
-					allowed_extensions=[
-						ext[0] for ext in File.Extension.choices[2:5]
-					]
+					allowed_extensions=EBOOK_FILE_EXTENSIONS
 				)
 			]
 		),
 		min_length=1,
 		max_length=3
 	)
-	premiere_datetime = serializers.DateTimeField(default=None)
+	premiere_datetime = serializers.DateTimeField()
 
 	def validate_premiere_datetime(self, premiere_datetime):
 		current_datetime = timezone.now()
+		max_premiere_datetime = current_datetime + datetime.timedelta(days=365)
 
-		if premiere_datetime < current_datetime:
+		if ( premiere_datetime < current_datetime and 
+		     premiere_datetime < max_premiere_datetime ):
 			raise serializers.ValidationError(
-				"Premiere date and time must be in the future"
+				"Premiere date and time must be in the future and one year forward"
 			)
 
 		return premiere_datetime
