@@ -24,7 +24,7 @@ const mutations = {
 				} else {
 					if ( field.value === null ) {
 						field.error = true;
-						isValid = true;
+						isValid = false;
 					}
 				}
 			}
