@@ -48,7 +48,7 @@ export default {
 					"updateFormData",
 					{
 						fieldName: "copies",
-						fieldValue: null
+						fieldValue: 0
 					}
 				)
 
@@ -62,6 +62,20 @@ export default {
 					fieldValue: updatedValue
 				}
 			);
+		},
+		handleChangeValue: function ( e ) {
+			const input = e.target;
+			const inputValue = Number.parseInt( input.value );
+
+			if ( inputValue <= 0 ) {
+				this.$store.commit(
+					"updateFormData",
+					{
+						fieldName: "copies",
+						fieldValue: 0
+					}
+				)
+			} 
 		}
 	}
 }
