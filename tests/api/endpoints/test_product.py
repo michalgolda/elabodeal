@@ -110,6 +110,7 @@ class MeProductsEndpointTest(APITestCase):
 				'author': 'test',
 				'isbn': '1231231231231',
 				'price': 12.00,
+				'page_count': 100, 
 				'age_category': 7,
 				'cover_img': cover_img,
 				'files': [ebook_file],
@@ -166,6 +167,7 @@ class MeProductsEndpointTest(APITestCase):
 				'author': 'test',
 				'isbn': '1231231231231',
 				'price': 12.00,
+				'page_count': 100,
 				'age_category': 7,
 				'cover_img': cover_img,
 				'files': [ebook_file],
@@ -175,7 +177,6 @@ class MeProductsEndpointTest(APITestCase):
 		response_data = response.json()
 
 		self.assertEqual(response.status_code, 201)
-
 
 	def test_create_product_auth_required(self):
 		self.client.logout()

@@ -43,8 +43,8 @@ class CreateProductInteractor(BaseProductInteractor):
 		category_id, product_language_id, 
 		title, description, contents, 
 		author, isbn, price, age_category, 
-		cover_img, other_images, files,
-		premiere_datetime
+		cover_img, other_images, files, 
+		premiere_datetime, copies, page_count
 	):
 		if product_group_id:
 			existing_product_group = self.product_group_repo.get_one_by(
@@ -101,6 +101,8 @@ class CreateProductInteractor(BaseProductInteractor):
 			author=author,
 			isbn=isbn,
 			price=price,
+			copies=copies,
+			page_count=page_count,
 			cover_img=uploaded_cover_img,
 			files=uploaded_files,
 			other_images=uploaded_other_images,

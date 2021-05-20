@@ -72,6 +72,14 @@ class ProductModelTest(BaseTestCase):
 			Product._meta.get_field('price').decimal_places,
 			Product.PRICE_DECIMALS_PLACES
 		)
+		
+		self.assertEqual(hasattr(Product, 'copies'), True)
+		self.assertEqual(
+			Product._meta.get_field('copies').default,
+			0
+		)
+
+		self.assertEqual(hasattr(Product, 'page_count'), True)
 
 		self.assertEqual(hasattr(Product, 'cover_img'), True)
 		self.assertEqual(hasattr(Product, 'other_images'), True)

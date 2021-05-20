@@ -47,6 +47,11 @@ class CreateProductRequestSerializer(serializers.Serializer):
 		max_digits=Product.MAX_PRICE_DIGITS,
 		decimal_places=Product.PRICE_DECIMALS_PLACES
 	)
+	copies = serializers.IntegerField(
+		min_value=0,
+		default=0
+	)
+	page_count = serializers.IntegerField(min_value=1)
 	age_category = serializers.ChoiceField(
 		choices=Product.AgeCategory.choices
 	)

@@ -62,6 +62,8 @@ class Product(models.Model):
 		max_digits=MAX_PRICE_DIGITS, 
 		decimal_places=PRICE_DECIMALS_PLACES
 	)
+	copies = models.IntegerField(default=0)
+	page_count = models.IntegerField()
 	cover_img = models.ForeignKey(
 		'elabodeal.File',
 		on_delete=models.CASCADE,

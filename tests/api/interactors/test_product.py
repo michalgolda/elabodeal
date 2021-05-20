@@ -120,6 +120,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		author = 'test'
 		isbn = 'test'
 		price = 12.00
+		copies = 200
+		page_count = 100
 		age_category = 7
 		other_images, files = [True], [True]
 		premiere_datetime = datetime.datetime.now()
@@ -143,6 +145,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 			author=author,
 			isbn=isbn,
 			price=price,
+			copies=copies,
+			page_count=page_count,
 			age_category=age_category,
 			cover_img=mock_cover_img,
 			other_images=other_images,
@@ -178,6 +182,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 			author=author,
 			isbn=isbn,
 			price=price,
+			copies=copies,
+			page_count=page_count,
 			cover_img=True,
 			files=[True],
 			other_images=[True],
@@ -200,6 +206,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		author = 'test'
 		isbn = 'test'
 		price = 12.00
+		copies = 200
+		page_count = 100
 		age_category = 7
 		other_images, files = [True], [True]
 		premiere_datetime = None
@@ -224,6 +232,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				author=author,
 				isbn=isbn,
 				price=price,
+				copies=200,
+				page_count=100,
 				age_category=age_category,
 				cover_img=mock_cover_img,
 				other_images=other_images,
@@ -246,6 +256,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		author = 'test'
 		isbn = 'test'
 		price = 12.00
+		copies = 200
+		page_count = 100
 		age_category = 7
 		other_images, files = [True], [True]
 		premiere_datetime = None
@@ -270,6 +282,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				author=author,
 				isbn=isbn,
 				price=price,
+				copies = copies,
+				page_count = page_count,
 				age_category=age_category,
 				cover_img=mock_cover_img,
 				other_images=other_images,
@@ -293,6 +307,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 		author = 'test'
 		isbn = 'test'
 		price = 12.00
+		copies = 200
+		page_count = 100
 		age_category = 7
 		other_images, files = [True], [True]
 		premiere_datetime = None
@@ -317,6 +333,8 @@ class CreateProductInteractorTest(BaseProductInteractorTest):
 				author=author,
 				isbn=isbn,
 				price=price,
+				copies = copies,
+				page_count = page_count,
 				age_category=age_category,
 				cover_img=mock_cover_img,
 				other_images=other_images,
