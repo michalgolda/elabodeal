@@ -1,80 +1,37 @@
 <template>
-	<div class="price">
-		<button 
-			class="btn btn__secondary" 
-			type="button"
-			@click="handleDecrementValue"
-		>
-			<i class="fas fa-minus"></i>
-		</button>
-		<div class="price__container">
-			<input 
-				class="price__input"  
+	<number-input-controls
+		@incrementValue="handleIncrementValue"
+		@decrementValue="handleDecrementValue"
+	>
+		<div class="price">
+			<input
+				class="price__input"
 				type="number"
 				step=".01"
-				:class="{ 'form__input-error': this.price.error }"
-				:value="_parseValue( this.price.value ? this.price.value : 0 )"
+				:class="{ 'form__input-error': price.error }"
+				:value="_parseValue( price.value ? price.value : 0 )"
 				@change="handleChangeValue"
 			/>
 			<div class="price__currency">
-				<p>ZŁ</p>
+				PLN
 			</div>
 		</div>
-		<button 
-			class="btn btn__secondary" 
-			type="button"
-			@click="handleIncrementValue"
-		>
-			<i class="fas fa-plus"></i>
-		</button>
-	</div>
+	</number-input-controls>
 </template>
 <script>
 import { mapState } from "vuex";
 
+import NumberInputControls from "../../../../components/NumberInputControls.vue";
 
 export default {
 	computed: mapState( {
-		price: state => state.form.fields.price
+		price: state => state.form.fields.price,
+		fee: state => state.fee
 	} ),
-	data: function () {
-		return {
-			fee: 1.25
-		}
+	components: {
+		NumberInputControls
 	},
 	methods: {
-		handleIncrementValue: function ( e ) {
-			const value = this.price.value ? this.price.value : 0;
-
-			if ( value >= 500 )
-				return;
-
-			const updatedValue = value + (1 + this.fee);
-
-			this.$store.commit( 
-				"updateFormData",
-				{
-					fieldName: "price",
-					fieldValue: updatedValue
-				}
-			);
-		},
-		handleDecrementValue: function ( e ) {
-			const value = this.price.value ? this.price.value : 0;
-
-			if ( value <= 0 )
-				return;
-
-			const updatedValue = value - (1 + this.fee);
-
-			this.$store.commit(
-				"updateFormData",
-				{
-					fieldName: "price",
-					fieldValue: updatedValue
-				}
-			);
-		},
 		handleChangeValue: function ( e ) {
 			const input = e.target;
 			const inputValue = Number.parseInt( input.value );
@@ -112,6 +69,38 @@ export default {
 					fieldValue: inputValue + this.fee
 				}
 			)
+		},
+		handleDecrementValue: function ( e ) {
+			const value = this.price.value ? this.price.value : 0;
+
+			if ( value <= 0 )
+				return;
+
+			const updatedValue = value - (1 + this.fee);
+
+			this.$store.commit(
+				"updateFormData",
+				{
+					fieldName: "price",
+					fieldValue: updatedValue
+				}
+			);
+		},
+		handleIncrementValue: function ( e ) {
+			const value = this.price.value ? this.price.value : 0;
+
+			if ( value >= 500 )
+				return;
+
+			const updatedValue = value + (1 + this.fee);
+
+			this.$store.commit( 
+				"updateFormData",
+				{
+					fieldName: "price",
+					fieldValue: updatedValue
+				}
+			);
 		},
 		_parseValue: function ( value ) {
 			return Number.parseFloat( value ).toFixed( 2 );

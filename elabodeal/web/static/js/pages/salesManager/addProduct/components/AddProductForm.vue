@@ -21,7 +21,7 @@
 		<additional-data-section />
 		<consents-section />
 		<button class="btn btn__primary">Dodaj produkt</button>
-		<button class="btn btn__secondary" type="button">Dodaj wersje językowe</button>
+		<!-- <button class="btn btn__secondary" type="button">Dodaj wersje językowe</button> -->
 	</form>
 </template>
 <script>
