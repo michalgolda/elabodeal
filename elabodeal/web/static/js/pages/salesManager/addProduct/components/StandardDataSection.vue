@@ -27,30 +27,18 @@
 			</select>
 		</div>
 	</div>
-	<div class="form__group form__group-grid form__group-grid-2">
+	<div class="form__group form__group-grid form__group-grid-3">
 		<div>
 			<label>ILOŚĆ STRON</label>
-			<input 
-				type="number" 
-				name="page_count"
-				min="10"
-				max="1500"
-				:class="{ 'form__input-error': this.form.fields.page_count.error }"
-				@change="handleChangePageCount"
-				@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'page_count' } )"
-			/>
+			<page-count-input />
 		</div>
 		<div>
 			<label>ROK WYDANIA</label>
-			<input 
-				type="number" 
-				name="published_year" 
-				min="900"
-				max="2200"
-				:class="{ 'form__input-error': this.form.fields.published_year.error }"
-				@change="handleChangePublishedYear"
-				@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'published_year' } )"
-			/>
+			<published-year-input />
+		</div>
+		<div>
+			<label>LICZBA KOPII</label>
+			<copies-input />
 		</div>
 	</div>
 	<div class="form__group">
@@ -108,11 +96,17 @@
 import { mapState } from "vuex";
 
 import PriceInput from "./PriceInput.vue";
+import CopiesInput from "./CopiesInput.vue";
+import PageCountInput from "./PageCountInput.vue";
+import PublishedYearInput from "./PublishedYearInput.vue";
 
 
 export default {
 	components: {
-		PriceInput
+		PriceInput,
+		CopiesInput,
+		PageCountInput,
+		PublishedYearInput
 	},
 	computed: mapState( [ "categories", "supportedLanguages", "form" ] ),
 	methods: {
@@ -139,28 +133,6 @@ export default {
 					fieldValue: this.supportedLanguages.find(
 						( language ) => language.name === value
 					).id
-				}
-			)
-		},
-		handleChangePageCount: function ( e ) {
-			const { value } = e.target;
-
-			this.$store.commit(
-				"updateFormData",
-				{
-					fieldName: "page_count",
-					fieldValue: value
-				}
-			)
-		},
-		handleChangePublishedYear: function ( e ) {
-			const { value } = e.target;
-
-			this.$store.commit(
-				"updateFormData",
-				{
-					fieldName: "published_year",
-					fieldValue: value
 				}
 			)
 		},

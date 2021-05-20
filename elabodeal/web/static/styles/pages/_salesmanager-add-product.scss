@@ -430,14 +430,4 @@
         font-weight: bold;
         margin-bottom: 1rem;
     }
-
-    input[name="page_count"], input[name="published_year"] {
-        text-align: center;
-
-        &::-webkit-inner-spin-button, 
-        &::-webkit-outer-spin-button {
-            -webkit-appearance: none; 
-            margin: 0; 
-        }
-    }
 }

@@ -7,6 +7,16 @@
 	.input-wrapper {
 		margin-left: .25rem;
 		margin-right: .25rem;
+
+		& > input {
+			text-align: center;
+		
+			&::-webkit-inner-spin-button, 
+	        &::-webkit-outer-spin-button {
+	            -webkit-appearance: none; 
+	            margin: 0; 
+	        }
+		}
 	}
 
 	.btn {

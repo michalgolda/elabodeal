@@ -4,9 +4,14 @@ import mutations from "./mutations";
 
 const store = createStore( {
 	state: function () {
-		const { categories, supportedLanguages } = window.__APP_CONTEXT__.data;
+		const { 
+			fee,
+			categories, 
+			supportedLanguages 
+		} = window.__APP_CONTEXT__.data;
 
 		return {
+			fee,
 			categories,
 			supportedLanguages,
 			form: {
@@ -50,6 +55,11 @@ const store = createStore( {
 					price: {
 						value: null,
 						required: true,
+						error: false
+					},
+					copies: {
+						value: null,
+						required: false,
 						error: false
 					},
 					description: {
