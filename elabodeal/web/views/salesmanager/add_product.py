@@ -46,11 +46,15 @@ class SalesManagerAddProductView(BaseView):
 
 		return categories
 
+	def _getFee(self):
+		return 1.25
+
 	def _getContextData(self):
 		return json.dumps(
 			dict(
 				categories=self._getCategories(),
-				supportedLanguages=self._getSupportedLanguages()
+				supportedLanguages=self._getSupportedLanguages(),
+				fee=self._getFee()
 			)
 		)
 
