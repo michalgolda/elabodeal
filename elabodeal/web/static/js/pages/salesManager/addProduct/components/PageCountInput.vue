@@ -49,7 +49,7 @@ export default {
 					"updateFormData",
 					{
 						fieldName: "page_count",
-						fieldValue: null
+						fieldValue: 1
 					}
 				);
 
