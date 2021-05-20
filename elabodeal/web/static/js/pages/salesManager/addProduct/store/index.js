@@ -94,7 +94,7 @@ const store = createStore( {
 					},
 					premiere_datetime: {
 						value: null,
-						required: false,
+						required: true,
 						error: false
 					}
 				}
