@@ -58,7 +58,7 @@ const store = createStore( {
 						error: false
 					},
 					copies: {
-						value: null,
+						value: 0,
 						required: false,
 						error: false
 					},
