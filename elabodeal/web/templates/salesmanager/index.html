@@ -3,7 +3,10 @@
 
 {% block title-description %}Menedżer sprzedaży{% endblock %}
 
-{% block page-id %}p-salesmanger-index{% endblock %}
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/salesManager~indexPage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/salesManager~indexPage.css' %}">
+{% endblock %}
 
 {% block body %}
 	{% include 'components/navigation.html' %}

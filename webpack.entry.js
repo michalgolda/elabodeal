@@ -22,12 +22,15 @@ module.exports = {
 	"cart~paymentSuccessPage": [
 		path.resolve(STATIC_PATH, "styles/pages/cart/payment-success.scss")
 	],
-	"salesManager~addProductPage": [
-		path.resolve(STATIC_PATH, "js/pages/salesManager/addProduct/index.js"),
-		path.resolve(STATIC_PATH, "styles/pages/salesManager/add-product.scss")
+	"salesManager~indexPage": [
+		path.resolve(STATIC_PATH, "styles/pages/salesManager/index.scss")
 	],
 	"salesManager~startPage": [
 		path.resolve(STATIC_PATH, "styles/pages/salesManager/start.scss")
+	],
+	"salesManager~addProductPage": [
+		path.resolve(STATIC_PATH, "js/pages/salesManager/addProduct/index.js"),
+		path.resolve(STATIC_PATH, "styles/pages/salesManager/add-product.scss")
 	],
 	globals: [
 		path.resolve(STATIC_PATH, "styles/globals.scss"),
