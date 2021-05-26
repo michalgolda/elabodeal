@@ -1,8 +1,14 @@
 .copies {
 	&__input {
 		&-infinity {
-			@extend input;
-
+			height: 32px;
+			background: $color-white;
+		    border: 1px solid $color-grey;
+		    outline: none;
+		    font-size: $font-size-small;
+		    padding: 0px 16px 0px 16px;
+		    border-radius: 2px;
+		    color: $color-black;
 			font-family: "Font Awesome";
 			color: $color-black;
 			display: flex;
