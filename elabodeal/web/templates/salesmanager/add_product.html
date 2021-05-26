@@ -14,16 +14,11 @@
 {% endblock %}
 
 {% block body %}
-	{% include 'components/navigation.html' %}
-	<div id="mount0_0">
-		<div class="loader">
-			<svg viewBox="0 0 50 50" class="loader__spinner">
-				<circle class="loader__spinner-line" cx="25" cy="25" r="22.5" />
-				<circle class="loader__spinner-ring" cx="25" cy="25" r="22.5" />
-			</svg>
-		</div>
-	</div>
-	{% include 'components/big-footer.html' %}
+{% include 'components/navigation.html' %}
+<div id="mount0_0">
+{% include 'components/loader.html' %}
+</div>
+{% include 'components/big-footer.html' %}
 {% endblock %}
 
 {% block page-bottom-scripts %}
