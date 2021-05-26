@@ -4,39 +4,23 @@ const webpack = require( 'webpack' );
 // Plugins
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoader = require('vue-loader');
+const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts");
 
-// Entrances
-const pageEntrances = require('./elabodeal/web/static/js/pages');
-
-const paths = {
-	dist: path.resolve(
-		__dirname,
-		'elabodeal/web/static/dist/'
-	),
-	globals: path.resolve(
-		__dirname,
-		'elabodeal/web/static/js/globals/index.js'
-	),
-	styles: path.resolve(
-		__dirname,
-		'elabodeal/web/static/styles/main.scss'
-	),
-	pages: pageEntrances
-};
+const entry = require("./webpack.entry");
 
 module.exports = {
-	entry: {
-		...paths.pages,
-		globals: paths.globals,
-		styles: paths.styles
-	},
+	entry: entry,
 	output: {
-		filename: '[name].bundle.js',
-		path: paths.dist
+		filename: '[name].js',
+		path: path.resolve(
+			__dirname,
+			"elabodeal/web/static/dist/"
+		)
 	},
 	plugins: [
+		new RemoveEmptyScriptsPlugin(),
 		new MiniCssExtractPlugin(),
-		new VueLoader.VueLoaderPlugin()
+		new VueLoader.VueLoaderPlugin(),
 	],
 	module: {
 		rules: [
