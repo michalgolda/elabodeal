@@ -1,6 +1,10 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/authPage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/authPage.css' %}">
+{% endblock %}
 
 {% block body %}
 <div class="layout-auth">

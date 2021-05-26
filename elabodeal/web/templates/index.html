@@ -3,7 +3,10 @@
 
 {% block title-description %}Strona główna{% endblock %}
 
-{% block page-id %}p-home{% endblock %}
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/indexPage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/indexPage.css' %}">
+{% endblock %}
 
 {% block body %}
 	{% include 'components/navigation.html' %}

@@ -10,7 +10,10 @@
 	{% endif %}
 {% endblock %}
 
-{% block page-id %}p-cart{% endblock %}
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/cart~indexPage.css' %}">
+<link rel="stylesheet" href="{% static 'dist/cart~indexPage.css' %}">
+{% endblock %}
 
 {% block body %}
 	<!-- Modals -->

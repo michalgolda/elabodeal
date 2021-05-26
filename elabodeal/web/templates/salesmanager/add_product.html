@@ -3,10 +3,14 @@
 
 {% block title-description %}Dodaj swojego e-booka i zacznij zarabiać{% endblock %}
 
-{% block page-id %}p-salesmanager-add-product{% endblock %}
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/salesManager~addProductPage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/salesManager~addProductPage.css' %}">
+{% endblock %}
+
 {% block page-scripts %}
-    <link ref="preload" href="{% static 'dist/salesManager~addProductPage.bundle.js' %}" as="script">
-    <script defer src="{% static 'dist/salesManager~addProductPage.bundle.js' %}"></script>
+<link ref="preload" href="{% static 'dist/salesManager~addProductPage.js' %}" as="script">
+<script defer src="{% static 'dist/salesManager~addProductPage.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -22,7 +26,7 @@
 	{% include 'components/big-footer.html' %}
 {% endblock %}
 
-{% block bottom-scripts %}
+{% block page-bottom-scripts %}
 <script type="text/javascript">
 	window.__APP_CONTEXT__ = {
 		data: JSON.parse( '{{ data|safe }}' )

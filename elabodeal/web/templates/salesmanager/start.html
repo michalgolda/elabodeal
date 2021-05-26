@@ -3,7 +3,10 @@
 
 {% block title-description %}Zacznij sprzedawać{% endblock %}
 
-{% block page-id %}p-salesmanager-start{% endblock %}
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/salesManager~startPage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/salesmanager~startPage.css' %}">
+{% endblock %}
 
 {% block body %}
 	{% include 'components/navigation.html' %}

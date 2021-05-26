@@ -8,10 +8,10 @@
     <meta name="csrf_token" content="{{ csrf_token }}">
     {% block meta-tags %}{% endblock %}
 
-    <link rel="stylesheet" href="{% static 'dist/styles.css' %}">
-
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700;900&display=swap" rel="stylesheet">
-    {% block styles %}{% endblock %}
+
+    <link rel="stylesheet" href="{% static 'dist/globals.css' %}">
+    {% block page-styles %}{% endblock %}
 
     <script
         defer src="https://browser.sentry-cdn.com/5.30.0/bundle.min.js"
@@ -23,18 +23,18 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
     <script src="https://kit.fontawesome.com/e27ac0eb6e.js" crossorigin="anonymous"></script>
 
-    <script defer src="{% static 'dist/runtime.bundle.js' %}"></script>
-    <script defer src="{% static 'dist/vendor.bundle.js' %}"></script>
-    <script defer src="{% static 'dist/globals.bundle.js' %}"></script>
+    <script defer src="{% static 'dist/runtime.js' %}"></script>
+    <script defer src="{% static 'dist/vendor.js' %}"></script>
+    <script defer src="{% static 'dist/globals.js' %}"></script>
     {% block page-scripts %}{% endblock %}
 
     <title>{% block title %}Elabodeal - {% block title-description %}{% endblock %}{% endblock %}</title>
 </head>
 </head>
-<body id="{% block page-id %}{% endblock %}" class="{% block page-class %}{% endblock %}">
+<body>
     {% block body %}
     {% endblock %}
 
-    {% block bottom-scripts %}{% endblock %}
+    {% block page-bottom-scripts %}{% endblock %}
 </body>
 </html>

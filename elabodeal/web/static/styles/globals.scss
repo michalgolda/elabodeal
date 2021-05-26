@@ -1,3 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@import "colors";
+@import "mixins";
+@import "typography";
+
+@import "components/alert";
+@import "components/button";
+@import "components/footer";
+@import "components/form";
+@import "components/loader";
+@import "components/modal";
+@import "components/section";
+@import "components/switch";
+@import "components/navigation";
+
+
 *, *::before, *::after {
     padding: 0;
     margin: 0;
@@ -64,4 +81,38 @@ label {
     color: $color-black;
     font-weight: 300;
     font-size: $font-size-small;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    height: auto;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem 0 2rem;
+    min-height: calc(100vh - 60px); 
+}
+
+.h1 {
+    font-size: $font-size-large;
+    font-weight: 600;
+}
+
+.h2 {
+    font-size: $font-size-big;
+    font-weight: 500;
+}
+
+.h3 {
+    font-size: $font-size-medium;
+    font-weight: 400;
+}
+
+.h4 {
+    font-size: $font-size-small;
+    font-weight: 400;
 }

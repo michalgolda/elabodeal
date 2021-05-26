@@ -1,0 +1,47 @@
+@import "../../colors";
+@import "../../typography";
+
+
+.form-wrapper {
+    height: auto;
+    max-width: 400px;
+    margin: 2rem auto;
+}
+
+.form {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: auto;
+    grid-row-gap: 1rem;
+    
+    
+    &__section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 1rem;
+    }
+
+    &__information {
+        font-size: $font-size-small;
+        font-weight: 500;
+        color: $color-grey;
+    }
+
+    &__error {
+        color: $color-red;
+        font-size: $font-size-small;
+    }
+
+    &__option {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+
+        & > p {
+            padding-left: 1rem;
+            font-weight: 500;
+            font-size: $font-size-small;
+        }
+    }
+}
