@@ -10,6 +10,10 @@ module.exports = {
 	"authPage": [
 		path.resolve(STATIC_PATH, "styles/pages/auth.scss")
 	],
+	"settingsPage": [
+		path.resolve(STATIC_PATH, "js/pages/settings/index.js"),
+		path.resolve(STATIC_PATH, "styles/pages/settings.scss")
+	],
 	"cart~indexPage": [
 		path.resolve(STATIC_PATH, "styles/pages/cart/index.scss")
 	],
