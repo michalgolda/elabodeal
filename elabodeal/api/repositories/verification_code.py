@@ -3,16 +3,17 @@ from elabodeal.api.repositories import Repository
 
 
 class VerificationCodeRepository(Repository):
-    def get(self, id: int) -> VerificationCode:
-        return VerificationCode.objects.filter(id=id).first()
+    def add(self, *args, **kwargs):
+        return VerificationCode.objects.create_code(*args, **kwargs)
 
-    def delete(self, code: VerificationCode) -> None:
-        code.delete()
+    def get_all_by(self, *args, **kwargs):
+        return self._query_filter(*args, **kwargs).all()
 
-    def save(self, code: VerificationCode) -> VerificationCode:
-        code.save()
+    def get_one_by(self, *args, **kwargs):
+        return self._query_filter(*args, **kwargs).first()
 
-        return code
+    def delete_by(self, *args, **kwargs):
+        return any(self._query_filter(*args, **kwargs).delete())
 
-    def find_by_email(self, email: str) -> VerificationCode:
-        return VerificationCode.objects.filter(email=email).first()
+    def _query_filter(self, *args, **kwargs):
+        return VerificationCode.objects.filter(*args, **kwargs)
