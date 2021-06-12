@@ -5,14 +5,21 @@ from elabodeal.celery import app
 
 
 @app.task(name='send_email')
-def send_email(email: dict) -> None:
+def send_email(serialized_email_dto):
+    to = serialized_email_dto.get('to')
+    subject = serialized_email_dto.get('subject')
+    context = serialized_email_dto.get('context')
+    template = serialized_email_dto.get('template')
+    message = serialized_email_dto.get('text_message')
+    html_message = render_to_string(
+        template,
+        context
+    )
+
     send_mail(
         from_email=None,
-        message=email['text_message'],
-        subject=email['subject'],
-        recipient_list=[email['to']],
-        html_message=render_to_string(
-            email['template'],
-            email['context']
-        )
+        message=message,
+        subject=subject,
+        recipient_list=[to],
+        html_message=html_message
     )
