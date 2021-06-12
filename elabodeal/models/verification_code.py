@@ -1,3 +1,4 @@
+import uuid
 from random import randint
 from datetime import timedelta
 
@@ -6,25 +7,36 @@ from django.utils import timezone
 
 
 class VerificationCodeManager(models.Manager):
-	def create_code(self, email: str, expires: int = 86400) -> object:
+	def create_code(self, email, expires = 3600):
 		current_datetime = timezone.now()
-		expiration_datetime = current_datetime + timedelta(seconds=expires)
-	
-		code = ''.join(str(randint(0, 9)) for _ in range(6))
+		code_length = self.model.MAX_CODE_LENGTH
+
+		expiration_timedelta = timedelta(seconds=expires)
+		expiration_datetime = current_datetime + expiration_timedelta
+
+		code = ''.join(str(randint(0, 9)) for _ in range(code_length))
 
 		verification_code = self.model(
 			email=email,
 			code=code,
 			expiration_at=expiration_datetime
 		)
+		verification_code.save()
 
 		return verification_code
 
 
 class VerificationCode(models.Model):
-	code = models.CharField(max_length=6)
+	MAX_CODE_LENGTH = 6
+
+	id = models.UUIDField(
+		primary_key=True,
+		default=uuid.uuid4,
+		editable=False
+	)
 	email = models.EmailField()
 	expiration_at = models.DateTimeField()
+	code = models.CharField(max_length=MAX_CODE_LENGTH)
 	created_at = models.DateTimeField(auto_now_add=True)
 	
 	objects = VerificationCodeManager()
