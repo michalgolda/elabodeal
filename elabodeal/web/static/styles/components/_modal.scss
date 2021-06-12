@@ -1,33 +1,34 @@
 .modal-wrapper {
-    z-index: 999;
-    position: fixed;
+    top: 0;
     width: 100%;
+    z-index: 999;
     height: 100vh;
+    position: fixed;
     background: rgba(1, 22, 39, .73);
 }
 
 .modal {
-    max-width: 512px;
     width: 100%;
     height: auto;
     padding: 16px;
+    max-width: 512px;
     border-radius: 2px;
     animation: fadeIn .5s;
     background-color: $color-white;
 
     &__header {
-        display: flex;
         flex-grow: 2;
-        justify-content: flex-end;
+        display: flex;
         margin-bottom: 1rem;
+        justify-content: flex-end;
     }
 
     &__title {
-        font-size: 1.5rem;
-        font-weight: 600;
         width: 100%;
-        color: $color-orange;
+        font-weight: 600;
+        font-size: 1.5rem;
         text-align: center;
+        color: $color-orange;
     }
 
     &__close-btn {
@@ -49,21 +50,21 @@
     }
 
     &__actions {
-        margin-top: 1rem;
-        display: flex;
-        justify-content: space-between;
         width: 100%;
+        display: flex;
+        margin-top: 1rem;
+        justify-content: space-between;
     }
 
     &__success-msg {
-        font-size: $font-size-medium;
-        color: $color-green;
         text-align: center;
+        color: $color-green;
+        font-size: $font-size-medium;
     }
 
     &__error-msg {
-        font-size: $font-size-medium;
         color: red;
         text-align: center;
+        font-size: $font-size-medium;
     }
 }
