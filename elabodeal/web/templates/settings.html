@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html' %} 
+{% load static %}
+{% load publisher %}
+{% load user %}
+
+{% block title-description%}Ustawienia{% endblock %} 
+
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/settingsPage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/settingsPage.css' %}">
+{% endblock %}
+
+{% block page-scripts %}	
+<link rel="preload" href="{% static 'dist/settingsPage.js' %}" as="script">
+<script defer src="{% static 'dist/settingsPage.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div id="mount0_0">
+{% include 'components/loader.html' %}
+</div>
+{% include 'components/small-footer-light.html' %} 
+{% endblock %}
+
+{% block page-bottom-scripts %}
+<script type="text/javascript">
+	window.__APP_CONTEXT__ = {};
+	window.__APP_CONTEXT__["publisher"] = JSON.parse('{% get_publisher_context %}')
+	window.__APP_CONTEXT__["user"] = JSON.parse('{% get_user_context %}'); 
+</script>
+{% endblock %}
