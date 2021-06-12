@@ -39,7 +39,9 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'libraries': {
-                'stripe': 'elabodeal.web.templatetags.stripe'
+                'stripe': 'elabodeal.web.templatetags.stripe',
+                'user': 'elabodeal.web.templatetags.user',
+                'publisher': 'elabodeal.web.templatetags.publisher'
             },
             'context_processors': [
                 'django.template.context_processors.debug',
