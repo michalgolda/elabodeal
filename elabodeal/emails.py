@@ -2,28 +2,28 @@ from dataclasses import dataclass, field
 
 
 @dataclass
-class Email:
+class EmailDTO:
     to: str
     context: dict
-    text_message: str = field(init=False, default=None)
     subject: str = field(init=False, default=None)
     template: str = field(init=False, default=None)
+    text_message: str = field(init=False, default=None)
 
-    def asdict(self) -> dict:
+    def asdict(self):
         return {
             'to': self.to,
             'context': self.context,
-            'text_message': self.text_message,
             'subject': self.subject,
-            'template': self.template
+            'template': self.template,
+            'text_message': self.text_message
         }
 
 
-class ConfirmChangeEmail(Email):
+class ChangeEmailRequestEmailDTO(EmailDTO):
     subject = 'Elabodeal - Kod weryfikacyjny'
     template = 'emails/confirm-change-email.html'
 
 
-class ConfirmNewUserEmail(Email):
+class ConfirmNewUserEmail(EmailDTO):
     subject = 'Elabodeal - Potwierdzenie rejestracji'
     template = 'emails/confirm-new-user.html'
