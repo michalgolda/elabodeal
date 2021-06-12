@@ -1,5 +1,9 @@
 .form {
 	&__input {
+		&-group {
+			margin-bottom: .5rem;
+		}
+
 		&-error {
 			border: 1px solid $color-red;
 		}
