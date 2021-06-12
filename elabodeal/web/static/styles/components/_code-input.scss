@@ -6,15 +6,15 @@
 
     &__group {
         display: grid;
-        grid-template-columns: 46px 46px 46px;
-        column-gap: .5rem;
+        column-gap: .30rem;
+        grid-template-columns: 40px 40px 40px;
 
         &-separator {
-            width: 20px;
+            width: 15px;
             height: 1px;
-            background: $color-black;
             margin-left: .5rem;
             margin-right: .5rem;
+            background: $color-black;
         }
     }
 
@@ -23,9 +23,10 @@
         height: 46px;
         padding-left: 0;
         padding-right: 0;
-        text-align: center;
         border-width: 2px;
+        text-align: center;
         font-size: $font-size-large;
+        font-family: 'system-ui', sans-serif;
     }
 
     &-invalid {
