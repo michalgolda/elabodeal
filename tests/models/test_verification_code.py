@@ -1,163 +1,47 @@
-import datetime
-from unittest import skip
+import uuid
 
 from tests.base import TestCase
-
-from django.core import mail
-from django.conf import settings
-from django.utils import timezone
-
-from elabodeal.models import (
-	VerificationCode, 
-	VerificationCodeException,
-	User
-)
+from elabodeal.models import VerificationCode
 
 
 class TestVerificationCodeModel(TestCase):
 	def test_fields(self):
+		self.assertEqual(hasattr(VerificationCode, 'id'), True)
 		self.assertEqual(hasattr(VerificationCode, 'code'), True)
 		self.assertEqual(hasattr(VerificationCode, 'email'), True)
-		self.assertEqual(hasattr(VerificationCode, 'expiration_at'), True)
 		self.assertEqual(hasattr(VerificationCode, 'created_at'), True)
+		self.assertEqual(hasattr(VerificationCode, 'expiration_at'), True)
 
-	def test_manager_generate_method(self):
-		user = User.objects.create_user(
-			email='xyz@xyz.pl', 
-			username='xyz',
-			password='xyz'
-		)
-		
-		generated_code = VerificationCode.objects.generate(
-			email=user.email
-		)
-		
-		self.assertEqual(len(generated_code.code), 6)
-		self.assertIsInstance(generated_code, VerificationCode)
+		id_field = VerificationCode._meta.get_field('id')
+		code_field = VerificationCode._meta.get_field('code')
+		created_at_field = VerificationCode._meta.get_field('created_at')
 
-		code = VerificationCode.objects.filter(email=user.email).first()
-		
-		self.assertEqual(generated_code.code, code.code)
-
-	def test_manager_generate_method_not_found_candiate(self):
-		with self.assertRaises(VerificationCodeException):
-			VerificationCode.objects.generate(
-				email='xyz@xyz.pl'
-			)
-
-	def test_manager_generate_method_clear_exist_code(self):
-		user = User.objects.create_user(
-			email='xyz@xyz.pl', 
-			username='xyz',
-			password='xyz'
+		self.assertEqual(id_field.primary_key, True)
+		self.assertEqual(id_field.default, uuid.uuid4)
+		self.assertEqual(id_field.editable, False)
+		self.assertEqual(
+			code_field.max_length,
+			VerificationCode.MAX_CODE_LENGTH
 		)
-		
-		generated_code_old = VerificationCode.objects.generate(
-			email=user.email
-		)
-			
-		generated_code_new = VerificationCode.objects.generate(
-			email=user.email
+		self.assertEqual(
+			created_at_field.auto_now_add,
+			True
 		)
 
-		codes = VerificationCode.objects.filter(email=generated_code_old.email).all()
-
-		self.assertEqual(len(codes), 1)
-
-	def test_manager_generate_method_send_email(self):
-		settings.EMAIL_HOST_USER = 'xyz@xyz.pl'
-		
-		user = User.objects.create_user(
-			email='xyz@xyz.pl', 
-			username='xyz',
-			password='xyz'
-		)
-		
-		code = VerificationCode.objects.generate(email=user.email)
-
-		outbox = mail.outbox
-
-		mail_obj = outbox[0]
-		mail_subject = mail_obj.subject
-		mail_body = mail_obj.body
-
-		self.assertEqual(len(outbox), 1)
-		self.assertEqual(mail_subject , 'Elabodeal - Weryfikacja konta')
-		self.assertIn(code.code, mail_body)
-
-	def test_manager_verify_method(self):
-		user = User.objects.create_user(
-			email='xyz@xyz.pl', 
-			username='xyz',
-			password='xyz'
-		)
-		
-		code = VerificationCode.objects.generate(
-			email=user.email
+	def test_manager_create_code_method(self):
+		created_verification_code = VerificationCode.objects.create_code(
+			email='test@test.pl'
 		)
 
-		verified_user = VerificationCode.objects.verify(
-			email=code.email, 
-			code=code.code
+		self.assertEqual(
+			created_verification_code.email, 
+			'test@test.pl'
 		)
-		
-		self.assertIsInstance(verified_user, User)
-		self.assertEqual(verified_user.email_verified, True)	
-
-	def test_manager_verify_method_not_found_user(self):
-		with self.assertRaises(VerificationCodeException):
-			VerificationCode.objects.verify(
-				email='xyz@xyz.pl', 
-				code=123
-			)
-
-
-	def test_manager_verify_method_not_found_code(self):
-		user = User.objects.create_user(
-			email='xyz@xyz.pl', 
-			username='xyz',
-			password='xyz'
+		self.assertNotEqual(
+			created_verification_code.expiration_at, 
+			None
 		)
-		
-		with self.assertRaises(VerificationCodeException):
-			VerificationCode.objects.verify(
-				email='xyz@xyz.pl', 
-				code=123
-			)
-
-	def test_manager_verify_method_invalid_code(self):
-		user = User.objects.create_user(
-			email='xyz@xyz.pl', 
-			username='xyz',
-			password='xyz'
+		self.assertEqual(
+			len(created_verification_code.code),
+			VerificationCode.MAX_CODE_LENGTH
 		)
-
-		code = VerificationCode.objects.generate(
-			email=user.email
-		)
-
-		with self.assertRaises(VerificationCodeException):
-			VerificationCode.objects.verify(
-				email=user.email, 
-				code=123
-			)
-
-	def test_manager_verify_method_expired_code(self):
-		user = User.objects.create_user(
-			email='xyz@xyz.pl', 
-			username='xyz',
-			password='xyz'
-		)
-		
-		code = VerificationCode.objects.generate(
-			email=user.email
-		)
-		
-		code.expiration_at = timezone.now() - datetime.timedelta(hours=24)
-		code.save()
-
-		with self.assertRaises(VerificationCodeException):
-			VerificationCode.objects.verify(
-				email=code.email, 
-				code=code.code
-			)
