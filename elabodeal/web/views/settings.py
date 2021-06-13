@@ -1,4 +1,3 @@
-import json
 from elabodeal.web.views import BaseView
 
 
