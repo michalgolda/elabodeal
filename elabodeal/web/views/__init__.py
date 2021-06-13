@@ -1,20 +1,25 @@
 from .base import BaseView, BaseAjaxView
+
+from .cart import (
+    CartView, 
+    CartAddItemAction,
+    CartDeleteItemAction,
+    CartCheckoutDeliveryView, 
+    CartCheckoutPaymentView,
+    CartCheckoutPaymentAjaxView, 
+    CartCheckoutPaymentSuccessView
+)
+from .salesmanager import (
+    SalesManagerIndexView, 
+    SalesManagerStartView,
+    SalesManagerAddProductView
+)
 from .index import IndexView
 from .logout import LogoutView
+from .settings import SettingsView
+from .shared_cart import SharedCartView
 from .auth import LoginView, RegisterView
-from .salesmanager import (SalesManagerIndexView, 
-                           SalesManagerStartView,
-                           SalesManagerAddProductView)
 from .product_detail import ProductDetailView
 from .search_results import SearchResultsView
-from .cart import (CartView, CartAddItemAction,
-                   CartDeleteItemAction,
-                   CartCheckoutDeliveryView, CartCheckoutPaymentView,
-                   CartCheckoutPaymentAjaxView, CartCheckoutPaymentSuccessView)
 from .email_verification import EmailVerificationView
-# from .saved_carts import SavedCartsView, SavedCartShareAjaxView
-# from .saved_cart_detail import SavedCartDetailView
 from .purchased_products import PurchasedProductsView
-from .shared_cart import SharedCartView
-from .user_settings import UserSettingsView
-from .publisher_settings import PublisherSettingsView
