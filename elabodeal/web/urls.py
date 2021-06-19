@@ -1,30 +1,40 @@
 from django.urls import include, path
-from elabodeal.web.views import (CartAddItemAction, CartCheckoutDeliveryView,
-                                 CartCheckoutPaymentAjaxView,
-                                 CartCheckoutPaymentSuccessView,
-                                 CartCheckoutPaymentView, CartDeleteItemAction,
-                                 CartView,
-                                 EmailVerificationView, IndexView, LoginView,
-                                 LogoutView, ProductDetailView,
-                                 PublisherSettingsView, PurchasedProductsView,
-                                 RegisterView, SalesManagerAddProductView,
-                                 SalesManagerIndexView, SalesManagerStartView,
-                                 SearchResultsView,
-                                 SharedCartView, UserSettingsView)
+from elabodeal.web.views import (
+   	CartView,
+    IndexView, 
+    LoginView,
+	LogoutView, 
+	RegisterView, 
+	SettingsView,
+	SharedCartView, 
+	ProductDetailView,
+	CartAddItemAction, 
+	SearchResultsView,
+    CartDeleteItemAction,
+	SalesManagerStartView,
+	SalesManagerIndexView, 
+	PurchasedProductsView,
+    EmailVerificationView, 
+    CartCheckoutPaymentView, 
+	CartCheckoutDeliveryView,
+	SalesManagerAddProductView,
+    CartCheckoutPaymentAjaxView,
+    CartCheckoutPaymentSuccessView,
+)
 
 app_name = 'web'
 
 urlpatterns = [
 	path('', IndexView.as_view(), name='index'),
-	path('p/<str:url_name>/', ProductDetailView.as_view(), name='product-detail'),
+	# path('p/<str:url_name>/', ProductDetailView.as_view(), name='product-detail'),
+	path('p/test/', ProductDetailView.as_view(), name='product-detail'),
 	path('zaloguj/', LoginView.as_view(), name='login'),
 	path('zarejestruj/', RegisterView.as_view(), name='register'),
 	path('weryfikacja/', EmailVerificationView.as_view(), name='email-verification'),
 	path('wyloguj/', LogoutView.as_view(), name='logout'),
 	path('s/', SearchResultsView.as_view(), name='search-results'),
 	path('mp/', PurchasedProductsView.as_view(), name='purchased-products'),
-	path('settings/', UserSettingsView.as_view(), name='user-settings'),
-	path('settings/publisher/', PublisherSettingsView.as_view(), name='publisher-settings'),
+	path('settings/', SettingsView.as_view(), name='settings'),
 	path('c/', include([
 		path('', CartView.as_view(), name='cart'),
 		path('ajax/', include([
