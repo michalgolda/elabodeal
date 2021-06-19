@@ -1,138 +1,152 @@
 <template>
     <div class="code">
         <div class="code__group">
-            <template v-for="index in [0, 1, 2]">
+            <template 
+                v-for="index in [0, 1, 2]" 
+                v-key="index"
+            >
                 <input
-                    :key="index"
-                    :data-id="index"
-                    v-on:keydown="handleKeydown"
-                    v-on:input="handleInput"
-                    v-on:change="handleChange"
-                    v-on:paste.prevent="handlePaste"
-                    ref="fields"
                     class="code__input"
                     type="text" 
                     maxlength="1" 
+                    :ref="setInputRef"
+                    :data-id="index"
+                    @keydown="handleKeydown"
+                    @input="handleInput"
+                    @change="handleChange"
+                    @paste="handlePaste"
                 />
             </template>
         </div>
         <span class="code__group-separator"></span>
         <div class="code__group">
-            <template v-for="index in [3, 4, 5]">
+            <template 
+                v-for="index in [3, 4, 5]" 
+                v-key="index"
+            >
                 <input
-                    :key="index"
-                    :data-id="index"
-                    v-on:keydown="handleKeydown"
-                    v-on:input="handleInput"
-                    v-on:change="handleChange"
-                    v-on:paste.prevent="handlePaste"
-                    ref="fields"
                     class="code__input" 
                     type="text" 
                     maxlength="1" 
+                    :ref="setInputRef"
+                    :data-id="index"
+                    @keydown="handleKeydown"
+                    @input="handleInput"
+                    @change="handleChange"
+                    @paste="handlePaste"
                 />
             </template>
         </div>
     </div>
 </template>
 <script>
-const KEYCODES = {
-    backspace: 8,
-    arrowLeft: 37,
-    arrowRight: 39,
-}
-
 export default {
-    name: 'CodeInput',
+    data: function () {
+        return {
+            keyCodes: {
+                backspace: 8,
+                arrowLeft: 37,
+                arrowRight: 39,
+            },
+            inputRefs: []
+        }
+    },
+    beforeUpdate() {
+        this.inputRefs = []
+    },
     methods: {
-        handleBackspaceKey( currentField, currentFieldId ) {            
-            if ( currentField.value ) {
-                currentField.value = '';
+        handleBackspaceKey: function ( currentInput, currentInputId ) {            
+            if ( currentInput.value ) {
+                currentInput.value = '';
 
                 this.handleChange();
 
                 return;
             }
 
-            var prevField = this.$refs.fields[ currentFieldId - 1 ];
+            const prevInput = this.inputRefs[ currentInputId - 1 ];
             
-            if ( !prevField ) return;
+            if ( !prevInput ) return;
 
-            prevField.focus();
-            
+            prevInput.focus();
         },
-        handleArrowLeftKey( currentFieldId ) {
-            var prevField = this.$refs.fields[ currentFieldId - 1 ];
+        handleArrowLeftKey: function ( currentInputId ) {
+            const prevField = this.inputRefs[ currentInputId - 1 ];
             
             if ( !prevField ) return;
             
             prevField.focus(); 
         },
-        handleArrowRightKey( currentFieldId ) {
-            var nextField = this.$refs.fields[ currentFieldId + 1 ];
+        handleArrowRightKey: function ( currentInputId ) {
+            const nextInput = this.inputRefs[ currentInputId + 1 ];
             
-            if ( !nextField ) return;
+            if ( !nextInput ) return;
             
-            nextField.focus();
+            nextInput.focus();
         },
-        handleKeydown( e ) {
-            var currentField = e.target;
-            var currentFieldId = parseInt(currentField.dataset.id);
+        handleKeydown: function ( e ) {
+            const currentInput = e.target;
+            const currentInputId = parseInt( currentInput.dataset.id );
 
             switch( e.keyCode ) {
-                case KEYCODES.backspace:
+                case this.keyCodes.backspace:
                     this.handleBackspaceKey(
-                        currentField,
-                        currentFieldId
+                        currentInput,
+                        currentInputId
                     );
                     break;
-                case KEYCODES.arrowLeft:
+                case this.keyCodes.arrowLeft:
                     this.handleArrowLeftKey(
-                        currentFieldId
+                        currentInputId
                     );
                     break;
-                case KEYCODES.arrowRight:
+                case this.keyCodes.arrowRight:
                     this.handleArrowRightKey(
-                        currentFieldId
+                        currentInputId
                     );
                     break; 
             }
 
         },
-        handleInput( e ) {
-            var currentField = e.target;
-            var currentFieldId = parseInt(currentField.dataset.id);
+        handleInput: function ( e ) {
+            const currentInput = e.target;
+            const currentInputId = parseInt( currentInput.dataset.id );
 
-            if ( currentField && currentField.value ) {                
-                var nextField = this.$refs.fields[ currentFieldId + 1 ];
+            if ( currentInput && currentInput.value ) {                
+                const nextInput = this.inputRefs[ currentInputId + 1 ];
                 
-                if ( !nextField ) return;
+                if ( !nextInput ) return;
 
-                nextField.focus();
+                nextInput.focus();
             }
         },
-        handlePaste( e ) {
-            var pasteString = e.clipboardData.getData( 'text' ).slice( 0, 6 );
+        handlePaste: function ( e ) {
+            e.preventDefault();
+
+            const pasteString = e.clipboardData.getData( 'text' ).slice( 0, 6 );
         
             for ( var i = 0; i <= 5; i++ )
-                this.$refs.fields[ i ].value = pasteString[ i ] || '';
+                this.inputRefs[ i ].value = pasteString[ i ] || '';
 
             this.handleChange();
         },
-        handleChange() {
+        handleChange: function () {
             this.$emit( "change" );
 
             var value = '';
             
             for ( var i = 0; i <= 5; i++ ) {
-                var field = this.$refs.fields[ i ];
+                const input = this.inputRefs[ i ];
                 
-                if ( field.value === '' )
+                if ( input.value === '' )
                     return;
-                else value += field.value;
+                else value += input.value;
             }
 
             this.$emit( "complete", value );
+        },
+        setInputRef: function ( el ) {
+            if ( el ) this.inputRefs.push( el );
         }
 
     }
