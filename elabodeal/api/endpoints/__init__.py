@@ -14,3 +14,9 @@ from .product import (
 	MeProductsEndpoint,
 	MeProductsDetailsEndpoint
 )
+from .settings import (
+	MeUpdateSettingsEndpoint,
+	MeUpdatePublisherSettingsEndpoint,
+	MeChangeEmailRequestEndpoint,
+	MeConfirmEmailChangeRequestEndpoint
+)

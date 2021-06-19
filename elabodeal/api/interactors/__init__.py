@@ -18,3 +18,9 @@ from .product import (
 	GetProductListInteractor,
 	CreateProductInteractor
 )
+from .settings import (
+	UpdateUserSettingsInteractor,
+	UpdatePublisherSettingsInteractor,
+	ChangeEmailRequestInteractor,
+	ConfirmEmailChangeRequestInteractor
+)

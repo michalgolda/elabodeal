@@ -8,10 +8,14 @@ from elabodeal.api.endpoints import (
     # UpdatePublisherSettingsEndpoint,
     # SaveCartEndpoint,
     # ShareCartEndpoint,
-    MeProductsGroupsEndpoint,
-    MeProductsGroupsDetailsEndpoint,
     MeProductsEndpoint,
-    MeProductsDetailsEndpoint
+    MeProductsGroupsEndpoint,
+    MeUpdateSettingsEndpoint,
+    MeProductsDetailsEndpoint,
+    MeChangeEmailRequestEndpoint,
+    MeProductsGroupsDetailsEndpoint,
+    MeUpdatePublisherSettingsEndpoint,
+    MeConfirmEmailChangeRequestEndpoint
 )
 
 app_name = 'api'
@@ -74,6 +78,26 @@ urlpatterns = [
                 'products/groups/<uuid:product_group_id>/',
                 MeProductsGroupsDetailsEndpoint.as_view(),
                 name='me-product-group-details'
+            ),
+            path(
+                'settings/',
+                MeUpdateSettingsEndpoint.as_view(),
+                name='me-update-settings'
+            ),
+            path(
+                'settings/email/',
+                MeChangeEmailRequestEndpoint.as_view(),
+                name='me-change-email-request'
+            ),
+            path(
+                'settings/email/confirm/',
+                MeConfirmEmailChangeRequestEndpoint.as_view(),
+                name='me-confirm-email-change-request'
+            ),
+            path(
+                'settings/publisher/',
+                MeUpdatePublisherSettingsEndpoint.as_view(),
+                name='me-publisher-update-settings'
             )
         ])
     )

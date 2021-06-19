@@ -6,12 +6,7 @@ from elabodeal.models import VerificationCode
 
 class ConfirmEmailRequestSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    code = serializers.CharField(max_length=6)
-
-    def validate_code(self, value):
-        if len(value) > 6 or len(value) < 6:
-            raise serializers.ValidationError(
-                'Verification code is invalid'
-            )
-
-        return value
+    code = serializers.CharField(
+        min_length=VerificationCode.MAX_CODE_LENGTH,
+        max_length=VerificationCode.MAX_CODE_LENGTH
+    )
