@@ -1,0 +1,101 @@
+@import "../colors";
+@import "../mixins";
+@import "../typography";
+
+@import "../components/link-list";
+@import "../components/code-input";
+
+
+.section {
+    &-settings {
+        &__title {
+            color: $color-orange;
+            font-size: $font-size-medium;
+        }   
+    }
+
+    &__content {
+        margin-top: 1rem;
+    }
+}
+
+.settings-list {
+    width: 100%;
+    height: auto;
+    transition: all 1s ease-in-out;
+
+    &__item {
+        width: 100%;
+        height: auto;
+        list-style: none;
+        padding: .5rem;
+        margin-bottom: .5rem;
+
+        &-box {
+            background-color: white;
+            border-radius: 2px;
+            border: 1px solid $color-grey;
+        }
+    }
+}
+
+.settings-item {
+    &__common {
+        display: flex;
+        justify-content: space-between;
+
+        &-center {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__title {
+        font-weight: bold;
+        font-size: $font-size-small;
+        text-transform: uppercase;
+    }
+
+    &__preview {
+        font-size: $font-size-small;
+    }
+
+    &__forms {
+        max-width: 512px;
+        height: auto;
+        margin: 0 auto;
+        margin-top: 1.5rem;
+    }
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    column-gap: 2rem;
+}
+
+.link-list {
+    margin-top: 1rem;
+}
+
+.code {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.modal-btn {
+    margin-left: .5rem;
+    margin-right: .5rem;
+}
+
+.email-change {
+    margin-top: .5rem;
+
+    &__message {
+        margin-bottom: .5rem;
+    }
+
+    &__cancel {
+        margin-left: .5rem;
+    }
+}
