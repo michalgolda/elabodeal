@@ -13,10 +13,5 @@ webpackConfig.optimization = {
 		new TerserPlugin(),
 	]
 };
-webpackConfig.resolve = {
-	alias: {
-		'vue': '@vue/runtime-dom'
-	}
-}
 
 module.exports = webpackConfig;

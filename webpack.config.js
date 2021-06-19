@@ -1,12 +1,12 @@
-const path = require( 'path' );
-const webpack = require( 'webpack' );
+const path = require('path');
+const webpack = require('webpack');
 
 // Plugins
+const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const VueLoader = require('vue-loader');
-const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts");
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
-const entry = require("./webpack.entry");
+const entry = require('./webpack.entry');
 
 module.exports = {
 	entry: entry,
@@ -14,14 +14,23 @@ module.exports = {
 		filename: '[name].js',
 		path: path.resolve(
 			__dirname,
-			"elabodeal/web/static/dist/"
+			'elabodeal/web/static/dist/'
 		)
 	},
 	plugins: [
-		new RemoveEmptyScriptsPlugin(),
+		new VueLoaderPlugin(),
 		new MiniCssExtractPlugin(),
-		new VueLoader.VueLoaderPlugin(),
+		new RemoveEmptyScriptsPlugin()
 	],
+	resolve: {
+		extensions: ['.js', '.vue', '.json'],
+		alias: {
+			'@': path.resolve(
+				__dirname,
+				'elabodeal/web/static/js/'
+			)
+		}
+	},
 	module: {
 		rules: [
 			{
@@ -46,7 +55,7 @@ module.exports = {
 				test: /\.m?js$/,
 				exclude: /node_modules/,
 				use: {
-					loader: "babel-loader"
+					loader: 'babel-loader'
 				}
 			},
 			{
