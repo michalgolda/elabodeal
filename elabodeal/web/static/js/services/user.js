@@ -1,40 +1,28 @@
-import apiClient from "../api";
-import Alert from "../alert";
+import Service from '@/services';
 
 
-function updateSettings( 
-		actionUrl, 
-		data, 
-		handlers = {
-			errorHandler: () => null
-		} 
-	) {
-	return apiClient.put( actionUrl, data )
-		.then( response => {
-			Alert.success( "Ustawienia zostały poprawnie zapisane." );
-		} )
-		.catch( error => {
-			if ( error.response ) {
-				switch ( error.response.status ) {
-					case 400:
-						Alert.info( "Wprowadzone dane są nieprawidłowe. Spórbuj ponwonie." )
+const userService = new Service('user');
 
-						handlers.errorHandler( error );
+userService.register_function('updateSettings', {
+	url: '/api/me/settings/',
+	method: 'put',
+	successMsg: 'Ustawienia zostały poprawnie zapisane.',
+	errorMsg: 'Wprowadzone dane są nieprawidłowe. Spórbuj ponwonie.'
+});
 
-						break;
-					default:
-						Alert.error( 
-                            `Wystąpił błąd po stronie serwera. 
-                            Po zlokalizowaniu usterki, 
-                            postaramy się jak najszybciej ją usunąć :)` 
-                        );
-				}
-			}
-		} )
-}
 
-const userService = {
-	updateSettings
-}
+userService.register_function('changeEmail', {
+	url: '/api/me/settings/email/',
+	method: 'post',
+	errorMsg: 'Wprowadzony email jest zajęty.'
+});
+
+
+userService.register_function('confirmEmailChange', {
+	url: '/api/me/settings/email/confirm/',
+	method: 'post',
+	successMsg: 'Adres email został pomyślnie zmieniony.',
+	errorMsg: 'Wprowadzony kod jest niepoprwany.'
+});
 
 export default userService;
