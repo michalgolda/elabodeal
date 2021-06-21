@@ -1,20 +1,8 @@
-clean-py-files:
-	find . -name '__pycache__' -exec rm -rf {} \;
+clean-pycache:
+	@find . -name '__pycache__' -exec rm -rf {} \;
 
-clean-dist-files:
-	find elabodeal/ -name 'dist' -exec rm -rf {} \;
+remove-dist-folder:
+	@find elabodeal/ -name 'dist' -exec rm -rf {} \;
 
-clean-migrations-files:
-	find elabodeal/ -name 'migrations' -exec rm -rf {} \;
-
-clean-js-files:
-	find . -name 'package-lock.json' -exec rm -rf {} \;
-	find . -name 'node_modules' -exec rm -rf {} \;
-
-py-tests:
-	python manage.py test
-
-js-tests:
-	npm run test
-
-tests: py-tests js-tests
+remove-migration-folder:
+	@find elabodeal/ -name 'migrations' -exec rm -rf {} \;
