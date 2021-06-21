@@ -11,3 +11,4 @@ geckodriver.log
 package-lock.json
 dist/
 .vscode/
+yarn.lock
