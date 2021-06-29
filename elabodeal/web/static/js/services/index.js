@@ -7,22 +7,27 @@ function Service (name) {
 };
 
 Service.prototype.register_function = function (name, config) {
-    const { url, 
-            method, 
-            successMsg, 
-            errorMsg } = config;
+    var { url, 
+          method, 
+          successMsg, 
+          errorMsg } = config;
 
 
     function serviceFunction (
         data,
-        successCallback = () => null,
-        errorCallback = () => null) {
+        { successCallback, 
+          errorCallback, 
+          hideDefaultSuccessMsg, 
+          hideDefaultErrorMsg } = {}) {
+
+        successMsg = !hideDefaultSuccessMsg ? successMsg : null;
+        errorMsg = !hideDefaultErrorMsg ? errorMsg : null;
 
         return apiClient[method](url, data)
             .then(res => {
                 successMsg ? Alert.success(successMsg) : null;
 
-                successCallback(res);
+                if (successCallback) successCallback(res);
             })
             .catch(err => {
                 const errResponseStatus = err.status;
@@ -31,7 +36,7 @@ Service.prototype.register_function = function (name, config) {
                 
                 if (!badRequestErr) return;
                 
-                errorCallback(err);
+                if (errorCallback) errorCallback(err);
 
                 errorMsg ? Alert.info(errorMsg) : null;
             })
