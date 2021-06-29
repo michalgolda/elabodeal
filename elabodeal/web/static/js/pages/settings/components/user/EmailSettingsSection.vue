@@ -5,30 +5,34 @@
 		description="Miejsce na fajną informacje"
 		currentLabel="Aktulany adres email"
 		:currentValue="currentValue"
-		@saveChanges="handleSaveChanges"
 	>
-		<div class="form__input-group">
-			<label>EMAIL</label>
-			<input 
-				name="new_email"
-				type="email"
-				required="required"
-				:class="{'form__input-error': currentSectionError}"
-				@change="handleChangeEmail"
-				@keydown="clearCurrentSectionErrors"
-			/>
-		</div>
-		<div class="form__input-group">
-			<label>POWTÓRZ EMAIL</label>
-			<input 
-				name="new_email_repeat"
-				type="email"
-				required="required" 
-				:class="{'form__input-error': currentSectionError}"
-				@change="handleChangeEmailRepeat"
-				@keydown="clearCurrentSectionErrors"
-			/>
-		</div>
+		<form @submit.prevent="handleSaveChanges">
+			<div class="form__input-group">
+				<label>EMAIL</label>
+				<input 
+					name="email"
+					type="email"
+					required="required"
+					:class="{'form__input-error': currentSectionError}"
+					@change="handleChangeEmail"
+					@keydown="() => clearSectionError()"
+				/>
+			</div>
+			<div class="form__input-group">
+				<label>POWTÓRZ EMAIL</label>
+				<input 
+					name="email_repeat"
+					type="email"
+					required="required" 
+					:class="{'form__input-error': currentSectionError}"
+					@change="handleChangeEmailRepeat"
+					@keydown="() => clearSectionError()"
+				/>
+			</div>
+			<button class="btn btn-block btn__secondary">
+				Zmień
+			</button>
+		</form>
 	</SettingsSection>
 </template>
 <script>
@@ -37,10 +41,10 @@ import { createNamespacedHelpers,
 
 import SettingsSection from "../SettingsSection";
 
+
 const { mapState: mapUiState,
 		mapMutations: mapUiMutations } = createNamespacedHelpers('ui');
 const { mapActions: mapUserSettingsActions } = createNamespacedHelpers('userSettings');
-
 
 export default {
 	components: {
@@ -50,7 +54,9 @@ export default {
 		...mapRootState({
 			currentValue: state => state.user.email
 		}),
-		...mapUiState(['currentSectionError'])
+		...mapUiState({
+			currentSectionError: state => state.section.error.code === 'INVALID_FORM_DATA'
+		})
 	},
 	data () {
 		return {
@@ -59,14 +65,17 @@ export default {
 		}
 	},
 	methods: {
-		...mapUiMutations(['setCurrentSectionError']),
+		...mapUiMutations([
+			'setSectionError',
+			'clearSectionError'
+		]),
 		...mapUserSettingsActions(['changeEmail']),
 		handleSaveChanges (e) {
 			if (!this.email || !this.emailRepeat)
 				return;
 
 			if (this.email !== this.emailRepeat) {
-				this.setCurrentSectionError(true);
+				this.setSectionError('INVALID_FORM_DATA');
 
 				return;
 			}
@@ -74,16 +83,15 @@ export default {
 			if (this.emailRepeat === this.currentValue)
 				return;
 
-			this.changeEmail(this.emailRepeat);
+			this.changeEmail({
+				email: this.email
+			});
 		},
 		handleChangeEmail (e) {
 			this.email = e.target.value;
 		},
 		handleChangeEmailRepeat (e) {
 			this.emailRepeat = e.target.value;
-		},
-		clearCurrentSectionErrors (e) {
-			this.setCurrentSectionError(null);
 		}
 	}
 }

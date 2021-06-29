@@ -15,8 +15,6 @@
 			title="Powiadomienia"
 		>
 			<NewsletterSettingsSection />
-			<NewsletterSettingsSection />
-			<NewsletterSettingsSection />
 		</SettingsGroup>
 	</SettingsTab>
 </template>

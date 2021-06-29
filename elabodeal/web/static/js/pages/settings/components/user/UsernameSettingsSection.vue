@@ -3,21 +3,25 @@
 		name="username"
 		title="Nazwa użytkownika"
 		description="Fajny opis tutaj będzie"
-		currentLabel="Aktualna nazawa użytkownika"
+		currentLabel="Aktualna nazwa użytkownika"
 		:currentValue="currentValue"
-		@saveChanges="handleSaveChanges"
 	>
-		<div class="form__input-group">
-			<label>NAZWA UŻYTKOWNIKA</label>
-			<input 
-				name="new_username"
-				type="text"
-				required="required"
-				:class="{'form__input-error': currentSectionError}"
-				@change="handleChangeUsername"
-				@keydown="clearCurrentSectionErrors"
-			/>
-		</div>
+		<form @submit.prevent="handleSaveChanges">
+			<div class="form__input-group">
+				<label>nazwa użytkownika</label>
+				<input 
+					type="text"
+					name="username"
+					required="required"
+					:class="{'form__input-error': currentSectionError}"
+					@change="handleChangeUsername"
+					@keydown="() => hideCurrentSectionError"
+				/>
+			</div>
+			<button class="btn btn-block btn__secondary">
+				Zmień
+			</button>
+		</form>
 	</SettingsSection>
 </template>
 <script>
@@ -40,7 +44,9 @@ export default {
 		...mapRootState({
 			currentValue: state => state.user.username
 		}),
-		...mapUiState(['currentSectionError'])
+		...mapUiState({
+			currentSectionError: state => state.section.error.code === 'INVALID_FORM_DATA'
+		}),
 	},
 	data() {
 		return {
@@ -48,19 +54,21 @@ export default {
 		}
 	},
 	methods: {
-		...mapUiMutations(['setCurrentSectionError']),
+		...mapUiMutations([
+			'setSectionError', 
+			'clearSectionError'
+		]),
 		...mapUserSettingsActions(['changeUsername']),
 		handleSaveChanges (e) {
 			if (!this.username || this.username === this.currentValue)
 				return;
 
-			this.changeUsername(this.username);
+			this.changeUsername({
+				username: this.username
+			});
 		},
 		handleChangeUsername (e) {
 			this.username = e.target.value;
-		},
-		clearCurrentSectionErrors (e) {
-			this.setCurrentSectionError(null);
 		}
 	}
 }

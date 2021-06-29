@@ -4,19 +4,29 @@
 		title="Newsletter"
 		description="Fajny opis tutaj będzie"
 		:currentValue="currentValue"
+		@change="handleChange"
 	/>
 </template>
 <script>
+import { createNamespacedHelpers,
+		 mapState as mapRootState } from 'vuex';
+
 import CheckboxSettingsSection from '../CheckboxSettingsSection';
+
+const { mapActions: mapUserSettingsActions } = createNamespacedHelpers('userSettings');
 
 
 export default {
 	components: {
 		CheckboxSettingsSection
 	},
-	data() {
-		return {
-			currentValue: true
+	computed: mapRootState({
+		currentValue: state => state.user.newsletter
+	}),
+	methods: {
+		...mapUserSettingsActions(['toggleNewsletter']),
+		handleChange (value) {
+			this.toggleNewsletter({ value });
 		}
 	}
 }
