@@ -9,6 +9,7 @@
 </template>
 <script>
 export default {
+	emits: ['change'],
 	props: {
 		name: {
 			type: String,

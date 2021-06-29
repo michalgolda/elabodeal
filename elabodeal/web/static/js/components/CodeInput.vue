@@ -41,6 +41,7 @@
 </template>
 <script>
 export default {
+    emits: ['complete', 'change'],
     data: function () {
         return {
             keyCodes: {
