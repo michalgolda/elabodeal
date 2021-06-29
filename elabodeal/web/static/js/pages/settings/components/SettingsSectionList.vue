@@ -1,5 +1,5 @@
 <template>
-	<ul class="settings-list">
+	<div class="settings">
 		<slot />
-	</ul>
+	</div>
 </template>

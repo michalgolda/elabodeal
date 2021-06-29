@@ -2,39 +2,44 @@
 	<div class="section">
         <p class="section__title">Ustawienia</p>
         <div class="link-list">
-            <div 
-                class="link flex-center"
-                :class="{ 'link__current': currentTab === 'user' }"
-            >
-                <a 
-                    href=""
-                    @click.prevent="() => setCurrentTab('user')"
+            <template v-for="tab in tabs">
+                <div 
+                    class="link flex-center"
+                    :class="{ 'link__current': currentTabName === tab.name }"
                 >
-                    <p>Użytkownik</p>
-                </a>
-            </div>
-            <div 
-                class="link flex-center"
-                :class="{ 'link__current': currentTab === 'publisher' }"
-            >
-                <a 
-                    href=""
-                    @click.prevent="() => setCurrentTab('publisher')"
-                >
-                    <p>Sprzedający</p>
-                </a>
-            </div>
+                    <a 
+                        href=""
+                        @click.prevent="() => showTab(tab.name)"
+                    >
+                        <p>{{ tab.linkText }}</p>
+                    </a>
+                </div>
+            </template>
         </div>
     </div>
 </template>
 <script>
 import { createNamespacedHelpers } from 'vuex';
 
-const { mapState, mapMutations } = createNamespacedHelpers('ui');
+const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('ui');
 
 
 export default {
-    computed: mapState(['currentTab']),
-    methods: mapMutations(['setCurrentTab'])
+    computed: mapGetters(['currentTabName']),
+    data() {
+        return {
+            tabs: [
+                {
+                    name: 'user',
+                    linkText: 'Użytkownik'
+                },
+                {
+                    name: 'publisher',
+                    linkText: 'Sprzedający'
+                }
+            ]
+        }
+    },
+    methods: mapMutations(['showTab'])
 }
 </script>

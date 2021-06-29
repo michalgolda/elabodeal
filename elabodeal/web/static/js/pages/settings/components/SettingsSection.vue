@@ -1,16 +1,15 @@
 <template>
-	<li class="settings-list__item settings-list__item-box">
-		<div
-			class="settings-item__content" 
-			v-if="showCurrentSection"
-		>
-			<p class="settings-item__title">{{ title }}</p>
-			<p class="settings-item__description">{{ description }}</p>
-			<div class="settings-item__forms">
-				<div 
-					class="form__input-group"
-					v-if="showCurrentValue"
-				>
+	<div 
+		class="settings__section"
+		:class="{'settings__section-isEditing': isEditing}"
+	>
+		<template v-if="isEditing">
+			<p class="settings__section-title">{{ title }}</p>
+			<p class="settings__section-description">
+				{{ description }}
+			</p>
+			<div class="settings__section-content">
+				<div v-if="showCurrentValue">
 					<label>{{ currentLabel }}</label>
 					<input
 						type="text"
@@ -20,50 +19,32 @@
 					/>
 				</div>
 				<slot />
-				<div class="form__input-group">
-					<button 
-						class="btn btn-block btn__secondary"
-						@click="emitSaveChanges"
-					>
-						Zapisz zmiany
-					</button>
-				</div>
-				<div class="form__input-group">
-					<button
-						class="btn btn-block btn__primary"
-						@click="handleCancelEdit"
-					>
-						Anuluj
-					</button>
-				</div>
+				<button 
+					class="btn btn-block btn__primary"
+					@click="handleCancelEdit"
+				>
+					Anuluj
+				</button>
 			</div>
-		</div>
-		<div
-			class="settings-item__common"
-			v-else
-		>
-			<div 
-				class="settings-item__common-info"
-				:class="{ 'settings-item__common-center': !showCurrentValue }"
-			>
-				<p class="settings-item__title">{{ title }}</p>
-				<span 
-					class="settings-item__preview"
+		</template>
+		<template v-else>
+			<div>
+				<p class="settings__section-title">{{ title }}</p>
+				<p 
+					class="settings__section-currentValue"
 					v-if="showCurrentValue"
 				>
 					{{ currentValue }}
-				</span>
+				</p>
 			</div>
-			<div class="settings-item__common-center">
-				<button
-					class="btn btn-block btn__secondary"
-					@click="handleEdit"
-				>
-					Edytuj
-				</button>
-			</div>
-		</div>
-	</li>
+			<button
+				class="btn btn__secondary"
+				@click="handleEdit"
+			>
+				Edytuj
+			</button>
+		</template>
+	</div>
 </template>
 <script>
 import { createNamespacedHelpers } from 'vuex';
@@ -95,24 +76,23 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['currentTab', 'currentSection']),
+		...mapState({
+			currentSectionName: state => state.section.name
+		}),
 		showCurrentValue() {
 			return this.currentValue ? true : false;
 		},
-		showCurrentSection() {
-			return this.currentSection === this.name;
+		isEditing() {
+			return this.currentSectionName === this.name;
 		}		
 	},
 	methods: {
-		...mapMutations(['setCurrentSection']),
+		...mapMutations(['showSection', 'hideSection']),
 		handleEdit(e) {
-			this.setCurrentSection(this.name);
+			this.showSection(this.name);
 		},
 		handleCancelEdit(e) {
-			this.setCurrentSection(null);
-		},
-		emitSaveChanges(e) {
-			this.$emit('saveChanges', e);
+			this.hideSection();
 		}
 	}
 }

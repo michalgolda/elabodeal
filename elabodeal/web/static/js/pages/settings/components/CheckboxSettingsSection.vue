@@ -1,24 +1,22 @@
 <template>
-	<li class="settings-list__item settings-list__item-box">
-		<div class="settings-item__common">
-			<div class="settings-item__common-info">
-				<p class="settings-item__title">{{ title }}</p>
-				<p class="settings-item__description">{{ description }}</p>
-			</div>
-			<div class="settings-item__common-center">
-				<SwitchInput 
-					:name="name"
-					:currentValue="currentValue"
-				/>
-			</div>
+	<div class="settings__section">
+		<div>
+			<p class="settings__section-title">{{ title }}</p>
+			<p class="settings__section-description">{{ description }}</p>
 		</div>
-	</li>
+		<SwitchInput 
+			:name="name"
+			:currentValue="currentValue"
+			@change="emitChange"
+		/>
+	</div>
 </template>
 <script>
 import SwitchInput from '@/components/SwitchInput';
 
 
 export default {
+	emits: ['change'],
 	components: {
 		SwitchInput
 	},
@@ -38,6 +36,11 @@ export default {
 		currentValue: {
 			type: Boolean,
 			required: true
+		}
+	},
+	methods: {
+		emitChange (value) {
+			this.$emit("change", value);
 		}
 	}
 }

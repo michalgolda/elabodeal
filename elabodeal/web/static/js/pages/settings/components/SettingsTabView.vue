@@ -1,11 +1,11 @@
 <template>
-	<UserSettingsTab v-if="currentTab === 'user'" />
-	<PublisherSettingsTab v-if="currentTab === 'publisher'" />
+	<UserSettingsTab v-if="currentTabName === 'user'" />
+	<PublisherSettingsTab v-if="currentTabName === 'publisher'" />
 </template>
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapState, mapMutations } = createNamespacedHelpers('ui');
+const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('ui');
 
 import UserSettingsTab from './user/UserSettingsTab';
 import PublisherSettingsTab from './publisher/PublisherSettingsTab';
@@ -22,11 +22,14 @@ export default {
 		const tabParam = urlSearchParams.get('tab');
 		const sectionParam = urlSearchParams.get('section');
 
-		this.setCurrentTab(tabParam);
-		this.setCurrentSection(sectionParam);
+		this.showTab(tabParam);
+		this.showSection(sectionParam);
 	},
-	computed: mapState(['currentTab']),
-	methods: mapMutations(['setCurrentTab', 'setCurrentSection'])
+	computed: mapGetters(['currentTabName']),
+	methods: mapMutations([
+		'showTab', 
+		'showSection'
+	])
 
 }
 </script>
