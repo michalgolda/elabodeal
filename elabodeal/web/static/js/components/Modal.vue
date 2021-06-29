@@ -5,7 +5,7 @@
 				<p class="modal__title">{{ title }}</p>
 				<i 
 					class="fas fa-times modal__close-btn"
-					@click="modal.hide()"
+					@click="$modalManager.hide()"
 				></i>
 			</div>
 			<div class="modal__body">
