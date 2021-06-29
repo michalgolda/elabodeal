@@ -19,7 +19,7 @@
     "husky": "^4.3.8",
     "mini-css-extract-plugin": "^1.6.0",
     "mount-vue-component": "^0.10.0",
-    "node-sass": "^6.0.0",
+    "sass": "^1.35.1",
     "sass-loader": "^10.2.0",
     "vue-loader": "^16.2.0",
     "vue-template-compiler": "^2.6.12",
