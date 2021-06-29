@@ -2,69 +2,62 @@
     <Modal
         title="Kod potwierdzający zmianę adresu email"
     >
-        <form>
-            <CodeInput 
-                @complete="handleComplete"
-            />
-            <div class="flex-center">
-                <button
-                    class="btn btn__secondary-outline modal-btn"
-                    type="button"
-                >
-                    Wyślij kod ponownie
-                </button>
-            </div>
-        </form>
+        <CodeInput 
+            @complete="handleComplete"
+            @change="() => clearSectionError()"
+            :class="{'code-invalid': invalidCode}"
+        />
+        <div class="flex-center">
+            <button
+                class="btn btn__secondary-outline"
+                type="button"
+                @click="handleResendCode"
+            >
+                Wyślij kod ponownie
+            </button>
+        </div>
     </Modal>
 </template>
 <script>
-import { mapState } from "vuex";
+import { createNamespacedHelpers } from 'vuex';
 
-import Alert from "../../../alert";
-import userService from "../../../services/user";
+import Modal from '../../../components/Modal.vue';
+import CodeInput from '../../../components/CodeInput.vue';
 
-import CodeInput from "../../../components/CodeInput.vue";
-import Modal from "../../../components/Modal.vue";
 
+const { mapState: mapUiState,
+        mapMutations: mapUiMutations } = createNamespacedHelpers('ui');
+const { mapActions: mapUserSettingsActions } = createNamespacedHelpers('userSettings');
 
 export default {
-    computed: mapState( {
-        user: state => state.user,
-        email: state => state.forms.user.fields.email.value
-    } ),
     components: {
         Modal,
         CodeInput
     },
-    data: function () {
-        return {
-            code: ''
-        }
+    computed: {
+        email () {
+            return this.context.email
+        },
+        ...mapUiState({
+            invalidCode: state => state.section.error.code === 'invalidCode'
+        })
     },
     methods: {
-        handleComplete: function ( value ) {
-            this.code = value;
-
-            const formData = this._createFormDataObject();
-
-            userService.confirmEmailChangeRequest
-                .setFormData( formData )
-                .setSuccessHandler( () => {
-                    this.modal.hide();
-
-                    user.email = this.email;
-
-                    Alert.success( "Adres email został pomyślnie zmieniony." );
-                } )
-                .execute()
+        ...mapUiMutations(['clearSectionError']),
+        ...mapUserSettingsActions([
+            'confirmChangeEmail',
+            'resendChangeEmailCode'
+        ]),
+        handleComplete (code) {
+            this.confirmChangeEmail({
+                code,
+                email: this.email
+            });
         },
-        _createFormDataObject: function () {
-            const formData = new FormData();
-
-            formData.append("email", this.email);
-            formData.append("code", this.code);
-
-            return formData;
+        handleResendCode () {
+            this.resendChangeEmailCode({
+                email: this.email
+            });
         }
     }
 }
