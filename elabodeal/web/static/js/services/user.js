@@ -14,7 +14,8 @@ userService.register_function('updateSettings', {
 userService.register_function('changeEmail', {
 	url: '/api/me/settings/email/',
 	method: 'post',
-	errorMsg: 'Wprowadzony email jest zajęty.'
+	successMsg: 'Kod weryfikacyjny został wysłany na podany adres email.',
+	errorMsg: 'Wprowadzony email jest zajęty lub błędny.'
 });
 
 
@@ -24,5 +25,14 @@ userService.register_function('confirmEmailChange', {
 	successMsg: 'Adres email został pomyślnie zmieniony.',
 	errorMsg: 'Wprowadzony kod jest niepoprwany.'
 });
+
+
+userService.register_function('changePassword', {
+	url: '/api/me/settings/password/',
+	method: 'put',
+	successMsg: 'Hasło zostało pomyślnie zmienione.',
+	errorMsg: 'Aktualne lub nowe hasło jest błędne.'
+});	
+
 
 export default userService;
