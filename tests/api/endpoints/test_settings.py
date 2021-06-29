@@ -168,3 +168,48 @@ class MeConfirmEmailChangeRequestEndpointTest(APITestCase):
 		)
 
 		self.assertEqual(response.status_code, 401)
+
+
+class MeChangePasswordEndpointTest(APITestCase):
+	def setUp(self):
+		self.user = User.objects.create_user(
+			email='test@test.pl',
+			password='123',
+			username='test'
+		)
+
+		self.client.login(
+			email=self.user.email,
+			password='123'
+		)
+
+	def test_simple(self):
+		response = self.client.put(
+			reverse('api:me-change-password'),
+			data={
+				'new_password': 'New_password123',
+				'current_password': '123'
+			}
+		)
+
+		self.assertEqual(response.status_code, 200)
+
+	def test_if_current_password_is_invalid(self):
+		response = self.client.put(
+			reverse('api:me-change-password'),
+			data={
+				'new_password': 'New_password123',
+				'current_password': '321'
+			}
+		)
+
+		self.assertEqual(response.status_code, 400)
+
+	def test_if_user_is_not_authenticated(self):
+		self.client.logout()
+
+		response = self.client.put(
+			reverse('api:me-change-password')
+		)
+
+		self.assertEqual(response.status_code, 401)

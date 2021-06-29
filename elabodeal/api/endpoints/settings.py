@@ -1,9 +1,12 @@
+from django.contrib.auth import update_session_auth_hash
+
 from elabodeal.api.endpoints import Endpoint
 from elabodeal.api.permissions import PublisherOnlyAccess
 from elabodeal.api.interactors import (
+	ChangePasswordInteractor,
 	UpdateUserSettingsInteractor,
-	UpdatePublisherSettingsInteractor,
 	ChangeEmailRequestInteractor,
+	UpdatePublisherSettingsInteractor,
 	ConfirmEmailChangeRequestInteractor
 )
 from elabodeal.api.repositories import (
@@ -12,10 +15,11 @@ from elabodeal.api.repositories import (
 	VerificationCodeRepository
 )
 from elabodeal.api.serializers import (
-	UpdateUserSettingsRequestSerializer,
-	UpdatePublisherSettingsRequestSerializer,
 	ChangeEmailRequestSerializer,
-	ConfirmEmailChangeRequestSerializer
+	ChangePasswordRequestSerializer,
+	UpdateUserSettingsRequestSerializer,
+	ConfirmEmailChangeRequestSerializer,
+	UpdatePublisherSettingsRequestSerializer
 )
 
 
@@ -105,4 +109,30 @@ class MeConfirmEmailChangeRequestEndpoint(Endpoint):
 			**serialized_request.validated_data
 		)
 
+		return self.respond(status=200)
+
+
+class MeChangePasswordEndpoint(Endpoint):
+
+	def put(self, request):
+		user = request.user
+
+		serialized_request = ChangePasswordRequestSerializer(
+			data=request.data,
+			instance=user
+		)
+		serialized_request.is_valid(raise_exception=True)
+
+		user_repo = UserRepository()
+
+		interactor = ChangePasswordInteractor(
+			user_repo=user_repo
+		)
+		interactor.execute(
+			user,
+			**serialized_request.validated_data
+		)
+
+		update_session_auth_hash(request, user)
+		
 		return self.respond(status=200)
