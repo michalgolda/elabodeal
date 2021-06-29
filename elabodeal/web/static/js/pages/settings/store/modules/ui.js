@@ -3,9 +3,13 @@ import { setCurrentUrlParams } from '@/utils/url';
 
 const initialState = () => {
 	return {
-		currentTab: 'user',
-		currentSection: '',
-		currentSectionError: null
+		tab: {
+			name: 'user'
+		},
+		section: {
+			name: '',
+			error: {}
+		}
 	}
 }
 
@@ -13,7 +17,7 @@ const uiModule = {
 	namespaced: true,
 	state: initialState(),
 	mutations: {
-		setCurrentTab(state, tabName) {
+		showTab(state, tabName) {
 			tabName = tabName ? tabName.toLowerCase() : 'user';
 
 			setCurrentUrlParams({
@@ -21,20 +25,37 @@ const uiModule = {
 				section: null
 			});
 
-			state.currentTab = tabName;
+			state.tab.name = tabName;
 		},
-		setCurrentSection(state, sectionName) {
+		showSection(state, sectionName) {
 			sectionName = sectionName ? sectionName.toLowerCase() : '';
 
 			setCurrentUrlParams({
 				section: sectionName
 			});
 
-			state.currentSection = sectionName;
+			state.section.name = sectionName;
+			state.section.error = {};
 		},
-		setCurrentSectionError(state, error) {
-			state.currentSectionError = error;
+		hideSection(state) {
+			setCurrentUrlParams({
+				section: ''
+			});
+
+			state.section.name = '';
+			state.section.error = {};
+		},	
+		setSectionError(state, errorCode) {
+			state.section.error = {
+				code: errorCode
+			};
+		},
+		clearSectionError(state) {
+			state.section.error = {};
 		}
+	},
+	getters: {
+		currentTabName: state => state.tab.name
 	}
 };
 
