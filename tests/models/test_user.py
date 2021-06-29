@@ -77,6 +77,12 @@ class UserModelTest(TestCase):
 			False
 		)
 
+		self.assertEqual(hasattr(User, 'newsletter'), True)
+		self.assertEqual(
+			User._meta.get_field('newsletter').default,
+			False
+		)
+
 		self.assertEqual(hasattr(User, 'created_at'), True)
 		self.assertEqual(
 			User._meta.get_field('created_at').auto_now_add,
