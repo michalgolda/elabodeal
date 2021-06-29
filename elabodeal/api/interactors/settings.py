@@ -1,16 +1,17 @@
+from elabodeal.celery.tasks import send_email
 from elabodeal.api.interactors import Interactor
 from elabodeal.emails import ChangeEmailRequestEmailDTO
-from elabodeal.celery.tasks import send_email
 
 
 def update_model_attrs(model, attrs):
 	is_updated = False
 
 	for attr_name, attr_value in attrs.items():
-		if getattr(model, attr_name) != attr_value:
-			setattr(model, attr_name, attr_value)
+		if attr_value != None:
+			if getattr(model, attr_name) != attr_value:
+				setattr(model, attr_name, attr_value)
 
-			is_updated = True
+				is_updated = True
 
 	return is_updated 
 
@@ -72,3 +73,14 @@ class ConfirmEmailChangeRequestInteractor(Interactor):
 
 		self.user_repo.save(user)
 		self.verification_code_repo.delete_by(email=email)
+
+
+class ChangePasswordInteractor(Interactor):
+	def __init__(self, user_repo):
+		self.user_repo = user_repo
+
+	def execute(self, user, new_password):
+		user.set_password(new_password)
+
+		self.user_repo.save(user)
+

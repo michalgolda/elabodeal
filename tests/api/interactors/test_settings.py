@@ -8,7 +8,8 @@ from elabodeal.api.interactors import (
 	UpdateUserSettingsInteractor,
 	UpdatePublisherSettingsInteractor,
 	ChangeEmailRequestInteractor,
-	ConfirmEmailChangeRequestInteractor
+	ConfirmEmailChangeRequestInteractor,
+	ChangePasswordInteractor
 )
 
 
@@ -135,6 +136,26 @@ class ConfirmEmailChangeRequestInteractorTest(BaseTestCase):
 		self.mock_user_repo.save.assert_called_once_with(mock_user)
 		
 		self.mock_verification_code_repo.delete_by.assert_called_once_with(
-			email='test@test.pl'		)
+			email='test@test.pl')
 
 
+class ChangePasswordInteractorTest(BaseTestCase):
+
+	@mock.patch('elabodeal.api.repositories.UserRepository')
+	def setUp(self, mock_user_repo):
+		self.mock_user_repo = mock_user_repo
+
+	def test_execute(self):
+		mock_user = mock.MagicMock()
+		mock_user.set_password = mock.MagicMock(return_value=True)
+
+		new_password = '123'
+
+		interactor = ChangePasswordInteractor(
+			user_repo=self.mock_user_repo
+		)
+		interactor.execute(mock_user, new_password)
+
+		mock_user.set_password.assert_called_once_with(new_password)	
+
+		self.mock_user_repo.save.assert_called_once_with(mock_user)
