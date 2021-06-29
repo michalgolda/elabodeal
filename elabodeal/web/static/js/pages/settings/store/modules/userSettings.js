@@ -4,13 +4,13 @@ import userService from '@/services/user';
 const userSettingsModule = {
 	namespaced: true,
 	actions: {
-		changeUsername(ctx, username) {
+		changeUsername (ctx, { username }) {
 			const data = new FormData();
 
 			data.append('username', username);
 
-			userService.updateSettings(data, 
-				() => {
+			userService.updateSettings(data, {
+				successCallback: () => {
 					const navUsernameElm = document.getElementsByClassName('nav__username')[0];
 
 					navUsernameElm.textContent = username;
@@ -26,48 +26,115 @@ const userSettingsModule = {
 					);
 
 					ctx.commit(
-						'ui/setCurrentSection',
+						'ui/hideSection',
 						null,
 						{root: true}
 					);
 				},
-				() => {
+				errorCallback: () => {
 					ctx.commit(
-						'ui/setCurrentSectionError',
-						true,
+						'ui/setSectionError',
+						'INVALID_FORM_DATA',
 						{root: true}
 					);
 				}
-			);
+			});
 		},
-		changeEmail(ctx, email) {
+		changeEmail (ctx, { email }) {
 			const data = new FormData();
 
-			data.append('email', value);
+			data.append('email', email);
 
-			userService.changeEmail(data,
-				() => {
-					
+			userService.changeEmail(data, {
+				successCallback: () => {
+					this.$modalManager.show('confirmEmailChangeModal', {
+						email
+					});
+
+					ctx.commit(
+						'ui/hideSection', 
+						null, 
+						{root:true}
+					);
 				},
-				() => {
-
+				errorCallback: () => {
+					ctx.commit(
+						'ui/setSectionError',
+						'INVALID_FORM_DATA',
+						{root: true}
+					);
 				}
-			);
+			});
 		},
-		confirmChangeEmail(ctx, email, code) {
+		resendChangeEmailCode (ctx, { email }) {
+			const data = new FormData();
+
+			data.append('email', email);
+
+			userService.changeEmail(data);
+		},
+		confirmChangeEmail (ctx, { email, code }) {
 			const data = new FormData();
 
 			data.append('code', code);
 			data.append('email', email);
 
-			userService.confirmEmailChange(data,
-				() => {
+			userService.confirmEmailChange(data, {
+				successCallback: () => {
+					this.$modalManager.hide();
 
+					ctx.commit(
+						'updateData',
+						{
+							key: 'user',
+							fieldName: 'email',
+							fieldValue: email
+						},
+						{root: true}
+					);
 				},
-				() => {
-					
+				errorCallback: () => {
+					ctx.commit(
+						'ui/setSectionError',
+						'INVALID_CODE',
+						{root: true}
+					);
 				}
-			);
+			});
+		},
+		changePassword (ctx, { currentPassword, newPassword }) {
+			const data = new FormData();
+
+			data.append('new_password', newPassword);
+			data.append('current_password', currentPassword);
+	
+
+			userService.changePassword(data, {
+				successCallback: () => {
+					ctx.commit(
+						'ui/hideSection',
+						null,
+						{root: true}
+					);
+				},
+				errorCallback: () => {
+					ctx.commit(
+						'ui/setSectionError',
+						'INVALID_FORM_DATA',
+						{root: true}
+					);
+				}
+			});
+		},
+		toggleNewsletter (ctx, { value }) {
+			const data = new FormData();
+
+			data.append('newsletter', value);
+
+			userService.updateSettings(data, {
+				hideDefaultSuccessMsg: true,
+				hideDefaultErrorMsg: true
+			});
 		}
 	}
 };
