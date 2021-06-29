@@ -7,10 +7,11 @@ from .product import (
 	CreateProductRequestSerializer
 )
 from .settings import (
-	UpdateUserSettingsRequestSerializer,
-	UpdatePublisherSettingsRequestSerializer,
 	ChangeEmailRequestSerializer,
-	ConfirmEmailChangeRequestSerializer
+	ChangePasswordRequestSerializer,
+	ConfirmEmailChangeRequestSerializer,
+	UpdateUserSettingsRequestSerializer,
+	UpdatePublisherSettingsRequestSerializer
 )
 from .file import FileSerializer
 from .product_language import ProductLanguageSerializer
