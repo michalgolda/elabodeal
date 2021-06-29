@@ -17,6 +17,7 @@ def get_user_context(context):
 		user_context['email'] = user.email
 		user_context['username'] = user.username
 		user_context['email_verified'] = user.email_verified
+		user_context['newsletter'] = user.newsletter 
 
 		user_context['isAuthenticated'] = True
 		user_context['isPublisher'] = user.is_publisher
