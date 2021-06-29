@@ -1,6 +1,10 @@
 from django.utils import timezone
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as DjangoValidationError
 
 from rest_framework import serializers
+
 from elabodeal.models import (
 	User,
 	Publisher,
@@ -9,7 +13,14 @@ from elabodeal.models import (
 
 
 class UpdateUserSettingsRequestSerializer(serializers.Serializer):
-	username = serializers.CharField(max_length=User.MAX_USERNAME_LENGTH)
+	username = serializers.CharField(
+		default=None,
+		max_length=User.MAX_USERNAME_LENGTH
+	)
+	newsletter = serializers.BooleanField(
+		allow_null=True, 
+		default=None
+	)
 
 	def validate_username(self, value):
 		existing_user = User.objects.filter(username=value).first()
@@ -23,10 +34,22 @@ class UpdateUserSettingsRequestSerializer(serializers.Serializer):
 
 
 class UpdatePublisherSettingsRequestSerializer(serializers.Serializer):
-	first_name = serializers.CharField(max_length=Publisher.MAX_FIRST_NAME_LENGTH)
-	last_name = serializers.CharField(max_length=Publisher.MAX_LAST_NAME_LENGTH)
-	account_number = serializers.CharField(max_length=Publisher.MAX_ACCOUNT_NUMBER_LENGTH)
-	swift = serializers.CharField(max_length=Publisher.MAX_SWIFT_LENGHT)
+	first_name = serializers.CharField(
+		default=None,
+		max_length=Publisher.MAX_FIRST_NAME_LENGTH
+	)
+	last_name = serializers.CharField(
+		default=None,
+		max_length=Publisher.MAX_LAST_NAME_LENGTH
+	)
+	account_number = serializers.CharField(
+		default=None,
+		max_length=Publisher.MAX_ACCOUNT_NUMBER_LENGTH
+	)
+	swift = serializers.CharField(
+		default=None,
+		max_length=Publisher.MAX_SWIFT_LENGHT
+	)
 
 
 class ChangeEmailRequestSerializer(serializers.Serializer):
@@ -75,4 +98,33 @@ class ConfirmEmailChangeRequestSerializer(serializers.Serializer):
 
 		return data
 
+
+class ChangePasswordRequestSerializer(serializers.Serializer):
+	new_password = serializers.CharField()
+	current_password = serializers.CharField()
+	
+	def validate(self, data):
+		new_password = data.get('new_password')
+		current_password = data.get('current_password')
+
+		current_password_is_valid = check_password(
+			current_password,
+			self.instance.password
+		)
+
+		if not current_password_is_valid:
+			raise serializers.ValidationError({
+				'current_password': 'Błędne hasło'
+			})
+
+		try:
+			validate_password(new_password)
+		except DjangoValidationError as e:
+			raise serializers.ValidationError({
+				'new_password': list(e.messages)
+			})
+
+		del data['current_password']
+
+		return data
 
