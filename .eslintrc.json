@@ -1,0 +1,8 @@
+{
+    "extends": ["plugin:vue/vue3-recommended", "eslint:recommended"],
+    "env": {
+		"jquery": true,
+		"browser": true,
+		"commonjs": true
+	}
+}
