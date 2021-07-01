@@ -48,6 +48,15 @@ module.exports = {
         				options: {
         					sourceMap: true
         				},
+        			},
+        			{
+        				loader: 'sass-resources-loader',
+        				options: {
+        					resources: path.resolve(
+								__dirname,
+								'elabodeal/web/static/styles/resources.scss'
+							)
+        				}
         			}
         		], 
 			},

@@ -1,18 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-@import "colors";
-@import "mixins";
-@import "typography";
-
-@import "components/alert";
-@import "components/button";
-@import "components/footer";
-@import "components/form";
-@import "components/loader";
-@import "components/modal";
-@import "components/section";
-@import "components/switch";
-@import "components/navigation";
+@import "components/all";
 
 
 *, *::before, *::after {
