@@ -45,10 +45,8 @@ const uiModule = {
 			state.section.name = '';
 			state.section.error = {};
 		},	
-		setSectionError(state, errorCode) {
-			state.section.error = {
-				code: errorCode
-			};
+		setSectionError(state, error) {
+			state.section.error = error;
 		},
 		clearSectionError(state) {
 			state.section.error = {};

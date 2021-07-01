@@ -6,8 +6,7 @@ const userService = new Service('user');
 userService.register_function('updateSettings', {
 	url: '/api/me/settings/',
 	method: 'put',
-	successMsg: 'Ustawienia zostały poprawnie zapisane.',
-	errorMsg: 'Wprowadzone dane są nieprawidłowe. Spórbuj ponwonie.'
+	successMsg: 'Ustawienia zostały poprawnie zapisane.'
 });
 
 
@@ -30,8 +29,7 @@ userService.register_function('confirmEmailChange', {
 userService.register_function('changePassword', {
 	url: '/api/me/settings/password/',
 	method: 'put',
-	successMsg: 'Hasło zostało pomyślnie zmienione.',
-	errorMsg: 'Aktualne lub nowe hasło jest błędne.'
+	successMsg: 'Hasło zostało pomyślnie zmienione.'
 });	
 
 

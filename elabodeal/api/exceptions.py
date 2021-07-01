@@ -22,8 +22,16 @@ class ResourceDoesNotExists(LogicException):
 def exception_handler(exc, context):
     response = rest_framework_exception_handler(exc, context)
 
-    if isinstance(exc, LogicException):
-        response.data['status_code'] = exc.status_code
-        response.data['type'] = exc.type
+    error = {}
+    error['type'] = type(exc).__name__
+    error['message'] = response.data.get('detail')
+
+    if error['type'] == 'ValidationError':
+        error['message'] = 'Request body data is invalid.'
+        error['details'] = response.data
+
+    response.data = {}
+    response.data['error'] = error
 
     return response
+

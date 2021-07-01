@@ -9,13 +9,18 @@
 		<form @submit.prevent="handleSaveChanges">
 			<div class="form__input-group">
 				<label>nazwa użytkownika</label>
+				<p 
+					class="form__input-error-msg"
+					v-for="error in usernameErrors"
+				>
+					{{ error }}
+				</p>
 				<input 
 					type="text"
 					name="username"
 					required="required"
-					:class="{'form__input-error': currentSectionError}"
+					:class="{'form__input-error': usernameErrors}"
 					@change="handleChangeUsername"
-					@keydown="() => hideCurrentSectionError"
 				/>
 			</div>
 			<button class="btn btn-block btn__secondary">
@@ -45,7 +50,7 @@ export default {
 			currentValue: state => state.user.username
 		}),
 		...mapUiState({
-			currentSectionError: state => state.section.error.code === 'INVALID_FORM_DATA'
+			usernameErrors: state => state.section.error.username
 		}),
 	},
 	data() {
@@ -54,10 +59,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapUiMutations([
-			'setSectionError', 
-			'clearSectionError'
-		]),
+		...mapUiMutations(['setSectionError']),
 		...mapUserSettingsActions(['changeUsername']),
 		handleSaveChanges (e) {
 			if (!this.username || this.username === this.currentValue)

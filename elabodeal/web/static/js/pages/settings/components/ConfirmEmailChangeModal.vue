@@ -1,11 +1,11 @@
 <template>
     <Modal
-        title="Kod potwierdzający zmianę adresu email"
+        title="Potwierdzenie zmiany adresu email"
     >
         <CodeInput 
+            :class="{'code-invalid': codeErrors}"
             @complete="handleComplete"
             @change="() => clearSectionError()"
-            :class="{'code-invalid': invalidCode}"
         />
         <div class="flex-center">
             <button
@@ -39,7 +39,7 @@ export default {
             return this.context.email
         },
         ...mapUiState({
-            invalidCode: state => state.section.error.code === 'invalidCode'
+            codeErrors: state => state.section.error.code
         })
     },
     methods: {
@@ -49,15 +49,15 @@ export default {
             'resendChangeEmailCode'
         ]),
         handleComplete (code) {
+            this.clearSectionError();
+
             this.confirmChangeEmail({
                 code,
                 email: this.email
             });
         },
         handleResendCode () {
-            this.resendChangeEmailCode({
-                email: this.email
-            });
+            this.resendChangeEmailCode({ email: this.email });
         }
     }
 }

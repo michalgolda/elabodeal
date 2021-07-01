@@ -9,13 +9,18 @@
 		<form @submit.prevent="handleSaveChanges">
 			<div class="form__input-group">
 				<label>Aktualny kod swift</label>
+				<p
+					class="form__input-error-msg"
+					v-for="error in swiftErrors"
+				>
+					{{ error }}
+				</p>
 				<input 
 					type="text"
 					name="swift"
 					required="required"
-					:class="{'form__input-error': currentSectionError}"
+					:class="{'form__input-error': swiftErrors}"
 					@change="handleChangeSwift"
-					@keydown="() => hideCurrentSectionError"
 				/>
 			</div>
 			<button class="btn btn-block btn__secondary">
@@ -45,7 +50,7 @@ export default {
 			currentValue: state => state.publisher.swift
 		}),
 		...mapUiState({
-			currentSectionError: state => state.section.error.code === 'INVALID_FORM_DATA'
+			swiftErrors: state => state.section.error.swift
 		}),
 	},
 	data() {
@@ -54,10 +59,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapUiMutations([
-			'setSectionError', 
-			'clearSectionError'
-		]),
+		...mapUiMutations(['setSectionError']),
 		...mapPublisherSettingsActions(['changeSwift']),
 		handleSaveChanges (e) {
 			if (!this.swift || this.swift === this.currentValue)

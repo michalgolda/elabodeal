@@ -27,10 +27,10 @@ const publisherSettingsModule = {
 						{root: true}
 					);
 				},
-				errorCallback: () => {
+				errorCallback: (errorRes) => {
 					ctx.commit(
 						'ui/setSectionError',
-						'INVALID_FORM_DATA',
+						errorRes.data.error.details,
 						{root: true}
 					);
 				}
@@ -59,10 +59,10 @@ const publisherSettingsModule = {
 						{root: true}
 					);
 				},
-				errorCallback: () => {
+				errorCallback: (errorRes) => {
 					ctx.commit(
 						'ui/setSectionError',
-						'INVALID_FORM_DATA',
+						errorRes.data.error.details,
 						{root: true}
 					);
 				}
@@ -90,10 +90,10 @@ const publisherSettingsModule = {
 						{root: true}
 					);
 				},
-				errorCallback: () => {
+				errorCallback: (errorRes) => {
 					ctx.commit(
 						'ui/setSectionError',
-						'INVALID_FORM_DATA',
+						errorRes.data.error.details,
 						{root: true}
 					);
 				}
@@ -121,10 +121,10 @@ const publisherSettingsModule = {
 						{root: true}
 					);
 				},
-				errorCallback: () => {
+				errorCallback: (errorRes) => {
 					ctx.commit(
 						'ui/setSectionError',
-						'INVALID_FORM_DATA',
+						errorRes.data.error.details,
 						{root: true}
 					);
 				}

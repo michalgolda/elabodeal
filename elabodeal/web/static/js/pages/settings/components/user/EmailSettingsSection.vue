@@ -9,24 +9,34 @@
 		<form @submit.prevent="handleSaveChanges">
 			<div class="form__input-group">
 				<label>EMAIL</label>
+				<p
+					class="form__input-error-msg"
+					v-for="error in emailErrors"
+				>
+					{{ error }}
+				</p>
 				<input 
 					name="email"
 					type="email"
 					required="required"
-					:class="{'form__input-error': currentSectionError}"
+					:class="{'form__input-error': emailErrors}"
 					@change="handleChangeEmail"
-					@keydown="() => clearSectionError()"
 				/>
 			</div>
 			<div class="form__input-group">
 				<label>POWTÓRZ EMAIL</label>
+				<p
+					class="form__input-error-msg"
+					v-for="error in emailRepeatErrors"
+				>
+					{{ error }}
+				</p>
 				<input 
 					name="email_repeat"
 					type="email"
 					required="required" 
-					:class="{'form__input-error': currentSectionError}"
+					:class="{'form__input-error': emailRepeatErrors}"
 					@change="handleChangeEmailRepeat"
-					@keydown="() => clearSectionError()"
 				/>
 			</div>
 			<button class="btn btn-block btn__secondary">
@@ -55,7 +65,8 @@ export default {
 			currentValue: state => state.user.email
 		}),
 		...mapUiState({
-			currentSectionError: state => state.section.error.code === 'INVALID_FORM_DATA'
+			emailErrors: state => state.section.error.email,
+			emailRepeatErrors: state => state.section.error.email_repeat
 		})
 	},
 	data () {
@@ -65,23 +76,28 @@ export default {
 		}
 	},
 	methods: {
-		...mapUiMutations([
-			'setSectionError',
-			'clearSectionError'
-		]),
+		...mapUiMutations(['setSectionError']),
 		...mapUserSettingsActions(['changeEmail']),
 		handleSaveChanges (e) {
 			if (!this.email || !this.emailRepeat)
 				return;
 
 			if (this.email !== this.emailRepeat) {
-				this.setSectionError('INVALID_FORM_DATA');
+				this.setSectionError({
+					email_repeat: ['Adresy email nie są zgodne.']
+				});
 
 				return;
 			}
 
-			if (this.emailRepeat === this.currentValue)
+			if (this.emailRepeat === this.currentValue) {
+				this.setSectionError({
+					email: ['Nowy adres email jest taki sam jak aktualny.'],
+					email_repeat: undefined
+				});
+
 				return;
+			}
 
 			this.changeEmail({
 				email: this.email

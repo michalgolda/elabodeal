@@ -31,10 +31,10 @@ const userSettingsModule = {
 						{root: true}
 					);
 				},
-				errorCallback: () => {
+				errorCallback: (errorRes) => {
 					ctx.commit(
 						'ui/setSectionError',
-						'INVALID_FORM_DATA',
+						errorRes.data.error.details,
 						{root: true}
 					);
 				}
@@ -57,10 +57,10 @@ const userSettingsModule = {
 						{root:true}
 					);
 				},
-				errorCallback: () => {
+				errorCallback: (errorRes) => {
 					ctx.commit(
 						'ui/setSectionError',
-						'INVALID_FORM_DATA',
+						errorRes.data.error.details,
 						{root: true}
 					);
 				}
@@ -93,10 +93,10 @@ const userSettingsModule = {
 						{root: true}
 					);
 				},
-				errorCallback: () => {
+				errorCallback: (errorRes) => {
 					ctx.commit(
 						'ui/setSectionError',
-						'INVALID_CODE',
+						errorRes.data.error.details,
 						{root: true}
 					);
 				}
@@ -108,7 +108,6 @@ const userSettingsModule = {
 			data.append('new_password', newPassword);
 			data.append('current_password', currentPassword);
 	
-
 			userService.changePassword(data, {
 				successCallback: () => {
 					ctx.commit(
@@ -117,10 +116,10 @@ const userSettingsModule = {
 						{root: true}
 					);
 				},
-				errorCallback: () => {
+				errorCallback: (errorRes) => {
 					ctx.commit(
 						'ui/setSectionError',
-						'INVALID_FORM_DATA',
+						errorRes.data.error.details,
 						{root: true}
 					);
 				}

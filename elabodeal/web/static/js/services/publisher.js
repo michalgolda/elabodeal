@@ -14,8 +14,7 @@ publisherService.register_function('createProduct', {
 publisherService.register_function('updateSettings', {
 	url: '/api/me/settings/publisher/',
 	method: 'put',
-	successMsg: 'Ustawienia zostały pomyślnie zapisane.',
-	errorMsg: 'Wprowadzone dane są nieprawidłowe. Spróbuj ponownie.'
+	successMsg: 'Ustawienia zostały pomyślnie zapisane.'
 });
 
 export default publisherService;
