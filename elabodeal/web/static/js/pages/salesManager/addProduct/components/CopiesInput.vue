@@ -3,21 +3,21 @@
 		@incrementValue="handleIncrementValue"
 		@decrementValue="handleDecrementValue"
 	>
-		<template v-if="!showInfinity">
-			<input 
-				class="copies__input"
-				type="number"
-				name="copies"
-				:class="{ 'form__input-error': copies.error }"
-				:value="copies.value"
-				@change="handleChangeValue"
-			/>
-		</template>
-		<template v-else>
-			<span class="copies__input-infinity">
-				<i class="fas fa-infinity"></i>
-			</span>
-		</template>
+		<input 
+			class="copies__input"
+			type="number"
+			name="copies"
+			:class="{ 'form__input-error': copies.error }"
+			:value="copies.value"
+			@change="handleChangeValue"
+			v-if="!showInfinity"
+		>
+		<span 
+			class="copies__input-infinity"
+			v-else
+		>
+			<i class="fas fa-infinity" />
+		</span>
 	</number-input-controls>
 </template>
 <script>
@@ -34,7 +34,7 @@ export default {
 		NumberInputControls
 	},
 	methods: {
-		handleIncrementValue: function ( e ) {
+		handleIncrementValue: function () {
 			const value = this.copies.value ? this.copies.value : 0;
 
 			const updatedValue = value + 1;
@@ -47,7 +47,7 @@ export default {
 				}
 			);
 		},
-		handleDecrementValue: function ( e ) {
+		handleDecrementValue: function () {
 			const value = this.copies.value ? this.copies.value : 0;
 
 			const updatedValue = value - 1;

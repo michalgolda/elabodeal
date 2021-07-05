@@ -5,7 +5,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('ui');
+const { mapMutations, mapGetters } = createNamespacedHelpers('ui');
 
 import UserSettingsTab from './user/UserSettingsTab';
 import PublisherSettingsTab from './publisher/PublisherSettingsTab';

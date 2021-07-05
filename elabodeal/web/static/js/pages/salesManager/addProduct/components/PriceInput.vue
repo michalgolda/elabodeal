@@ -1,7 +1,7 @@
 <template>
 	<number-input-controls
-		@incrementValue="handleIncrementValue"
-		@decrementValue="handleDecrementValue"
+		@increment-value="handleIncrementValue"
+		@decrement-value="handleDecrementValue"
 	>
 		<div class="price">
 			<input
@@ -11,7 +11,7 @@
 				:class="{ 'form__input-error': price.error }"
 				:value="_parseValue( price.value ? price.value : 0 )"
 				@change="handleChangeValue"
-			/>
+			>
 			<div class="price__currency">
 				PLN
 			</div>
@@ -70,7 +70,7 @@ export default {
 				}
 			)
 		},
-		handleDecrementValue: function ( e ) {
+		handleDecrementValue: function () {
 			const value = this.price.value ? this.price.value : 0;
 
 			if ( value <= 0 ) {
@@ -95,7 +95,7 @@ export default {
 				}
 			);
 		},
-		handleIncrementValue: function ( e ) {
+		handleIncrementValue: function () {
 			const value = this.price.value ? this.price.value : 0;
 
 			if ( value >= 500 )

@@ -1,7 +1,7 @@
 <template>
 	<number-input-controls
-		@incrementValue="handleIncrementValue"
-		@decrementValue="handleDecrementValue"
+		@increment-value="handleIncrementValue"
+		@decrement-value="handleDecrementValue"
 	>
 		<input 
 			type="number"
@@ -10,7 +10,7 @@
 			:value="page_count.value"
 			@change="handleChangeValue"
 			@keyup="$store.commit( 'clearFieldError', { fieldName: 'page_count' } )"
-		/>
+		>
 	</number-input-controls>
 </template>
 <script>
@@ -26,7 +26,7 @@ export default {
 		NumberInputControls
 	},
 	methods: {
-		handleIncrementValue: function ( e ) {
+		handleIncrementValue: function () {
 			const value = this.page_count.value ? this.page_count.value : 0;
 
 			const updatedValue = value + 1;
@@ -39,7 +39,7 @@ export default {
 				}
 			);
 		},
-		handleDecrementValue: function ( e ) {
+		handleDecrementValue: function () {
 			const value = this.page_count.value ? this.page_count.value : 0;
 
 			const updatedValue = value - 1;

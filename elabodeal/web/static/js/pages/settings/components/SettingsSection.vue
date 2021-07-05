@@ -4,7 +4,9 @@
 		:class="{'settings__section-isEditing': isEditing}"
 	>
 		<template v-if="isEditing">
-			<p class="settings__section-title">{{ title }}</p>
+			<p class="settings__section-title">
+				{{ title }}
+			</p>
 			<p class="settings__section-description">
 				{{ description }}
 			</p>
@@ -16,7 +18,7 @@
 						disabled="disabled" 
 						:name="`current_${name}`"
 						:placeholder="currentValue"
-					/>
+					>
 				</div>
 				<slot />
 				<button 
@@ -29,7 +31,9 @@
 		</template>
 		<template v-else>
 			<div>
-				<p class="settings__section-title">{{ title }}</p>
+				<p class="settings__section-title">
+					{{ title }}
+				</p>
 				<p 
 					class="settings__section-currentValue"
 					v-if="showCurrentValue"
@@ -88,10 +92,10 @@ export default {
 	},
 	methods: {
 		...mapMutations(['showSection', 'hideSection']),
-		handleEdit(e) {
+		handleEdit() {
 			this.showSection(this.name);
 		},
-		handleCancelEdit(e) {
+		handleCancelEdit() {
 			this.hideSection();
 		}
 	}

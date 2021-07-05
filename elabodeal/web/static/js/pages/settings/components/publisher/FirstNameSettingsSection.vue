@@ -3,8 +3,8 @@
 		name="first_name"
 		title="Imię"
 		description="awjdkawjdkaw"
-		currentLabel="Aktualne imię"
-		:currentValue="currentValue"
+		current-label="Aktualne imię"
+		:current-value="currentValue"
 	>
 		<form @submit.prevent="handleSaveChanges">
 			<div class="form__input-group">
@@ -12,6 +12,7 @@
 				<p 
 					class="form__input-error-msg"
 					v-for="error in firstNameErrors"
+					:key="error"
 				>
 					{{ error }}
 				</p>q
@@ -21,7 +22,7 @@
 					required="required"
 					:class="{'form__input-error': firstNameErrors}"
 					@change="handleChangeFirstName"
-				/>
+				>
 			</div>
 			<button class="btn btn-block btn__secondary">
 				Zmień
@@ -61,7 +62,7 @@ export default {
 	methods: {
 		...mapUiMutations(['setSectionError']),
 		...mapPublisherSettingsActions(['changeFirstName']),
-		handleSaveChanges (e) {
+	handleSaveChanges () {
 			if (!this.first_name || this.first_name === this.currentValue)
 				return;
 

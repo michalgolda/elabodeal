@@ -5,7 +5,7 @@
 		type="file" 
 		:accept="accept"
 		@change="handleUploadedFile"
-	/>
+	>
 	<slot
 		:handleChooseFile="handleChooseFile"
 		:handleDeleteFile="handleDeleteFile"
@@ -15,7 +15,10 @@
 <script>
 export default {
 	props: {
-		accept: String
+		accept: {
+			type: String,
+			required: true
+		}
 	},
 	data: function () {
 		return {
@@ -24,7 +27,7 @@ export default {
 	},
 	emits: [ "choose", "delete" ],
 	methods: {
-		handleChooseFile: function ( e ) {
+		handleChooseFile: function () {
 			const { input } = this.$refs;
 
 			input.click();

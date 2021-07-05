@@ -4,7 +4,7 @@ import apiClient from "@/api";
 
 function Service (name) {
     this.name = name;
-};
+}
 
 Service.prototype.register_function = function (name, config) {
     var { url, 

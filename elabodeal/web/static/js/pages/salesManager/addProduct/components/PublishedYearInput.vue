@@ -10,7 +10,7 @@
 			:value="published_year.value"
 			@change="handleChangeValue"
 			@keyup="$store.commit( 'clearFieldError', { fieldName: 'published_year' } )"
-		/>
+		>
 	</number-input-controls>
 </template>
 <script>
@@ -26,7 +26,7 @@ export default {
 		NumberInputControls
 	},
 	methods: {
-		handleIncrementValue: function ( e ) {
+		handleIncrementValue: function () {
 			const value = this.published_year.value ? this.published_year.value : 0;
 			const updatedValue = value + 1;
 
@@ -38,7 +38,7 @@ export default {
 				}
 			);
 		},
-		handleDecrementValue: function ( e ) {
+		handleDecrementValue: function () {
 			const value = this.published_year.value ? this.published_year.value : 0;
 			const updatedValue = value - 1;
 

@@ -2,19 +2,19 @@
 	<div class="form__group">
 		<label>
 			KATEGORIA WIEKOWA 
-			<i class="fas fa-question-circle input-information"></i>
+			<i class="fas fa-question-circle input-information" />
 		</label>
 		<div class="age-categories">
-			<template v-for="age in [ 3, 7, 12, 16, 18 ]">
-				<div
-					class="age-category"
-					:age="age"
-					:class="{ 'age-category-selected': selectedAgeCategory === age }"
-					@click="handleChangeAgeCategory"
-				>
-					<p>+{{ age }}</p>
-				</div>
-			</template>
+			<div
+				v-for="age in [3, 7, 12, 16, 18]"
+				:key="age"
+				class="age-category"
+				:age="age"
+				:class="{ 'age-category-selected': selectedAgeCategory === age }"
+				@click="handleChangeAgeCategory"
+			>
+				<p>+{{ age }}</p>
+			</div>
 		</div>
 	</div>
 </template>

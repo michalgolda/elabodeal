@@ -7,10 +7,18 @@
 				:class="{ 'form__input-error': this.form.fields.category_id.error }"
 				@change="handleChangeCategory"
 			>
-				<option selected disabled>Wybierz kategorie</option>
-				<template v-for="category in categories">
-					<option>{{ category.name }}</option>
-				</template>
+				<option 
+					selected 
+					disabled
+				>
+					Wybierz kategorie
+				</option>
+				<option
+					v-for="category in categories"
+					:key="category.id"
+				>
+					{{ category.name }}
+				</option>
 			</select>
 		</div>
 		<div>
@@ -20,10 +28,18 @@
 				:class="{ 'form__input-error': this.form.fields.product_language_id.error }"
 				@change="handleChangeLanguage"
 			>
-				<option selected disabled>Wybierz język</option>
-				<template v-for="language in supportedLanguages">
-					<option>{{ language.name }}</option>
-				</template>
+				<option 
+					selected 
+					disabled
+				>
+					Wybierz język
+				</option>
+				<option
+					v-for="language in supportedLanguages"
+					:key="language.id"
+				>
+					{{ language.name }}
+				</option>
 			</select>
 		</div>
 	</div>
@@ -48,8 +64,8 @@
 			name="title"
 			:class="{ 'form__input-error': this.form.fields.title.error }"
 			@change="handleChangeTitle"
-			@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'title' } )"
-		/>
+			@keyup="this.$store.commit('clearFieldError', { fieldName: 'title' })"
+		>
 	</div>
 	<div class="form__group">
 		<label>AUTOR</label>
@@ -58,18 +74,20 @@
 			name="author"
 			:class="{ 'form__input-error': this.form.fields.author.error }"
 			@change="handleChangeAuthor"
-			@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'author' } )"
-		/>
+			@keyup="this.$store.commit('clearFieldError', { fieldName: 'author' })"
+		>
 	</div>
 	<div class="form__group form__group-textarea">
-		<label>OPIS <i class="fas fa-question-circle input-information"></i></label>
+		<label>
+			OPIS 
+			<i class="fas fa-question-circle input-information" />
+		</label>
 		<textarea
 			name="description"
 			:class="{ 'form__input-error': this.form.fields.description.error }"
 			@change="handleChangeDescription"
 			@keyup="this.$store.commit( 'clearFieldError', { fieldName: 'description' } )"
-		>
-		</textarea>
+		/>
 		<p>Pozostało znaków: 9000</p>
 	</div>
 	<div class="form__group form__group-textarea">
@@ -77,25 +95,26 @@
 		<textarea 
 			name="contents"
 			@change="handleChangeContents"
-		>
-		</textarea>
+		/>
 		<p>Pozostało znaków: 9000</p>
 	</div>
 	<div class="form__group">
-		<label>NUMER ISBN <i class="fas fa-question-circle input-information"></i></label>
+		<label>
+			NUMER ISBN 
+			<i class="fas fa-question-circle input-information" />
+		</label>
 		<input
-			 type="text" 
-			 name="isbn"
-			 :class="{ 'form__input-error': this.form.fields.isbn.error }"
-			 @change="handleChangeIsbn"
-			 @keyup="this.$store.commit( 'clearFieldError', { fieldName: 'isbn' } )"
-		/>
+			type="text" 
+			name="isbn"
+			:class="{ 'form__input-error': this.form.fields.isbn.error }"
+			@change="handleChangeIsbn"
+			@keyup="this.$store.commit('clearFieldError', {fieldName: 'isbn'})"
+		>
 	</div>
 </template>
 <script>
 import { mapState } from "vuex";
 
-import PriceInput from "./PriceInput.vue";
 import CopiesInput from "./CopiesInput.vue";
 import PageCountInput from "./PageCountInput.vue";
 import PublishedYearInput from "./PublishedYearInput.vue";
@@ -103,7 +122,6 @@ import PublishedYearInput from "./PublishedYearInput.vue";
 
 export default {
 	components: {
-		PriceInput,
 		CopiesInput,
 		PageCountInput,
 		PublishedYearInput

@@ -1,41 +1,35 @@
 <template>
     <div class="code">
         <div class="code__group">
-            <template 
-                v-for="index in [0, 1, 2]" 
-                v-key="index"
+            <input
+                v-for="index in [0, 1, 2]"
+                :key="index"
+                class="code__input"
+                type="text" 
+                maxlength="1" 
+                :ref="setInputRef"
+                :data-id="index"
+                @keydown="handleKeydown"
+                @input="handleInput"
+                @change="handleChange"
+                @paste="handlePaste"
             >
-                <input
-                    class="code__input"
-                    type="text" 
-                    maxlength="1" 
-                    :ref="setInputRef"
-                    :data-id="index"
-                    @keydown="handleKeydown"
-                    @input="handleInput"
-                    @change="handleChange"
-                    @paste="handlePaste"
-                />
-            </template>
         </div>
-        <span class="code__group-separator"></span>
+        <span class="code__group-separator" />
         <div class="code__group">
-            <template 
-                v-for="index in [3, 4, 5]" 
-                v-key="index"
+            <input
+                v-for="index in [3, 4, 5]"
+                :key="index"
+                class="code__input" 
+                type="text" 
+                maxlength="1" 
+                :ref="setInputRef"
+                :data-id="index"
+                @keydown="handleKeydown"
+                @input="handleInput"
+                @change="handleChange"
+                @paste="handlePaste"
             >
-                <input
-                    class="code__input" 
-                    type="text" 
-                    maxlength="1" 
-                    :ref="setInputRef"
-                    :data-id="index"
-                    @keydown="handleKeydown"
-                    @input="handleInput"
-                    @change="handleChange"
-                    @paste="handlePaste"
-                />
-            </template>
         </div>
     </div>
 </template>

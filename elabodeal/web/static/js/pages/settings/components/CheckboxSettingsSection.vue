@@ -1,12 +1,16 @@
 <template>
 	<div class="settings__section">
 		<div>
-			<p class="settings__section-title">{{ title }}</p>
-			<p class="settings__section-description">{{ description }}</p>
+			<p class="settings__section-title">
+				{{ title }}
+			</p>
+			<p class="settings__section-description">
+				{{ description }}
+			</p>
 		</div>
 		<SwitchInput 
 			:name="name"
-			:currentValue="currentValue"
+			:current-value="currentValue"
 			@change="emitChange"
 		/>
 	</div>

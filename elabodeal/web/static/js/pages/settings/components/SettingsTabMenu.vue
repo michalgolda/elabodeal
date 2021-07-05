@@ -1,27 +1,29 @@
 <template>
 	<div class="section">
-        <p class="section__title">Ustawienia</p>
+        <p class="section__title">
+            Ustawienia
+        </p>
         <div class="link-list">
-            <template v-for="tab in tabs">
-                <div 
-                    class="link flex-center"
-                    :class="{ 'link__current': currentTabName === tab.name }"
+            <div 
+                class="link flex-center"
+                :class="{ 'link__current': currentTabName === tab.name }"
+                v-for="tab in tabs"
+                :key="tab.name"
+            >
+                <a 
+                href=""
+                    @click.prevent="() => showTab(tab.name)"
                 >
-                    <a 
-                        href=""
-                        @click.prevent="() => showTab(tab.name)"
-                    >
-                        <p>{{ tab.linkText }}</p>
-                    </a>
-                </div>
-            </template>
+                    <p>{{ tab.linkText }}</p>
+                </a>
+            </div>
         </div>
     </div>
 </template>
 <script>
 import { createNamespacedHelpers } from 'vuex';
 
-const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('ui');
+const { mapMutations, mapGetters } = createNamespacedHelpers('ui');
 
 
 export default {

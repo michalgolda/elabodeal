@@ -5,7 +5,7 @@
 			type="button"
 			@click="$emit( 'decrementValue' )"
 		>
-			<i class="fas fa-minus"></i>
+			<i class="fas fa-minus" />
 		</button>
 		<div class="input-wrapper">
 			<slot />
@@ -15,7 +15,7 @@
 			type="button"
 			@click="$emit( 'incrementValue' )"
 		>
-			<i class="fas fa-plus"></i>
+		<i class="fas fa-plus" />
 		</button>
 	</div>
 </template>

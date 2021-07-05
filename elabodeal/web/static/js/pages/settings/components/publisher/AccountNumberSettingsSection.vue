@@ -3,8 +3,8 @@
 		name="account_number"
 		title="Numer konta"
 		description="ajdawjdakwjdk"
-		currentLabel="Aktualny numer konta"
-		:currentValue="currentValue"
+		current-label="Aktualny numer konta"
+		:current-value="currentValue"
 	>
 		<form @submit.prevent="handleSaveChanges">
 			<div class="form__input-group">
@@ -12,6 +12,7 @@
 				<p
 					class="form__input-error-msg"
 					v-for="error in accountNumbersErrors"
+					:key="error"
 				>
 					{{ error }}
 				</p>
@@ -21,7 +22,7 @@
 					required="required"
 					:class="{'form__input-error': accountNumberErrors}"
 					@change="handleChangeAccountNumber"
-				/>
+				>
 			</div>
 			<button class="btn btn-block btn__secondary">
 				Zmień
@@ -61,7 +62,7 @@ export default {
 	methods: {
 		...mapUiMutations(['setSectionError']),
 		...mapPublisherSettingsActions(['changeAccountNumber']),
-		handleSaveChanges (e) {
+		handleSaveChanges () {
 			if (!this.account_number || this.account_number === this.currentValue)
 				return;
 

@@ -3,7 +3,7 @@ import { mount } from 'mount-vue-component';
 
 function ModalManagerStorage () {
 	this.storageKey = '__modal__';
-};
+}
 
 ModalManagerStorage.prototype.set = function (value) {
 	value = JSON.stringify(value);
@@ -40,7 +40,7 @@ function ModalManager ({ modals } = {}) {
 			this.register(modalName, modalComponent);
 		}
 	}
-};
+}
 
 ModalManager.prototype.install = function (app) {
 	this.app = app;

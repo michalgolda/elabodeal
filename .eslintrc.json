@@ -1,8 +1,11 @@
 {
-    "extends": ["plugin:vue/vue3-recommended", "eslint:recommended"],
+    "extends": ["plugin:vue/vue3-strongly-recommended", "eslint:recommended"],
     "env": {
 		"jquery": true,
 		"browser": true,
 		"commonjs": true
+	},
+	"rules": {
+		"vue/html-indent": [0, "tab"]
 	}
 }

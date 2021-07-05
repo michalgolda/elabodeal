@@ -2,11 +2,13 @@
 	<div class="modal-wrapper flex-center">
 		<div class="modal">
 			<div class="modal__header">
-				<p class="modal__title">{{ title }}</p>
+				<p class="modal__title">
+					{{ title }}
+				</p>
 				<i 
 					class="fas fa-times modal__close-btn"
 					@click="$modalManager.hide()"
-				></i>
+				/>
 			</div>
 			<div class="modal__body">
 				<slot />

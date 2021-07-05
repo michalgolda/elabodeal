@@ -5,7 +5,7 @@ const storeAppGlobalPropertiesInjector = (store, properties) => {
 				for (var propertyName of properties) {
 					const appGlobalProperties = app.config.globalProperties;
 					
-					if (appGlobalProperties.hasOwnProperty(propertyName)) {
+					if (appGlobalProperties[propertyName] !== undefined) {
 						store[propertyName] = appGlobalProperties[propertyName];
 					} else {
 						console.warn(`You are want inject property to store which aren't exists.`);

@@ -14,21 +14,21 @@
 				@click="input.handleChooseFile"
 				v-show="input.isEmpty"
 			>
-				<i class="fas fa-image"></i>
+				<i class="fas fa-image" />
 			</div>
 			<div 
 				class="file__upload file__upload-preview"
 				:class="{ 'file__upload-cover': isCover }"
 				v-show="!input.isEmpty"
 			>
-				<img ref="imagePreview" />
+				<img ref="imagePreview">
 				<div class="file__upload-actions">
 					<button 
 						class="btn btn__danger" 
 						type="button"
 						@click="input.handleDeleteFile"
 					>
-						<i class="fas fa-trash-alt"></i>
+						<i class="fas fa-trash-alt" />
 					</button>
 				</div>
 			</div>
@@ -52,7 +52,7 @@ export default {
 	},
 	computed: mapState( [ "form" ] ),
 	methods: {
-		handleChooseFile: function ( { file, e } ) {
+		handleChooseFile: function ( { file } ) {
 			const { imagePreview } = this.$refs;
 
 			const reader = new FileReader();
@@ -81,7 +81,7 @@ export default {
 				}
 			)
 		},
-		handleDeleteFile: function ( { file, e } ) {
+		handleDeleteFile: function ( { file } ) {
 			const { imagePreview } = this.$refs;
 
 			imagePreview.src = '';

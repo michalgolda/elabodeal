@@ -11,7 +11,10 @@
 		<div class="form__group">
 			<div>
 				<label>CENA</label>
-				<div class="flex-center" style="width: 100%;">
+				<div 
+					class="flex-center" 
+					style="width: 100%;"
+				>
 					<div>
 						<price-input />
 					</div>
@@ -20,7 +23,9 @@
 		</div>
 		<additional-data-section />
 		<consents-section />
-		<button class="btn btn__primary">Dodaj produkt</button>
+		<button class="btn btn__primary">
+			Dodaj produkt
+		</button>
 		<!-- <button class="btn btn__secondary" type="button">Dodaj wersje językowe</button> -->
 	</form>
 </template>

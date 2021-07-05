@@ -1,5 +1,7 @@
 <template>
-	<p class="form__group-title">Premiera</p>
+	<p class="form__group-title">
+		Premiera
+	</p>
 	<div class="form__group form__group-grid form__group-grid-2">
 		<div>
 			<label>DATA</label>
@@ -8,7 +10,7 @@
 				name="premiere_date"
 				:class="{ 'form__input-error': this.form.fields.premiere_datetime.error }"
 				@change="handleChangePremiereDate"
-			/>
+			>
 		</div>
 		<div>
 			<label>GODZINA</label>
@@ -18,7 +20,7 @@
 				:class="{ 'form__input-error': this.form.fields.premiere_datetime.error }"
 				:value="this.premiereTime"
 				@change="handleChangePremiereTime"
-			/>
+			>
 		</div>
 	</div>
 </template>

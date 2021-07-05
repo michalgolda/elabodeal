@@ -14,7 +14,7 @@ const Alert = new class {
         this.show( message, title, 'error' );
     }
 
-    info( message, title = 'Informacja!', type = 'info' ) {
+    info( message, title = 'Informacja!' ) {
         this.show( message, title, 'info' );
     }
 

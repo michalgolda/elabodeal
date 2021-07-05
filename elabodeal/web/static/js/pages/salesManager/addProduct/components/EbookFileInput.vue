@@ -3,7 +3,9 @@
 		class="file" 
 		style="width: 168px; margin: 0 auto;"
 	>
-		<p class="file__upload-type">{{ type }}</p>
+		<p class="file__upload-type">
+			{{ type }}
+		</p>
 		<file-input 
 			v-slot="input"
 			:accept="'.' + type.toLocaleLowerCase()"
@@ -38,14 +40,17 @@ import FileInput from "./FileInput.vue";
 
 export default {
 	props: {
-		type: String
+		type: {
+			type: String,
+			required: true
+		}
 	},
 	components: {
 		FileInput
 	},
 	computed: mapState( [ "form" ] ),
 	methods: {
-		handleChooseFile: function ( { file, e } ) {
+		handleChooseFile: function ( { file } ) {
 			var value = this.form.fields[ "files" ].value;
 
 			file.id = String( Math.random() );
@@ -60,7 +65,7 @@ export default {
 				}
 			)
 		},
-		handleDeleteFile: function( { file, e } ) {
+		handleDeleteFile: function( { file } ) {
 			var value = this.form.fields[ "files" ].value.filter(
 				( element ) => element.id !== file.id
 			)

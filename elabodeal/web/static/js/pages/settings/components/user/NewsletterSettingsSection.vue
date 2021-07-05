@@ -3,13 +3,14 @@
 		name="newsletter"
 		title="Newsletter"
 		description="Fajny opis tutaj będzie"
-		:currentValue="currentValue"
+		:current-value="currentValue"
 		@change="handleChange"
 	/>
 </template>
 <script>
-import { createNamespacedHelpers,
-		 mapState as mapRootState } from 'vuex';
+import { 
+	createNamespacedHelpers,
+	mapState as mapRootState } from 'vuex';
 
 import CheckboxSettingsSection from '../CheckboxSettingsSection';
 

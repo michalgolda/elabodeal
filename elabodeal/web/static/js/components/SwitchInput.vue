@@ -1,11 +1,11 @@
 <template>
 	<input 
 		class="switch" 
-	    type="checkbox"
-	    :name="name"
-	    :checked="currentValue"
-	    @change="emitChange"
-	/>	
+		type="checkbox"
+		:name="name"
+		:checked="currentValue"
+		@change="emitChange"
+	>	
 </template>
 <script>
 export default {

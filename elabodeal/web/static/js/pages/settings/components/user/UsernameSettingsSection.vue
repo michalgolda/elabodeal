@@ -3,8 +3,8 @@
 		name="username"
 		title="Nazwa użytkownika"
 		description="Fajny opis tutaj będzie"
-		currentLabel="Aktualna nazwa użytkownika"
-		:currentValue="currentValue"
+		current-label="Aktualna nazwa użytkownika"
+		:current-value="currentValue"
 	>
 		<form @submit.prevent="handleSaveChanges">
 			<div class="form__input-group">
@@ -12,6 +12,7 @@
 				<p 
 					class="form__input-error-msg"
 					v-for="error in usernameErrors"
+					:key="error"
 				>
 					{{ error }}
 				</p>
@@ -21,7 +22,7 @@
 					required="required"
 					:class="{'form__input-error': usernameErrors}"
 					@change="handleChangeUsername"
-				/>
+				>
 			</div>
 			<button class="btn btn-block btn__secondary">
 				Zmień
@@ -45,6 +46,11 @@ export default {
 	components: {
 		SettingsSection
 	},
+	data() {
+		return {
+			username: ''
+		}
+	},
 	computed: {
 		...mapRootState({
 			currentValue: state => state.user.username
@@ -53,15 +59,10 @@ export default {
 			usernameErrors: state => state.section.error.username
 		}),
 	},
-	data() {
-		return {
-			username: ''
-		}
-	},
 	methods: {
 		...mapUiMutations(['setSectionError']),
 		...mapUserSettingsActions(['changeUsername']),
-		handleSaveChanges (e) {
+		handleSaveChanges () {
 			if (!this.username || this.username === this.currentValue)
 				return;
 

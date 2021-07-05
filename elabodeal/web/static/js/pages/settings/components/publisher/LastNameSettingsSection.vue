@@ -3,8 +3,8 @@
 		name="last_name"
 		title="Nazwisko"
 		description="awjdkawjdkaw"
-		currentLabel="Aktualne nazwisko"
-		:currentValue="currentValue"
+		current-label="Aktualne nazwisko"
+		:current-value="currentValue"
 	>
 		<form @submit.prevent="handleSaveChanges">
 			<div class="form__input-group">
@@ -12,6 +12,7 @@
 				<p 
 					class="form__input-error-msg"
 					v-for="error in lastNameErrors"
+					:key="error"
 				>
 					{{ error }}
 				</p>
@@ -21,7 +22,7 @@
 					required="required"
 					:class="{'form__input-error': lastNameErrors}"
 					@change="handleChangeLastName"
-				/>
+				>
 			</div>
 			<button class="btn btn-block btn__secondary">
 				Zmień
@@ -61,7 +62,7 @@ export default {
 	methods: {
 		...mapUiMutations(['setSectionError']),
 		...mapPublisherSettingsActions(['changeLastName']),
-		handleSaveChanges (e) {
+		handleSaveChanges () {
 			if (!this.last_name || this.last_name === this.currentValue)
 				return;
 

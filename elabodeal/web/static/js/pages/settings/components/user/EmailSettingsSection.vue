@@ -3,8 +3,8 @@
 		name="email"
 		title="Adres email"
 		description="Miejsce na fajną informacje"
-		currentLabel="Aktulany adres email"
-		:currentValue="currentValue"
+		current-label="Aktulany adres email"
+		:current-value="currentValue"
 	>
 		<form @submit.prevent="handleSaveChanges">
 			<div class="form__input-group">
@@ -12,6 +12,7 @@
 				<p
 					class="form__input-error-msg"
 					v-for="error in emailErrors"
+					:key="error"
 				>
 					{{ error }}
 				</p>
@@ -21,13 +22,14 @@
 					required="required"
 					:class="{'form__input-error': emailErrors}"
 					@change="handleChangeEmail"
-				/>
+				>
 			</div>
 			<div class="form__input-group">
 				<label>POWTÓRZ EMAIL</label>
 				<p
 					class="form__input-error-msg"
 					v-for="error in emailRepeatErrors"
+					:key="error"
 				>
 					{{ error }}
 				</p>
@@ -37,7 +39,7 @@
 					required="required" 
 					:class="{'form__input-error': emailRepeatErrors}"
 					@change="handleChangeEmailRepeat"
-				/>
+				>
 			</div>
 			<button class="btn btn-block btn__secondary">
 				Zmień
@@ -46,8 +48,9 @@
 	</SettingsSection>
 </template>
 <script>
-import { createNamespacedHelpers, 
-		 mapState as mapRootState } from 'vuex'; 
+import { 
+	createNamespacedHelpers, 
+	mapState as mapRootState } from 'vuex'; 
 
 import SettingsSection from "../SettingsSection";
 
@@ -78,7 +81,7 @@ export default {
 	methods: {
 		...mapUiMutations(['setSectionError']),
 		...mapUserSettingsActions(['changeEmail']),
-		handleSaveChanges (e) {
+		handleSaveChanges () {
 			if (!this.email || !this.emailRepeat)
 				return;
 

@@ -10,6 +10,7 @@
 				<p
 					class="form__input-error-msg"
 					v-for="error in currentPasswordErrors"
+					:key="error"
 				>
 					{{ error }}
 				</p>
@@ -19,13 +20,14 @@
 					required="required"
 					:class="{'form__input-error': currentPasswordErrors}"
 					@change="handleChangeCurrentPassword"
-				/>
+				>
 			</div>
 			<div class="form__input-group">
 				<label>HASŁO</label>
 				<p
 					class="form__input-error-msg"
 					v-for="error in newPasswordErrors"
+					:key="error"
 				>
 					{{ error }}
 				</p>
@@ -35,13 +37,14 @@
 					required="required"
 					:class="{'form__input-error': newPasswordErrors}"
 					@change="handleChangeNewPassword"
-				/>
+				>
 			</div>
 			<div class="form__input-group">
 				<label>POWTÓRZ HASŁO</label>
 				<p
 					class="form__input-error-msg"
 					v-for="error in newPasswordRepeatErrors"
+					:key="error"
 				>
 					{{ error }}
 				</p>
@@ -51,9 +54,11 @@
 					required="required"
 					:class="{'form__input-error': newPasswordRepeatErrors}"
 					@change="handleChangeNewPasswordRepeat"
-				/>
+				>
 			</div>
-			<button class="btn btn-block btn__secondary">Zmień</button>
+			<button class="btn btn-block btn__secondary">
+				Zmień
+			</button>
 		</form>
 	</SettingsSection>
 </template>
@@ -88,7 +93,7 @@ export default {
 	methods: {
 		...mapUiMutations(['setSectionError']),
 		...mapUserSettingsActions(['changePassword']),
-		handleSaveChanges (e) {
+		handleSaveChanges () {
 			if (this.newPassword !== this.newPasswordRepeat) {
 				this.setSectionError({
 					new_password_repeat: ['Hasła nie są zgodne.']
