@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
@@ -27,7 +28,7 @@ class UpdateUserSettingsRequestSerializer(serializers.Serializer):
 
 		if existing_user:
 			raise serializers.ValidationError(
-				'The user which has same username is already exist'
+				_('Podana nazwa użytkownika jest już w użyciu')
 			)
 
 		return value
@@ -59,7 +60,9 @@ class ChangeEmailRequestSerializer(serializers.Serializer):
 		existing_user = User.objects.filter(email=value).first()
 
 		if existing_user:
-			raise serializers.ValidationError('This email is already exist')
+			raise serializers.ValidationError(
+				_('Podany adres email jest już w użyciu')
+			)
 
 		return value
 
@@ -81,17 +84,20 @@ class ConfirmEmailChangeRequestSerializer(serializers.Serializer):
 
 		if not existing_code:
 			raise serializers.ValidationError({
-				'email': 'The verification code by that email does not exist'
+				'email': _(
+					'Nie znaleziono kodu weryfikacyjnego',
+					'przypisanego do podanego adresu email'
+				)
 			})
 
 		if current_datetime > existing_code.expiration_at:
 			raise serializers.ValidationError({
-				'code': 'The verification code is expired'
+				'code': _('Podany kod weryfikacyjny jest nieaktwyny')
 			})
 
 		if code != existing_code.code:
 			raise serializers.ValidationError({
-				'code': 'The verification is invalid'
+				'code': _('Podany kod weryfikacyjny jest błędny')
 			})
 
 		del data['code']
@@ -114,7 +120,7 @@ class ChangePasswordRequestSerializer(serializers.Serializer):
 
 		if not current_password_is_valid:
 			raise serializers.ValidationError({
-				'current_password': 'Błędne hasło'
+				'current_password': _('Podane hasło jest błędne')
 			})
 
 		try:
