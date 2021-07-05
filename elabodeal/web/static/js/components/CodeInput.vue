@@ -110,7 +110,11 @@ export default {
             if ( currentInput && currentInput.value ) {                
                 const nextInput = this.inputRefs[ currentInputId + 1 ];
                 
-                if ( !nextInput ) return;
+                if ( !nextInput ) {
+                    this.handleChange();
+
+                    return;
+                }
 
                 nextInput.focus();
             }
@@ -137,6 +141,8 @@ export default {
                     return;
                 else value += input.value;
             }
+
+            if (value.length !== 6) return;
 
             this.$emit( "complete", value );
         },
