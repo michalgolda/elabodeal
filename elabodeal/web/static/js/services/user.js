@@ -30,7 +30,13 @@ userService.register_function('changePassword', {
 	url: '/api/me/settings/password/',
 	method: 'put',
 	successMsg: 'Hasło zostało pomyślnie zmienione.'
-});	
+});
+
+
+userService.register_function('addProductToCart', {
+	url: '/api/me/cart/',
+	method: 'put'
+});
 
 
 export default userService;

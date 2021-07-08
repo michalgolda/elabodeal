@@ -1,0 +1,232 @@
+.container {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: space-between;
+}
+
+.section {
+    margin-bottom: 1rem;
+
+    &__flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__age {
+        display: flex;
+        width: 100%;
+        height: 32px;
+        justify-content: left;
+    }
+}
+
+.product-cover {
+    width: 256px;
+    height: 380px;
+    border-radius: 2px;
+    margin-right: 2rem;
+
+    @include for-tablet-landscape-up {
+        width: 380px;
+        height: 500px;
+    }
+}
+
+.product-details {
+    width: 100%;
+    height: auto;
+}
+
+.product-author {
+    font-size: $font-size-big;
+    font-weight: 400;
+}
+
+.product-age {
+    background-color: $color-green;
+    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+    font-size: $font-size-small;
+    margin-right: 0.5rem;
+
+    &[age="18"] {
+        background-color: $color-red;
+    }
+}
+
+.product-price {
+    font-size: $font-size-big;
+    font-weight: bold;
+    color: $color-orange;
+}
+
+.product-information {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 32px 32px;
+    grid-row-gap: 0.5rem;
+    grid-column-gap: 0.5rem;
+
+    @include for-tablet-landscape-up {
+        grid-template-columns: auto auto;
+    }
+
+    @include for-desktop-up {
+        grid-template-columns: auto auto auto;
+    }
+    
+    .info {
+        height: 32px;
+        background-color: $color-white;
+        border: 1px solid $color-grey;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        & > p {
+            font-size: $font-size-small;
+        }
+
+        &__value {
+            font-weight: 500;
+        }
+    }   
+}
+
+.product-text-box {
+    width: 100%;
+    height: auto;
+    background-color: $color-white;
+    border: 1px solid $color-grey;
+    border-radius: 2px;
+    padding: 1rem;
+}
+
+#product-contents {
+    display: none;
+}
+
+#form-action {
+    display: inline-block;
+}
+
+#js-cart-update-modal {
+    display: block !important;
+
+    .item-list {
+        display: grid;
+        grid-template-rows: 80px;
+    }
+
+    .item {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        height: 80px;
+
+        &__cover {
+            height: 80px;
+            width: 60px;
+            border-radius: 2px;
+        }
+
+        &__container {
+            padding-left: 1rem;
+        }
+
+        &__title {
+            font-weight: bold;
+            width: 128px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        &__author {
+            font-weight: 400;
+            font-size: $font-size-small;
+            color: $color-grey;
+        }
+
+        &__price {
+            font-weight: bold;
+            color: $color-green;
+        }
+    }
+}
+
+.text-details {
+    &__actions {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: .5rem;
+
+        & > button {
+            margin-right: .5rem;
+        }
+    }
+
+    &__content {
+        width: 100%;
+        height: auto;
+        background-color: $color-white;
+        border: 1px solid $color-grey;
+        border-radius: 2px;
+        padding: 1rem;
+
+        & > .loader {
+            height: 16px;
+
+            & > .loader__spinner {
+                font-size: 2.5rem;
+            }
+        }
+    }
+}
+
+.product-actions {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+
+    & > button {
+        margin-left: .5rem;
+    }
+}
+
+.cart-updated-item {
+    display: flex;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+
+    .item {
+        &__cover {
+            width: 100px;
+        }
+
+        &__container {
+            margin-left: .5rem;
+        }
+
+        &__title {
+            font-weight: bold;
+        }
+
+        &__price {
+            color: $color-orange;
+            font-weight: bold;
+        }
+    }
+}

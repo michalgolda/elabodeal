@@ -4,13 +4,13 @@ from elabodeal.web.views import (
     IndexView, 
     LoginView,
 	LogoutView, 
+	ProductView,
 	RegisterView, 
 	SettingsView,
 	SharedCartView, 
-	ProductDetailView,
-	CartAddItemAction, 
+	# CartAddItemAction, 
 	SearchResultsView,
-    CartDeleteItemAction,
+    # CartDeleteItemAction,
 	SalesManagerStartView,
 	SalesManagerIndexView, 
 	PurchasedProductsView,
@@ -18,7 +18,7 @@ from elabodeal.web.views import (
     CartCheckoutPaymentView, 
 	CartCheckoutDeliveryView,
 	SalesManagerAddProductView,
-    CartCheckoutPaymentAjaxView,
+    # CartCheckoutPaymentAjaxView,
     CartCheckoutPaymentSuccessView,
 )
 
@@ -26,8 +26,7 @@ app_name = 'web'
 
 urlpatterns = [
 	path('', IndexView.as_view(), name='index'),
-	# path('p/<str:url_name>/', ProductDetailView.as_view(), name='product-detail'),
-	path('p/test/', ProductDetailView.as_view(), name='product-detail'),
+	path('p/<uuid:id>/', ProductView.as_view(), name='product'),
 	path('zaloguj/', LoginView.as_view(), name='login'),
 	path('zarejestruj/', RegisterView.as_view(), name='register'),
 	path('weryfikacja/', EmailVerificationView.as_view(), name='email-verification'),
@@ -37,18 +36,18 @@ urlpatterns = [
 	path('settings/', SettingsView.as_view(), name='settings'),
 	path('c/', include([
 		path('', CartView.as_view(), name='cart'),
-		path('ajax/', include([
-			path('add-item/', CartAddItemAction.as_view(), name='cart-action-add-item'),
-			path('delete-item/', CartDeleteItemAction.as_view(), name='cart-action-delete-item'),
-			# path('save/', CartSaveAjaxView.as_view(), name='save-cart'),
-		])),
+		# path('ajax/', include([
+		# 	path('add-item/', CartAddItemAction.as_view(), name='cart-action-add-item'),
+		# 	path('delete-item/', CartDeleteItemAction.as_view(), name='cart-action-delete-item'),
+		# 	# path('save/', CartSaveAjaxView.as_view(), name='save-cart'),
+		# ])),
 		path('checkout/', include([
 			path('d/', CartCheckoutDeliveryView.as_view(), name='cart-checkout-delivery'),
 			path('p/', include([
 				path('', CartCheckoutPaymentView.as_view(), name='cart-checkout-payment'),
-				path('ajax/', include([
-					path('payment_init/', CartCheckoutPaymentAjaxView.as_view(), name='cart-checkout-payment-init')
-				])),
+				# path('ajax/', include([
+				# 	path('payment_init/', CartCheckoutPaymentAjaxView.as_view(), name='cart-checkout-payment-init')
+				# ])),
 				path('success/', CartCheckoutPaymentSuccessView.as_view(), name='cart-checkout-payment-success')
 			])),
 		])),

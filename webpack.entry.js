@@ -4,6 +4,10 @@ const path = require("path");
 const STATIC_PATH = path.resolve(__dirname, "elabodeal/web/static/");
 
 module.exports = {
+	"productPage": [
+		path.resolve(STATIC_PATH, "js/pages/product/index.js"),
+		path.resolve(STATIC_PATH, "styles/pages/product.scss")
+	],
 	"indexPage": [
 		path.resolve(STATIC_PATH, "styles/pages/index.scss")
 	],

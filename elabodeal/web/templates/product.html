@@ -1,0 +1,97 @@
+{% extends 'layouts/base.html' %}{% load static %}
+
+{% block title-description %}{{ product.title }}{% endblock %}
+
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/productPage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/productPage.css' %}">
+{% endblock %}
+
+{% block page-scripts %}	
+<link rel="preload" href="{% static 'dist/productPage.js' %}" as="script">
+<script defer src="{% static 'dist/productPage.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="wrapper">
+	<div class="container">
+		<img class="product-cover" src="{{ product.cover_img.path }}" />
+		<div class="section">
+			<div class="section">
+				<h1 class="product-title">{{ product.title }}</h1>
+				<p class="product-author">{{ product.author }}</p>
+			</div>
+			<div class="section section__age">
+				<span class="product-age">
+					{{ product.age_category }}+
+				</span>
+			</div>
+			<div class="section section__flex">
+				<p class="product-price">{{ product.price }} zł</p>
+				<div class="product-actions">
+					<button class="btn btn__primary">Kup teraz</button>
+					<button 
+						id="add-to-cart"
+						class="btn btn__secondary"
+						data-product-id="{{ product.id }}"
+					>
+						Dodaj do koszyka
+					</button>
+				</div>
+			</div>
+			<div class="section">
+				<h4>Szczegółowe informacje: </h4>
+			</div>
+			<div class="section section__subsection">
+				<div class="product-information">
+					<div class="info">
+						<p class="info__key">Kategoria</p>
+						<p class="info__value">{{ product.category }}</p>
+					</div>
+					<div class="info">
+						<p class="info__key">Ilość stron</p>
+						<p class="info__value">{{ product.page_count }}</p>
+					</div>
+					<div class="info">
+						<p class="info__key">Oceny</p>
+						<p class="info__value">{{ product.average_rating }} / 5</p>
+					</div>
+					<div class="info">
+						<p class="info__key">Rok wydania</p>
+						<p class="info__value">{{ product.published_year }}</p>
+					</div>
+					<div class="info">
+						<p class="info__key">Formaty</p>
+						<p class="info__value">
+						{% for format in product_formats %}
+						{{ format|upper }}
+						{% endfor %}
+						</p>
+					</div>
+					<div class="info">
+						<p class="info__key">Numer ISBN</p>
+						<p class="info__value">{{ product.isbn }}</p>
+					</div>
+				</div>
+			</div>
+			<div
+				id="text-details"
+				class="section" 
+				data-contents="{{ product.contents }}"
+				data-description="{{ product.description }}"
+			>
+				<div class="text-details__actions">
+					<button class="btn btn__primary">Opis</button>
+					<button class="btn btn__primary btn__primary-outline">Spis
+						treści</button>
+				</div>
+				<div class="text-details__content">
+					{% include 'components/loader.html' %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% include 'components/small-footer-light.html' %}
+{% endblock %}
