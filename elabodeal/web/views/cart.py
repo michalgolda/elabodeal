@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from elabodeal.web.views import BaseView, BaseAjaxView
 from elabodeal.web.forms import DeliveryForm
 from elabodeal.models import Product, Cart, PurchasedProduct, User
-from elabodeal.utils import SessionCartManager
+# from elabodeal.utils import SessionCartManager
 
 
 class CartView(BaseView):
@@ -200,41 +200,41 @@ class CartCheckoutPaymentSuccessView(BaseView):
 		return HttpResponse(status=200)
 
 
-class CartAddItemAction(BaseView):
-	def post(self, request):
-		product_id = request.POST.get('product_id')
+# class CartAddItemAction(BaseView):
+# 	def post(self, request):
+# 		product_id = request.POST.get('product_id')
 		
-		product = Product.objects.filter(id=int(product_id)).first()
-		if not product:
-			return redirect('web:index')
+# 		product = Product.objects.filter(id=int(product_id)).first()
+# 		if not product:
+# 			return redirect('web:index')
 
-		cart = SessionCartManager(request)
+# 		cart = SessionCartManager(request)
 
-		for item in cart.items:
-			if item.id == product.id:
-				return redirect('web:product-detail', 
-								url_name=product.url_name)
+# 		for item in cart.items:
+# 			if item.id == product.id:
+# 				return redirect('web:product-detail', 
+# 								url_name=product.url_name)
 
-		cart_item = cart.Item(id=product.id, 
-							  price=float(product.price))
-		cart.add_item(cart_item)
+# 		cart_item = cart.Item(id=product.id, 
+# 							  price=float(product.price))
+# 		cart.add_item(cart_item)
 		
-		request.session['cart'] = cart.to_dict()
+# 		request.session['cart'] = cart.to_dict()
 
-		request.session['cart_update_popup'] = True
+# 		request.session['cart_update_popup'] = True
 
-		return redirect('web:product-detail', 
-						url_name=product.url_name)
+# 		return redirect('web:product-detail', 
+# 						url_name=product.url_name)
 
 
-class CartDeleteItemAction(BaseView):
-	def post(self, request):
-		product_id = request.POST.get('product_id')
+# class CartDeleteItemAction(BaseView):
+# 	def post(self, request):
+# 		product_id = request.POST.get('product_id')
 
-		cart = SessionCartManager(request)
-		cart.remove_item(int(product_id))
+# 		cart = SessionCartManager(request)
+# 		cart.remove_item(int(product_id))
 
-		request.session['cart'] = cart.to_dict()
+# 		request.session['cart'] = cart.to_dict()
 
-		return redirect('web:cart')
+# 		return redirect('web:cart')
 

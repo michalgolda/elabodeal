@@ -18,3 +18,7 @@ from .settings import (
 	UpdatePublisherSettingsInteractor,
 	ConfirmEmailChangeRequestInteractor
 )
+from .cart import (
+	AddProductToCartInteractor,
+	RemoveProductFromCartInteractor
+)

@@ -2,6 +2,7 @@ from django.urls import path, include
 
 from elabodeal.api.endpoints import (
     MeProductsEndpoint,
+    MeUpdateCartEndpoint,
     MeChangePasswordEndpoint,
     MeProductsGroupsEndpoint,
     MeUpdateSettingsEndpoint,
@@ -9,7 +10,7 @@ from elabodeal.api.endpoints import (
     MeChangeEmailRequestEndpoint,
     MeProductsGroupsDetailsEndpoint,
     MeUpdatePublisherSettingsEndpoint,
-    MeConfirmEmailChangeRequestEndpoint
+    MeConfirmEmailChangeRequestEndpoint,
 )
 
 app_name = 'api'
@@ -62,6 +63,11 @@ urlpatterns = [
                 'settings/publisher/',
                 MeUpdatePublisherSettingsEndpoint.as_view(),
                 name='me-publisher-update-settings'
+            ),
+            path(
+                'cart/',
+                MeUpdateCartEndpoint.as_view(),
+                name='me-update-cart'
             )
         ])
     )

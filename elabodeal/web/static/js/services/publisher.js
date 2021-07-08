@@ -8,7 +8,6 @@ publisherService.register_function('createProduct', {
 	method: 'post',
 	successMsg: 'Produkt został pomyślnie dodany.',
 	errorMsg: 'Popraw błędy w formularzu'
-
 });
 
 publisherService.register_function('updateSettings', {

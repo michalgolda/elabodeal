@@ -90,7 +90,7 @@
 												<strong>{{ product.created_at.day }}.{{ product.created_at.month }}.{{ product.created_at.year }}</strong>
 											</p>
 										</div>
-										<a class="btn btn__secondary btn-block" href="#">Pokaż szczegóły</a>
+										<a class="btn btn__secondary btn-block" href="{% url 'web:product' id=product.id %}">Pokaż szczegóły</a>
 									</div>
 								</div>
 							</div>

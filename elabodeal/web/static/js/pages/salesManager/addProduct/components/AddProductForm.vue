@@ -1,4 +1,4 @@
-<template>
+1<template>
 	<form 
 		class="form" 
 		autocomplete="off"
@@ -83,8 +83,7 @@ export default {
 				}
 			}
 
-			publisherService.createProduct( 
-				'/api/me/products/', 
+			publisherService.createProduct(
 				formData,
 				() => window.location = '/',
 				( error ) => {

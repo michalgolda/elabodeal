@@ -15,7 +15,7 @@
 					:key="error"
 				>
 					{{ error }}
-				</p>q
+				</p>
 				<input 
 					type="text"
 					name="first_name"

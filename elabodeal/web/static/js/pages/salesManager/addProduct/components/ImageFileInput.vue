@@ -1,6 +1,6 @@
 <template>
 	<file-input 
-		accept=".jpg,.png"
+		accept=".jpg,.png,.jpeg"
 		v-slot="input"
 		@choose="handleChooseFile"
 		@delete="handleDeleteFile"

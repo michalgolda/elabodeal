@@ -11,7 +11,7 @@
 				<i class="fas fa-shopping-cart nav__icon"></i>
 				<p>
 					{% if 'cart' in request.session %}
-					{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
+					{{ request.session.cart.total_price }} zł ({{ request.session.cart.product_count }})
 					{% else %}
 					0.00 zł (0)
 					{% endif %}
@@ -34,7 +34,7 @@
 				<i class="fas fa-shopping-cart nav__icon"></i>
 				<p>
 					{% if 'cart' in request.session %}
-					{{ request.session.cart.total_price }} zł ({{ request.session.cart.item_count }})
+					{{ request.session.cart.total_price }} zł ({{ request.session.cart.product_count }})
 					{% else %}
 					0.00 zł
 					{% endif %}

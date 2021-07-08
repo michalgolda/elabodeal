@@ -14,3 +14,4 @@ from .settings import (
 	MeUpdatePublisherSettingsEndpoint,
 	MeConfirmEmailChangeRequestEndpoint
 )
+from .cart import MeUpdateCartEndpoint

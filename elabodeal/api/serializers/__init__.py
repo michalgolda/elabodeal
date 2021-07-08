@@ -16,3 +16,4 @@ from .settings import (
 from .file import FileSerializer
 from .product_language import ProductLanguageSerializer
 from .product_premiere import ProductPremiereSerializer
+from .cart import UpdateCartRequestSerializer
