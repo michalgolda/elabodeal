@@ -22,6 +22,10 @@ class CartSessionManager:
         return self._products
 
     @property
+    def isEmpty(self):
+        return len(self._products) == 0
+
+    @property
     def total_price(self):
         sum = 0.00
         for product in self._products:
@@ -50,7 +54,8 @@ class CartSessionManager:
         self.session['cart'] = {
             'products': [asdict(p) for p in self._products],
             'total_price': self.total_price,
-            'product_count': self.product_count
+            'product_count': self.product_count,
+            'isEmpty': self.isEmpty
         }
 
     def _load(self):

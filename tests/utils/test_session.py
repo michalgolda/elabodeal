@@ -39,6 +39,12 @@ class CartSessionManagerTest(BaseTestCase):
         self.assertEqual(cart_manager.total_price, '2.00')
 
 
+    def test_isEmpty_property(self):
+        cart_manager = CartSessionManager(self.session)
+
+        self.assertEqual(cart_manager.isEmpty, False)
+
+
     def test_add_method(self):
         session = {}
 
@@ -62,3 +68,28 @@ class CartSessionManagerTest(BaseTestCase):
         cart_manager.remove('1')
 
         self.assertEqual(cart_manager.products, [])
+
+    def test_commit_method(self):
+        self.session = {}
+
+        cart_manager = CartSessionManager(self.session)
+
+        cart_manager.add(1, 2.00);
+
+        cart_manager.commit()
+
+        updated_session = {
+            'cart': {
+                'products': [
+                    {
+                        'id': '1',
+                        'price': 2.00
+                    }
+                ],
+                'total_price': '2.00',
+                'product_count': 1,
+                'isEmpty': False
+            }
+        }
+
+        self.assertEqual(self.session, updated_session)
