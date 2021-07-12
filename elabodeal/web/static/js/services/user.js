@@ -42,7 +42,7 @@ userService.register_function('addProductToCart', {
 userService.register_function('removeProductFromCart', {
 	url: '/api/me/cart/',
 	method: 'delete',
-	successMsg: 'Product został pomyślnie usunięty z koszyka.'
+	successMsg: 'Produkt został pomyślnie usunięty z koszyka.'
 });
 
 
