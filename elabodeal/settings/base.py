@@ -41,7 +41,8 @@ TEMPLATES = [
             'libraries': {
                 'stripe': 'elabodeal.web.templatetags.stripe',
                 'user': 'elabodeal.web.templatetags.user',
-                'publisher': 'elabodeal.web.templatetags.publisher'
+                'publisher': 'elabodeal.web.templatetags.publisher',
+                'json': 'elabodeal.web.templatetags.json'
             },
             'context_processors': [
                 'django.template.context_processors.debug',

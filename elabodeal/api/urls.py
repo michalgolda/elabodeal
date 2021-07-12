@@ -2,6 +2,7 @@ from django.urls import path, include
 
 from elabodeal.api.endpoints import (
     MeProductsEndpoint,
+    MeSaveCartEndpoint,
     MeUpdateCartEndpoint,
     MeChangePasswordEndpoint,
     MeProductsGroupsEndpoint,
@@ -68,6 +69,11 @@ urlpatterns = [
                 'cart/',
                 MeUpdateCartEndpoint.as_view(),
                 name='me-update-cart'
+            ),
+            path(
+                'cart/save/',
+                MeSaveCartEndpoint.as_view(),
+                name='me-save-cart'
             )
         ])
     )

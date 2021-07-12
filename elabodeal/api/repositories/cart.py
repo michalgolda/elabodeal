@@ -3,11 +3,22 @@ from elabodeal.models import Cart
 
 
 class CartRepository(Repository):
-    def get(self, id: int) -> Cart:
-        return Cart.objects.filter(id=id).first()
+    def add(self, *args, **kwargs):
+        return Cart.objects.create(*args, **kwargs)
 
-    def delete(self, cart: Cart) -> None:
-        cart.delete()
+    def get_all_by(self, *args, **kwargs):
+        return self._query_filter(*args, **kwargs).all()
 
-    def save(self, cart: Cart) -> Cart:
+    def get_one_by(self, *args, **kwargs):
+        return self._query_filter(*args, **kwargs).first()
+
+    def delete_by(self, *args, **kwargs):
+        return any(self._query_filter(*args, **kwargs).delete())
+    
+    def save(self, cart):
         cart.save()
+
+        return cart
+
+    def _query_filter(self, *args, **kwargs):
+        return Cart.objects.filter(*args, **kwargs)

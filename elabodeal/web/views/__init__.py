@@ -4,10 +4,10 @@ from .cart import (
     CartView, 
     # CartAddItemAction,
     # CartDeleteItemAction,
-    CartCheckoutDeliveryView, 
-    CartCheckoutPaymentView,
+    # CartCheckoutDeliveryView, 
+    # CartCheckoutPaymentView,
     # CartCheckoutPaymentAjaxView, 
-    CartCheckoutPaymentSuccessView
+    # CartCheckoutPaymentSuccessView
 )
 from .salesmanager import (
     SalesManagerIndexView, 

@@ -11,15 +11,15 @@ const cartModule = {
 
 			userService.addProductToCart(data, {
 				successCallback: ({ data }) => {
-					const { author, title, price, cover_img } = data;
+					const { product, cart } = data;
 
 					const modalContext = { 
 						product: {
-							author, 
-							title, 
-							price,
+							author: product.author, 
+							title: product.title, 
+							price: product.price,
 							cover_img: {
-								url: cover_img.path
+								url: product.cover_img.path
 							}
 						}
 					};
@@ -28,6 +28,12 @@ const cartModule = {
 						'successCartUpdatedModal',
 						modalContext
 					);
+
+					const cartTotalPriceElm = document.getElementsByClassName('cart-total-price')[0];
+					const cartProductCountElm = document.getElementById('cart-product-count');
+				
+					cartTotalPriceElm.innerHTML = cart.total_price;
+					cartProductCountElm.innerHTML = `(${cart.product_count.toString()})`;
 				}
 			});
 		}

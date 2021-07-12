@@ -30,6 +30,9 @@ class CartSessionManager:
         return '{0:.2f}'.format(round(sum, 2))
 
     def add(self, id, price):
+        for product in self._products:
+            if product.id == str(id): return
+
         product = self.Product(str(id), float(price))
 
         self._products.append(product)
@@ -38,7 +41,7 @@ class CartSessionManager:
         updated_state = []
 
         for product in self._products:
-            if product.id != id:
+            if product.id != str(id):
                 updated_state.append(product)
 
         self._products = updated_state

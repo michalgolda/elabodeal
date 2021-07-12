@@ -7,7 +7,7 @@ class Cart(models.Model):
 		on_delete=models.CASCADE
 	)
 
-	items = models.ManyToManyField('elabodeal.Product')
+	products = models.ManyToManyField('elabodeal.Product')
 
 	title = models.CharField(max_length=100)
 	description = models.CharField(max_length=500)

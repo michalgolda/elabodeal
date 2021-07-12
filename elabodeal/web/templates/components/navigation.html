@@ -9,13 +9,21 @@
 		<div class="nav__action">
 			<a class="nav__link nav__cart" href="{% url 'web:cart' %}">
 				<i class="fas fa-shopping-cart nav__icon"></i>
-				<p>
+				<div>
 					{% if 'cart' in request.session %}
-					{{ request.session.cart.total_price }} zł ({{ request.session.cart.product_count }})
+					<span class="cart-total-price">
+						{{ request.session.cart.total_price }}
+					</span> 
+					<span>zł</span> 
+					<span id="cart-product-count">
+						({{ request.session.cart.product_count }})
+					</span>
 					{% else %}
-					0.00 zł (0)
+					<span class="cart-total-price">0.00</span> 
+					<span>zł</span>
+					<span id="cart-product-count">(0)</span>
 					{% endif %}
-				</p>
+				</div>
 			</a>
 		</div>
 		<div class="nav__action">
@@ -32,13 +40,21 @@
 		<div class="nav__action">
 			<a class="nav__link nav__cart" href="{% url 'web:cart' %}">
 				<i class="fas fa-shopping-cart nav__icon"></i>
-				<p>
+				<div>
 					{% if 'cart' in request.session %}
-					{{ request.session.cart.total_price }} zł ({{ request.session.cart.product_count }})
+					<span class="cart-total-price">
+						{{ request.session.cart.total_price }}
+					</span> 
+					<span>zł</span> 
+					<span id="cart-product-count">
+						({{ request.session.cart.product_count }})
+					</span>
 					{% else %}
-					0.00 zł
+					<span class="cart-total-price">0.00</span> 
+					<span>zł</span>
+					<span id="cart-product-count">(0)</span>
 					{% endif %}
-				</p>
+				</div>
 			</a>
 		</div>
 		<div id="js-show-menu" class="nav__action flex-center">

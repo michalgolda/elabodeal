@@ -39,4 +39,18 @@ userService.register_function('addProductToCart', {
 });
 
 
+userService.register_function('removeProductFromCart', {
+	url: '/api/me/cart/',
+	method: 'delete',
+	successMsg: 'Product został pomyślnie usunięty z koszyka.'
+});
+
+
+userService.register_function('saveCart', {
+	url: '/api/me/cart/save/',
+	method: 'post',
+	successMsg: 'Koszyk został pomyślnie zapisany.'
+});
+
+
 export default userService;

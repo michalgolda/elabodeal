@@ -19,6 +19,7 @@ from .settings import (
 	ConfirmEmailChangeRequestInteractor
 )
 from .cart import (
+	SaveCartInteractor,
 	AddProductToCartInteractor,
 	RemoveProductFromCartInteractor
 )

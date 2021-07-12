@@ -29,6 +29,7 @@
 				href="/c/"
 				class="btn btn-block btn__secondary" 
 				style="margin-right: .5rem;"
+				@click="$modalManager.hide()"
 			>
 				Przejdż do koszyka
 			</a>

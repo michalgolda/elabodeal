@@ -1,203 +1,228 @@
-import stripe
-import json
+# import stripe
+# import json
 
-from django.conf import settings
-from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
+# from django.conf import settings
+# from django.shortcuts import redirect
+# from django.http import HttpResponse
+# from django.views.decorators.csrf import csrf_exempt
+# from django.utils.decorators import method_decorator
+# from django.core.mail import send_mail
+# from django.template.loader import render_to_string
 
-from elabodeal.web.views import BaseView, BaseAjaxView
-from elabodeal.web.forms import DeliveryForm
-from elabodeal.models import Product, Cart, PurchasedProduct, User
+# from elabodeal.web.views import BaseView, BaseAjaxView
+# from elabodeal.web.forms import DeliveryForm
+# from elabodeal.models import Product, Cart, PurchasedProduct, User
 # from elabodeal.utils import SessionCartManager
+
+from elabodeal.web.views import BaseView
+from elabodeal.models import Product
+from elabodeal.utils import CartSessionManager
 
 
 class CartView(BaseView):
-	def get(self, request):
-		cart = SessionCartManager(request)
-		
+	def get_products(self, cart_session_products):
 		products = []
-		for item in cart.items:
-			product = Product.objects.filter(id=item.id).first()
 
-			products.append(product)
+		for cart_session_product in cart_session_products:
+			product = Product.objects.filter(id=cart_session_product.id).first()
 
-		context = {'products': products}
+			products.append({
+				'id': str(product.id),
+				'title': product.title,
+				'author': product.author,
+				'price': float(product.price),
+				'cover_img': {
+					'path': product.cover_img.path
+				}
+			})
+
+		return products
+
+	def get_context(self, cart_session_products):
+		return {
+			'products': self.get_products(cart_session_products)
+		}
+
+	def get(self, request):
+		session = request.session
+
+		cart_manager = CartSessionManager(session)
+	
+		cart_session_products = cart_manager.products
+
+		context = self.get_context(cart_session_products)
 
 		return self.respond('cart.html', request, context)
 
 
-class CartCheckoutDeliveryView(BaseView):
-	def get_form(self, request = None):
-		return DeliveryForm(request.POST if request else request)
+# class CartCheckoutDeliveryView(BaseView):
+# 	def get_form(self, request = None):
+# 		return DeliveryForm(request.POST if request else request)
 
-	def get(self, request):
-		session = request.session
+# 	def get(self, request):
+# 		session = request.session
 
-		cart = session.get('cart')
-		if not cart or not cart['item_count'] > 0:
-			return redirect('web:cart')
+# 		cart = session.get('cart')
+# 		if not cart or not cart['item_count'] > 0:
+# 			return redirect('web:cart')
 
-		context = {'form': self.get_form()}
+# 		context = {'form': self.get_form()}
 
-		return self.respond('cart-checkout-delivery.html', request, context)
+# 		return self.respond('cart-checkout-delivery.html', request, context)
 
-	def post(self, request):
-		session = request.session
+# 	def post(self, request):
+# 		session = request.session
 
-		form = self.get_form(request)
+# 		form = self.get_form(request)
 
-		if form.is_valid():
-			cart = session['cart']
+# 		if form.is_valid():
+# 			cart = session['cart']
 
-			products = cart['items']
-			total_price = cart['total_price']
-			delivery = form.cleaned_data
+# 			products = cart['items']
+# 			total_price = cart['total_price']
+# 			delivery = form.cleaned_data
 
-			session['checkout-payment']	= True
-			session['checkout-data'] = {'delivery': delivery,
-										'products': products, 
-										'total_price': total_price}
+# 			session['checkout-payment']	= True
+# 			session['checkout-data'] = {'delivery': delivery,
+# 										'products': products, 
+# 										'total_price': total_price}
 
-			request.session = session
+# 			request.session = session
 
-			return redirect('web:cart-checkout-payment')
+# 			return redirect('web:cart-checkout-payment')
 
-		context = {'form': form}
+# 		context = {'form': form}
 
-		return self.respond('cart-checkout-delivery.html', request, context)
-
-
-class CartCheckoutPaymentView(BaseView):
-	def get(self, request):
-		session = request.session
-
-		checkout_payment = session.get('checkout-payment')
-		if not checkout_payment:
-			return redirect('web:cart-checkout-delivery')
-
-		return self.respond('cart-checkout-payment.html', request)
+# 		return self.respond('cart-checkout-delivery.html', request, context)
 
 
-class CartCheckoutPaymentAjaxView(BaseAjaxView):	
-	def post(self, request):
-		email = request.POST.get('email')
-		first_name = request.POST.get('first_name')
-		last_name = request.POST.get('last_name')
-		phone_number = request.POST.get('phone_number')
+# class CartCheckoutPaymentView(BaseView):
+# 	def get(self, request):
+# 		session = request.session
 
-		if (not email or not first_name
-			or not last_name or not phone_number):
-			return self.respond(message='BadRequest',
-								status=400)
+# 		checkout_payment = session.get('checkout-payment')
+# 		if not checkout_payment:
+# 			return redirect('web:cart-checkout-delivery')
 
-		stripe.api_key = settings.STRIPE_API_KEY
+# 		return self.respond('cart-checkout-payment.html', request)
 
-		session = request.session
 
-		checkout_data = session['checkout-data']
+# class CartCheckoutPaymentAjaxView(BaseAjaxView):	
+# 	def post(self, request):
+# 		email = request.POST.get('email')
+# 		first_name = request.POST.get('first_name')
+# 		last_name = request.POST.get('last_name')
+# 		phone_number = request.POST.get('phone_number')
+
+# 		if (not email or not first_name
+# 			or not last_name or not phone_number):
+# 			return self.respond(message='BadRequest',
+# 								status=400)
+
+# 		stripe.api_key = settings.STRIPE_API_KEY
+
+# 		session = request.session
+
+# 		checkout_data = session['checkout-data']
 		
-		metadata_delivery = json.dumps(checkout_data['delivery'])
-		metadata_products = json.dumps(checkout_data['products'])
-		metadata_payer = json.dumps({'email': email,
-									 'first_name': first_name,
-									 'last_name': last_name,
-									 'phone_number': phone_number})
+# 		metadata_delivery = json.dumps(checkout_data['delivery'])
+# 		metadata_products = json.dumps(checkout_data['products'])
+# 		metadata_payer = json.dumps({'email': email,
+# 									 'first_name': first_name,
+# 									 'last_name': last_name,
+# 									 'phone_number': phone_number})
 
-		metadata = {'delivery': metadata_delivery,
-					'products': metadata_products,
-					'payer': metadata_payer}
+# 		metadata = {'delivery': metadata_delivery,
+# 					'products': metadata_products,
+# 					'payer': metadata_payer}
 
-		total_price = checkout_data['total_price']
+# 		total_price = checkout_data['total_price']
 
-		amount = int(float(total_price) * 100)
+# 		amount = int(float(total_price) * 100)
 
-		payment_intent = stripe.PaymentIntent.create(amount=amount,
-													 currency='PLN',
-													 metadata=metadata)
+# 		payment_intent = stripe.PaymentIntent.create(amount=amount,
+# 													 currency='PLN',
+# 													 metadata=metadata)
 
-		return self.respond(message="Success",
-							data=payment_intent,
-							status=201)
+# 		return self.respond(message="Success",
+# 							data=payment_intent,
+# 							status=201)
 
-@method_decorator(csrf_exempt, name='dispatch')
-class CartCheckoutPaymentSuccessView(BaseView):
-	def get(self, request):
-		session = request.session
+# @method_decorator(csrf_exempt, name='dispatch')
+# class CartCheckoutPaymentSuccessView(BaseView):
+# 	def get(self, request):
+# 		session = request.session
 
-		checkout_data = session.get('checkout-data')
-		if not checkout_data:
-			return redirect('web:index')
+# 		checkout_data = session.get('checkout-data')
+# 		if not checkout_data:
+# 			return redirect('web:index')
 
-		delivery = checkout_data['delivery']
-		delivery_email = delivery['email']
+# 		delivery = checkout_data['delivery']
+# 		delivery_email = delivery['email']
 
-		context = {'delivery_email': delivery_email}
+# 		context = {'delivery_email': delivery_email}
 
-		del session['checkout-data']
-		del session['cart']
+# 		del session['checkout-data']
+# 		del session['cart']
 
-		return self.respond('cart-checkout-payment-success.html', request, context)
+# 		return self.respond('cart-checkout-payment-success.html', request, context)
 
-	def post(self, request):
-		try:
-			sig_header = request.META['HTTP_STRIPE_SIGNATURE']
-		except KeyError as e:
-			return Response(status=403)
+# 	def post(self, request):
+# 		try:
+# 			sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+# 		except KeyError as e:
+# 			return Response(status=403)
 
-		secret = settings.STRIPE_WEBHOOK_SECRET
-		payload = request.body
+# 		secret = settings.STRIPE_WEBHOOK_SECRET
+# 		payload = request.body
 
-		try:
-			event = stripe.Event.construct_from(json.loads(payload), 
-												sig_header, secret)
-		except ValueError as e:
-			return HttpResponse(status=400)
-		except stripe.error.SignatureVerificationError as e:
-			return HttpResponse(status=400)
+# 		try:
+# 			event = stripe.Event.construct_from(json.loads(payload), 
+# 												sig_header, secret)
+# 		except ValueError as e:
+# 			return HttpResponse(status=400)
+# 		except stripe.error.SignatureVerificationError as e:
+# 			return HttpResponse(status=400)
 
-		if event.type == 'payment_intent.succeeded':
-			event_metadata = event.data.object.metadata
+# 		if event.type == 'payment_intent.succeeded':
+# 			event_metadata = event.data.object.metadata
 
-			delivery = json.loads(event_metadata['delivery'])
-			products = json.loads(event_metadata['products'])
-			payer = json.loads(event_metadata['payer']) 
+# 			delivery = json.loads(event_metadata['delivery'])
+# 			products = json.loads(event_metadata['products'])
+# 			payer = json.loads(event_metadata['payer']) 
 
-			delivery_email = delivery['email']
+# 			delivery_email = delivery['email']
 
-			user = User.objects.filter(email=delivery_email).first()
+# 			user = User.objects.filter(email=delivery_email).first()
 
-			product_objects = []
-			for p in products:
-				product_id = p['id']
+# 			product_objects = []
+# 			for p in products:
+# 				product_id = p['id']
 
-				product_object = Product.objects.filter(id=product_id).first()
-				product_objects.append(product_object)
+# 				product_object = Product.objects.filter(id=product_id).first()
+# 				product_objects.append(product_object)
 
-				if user:
-					has_purchased_product = PurchasedProduct.objects.filter(product=product_object, user=user).first()
-					if not has_purchased_product:
-						purchased_product = PurchasedProduct(user=user, product=product_object)
-						purchased_product.save()
+# 				if user:
+# 					has_purchased_product = PurchasedProduct.objects.filter(product=product_object, user=user).first()
+# 					if not has_purchased_product:
+# 						purchased_product = PurchasedProduct(user=user, product=product_object)
+# 						purchased_product.save()
 
-			# TODO: Dodanie taska celery wysyłającego maila
-			amount = event.data.object.amount
-			total_price = '{0:.2f}'.format(round(amount / 100, 2))
+# 			# TODO: Dodanie taska celery wysyłającego maila
+# 			amount = event.data.object.amount
+# 			total_price = '{0:.2f}'.format(round(amount / 100, 2))
 
-			context_of_email = {'products': product_objects,
-								'total_price': total_price,
-								'payment_method': 'Karta płatnicza'}
+# 			context_of_email = {'products': product_objects,
+# 								'total_price': total_price,
+# 								'payment_method': 'Karta płatnicza'}
 
-			send_mail(subject='Elabodeal - Potwierdzenie zakupu ebooka',
-					  message='Dziękujemy za zakupy',
-					  from_email=settings.EMAIL_HOST_USER,
-					  recipient_list=[delivery_email],
-					  html_message=render_to_string('emails/payment_success.html', context_of_email))
+# 			send_mail(subject='Elabodeal - Potwierdzenie zakupu ebooka',
+# 					  message='Dziękujemy za zakupy',
+# 					  from_email=settings.EMAIL_HOST_USER,
+# 					  recipient_list=[delivery_email],
+# 					  html_message=render_to_string('emails/payment_success.html', context_of_email))
 
-		return HttpResponse(status=200)
+# 		return HttpResponse(status=200)
 
 
 # class CartAddItemAction(BaseView):

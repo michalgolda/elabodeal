@@ -15,11 +15,11 @@ from elabodeal.web.views import (
 	SalesManagerIndexView, 
 	PurchasedProductsView,
     EmailVerificationView, 
-    CartCheckoutPaymentView, 
-	CartCheckoutDeliveryView,
+    # CartCheckoutPaymentView, 
+	# CartCheckoutDeliveryView,
 	SalesManagerAddProductView,
     # CartCheckoutPaymentAjaxView,
-    CartCheckoutPaymentSuccessView,
+    # CartCheckoutPaymentSuccessView,
 )
 
 app_name = 'web'
@@ -41,16 +41,16 @@ urlpatterns = [
 		# 	path('delete-item/', CartDeleteItemAction.as_view(), name='cart-action-delete-item'),
 		# 	# path('save/', CartSaveAjaxView.as_view(), name='save-cart'),
 		# ])),
-		path('checkout/', include([
-			path('d/', CartCheckoutDeliveryView.as_view(), name='cart-checkout-delivery'),
-			path('p/', include([
-				path('', CartCheckoutPaymentView.as_view(), name='cart-checkout-payment'),
-				# path('ajax/', include([
-				# 	path('payment_init/', CartCheckoutPaymentAjaxView.as_view(), name='cart-checkout-payment-init')
-				# ])),
-				path('success/', CartCheckoutPaymentSuccessView.as_view(), name='cart-checkout-payment-success')
-			])),
-		])),
+		# path('checkout/', include([
+		# 	path('d/', CartCheckoutDeliveryView.as_view(), name='cart-checkout-delivery'),
+		# 	path('p/', include([
+		# 		path('', CartCheckoutPaymentView.as_view(), name='cart-checkout-payment'),
+		# 		# path('ajax/', include([
+		# 		# 	path('payment_init/', CartCheckoutPaymentAjaxView.as_view(), name='cart-checkout-payment-init')
+		# 		# ])),
+		# 		path('success/', CartCheckoutPaymentSuccessView.as_view(), name='cart-checkout-payment-success')
+		# 	])),
+		# ])),
 	])),
 	# path('sc/', include([
 	# 	path('', SavedCartsView.as_view(), name='saved-carts'),
