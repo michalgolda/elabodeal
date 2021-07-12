@@ -94,7 +94,9 @@ const store = createStore({
 					cartTotalPriceElm[0].innerHTML = cart.total_price;
 					cartTotalPriceElm[1].innerHTML = cart.total_price;
 					
-					cartProductCountElm.innerHTML = `(${cart.product_count.toString()})`;
+					cartProductCountElm.innerHTML = `(${cart.product_count})`;
+
+					document.title = `Elabodeal - Koszyk (${cart.product_count})`;
 				}
 			});
 		}
