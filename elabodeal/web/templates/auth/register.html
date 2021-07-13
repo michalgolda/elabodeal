@@ -7,17 +7,17 @@
 	{% if form.errors %}
 		{% if form.username.errors %}
 			{% for error in form.username.errors %}
-				<p class="form__error">{{ error }}</p>
+				<p class="form__input-error-msg">{{ error }}</p>
 			{% endfor %}
 		{% else %}
 			{% if form.email.errors %}
 				{% for error in form.email.errors %}
-					<p class="form__error">{{ error }}</p>
+					<p class="form__input-error-msg">{{ error }}</p>
 				{% endfor %}
 			{% else %}
 				{% if form.password2.errors %}
 					{% for error in form.password2.errors %}
-						<p class="form__error">{{ error }}</p>
+						<p class="form__input-error-msg">{{ error }}</p>
 					{% endfor %}
 				{% endif %}
 			{% endif %}
