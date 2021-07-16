@@ -32,14 +32,14 @@
 			<span class="h2">Koszyk</span>
 		</div>
 		<div class="checkout-step__separator"></div>
-		<div class="checkout-step flex-center">
+		<div class="checkout-step checkout-step-next flex-center">
 			<figure class="flex-center">
 				<span class="h2">2</span>
 			</figure>
 			<span class="h2">Wysyłka</span>
 		</div>
 		<div class="checkout-step__separator"></div>
-		<div class="checkout-step flex-center">
+		<div class="checkout-step checkout-step-next flex-center">
 			<figure class="flex-center">
 				<span class="h2">3</span>
 			</figure>
@@ -68,11 +68,10 @@
 				<div>
 					{% if 'cart' in request.session %}
 					<p>Razem: <span class="cart-total-price">{{ request.session.cart.total_price }}</span> zł</p>
-					<a class="btn btn__primary">Przejdź dalej</a>
 					{% else %}
 					<p>Razem: <span>0.00 zł</span></p>
-					<a class="btn btn__disabled">Przejdź dalej</a>
 					{% endif %}
+					<button id="create-checkout-session-btn" class="btn btn__primary">Przejdź dalej</button>
 				</div>
 			</div>
 		</div>

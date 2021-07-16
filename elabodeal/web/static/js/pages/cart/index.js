@@ -8,6 +8,7 @@ import store from './store';
 import ProductList from './components/ProductList';
 import SaveCartBtn from './components/SaveCartBtn';
 import SaveCartModal from './components/SaveCartModal';
+import CreateCheckoutSessionBtn from './components/CreateCheckoutSessionBtn';
 
 
 const vueInstance = createApp();
@@ -29,5 +30,6 @@ vueInstance.use(injectedStore);
 
 mountPageComponents(vueInstance, {
     'product-list': ProductList,
-    'save-cart-btn': SaveCartBtn
+    'save-cart-btn': SaveCartBtn,
+    'create-checkout-session-btn': CreateCheckoutSessionBtn
 });

@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
 import { uiModule } from './modules';
 
-import userService from '@/services/user';
+import cartService from '@/services/cart';
 
 
 const initialState = () => {
@@ -61,7 +61,7 @@ const store = createStore({
 			data.append('title', title);
 			data.append('description', description);
 
-			userService.saveCart(data, {
+			cartService.save(data, {
 				successCallback: () => {
 					this.$modalManager.hide();
 				},
@@ -79,7 +79,7 @@ const store = createStore({
 
 			data.append('product_id', product_id);
 
-			userService.removeProductFromCart({ data }, {
+			cartService.removeProduct({ data }, {
 				successCallback: ({ data }) => {
 					const { cart } = data;
 
@@ -97,6 +97,13 @@ const store = createStore({
 					cartProductCountElm.innerHTML = `(${cart.product_count})`;
 
 					document.title = `Elabodeal - Koszyk (${cart.product_count})`;
+				}
+			});
+		},
+		createCheckoutSession () {
+			cartService.createCheckoutSession(null, {
+				successCallback: () => {
+					window.location = '/c/checkout/';
 				}
 			});
 		}
