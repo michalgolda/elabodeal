@@ -17,6 +17,10 @@
         color: $color-black;
     }
 
+    &-succeed {
+        color: $color-green;
+    }
+
     &__separator {
         width: 100px;
         height: 2px;
