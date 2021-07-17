@@ -15,6 +15,8 @@ from .settings import (
 	MeConfirmEmailChangeRequestEndpoint
 )
 from .cart import (
-	MeSaveCartEndpoint,
-	MeUpdateCartEndpoint
+	CartEndpoint,
+	SaveCartEndpoint,
+	CheckoutSessionEndpoint,
+	SucceedCheckoutSessionEndpoint
 )

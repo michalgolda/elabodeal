@@ -6,21 +6,28 @@ from elabodeal.api.repositories import (
 from elabodeal.api.interactors import (
 	SaveCartInteractor,
 	AddProductToCartInteractor,
-	RemoveProductFromCartInteractor
+	RemoveProductFromCartInteractor,
+	CreateCheckoutSessionInteractor,
+	UpdateCheckoutSessionInteractor,
+	RemoveCheckoutSessionInteractor,
+	SucceedCheckoutSessionInteractor,
+	SelectOrDeselectCartProductInteractor
 )
 from elabodeal.api.serializers import (
 	ProductSerializer,
 	SaveCartRequestSerializer,
-	UpdateCartRequestSerializer
+	UpdateCartRequestSerializer,
+	UpdateCheckoutSessionRequestSerializer
 )
+from elabodeal.api.services import StripePaymentService
 from elabodeal.utils import CartSessionManager
 
 
-class MeUpdateCartEndpoint(Endpoint):
+class CartEndpoint(Endpoint):
 	permission_classes = []
 	authentication_classes = []
 
-	def put(self, request):
+	def post(self, request):
 		session = request.session
 
 		serialized_request = UpdateCartRequestSerializer(
@@ -45,13 +52,29 @@ class MeUpdateCartEndpoint(Endpoint):
 		return self.respond(
 			data={
 				'product': serialized_product.data,
-				'cart': {
-					'total_price': cart_manager.total_price,
-					'product_count': cart_manager.product_count
-				}
+				'cart': cart_manager.asdict
 			},
 			status=200
 		)
+
+	def put(self, request):
+		session = request.session
+
+		serialized_request = UpdateCartRequestSerializer(
+			data=request.data
+		)
+		serialized_request.is_valid(raise_exception=True)
+
+		cart_manager = CartSessionManager(session)
+
+		interactor = SelectOrDeselectCartProductInteractor(
+			cart_manager=cart_manager
+		)
+		interactor.execute(
+			**serialized_request.validated_data
+		)
+
+		return self.respond(status=200)
 
 	def delete(self, request):
 		session = request.session
@@ -70,16 +93,13 @@ class MeUpdateCartEndpoint(Endpoint):
 
 		return self.respond(
 			data={
-				'cart': {
-					'total_price': cart_manager.total_price,
-					'product_count': cart_manager.product_count
-				}
+				'cart': cart_manager.asdict
 			},
 			status=200
 		)
 
 
-class MeSaveCartEndpoint(Endpoint):
+class SaveCartEndpoint(Endpoint):
 	def post(self, request):
 		user = request.user
 		session = request.session
@@ -105,3 +125,69 @@ class MeSaveCartEndpoint(Endpoint):
 		)
 
 		return self.respond(status=201)
+
+
+class CheckoutSessionEndpoint(Endpoint):
+	permission_classes = []
+	authentication_classes = []
+
+	def post(self, request):
+		session = request.session
+
+		cart_manager = CartSessionManager(session)
+		payment_service = StripePaymentService()
+
+		interactor = CreateCheckoutSessionInteractor(
+			cart_manager=cart_manager,
+			payment_service=payment_service
+		)
+		checkout_session = interactor.execute(session)
+
+		return self.respond(
+			data=checkout_session,
+			status=201
+		)
+
+	def put(self, request):
+		serialized_request = UpdateCheckoutSessionRequestSerializer(
+			data=request.data
+		)
+		serialized_request.is_valid(raise_exception=True)
+
+		session = request.session
+
+		interactor = UpdateCheckoutSessionInteractor()
+		checkout_session = interactor.execute(
+			session,
+			**serialized_request.validated_data
+		)
+
+		return self.respond(
+			data=checkout_session,
+			status=200
+		)
+
+	def delete(self, request):
+		session = request.session
+
+		payment_service = StripePaymentService()
+
+		interactor = RemoveCheckoutSessionInteractor(
+			payment_service=payment_service
+		)
+		interactor.execute(session)
+
+		return self.respond(status=200)
+
+
+class SucceedCheckoutSessionEndpoint(Endpoint):
+	permission_classes = []
+	authentication_classes = []
+	
+	def post(self, request):
+		session = request.session
+
+		interactor = SucceedCheckoutSessionInteractor()
+		interactor.execute(session)
+
+		return self.respond(status=200)
