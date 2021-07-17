@@ -3,7 +3,7 @@
 		<div class="flex-center">
 			<input 
 				type="checkbox" 
-				checked
+				:checked="selected"
 				@change="handleToggleProduct"
 			>
 		</div>
@@ -35,7 +35,7 @@
 	</div>
 </template>
 <script>
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 
 
 export default {
@@ -59,11 +59,14 @@ export default {
 		productId: {
 			type: String,
 			required: true
+		},
+		selected: {
+			type: Boolean,
+			required: true
 		}
 	},
 	methods: {
-		...mapActions(['removeProductFromCart']),
-		...mapMutations(['selectProduct', 'unSelectProduct']),
+		...mapActions(['removeProductFromCart', 'selectOrDeselectProduct']),
 		handleRemoveProduct () {
 			this.removeProductFromCart({
 				product_id: this.productId
@@ -72,18 +75,10 @@ export default {
 		handleToggleProduct (e) {
 			const { checked } = e.target;
 
-			const actionType = checked ? 'SELECT' : 'UNSELECT';
-
-			switch (actionType) {
-				case 'SELECT':
-					this.selectProduct(this.productId);
-
-					break;
-				case 'UNSELECT':
-					this.unSelectProduct(this.productId);
-
-					break;
-			}
+			this.selectOrDeselectProduct({
+				product_id: this.productId,
+				selected: checked
+			});
 		}
 	}
 }
