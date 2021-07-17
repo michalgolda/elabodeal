@@ -19,6 +19,7 @@
 			:price="product.price"
 			:cover-img-path="product.cover_img.path"
 			:product-id="product.id"
+			:selected="product.selected"
 		/>
 	</div>
 </template>
