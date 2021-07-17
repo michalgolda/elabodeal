@@ -33,24 +33,4 @@ userService.register_function('changePassword', {
 });
 
 
-userService.register_function('addProductToCart', {
-	url: '/api/me/cart/',
-	method: 'put'
-});
-
-
-userService.register_function('removeProductFromCart', {
-	url: '/api/me/cart/',
-	method: 'delete',
-	successMsg: 'Produkt został pomyślnie usunięty z koszyka.'
-});
-
-
-userService.register_function('saveCart', {
-	url: '/api/me/cart/save/',
-	method: 'post',
-	successMsg: 'Koszyk został pomyślnie zapisany.'
-});
-
-
 export default userService;

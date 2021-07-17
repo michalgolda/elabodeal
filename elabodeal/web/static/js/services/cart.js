@@ -5,7 +5,7 @@ const cartService = new Service('cart');
 
 cartService.register_function('addProduct', {
 	url: '/api/cart/',
-	method: 'put'
+	method: 'post'
 });
 
 
@@ -13,6 +13,12 @@ cartService.register_function('removeProduct', {
 	url: '/api/cart/',
 	method: 'delete',
 	successMsg: 'Produkt został pomyślnie usunięty z koszyka.'
+});
+
+
+cartService.register_function('selectOrDeselectProduct', {
+	url: '/api/cart/',
+	method: 'put'
 });
 
 
@@ -38,6 +44,12 @@ cartService.register_function('updateCheckoutSession', {
 cartService.register_function('removeCheckoutSession', {
 	url: '/api/cart/checkout/session/',
 	method: 'delete'
+});
+
+
+cartService.register_function('succeedCheckoutSession', {
+	url: '/api/cart/checkout/session/succeed/',
+	method: 'post'
 });
 
 
