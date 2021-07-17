@@ -10,3 +10,4 @@ python-decouple==3.4
 celery==5.0.5
 redis==3.5.3
 pillow==8.1.2
+stripe==2.60.0
