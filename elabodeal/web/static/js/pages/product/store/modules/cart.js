@@ -1,4 +1,4 @@
-import userService from '@/services/user';
+import cartService from '@/services/cart';
 
 
 const cartModule = {
@@ -9,7 +9,7 @@ const cartModule = {
 
 			data.append('product_id', productId);
 
-			userService.addProductToCart(data, {
+			cartService.addProduct(data, {
 				successCallback: ({ data }) => {
 					const { product, cart } = data;
 
