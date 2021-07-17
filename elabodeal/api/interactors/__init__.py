@@ -21,5 +21,10 @@ from .settings import (
 from .cart import (
 	SaveCartInteractor,
 	AddProductToCartInteractor,
-	RemoveProductFromCartInteractor
+	RemoveProductFromCartInteractor,
+	CreateCheckoutSessionInteractor,
+	UpdateCheckoutSessionInteractor,
+	SucceedCheckoutSessionInteractor,
+	RemoveCheckoutSessionInteractor,
+	SelectOrDeselectCartProductInteractor,
 )
