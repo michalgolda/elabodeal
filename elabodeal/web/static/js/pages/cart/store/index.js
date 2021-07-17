@@ -9,7 +9,9 @@ const initialState = () => {
 
 	return {
 		products,
-		selectedProducts: products
+		selectedProducts: products.filter((product) => {
+			return (product.selected === true);
+		})
 	}
 };
 
@@ -38,7 +40,7 @@ const store = createStore({
 
 			cartTotalPriceElm.innerText = updatedTotalPrice.toFixed(2).toString();
 		},
-		unSelectProduct (state, product_id) {
+		deselectProduct (state, product_id) {
 			const product = state.products.find((product) => {
 				return (product.id === product_id);
 			});
@@ -97,6 +99,28 @@ const store = createStore({
 					cartProductCountElm.innerHTML = `(${cart.product_count})`;
 
 					document.title = `Elabodeal - Koszyk (${cart.product_count})`;
+				}
+			});
+		},
+		selectOrDeselectProduct (ctx, { product_id, selected }) {
+			const data = new FormData();
+
+			data.append('product_id', product_id);
+
+			cartService.selectOrDeselectProduct(data, {
+				successCallback: () => {
+					const actionType = selected ? 'SELECT' : 'UNSELECT';
+
+					switch (actionType) {
+						case 'SELECT':
+							ctx.commit('selectProduct', product_id);
+
+							break;
+						case 'UNSELECT':
+							ctx.commit('deselectProduct', product_id);
+
+							break;
+					}
 				}
 			});
 		},
