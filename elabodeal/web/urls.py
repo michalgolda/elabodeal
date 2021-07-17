@@ -8,6 +8,7 @@ from elabodeal.web.views import (
 	RegisterView, 
 	SettingsView,
 	SharedCartView, 
+    CartCheckoutView,
 	# CartAddItemAction, 
 	SearchResultsView,
     # CartDeleteItemAction,
@@ -36,6 +37,7 @@ urlpatterns = [
 	path('settings/', SettingsView.as_view(), name='settings'),
 	path('c/', include([
 		path('', CartView.as_view(), name='cart'),
+		path('checkout/', CartCheckoutView.as_view(), name='cart-checkout')
 		# path('ajax/', include([
 		# 	path('add-item/', CartAddItemAction.as_view(), name='cart-action-add-item'),
 		# 	path('delete-item/', CartDeleteItemAction.as_view(), name='cart-action-delete-item'),

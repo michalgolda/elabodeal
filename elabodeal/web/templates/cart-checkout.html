@@ -1,0 +1,34 @@
+{% extends 'layouts/base.html' %} 
+{% load static %}
+{% load stripe %}
+{% load user %}
+{% load json %}
+
+{% block title-description%}Kasa{% endblock %}
+
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/cartCheckoutPage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/cartCheckoutPage.css' %}">
+{% endblock %}
+
+{% block page-scripts %}	
+<link rel="preload" href="{% static 'dist/cartCheckoutPage.js' %}" as="script">
+<script defer src="{% static 'dist/cartCheckoutPage.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div id="mount0_0">
+{% include 'components/loader.html' %}
+</div>
+{% include 'components/small-footer-light.html' %} 
+{% endblock %}
+
+{% block page-bottom-scripts %}
+<script type="text/javascript">
+	window.__APP_CONTEXT__ = {};
+	window.__APP_CONTEXT__['checkout_session'] = JSON.parse('{{ checkout_session|json_dumps }}');
+	window.__APP_CONTEXT__['user'] = JSON.parse('{% get_user_context %}');
+	window.__APP_CONTEXT__['stripe_publishable_key'] = '{% stripe_publishable_key %}';
+</script>
+{% endblock %}

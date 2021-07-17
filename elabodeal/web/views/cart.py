@@ -13,6 +13,8 @@
 # from elabodeal.web.forms import DeliveryForm
 # from elabodeal.models import Product, Cart, PurchasedProduct, User
 # from elabodeal.utils import SessionCartManager
+from django.shortcuts import redirect
+from django.utils.decorators import method_decorator
 
 from elabodeal.web.views import BaseView
 from elabodeal.models import Product
@@ -20,11 +22,13 @@ from elabodeal.utils import CartSessionManager
 
 
 class CartView(BaseView):
-	def get_products(self, cart_session_products):
+	def get_products(self, cart_manager):
 		products = []
+		cart_products = cart_manager.products
 
-		for cart_session_product in cart_session_products:
-			product = Product.objects.filter(id=cart_session_product.id).first()
+		for cart_product in cart_products:
+			product = Product.objects.filter(id=cart_product.id).first()
+			product_is_selected = cart_product.selected
 
 			products.append({
 				'id': str(product.id),
@@ -33,26 +37,69 @@ class CartView(BaseView):
 				'price': float(product.price),
 				'cover_img': {
 					'path': product.cover_img.path
-				}
+				},
+				'selected': product_is_selected
 			})
 
 		return products
 
-	def get_context(self, cart_session_products):
-		return {
-			'products': self.get_products(cart_session_products)
-		}
+	def get_context(self, cart_manager):
+		return dict(
+			products=self.get_products(cart_manager)
+		)
 
 	def get(self, request):
 		session = request.session
 
 		cart_manager = CartSessionManager(session)
-	
-		cart_session_products = cart_manager.products
 
-		context = self.get_context(cart_session_products)
+		context = self.get_context(cart_manager)
 
 		return self.respond('cart.html', request, context)
+
+
+def required_checkout_session(method):
+	def wrapper(request, *args, **kwargs):
+		checkout_session = request.session.get('checkout_session')
+
+		if not checkout_session: return redirect('web:index')
+
+		return method(request, *args, **kwargs)
+	return wrapper
+
+
+def validate_checkout_session(method):
+	def wrapper(request, *args, **kwargs):
+		cart = request.session.get('cart')
+
+		if not cart: return redirect('web:index')
+
+		checkout_session = request.session.get('checkout_session')
+
+		if checkout_session.get('cid') != cart.get('id'):
+			return redirect('web:index')
+
+		return method(request, *args, **kwargs)
+	return wrapper
+
+
+class CartCheckoutView(BaseView):
+
+	def get_context(self, checkout_session):
+		return dict(
+			checkout_session=checkout_session
+		)
+
+	@method_decorator([
+		required_checkout_session,
+		validate_checkout_session
+	])
+	def get(self, request):
+		checkout_session = request.session.get('checkout_session')
+
+		context = self.get_context(checkout_session)
+
+		return self.respond('cart-checkout.html', request, context)
 
 
 # class CartCheckoutDeliveryView(BaseView):

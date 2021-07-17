@@ -1,7 +1,8 @@
 from .base import BaseView, BaseAjaxView
 
 from .cart import (
-    CartView, 
+    CartView,
+    CartCheckoutView
     # CartAddItemAction,
     # CartDeleteItemAction,
     # CartCheckoutDeliveryView, 
