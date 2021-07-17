@@ -67,7 +67,13 @@
 				</div>
 				<div>
 					{% if 'cart' in request.session %}
-					<p>Razem: <span class="cart-total-price">{{ request.session.cart.total_price }}</span> zł</p>
+					<p>
+						Razem: 
+						<span class="cart-total-price">
+						{{ request.session.cart.total_price_of_selected_products }}
+						</span> 
+						zł
+					</p>
 					{% else %}
 					<p>Razem: <span>0.00 zł</span></p>
 					{% endif %}
