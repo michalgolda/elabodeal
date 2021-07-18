@@ -1,7 +1,7 @@
 <template>
 	<div class="wrapper">
 		<Steps />
-		<div class="section">
+		<div class="wrapper wrapper-content">
 			<slot />
 		</div>
 	</div>

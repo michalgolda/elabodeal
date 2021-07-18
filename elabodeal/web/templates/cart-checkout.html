@@ -30,5 +30,7 @@
 	window.__APP_CONTEXT__['checkout_session'] = JSON.parse('{{ checkout_session|json_dumps }}');
 	window.__APP_CONTEXT__['user'] = JSON.parse('{% get_user_context %}');
 	window.__APP_CONTEXT__['stripe_publishable_key'] = '{% stripe_publishable_key %}';
+	window.__APP_CONTEXT__['summary_products'] = JSON.parse('{{ summary_products|json_dumps }}');
+	window.__APP_CONTEXT__['summary_total_price'] = '{{ request.session.cart.total_price_of_selected_products }}';
 </script>
 {% endblock %}

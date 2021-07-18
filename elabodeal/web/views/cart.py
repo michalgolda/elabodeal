@@ -85,9 +85,27 @@ def validate_checkout_session(method):
 
 class CartCheckoutView(BaseView):
 
-	def get_context(self, checkout_session):
+	def get_summary_products(self, cart_manager):
+		summary_products = []
+		cart_products = cart_manager.selected_products
+
+		for cart_product in cart_products:
+			product = Product.objects.filter(id=cart_product.id).first()
+
+			summary_products.append(
+				dict(
+					title=product.title,
+					author=product.author,
+					price=float(product.price)
+				)
+			)
+
+		return summary_products
+
+	def get_context(self, cart_manager, checkout_session):
 		return dict(
-			checkout_session=checkout_session
+			checkout_session=checkout_session,
+			summary_products=self.get_summary_products(cart_manager)
 		)
 
 	@method_decorator([
@@ -95,9 +113,16 @@ class CartCheckoutView(BaseView):
 		validate_checkout_session
 	])
 	def get(self, request):
+		session = request.session
+
+		cart_manager = CartSessionManager(session)
+
 		checkout_session = request.session.get('checkout_session')
 
-		context = self.get_context(checkout_session)
+		context = self.get_context(
+			cart_manager,
+			checkout_session
+		)
 
 		return self.respond('cart-checkout.html', request, context)
 

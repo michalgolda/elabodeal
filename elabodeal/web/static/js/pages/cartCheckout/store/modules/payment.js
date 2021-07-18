@@ -6,10 +6,14 @@ const initialState = () => {
 
 	const checkoutSession = window.__APP_CONTEXT__['checkout_session'];
 	const paymentIntentClientSecret = checkoutSession['cs'];
+	const summaryProducts = window.__APP_CONTEXT__['summary_products'];
+	const summaryTotalPrice = window.__APP_CONTEXT__['summary_total_price'];
 
 	return {
 		stripePublishableKey,
 		paymentIntentClientSecret,
+		summaryProducts,
+		summaryTotalPrice,
 		payment: {}
 	}
 };

@@ -1,5 +1,6 @@
 <template>
 	<BaseView>
+		<ProductSummaryList />
 		<div class="form-wrapper">
 			<form 
 				@submit.prevent="handleSubmit"
@@ -62,11 +63,27 @@
 						<div ref="mountStripeCardElement" />
 					</div>
 				</div>
+				<div>
+					<div class="form__input-checkbox">
+						<input 
+							type="checkbox" 
+							required="required"
+						>
+						<label>Akceptuje regulamin</label>
+					</div>
+					<div class="form__input-checkbox">
+						<input 
+							type="checkbox" 
+							required="required"
+						>
+						<label>Akceptuje politykę prywatnośći</label>
+					</div>
+				</div>
 				<button 
 					class="btn btn__primary btn-block"
 					type="submit"
 				>
-					Zapłać
+					Zamawiam i płacę
 				</button>
 				<button
 					class="btn btn__secondary btn-block"
@@ -84,6 +101,7 @@ import { createNamespacedHelpers } from 'vuex';
 import Alert from '@/alert';
 
 import BaseView from './BaseView';
+import ProductSummaryList from './ProductSummaryList';
 
 const { mapMutations: mapUiMutations } = createNamespacedHelpers('ui');
 const { mapState: mapDeliverState } = createNamespacedHelpers('deliver');
@@ -95,7 +113,8 @@ const {
 
 export default {
 	components: {
-		BaseView
+		BaseView,
+		ProductSummaryList
 	},
 	computed: {
 		...mapDeliverState(['delivery']),
