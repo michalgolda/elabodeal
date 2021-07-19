@@ -51,16 +51,23 @@
 					>
 				</div>
 				<div>
-					<label>Karta</label>
-					<p
-						class="form__input-error-msg"
-						v-for="error in cardErrors"
-						:key="error"
-					>
-						{{ error }}
-					</p>
+					<label>Numer karty</label>
 					<div class="StripeElementWrapper">
-						<div ref="mountStripeCardElement" />
+						<div ref="stripeCardNumber" />
+					</div>
+				</div>
+				<div class="form__section">
+					<div>
+						<label>Ważność karty</label>
+						<div class="StripeElementWrapper">
+							<div ref="stripeCardExpiry" />
+						</div>
+					</div>
+					<div>
+						<label>Kod CVC</label>
+						<div class="StripeElementWrapper">
+							<div ref="stripeCardCvc" />
+						</div>
 					</div>
 				</div>
 				<div>
@@ -127,7 +134,8 @@ export default {
 		// eslint-disable-next-line
 		this.stripe = Stripe(this.stripePublishableKey);
 		this.stripeElements = this.stripe.elements();
-		this.stripeCard = this.stripeElements.create('card', {
+		
+		const defaultOptions = {
 			style: {
 				base: {
 					color: '#011627',
@@ -140,11 +148,20 @@ export default {
 					color: '#E71D36'
 				}
 			}
-		});
+		};
 
-		const { mountStripeCardElement } = this.$refs;
+		this.stripeCardCvc = this.stripeElements.create('cardCvc', defaultOptions);
+		this.stripeCardNumber = this.stripeElements.create('cardNumber', defaultOptions);
+		this.stripeCardExpiry = this.stripeElements.create('cardExpiry', defaultOptions);
 
-		this.stripeCard.mount(mountStripeCardElement);
+		const { 
+			stripeCardCvc: mountStripeCardCvc,
+			stripeCardNumber: mountStripeCardNumber,
+			stripeCardExpiry: mountStripeCardExpiry } = this.$refs;
+
+		this.stripeCardCvc.mount(mountStripeCardCvc);
+		this.stripeCardExpiry.mount(mountStripeCardExpiry);
+		this.stripeCardNumber.mount(mountStripeCardNumber);
 	},
 	data () {
 		return {
@@ -153,8 +170,8 @@ export default {
 	},
 	methods: {
 		...mapUiMutations(['setCurrentStep']),
-		...mapPaymentActions(['succeedCheckoutSession']),
 		...mapPaymentMutations(['setPaymentData']),
+		...mapPaymentActions(['succeedCheckoutSession']),
 		handleSubmit () {
 			const { 
 				first_name, 
@@ -167,7 +184,7 @@ export default {
 			this.stripe
 				.confirmCardPayment(this.paymentIntentClientSecret, {
 					payment_method: {
-						card: this.stripeCard,
+						card: this.stripeCardNumber,
 						billing_details: {
 							email: email.value,
 							phone: phone_number.value,
