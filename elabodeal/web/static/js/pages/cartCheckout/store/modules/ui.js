@@ -1,5 +1,8 @@
+import { appData } from '@/utils/data';
+
+
 const initialState = () => {
-	const { step } = window.__APP_CONTEXT__['checkout_session'];
+	const { step } = appData['checkout_session'];
 
 	return {
 		currentStep: step ? step : 'deliver',

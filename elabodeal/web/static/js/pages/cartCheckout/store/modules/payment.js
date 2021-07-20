@@ -1,20 +1,22 @@
+import { appData } from '@/utils/data';
 import cartService from '@/services/cart';
 
 
 const initialState = () => {
-	const stripePublishableKey = window.__APP_CONTEXT__['stripe_publishable_key'];
+	const { 
+		checkout_session: checkoutSession,
+		summary_products: summaryProducts,
+		summary_total_price: summaryTotalPrice,
+		stripe_publishable_key: stripePublishableKey } = appData;
 
-	const checkoutSession = window.__APP_CONTEXT__['checkout_session'];
 	const paymentIntentClientSecret = checkoutSession['cs'];
-	const summaryProducts = window.__APP_CONTEXT__['summary_products'];
-	const summaryTotalPrice = window.__APP_CONTEXT__['summary_total_price'];
 
 	return {
-		stripePublishableKey,
-		paymentIntentClientSecret,
+		payment: {},
 		summaryProducts,
 		summaryTotalPrice,
-		payment: {}
+		stripePublishableKey,
+		paymentIntentClientSecret
 	}
 };
 

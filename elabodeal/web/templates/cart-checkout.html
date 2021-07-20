@@ -1,8 +1,5 @@
 {% extends 'layouts/base.html' %} 
 {% load static %}
-{% load stripe %}
-{% load user %}
-{% load json %}
 
 {% block title-description%}Kasa{% endblock %}
 
@@ -22,15 +19,4 @@
 {% include 'components/loader.html' %}
 </div>
 {% include 'components/small-footer-light.html' %} 
-{% endblock %}
-
-{% block page-bottom-scripts %}
-<script type="text/javascript">
-	window.__APP_CONTEXT__ = {};
-	window.__APP_CONTEXT__['checkout_session'] = JSON.parse('{{ checkout_session|json_dumps }}');
-	window.__APP_CONTEXT__['user'] = JSON.parse('{% get_user_context %}');
-	window.__APP_CONTEXT__['stripe_publishable_key'] = '{% stripe_publishable_key %}';
-	window.__APP_CONTEXT__['summary_products'] = JSON.parse('{{ summary_products|json_dumps }}');
-	window.__APP_CONTEXT__['summary_total_price'] = '{{ request.session.cart.total_price_of_selected_products }}';
-</script>
 {% endblock %}

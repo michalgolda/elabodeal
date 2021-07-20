@@ -1,12 +1,12 @@
+import { appData } from '@/utils/data';
 import cartService from '@/services/cart';
 
 
 const initialState = () => {
-	const { delivery } = window.__APP_CONTEXT__['checkout_session'];
+	const { delivery } = appData;
 
 	return {
-		delivery: delivery ? delivery : {},
-		collectedDeliverData: delivery ? true : false
+		delivery: delivery ? delivery : {}
 	}
 };
 
@@ -15,12 +15,6 @@ const deliverModule = {
 	namespaced: true,
 	state: initialState(),
 	mutations: {
-		toggleCollectedDeliverData (state) {
-			const collectDeliverData = state.collectDeliverData;
-			const deliverDataIsCollected = collectDeliverData ? false : true;
-
-			state.collectedDeliverData = deliverDataIsCollected;
-		},
 		setDeliveryData (state, data) {
 			state.delivery = data;
 		} 
@@ -35,7 +29,6 @@ const deliverModule = {
 		
 			cartService.updateCheckoutSession(data, {
 				successCallback: ({ data }) => {
-					ctx.commit('toggleCollectedDeliverData');
 					ctx.commit('setDeliveryData', data.delivery);
 					ctx.commit('ui/setCurrentStep', 'payment', {root: true});
 				},

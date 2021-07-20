@@ -22,12 +22,12 @@ export default {
 	},
 	computed: {
 		...mapUiState(['currentStep']),
-		...mapDeliverState(['collectedDeliverData']),
+		...mapDeliverState(['delivery']),
 		showDeliverView () {
 			return this.currentStep === 'deliver';
 		},
 		showPaymentView () {
-			return this.currentStep === 'payment' && this.collectedDeliverData;
+			return this.currentStep === 'payment' && this.delivery;
 		},
 		showPaymentSuccessView () {
 			return this.currentStep === 'success';

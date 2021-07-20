@@ -1,11 +1,12 @@
 import { createStore } from 'vuex';
 import { uiModule } from './modules';
+import { appData } from '@/utils/data';
 
 import cartService from '@/services/cart';
 
 
 const initialState = () => {
-	const { products } = window.__APP_CONTEXT__;
+	const { products } = appData;
 
 	return {
 		products,

@@ -1,12 +1,16 @@
 import { createStore } from 'vuex';
 import cartService from '@/services/cart';
+import { appData } from '@/utils/data';
 
 import { uiModule, deliverModule, paymentModule } from './modules';
 
 
 const initialState = () => {
-	const { user, checkout_session } = window.__APP_CONTEXT__;
-	const delivery = checkout_session.delivery ? checkout_session.delivery : {};
+	const { 
+		user, 
+		checkout_session: checkoutSession } = appData;
+
+	const delivery = checkoutSession['delivery'] ? checkoutSession['delivery'] : {};
 
 	return { 
 		first_name: delivery.first_name, 
