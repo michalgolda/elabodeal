@@ -1,5 +1,5 @@
 import { appData } from '@/utils/data';
-import cartService from '@/services/cart';
+import { checkoutSessionService } from '@/services';
 
 
 const initialState = () => {
@@ -27,7 +27,7 @@ const deliverModule = {
 			data.append('last_name', last_name);
 			data.append('first_name', first_name);
 		
-			cartService.updateCheckoutSession(data, {
+			checkoutSessionService.updateSession(data, {
 				successCallback: ({ data }) => {
 					ctx.commit('setDeliveryData', data.delivery);
 					ctx.commit('ui/setCurrentStep', 'payment', {root: true});

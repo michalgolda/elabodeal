@@ -1,5 +1,5 @@
 import { appData } from '@/utils/data';
-import cartService from '@/services/cart';
+import { checkoutSessionService } from '@/services';
 
 
 const initialState = () => {
@@ -30,7 +30,7 @@ const paymentModule = {
 	},
 	actions: {
 		succeedCheckoutSession (ctx) {
-			cartService.succeedCheckoutSession(null, {
+			checkoutSessionService.succeedSession(null, {
 				successCallback: () => {
 					ctx.commit(
 						'ui/setCurrentStep',

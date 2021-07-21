@@ -32,15 +32,15 @@
 <script>
 import { mapState } from "vuex";
 
-import Alert from "../../../../alert";
-import publisherService from "../../../../services/publisher";
+import Alert from "@/alert";
+import { publisherService } from "@/services";
 
-import StandardDataSection from "./StandardDataSection.vue";
+import ImagesSection from "./ImagesSection.vue";
+import ConsentsSection from "./ConsentsSection.vue";
 import EbookFilesSection from "./EbookFilesSection.vue";
 import AgeCategorySection from "./AgeCategorySection.vue";
-import ImagesSection from "./ImagesSection.vue";
+import StandardDataSection from "./StandardDataSection.vue";
 import AdditionalDataSection from "./AdditionalDataSection.vue";
-import ConsentsSection from "./ConsentsSection.vue";
 
 import PriceInput from "./PriceInput.vue";
 

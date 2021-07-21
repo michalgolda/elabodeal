@@ -1,4 +1,4 @@
-import publisherService from '@/services/publisher';
+import { publisherService } from '@/services';
 
 
 const publisherSettingsModule = {

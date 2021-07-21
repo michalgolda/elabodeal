@@ -1,8 +1,7 @@
 import { createStore } from 'vuex';
 import { uiModule } from './modules';
 import { appData } from '@/utils/data';
-
-import cartService from '@/services/cart';
+import { cartService, checkoutSessionService } from '@/services';
 
 
 const initialState = () => {
@@ -126,7 +125,7 @@ const store = createStore({
 			});
 		},
 		createCheckoutSession () {
-			cartService.createCheckoutSession(null, {
+			checkoutSessionService.createSession(null, {
 				successCallback: () => {
 					window.location = '/c/checkout/';
 				}

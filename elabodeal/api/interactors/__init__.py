@@ -22,9 +22,11 @@ from .cart import (
 	SaveCartInteractor,
 	AddProductToCartInteractor,
 	RemoveProductFromCartInteractor,
+	SelectOrDeselectCartProductInteractor,
+)
+from .checkout_session import (
 	CreateCheckoutSessionInteractor,
 	UpdateCheckoutSessionInteractor,
-	SucceedCheckoutSessionInteractor,
 	RemoveCheckoutSessionInteractor,
-	SelectOrDeselectCartProductInteractor,
+	SucceedCheckoutSessionInteractor
 )

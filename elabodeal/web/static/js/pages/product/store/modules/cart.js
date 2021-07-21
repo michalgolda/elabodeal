@@ -1,4 +1,4 @@
-import cartService from '@/services/cart';
+import { cartService } from '@/services';
 
 
 const cartModule = {

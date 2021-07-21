@@ -80,13 +80,13 @@ urlpatterns = [
         name='save-cart'
     ),
     path(
-        'cart/checkout/session/',
+        'checkout_session/',
         CheckoutSessionEndpoint.as_view(),
         name='checkout-session'
     ),
     path(
-        'cart/checkout/session/succeed/',
+        'checkout_session/succeed/',
         SucceedCheckoutSessionEndpoint.as_view(),
-        name='succeed-checkout-session'
+        name='checkout-session-succeed'
     )
 ]

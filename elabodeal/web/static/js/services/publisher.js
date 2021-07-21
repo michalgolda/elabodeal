@@ -1,4 +1,4 @@
-import Service from "@/services";
+import Service from '@/services/base';
 
 
 const publisherService = new Service('publisher');

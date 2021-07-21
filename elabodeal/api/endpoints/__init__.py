@@ -16,7 +16,9 @@ from .settings import (
 )
 from .cart import (
 	CartEndpoint,
-	SaveCartEndpoint,
+	SaveCartEndpoint
+)
+from .checkout_session import (
 	CheckoutSessionEndpoint,
 	SucceedCheckoutSessionEndpoint
 )
