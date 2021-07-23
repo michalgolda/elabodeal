@@ -5,6 +5,7 @@ import storeAppGlobalPropertiesInjector from '@/utils/store';
 
 import store from './store';
 
+import BuyNowBtn from './components/BuyNowBtn';
 import TextDetails from './components/TextDetails';
 import AddToCartBtn from './components/AddToCartBtn';
 import SuccessCartUpdatedModal from './components/SuccessCartUpdatedModal';
@@ -29,6 +30,7 @@ vueInstance.use(injectedStore);
 
 
 mountPageComponents(vueInstance, {
+	'buy-now': BuyNowBtn,
 	'text-details': TextDetails,
 	'add-to-cart': AddToCartBtn
 });

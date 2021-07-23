@@ -145,6 +145,13 @@ class CartSessionManagerTest(BaseTestCase):
 
         self.assertEqual(selected_products, [])
 
+    def test_clear_method(self):
+        cart_manager = CartSessionManager(self.session)
+
+        cart_manager.clear()
+
+        self.assertEqual(cart_manager.products, [])
+
     def test_commit_method(self):
         self.session = {}
 

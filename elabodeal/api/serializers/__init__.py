@@ -18,6 +18,7 @@ from .product_language import ProductLanguageSerializer
 from .product_premiere import ProductPremiereSerializer
 from .cart import (
 	SaveCartRequestSerializer,
-	UpdateCartRequestSerializer
+	UpdateCartRequestSerializer,
+	AddProductToCartRequestSerializer
 )
 from .checkout_session import UpdateCheckoutSessionRequestSerializer

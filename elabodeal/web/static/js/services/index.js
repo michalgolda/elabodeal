@@ -4,7 +4,7 @@ import publisherService from './publisher';
 import checkoutSessionService from './checkout_session';
 
 
-export default {
+export {
     cartService,
     userService,
     publisherService,

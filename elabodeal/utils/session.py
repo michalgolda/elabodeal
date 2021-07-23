@@ -145,6 +145,9 @@ class CartSessionManager:
 
         product.selected = False
 
+    def clear(self):
+        self._products = []
+
     def commit(self):
         cart_id = str(uuid.uuid4())
 

@@ -27,11 +27,13 @@ class AddProductToCartInteractorTest(BaseTestCase):
 			cart_manager=self.mock_cart_manager
 		)
 
-		product = interactor.execute(mock_product.id)
+		product = interactor.execute(mock_product.id, True)
 
 		self.mock_product_repo.get_one_by.assert_called_once_with(
 			id=mock_product.id
 		)
+
+		self.mock_cart_manager.clear.assert_called()
 
 		self.mock_cart_manager.add.assert_called_once_with(
 			mock_product.id,

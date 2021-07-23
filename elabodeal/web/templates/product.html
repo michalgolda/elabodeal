@@ -30,7 +30,13 @@
 			<div class="section section__flex">
 				<p class="product-price">{{ product.price }} zł</p>
 				<div class="product-actions">
-					<button class="btn btn__primary">Kup teraz</button>
+					<button 
+						id="buy-now"
+						class="btn btn__primary"
+						data-product-id="{{ product.id }}"
+					>
+						Kup teraz
+					</button>
 					<button 
 						id="add-to-cart"
 						class="btn btn__secondary"

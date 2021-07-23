@@ -6,10 +6,12 @@ class AddProductToCartInteractor(Interactor):
 		self.product_repo = product_repo
 		self.cart_manager = cart_manager
 
-	def execute(self, product_id):
+	def execute(self, product_id, clear):
 		product = self.product_repo.get_one_by(id=product_id)
 
 		product_price = product.price
+
+		if clear: self.cart_manager.clear()
 
 		self.cart_manager.add(str(product_id), float(product_price))
 		self.cart_manager.commit()
