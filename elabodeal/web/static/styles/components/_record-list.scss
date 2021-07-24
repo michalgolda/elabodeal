@@ -19,7 +19,7 @@
 
         &__title {
             text-overflow: ellipsis;
-            font-size: $font-size-medium;
+            font-size: $font-size-big;
             font-weight: bold;
             overflow: hidden;
             white-space: nowrap;
@@ -41,10 +41,6 @@
 
         &__information {
             margin-right: .5rem;
-
-            &-highlight {
-                color: $color-orange;
-            }
         }
 
         &__action {
