@@ -61,7 +61,7 @@
 			</div>
 			<div class="cart-details">
 				<div>
-					{% if request.user.is_authenticated and products %}
+					{% if request.user.is_authenticated and request.session.cart.products %}
 					<button id="save-cart-btn" class="btn btn__primary">Zapisz koszyk</button>
 					{% endif %}
 				</div>
