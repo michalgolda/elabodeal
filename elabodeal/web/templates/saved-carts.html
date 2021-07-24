@@ -1,0 +1,43 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}Zapisane koszyki{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="wrapper">
+	<div class="section">
+		<p class="section__title">Zapisane koszyki</p>
+		<div class="record-list">
+			{% if carts %}
+			{% for cart in carts %}
+				<div class="record">
+					<div>
+						<p class="record__title">{{ cart.title }}</p>
+						<div class="record__informations">
+							<p class="record__information">
+								<span class="record__information-highlight">Data zapsiu</span> - {{ cart.created_at.day }}.{{ cart.created_at.month }}.{{ cart.created_at.year }}
+							</p>
+							<p class="record__information">
+								<span class="record__information-highlight">Ilość produktów</span> - {{ cart.products_count }}
+							</p>
+						</div>
+					</div>
+					<a 
+						href="{% url 'web:saved-cart-details' id=cart.id %}" 
+						class="btn btn__primary record__action"
+					>
+						Szczegóły
+					</a>
+				</div>
+			{% endfor %}
+			{% else %}
+			<div class="section flex-center">
+				<h2>Lista zapisanych koszyków jest pusta.</h2>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% include 'components/small-footer-light.html' %}
+{% endblock %}
