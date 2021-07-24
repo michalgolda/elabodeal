@@ -6,3 +6,6 @@ remove-dist-folder:
 
 remove-migration-folder:
 	@find elabodeal/ -name 'migrations' -exec rm -rf {} \;
+
+remove-media-folder:
+	@find elabodeal/ -name 'media' -exec rm -rf {} \;
