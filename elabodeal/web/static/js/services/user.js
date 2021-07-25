@@ -3,14 +3,14 @@ import Service from '@/services/base';
 
 const userService = new Service('user');
 
-userService.register_function('updateSettings', {
+userService.registerFunction('updateSettings', {
 	url: '/api/me/settings/',
 	method: 'put',
 	successMsg: 'Ustawienia zostały poprawnie zapisane.'
 });
 
 
-userService.register_function('changeEmail', {
+userService.registerFunction('changeEmail', {
 	url: '/api/me/settings/email/',
 	method: 'post',
 	successMsg: 'Kod weryfikacyjny został wysłany na podany adres email.',
@@ -18,7 +18,7 @@ userService.register_function('changeEmail', {
 });
 
 
-userService.register_function('confirmEmailChange', {
+userService.registerFunction('confirmEmailChange', {
 	url: '/api/me/settings/email/confirm/',
 	method: 'post',
 	successMsg: 'Adres email został pomyślnie zmieniony.',
@@ -26,7 +26,7 @@ userService.register_function('confirmEmailChange', {
 });
 
 
-userService.register_function('changePassword', {
+userService.registerFunction('changePassword', {
 	url: '/api/me/settings/password/',
 	method: 'put',
 	successMsg: 'Hasło zostało pomyślnie zmienione.'

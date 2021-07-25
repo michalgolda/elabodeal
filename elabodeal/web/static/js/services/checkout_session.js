@@ -4,25 +4,25 @@ import Service from '@/services/base';
 const checkoutSessionService = new Service('checkoutSessionService');
 
 
-checkoutSessionService.register_function('createSession', {
+checkoutSessionService.registerFunction('createSession', {
 	url: '/api/checkout_session/',
 	method: 'post'
 });
 
 
-checkoutSessionService.register_function('updateSession', {
+checkoutSessionService.registerFunction('updateSession', {
 	url: '/api/checkout_session/',
 	method: 'put'
 });
 
 
-checkoutSessionService.register_function('removeSession', {
+checkoutSessionService.registerFunction('removeSession', {
 	url: '/api/checkout_session/',
 	method: 'delete'
 });
 
 
-checkoutSessionService.register_function('succeedSession', {
+checkoutSessionService.registerFunction('succeedSession', {
 	url: '/api/checkout_session/succeed/',
 	method: 'post'
 });

@@ -3,14 +3,14 @@ import Service from '@/services/base';
 
 const publisherService = new Service('publisher');
 
-publisherService.register_function('createProduct', {
+publisherService.registerFunction('createProduct', {
 	url: '/api/me/products/',
 	method: 'post',
 	successMsg: 'Produkt został pomyślnie dodany.',
 	errorMsg: 'Popraw błędy w formularzu'
 });
 
-publisherService.register_function('updateSettings', {
+publisherService.registerFunction('updateSettings', {
 	url: '/api/me/settings/publisher/',
 	method: 'put',
 	successMsg: 'Ustawienia zostały pomyślnie zapisane.'

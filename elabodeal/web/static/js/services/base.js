@@ -25,7 +25,7 @@ Service.prototype.prepareURL = function (url, urlVariables, data) {
 };
 
 
-Service.prototype.register_function = function (name, config) {
+Service.prototype.registerFunction = function (functionName, config) {
     var { url, 
           method,
           urlVariables,
@@ -64,7 +64,7 @@ Service.prototype.register_function = function (name, config) {
 
     Object.defineProperty(
         this, 
-        name,
+        functionName,
         {
             writable: false,
             enumerable: false,
