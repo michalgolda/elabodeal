@@ -19,10 +19,13 @@ from .settings import (
 	ConfirmEmailChangeRequestInteractor
 )
 from .cart import (
-	SaveCartInteractor,
 	AddProductToCartInteractor,
 	RemoveProductFromCartInteractor,
 	SelectOrDeselectCartProductInteractor,
+)
+from .saved_carts import (
+	SaveCartInteractor,
+	ShareSavedCartInteractor
 )
 from .checkout_session import (
 	CreateCheckoutSessionInteractor,
