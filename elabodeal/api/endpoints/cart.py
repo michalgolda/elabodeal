@@ -92,31 +92,3 @@ class CartEndpoint(Endpoint):
 			},
 			status=200
 		)
-
-
-class SaveCartEndpoint(Endpoint):
-	def post(self, request):
-		user = request.user
-		session = request.session
-
-		serialized_request = SaveCartRequestSerializer(
-			data=request.data
-		)
-		serialized_request.is_valid(raise_exception=True)
-
-		cart_repo = CartRepository()
-		product_repo = ProductRepository()
-		cart_manager = CartSessionManager(session)
-
-		interactor = SaveCartInteractor(
-			cart_repo=cart_repo,
-			product_repo=product_repo,
-			cart_manager=cart_manager
-		)
-
-		interactor.execute(
-			user,
-			**serialized_request.validated_data
-		)
-
-		return self.respond(status=201)

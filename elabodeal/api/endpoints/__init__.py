@@ -14,9 +14,10 @@ from .settings import (
 	MeUpdatePublisherSettingsEndpoint,
 	MeConfirmEmailChangeRequestEndpoint
 )
-from .cart import (
-	CartEndpoint,
-	SaveCartEndpoint
+from .cart import CartEndpoint
+from .saved_carts import (
+	SavedCartsEndpoint,
+	ShareSavedCartEndpoint
 )
 from .checkout_session import (
 	CheckoutSessionEndpoint,
