@@ -41,6 +41,10 @@
 
         &__information {
             margin-right: .5rem;
+
+            & > strong {
+                color: $color-green;
+            }
         }
 
         &__action {
