@@ -1,12 +1,12 @@
+import uuid
 import random
 import string
 
 from django.db import models
-from django.shortcuts import reverse
 
 
 class SharedCartManager(models.Manager):
-	def create_share(self, cart: object) -> object:
+	def create_shared_cart(self, cart):
 		code = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 		shared_cart = self.model(
 			code=code,
@@ -17,16 +17,19 @@ class SharedCartManager(models.Manager):
 
 
 class SharedCart(models.Model):
-	code = models.CharField(max_length=6)
+	MAX_CODE_LENGTH = 6
+	MIN_CODE_LENGTH = 6
+
+	id = models.UUIDField(
+		primary_key=True,
+		default=uuid.uuid4,
+		editable=False
+	)	
 	cart = models.ForeignKey(
 		'elabodeal.Cart', 
 		on_delete=models.CASCADE
 	)
-
-	shared_at = models.DateTimeField(auto_now_add=True)
+	code = models.CharField(max_length=MAX_CODE_LENGTH)
+	created_at = models.DateTimeField(auto_now_add=True)
 
 	objects = SharedCartManager()
-
-	@property
-	def url(self):
-		return reverse('web:shared-cart-detail', args=[self.code])
