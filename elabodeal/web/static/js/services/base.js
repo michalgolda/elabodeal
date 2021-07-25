@@ -6,12 +6,31 @@ function Service (name) {
     this.name = name;
 }
 
+Service.prototype.prepareURL = function (url, urlVariables, data) {
+    urlVariables.map((urlVariableName) => {
+        const urlVariableValue = data.get(urlVariableName);
+
+        if (!urlVariableValue)
+            throw new Error(`data object does not contain a ${urlVariableName} field`);
+
+        const preparedURL = url.replace(`<${urlVariableName}>`, urlVariableValue);
+
+        if (!preparedURL)
+            throw new Error(`url string does not contain a ${urlVariableName} variable`);
+
+        url = preparedURL;
+    });
+
+    return url;
+};
+
+
 Service.prototype.register_function = function (name, config) {
     var { url, 
-          method, 
+          method,
+          urlVariables,
           successMsg, 
           errorMsg } = config;
-
 
     function serviceFunction (
         data,
@@ -22,6 +41,7 @@ Service.prototype.register_function = function (name, config) {
 
         successMsg = !hideDefaultSuccessMsg ? successMsg : null;
         errorMsg = !hideDefaultErrorMsg ? errorMsg : null;
+        url = urlVariables ? this.prepareURL(url, urlVariables, data) : url;
 
         return apiClient[method](url, data)
             .then(res => {
