@@ -3,13 +3,17 @@ from elabodeal.models import SharedCart
 
 
 class SharedCartRepository(Repository):
-    def get(self, id: int) -> SharedCart:
-        return SharedCart.objects.filter(id=id).first()
+    def add(self, cart):
+        return SharedCart.objects.create_share(cart)
 
-    def delete(self, shared_cart: SharedCart) -> None:
-        shared_cart.delete()
+    def get_all_by(self, *args, **kwargs):
+        return self._query_filter(*args, **kwargs).all()
 
-    def save(self, shared_cart: SharedCart) -> SharedCart:
-        shared_cart.save()
+    def get_one_by(self, *args, **kwargs):
+        return self._query_filter(*args, **kwargs).first()
 
-        return shared_cart
+    def delete_by(self, *args, **kwargs):
+        return any(self._query_filter(*args, **kwargs).delete())
+
+    def _query_filter(self, *args, **kwargs):
+        return Publisher.objects.filter(*args, **kwargs)

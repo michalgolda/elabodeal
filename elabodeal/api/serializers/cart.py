@@ -7,8 +7,3 @@ class UpdateCartRequestSerializer(serializers.Serializer):
 
 class AddProductToCartRequestSerializer(UpdateCartRequestSerializer):
 	clear = serializers.BooleanField(default=False)
-
-
-class SaveCartRequestSerializer(serializers.Serializer):
-	title = serializers.CharField(min_length=10)
-	description = serializers.CharField(max_length=200)
