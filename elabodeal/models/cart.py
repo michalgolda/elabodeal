@@ -25,3 +25,12 @@ class Cart(models.Model):
 	@property
 	def products_count(self):
 		return self.products.count()
+
+	@property
+	def total_price(self):
+		total_price = 0.00
+
+		for product in self.products.all():
+			total_price += float(product.price)
+
+		return '{0:.2f}'.format(round(total_price, 2))
