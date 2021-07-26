@@ -26,18 +26,9 @@ module.exports = {
 		path.resolve(STATIC_PATH, "js/pages/settings/index.js"),
 		path.resolve(STATIC_PATH, "styles/pages/settings.scss")
 	],
-	"cart~indexPage": [
+	"cartPage": [
 		path.resolve(STATIC_PATH, "js/pages/cart/index.js"),
-		path.resolve(STATIC_PATH, "styles/pages/cart/index.scss")
-	],
-	"cart~deliveryPage": [
-		path.resolve(STATIC_PATH, "styles/pages/cart/delivery.scss")
-	],
-	"cart~paymentPage": [
-		path.resolve(STATIC_PATH, "styles/pages/cart/payment.scss")
-	],
-	"cart~paymentSuccessPage": [
-		path.resolve(STATIC_PATH, "styles/pages/cart/payment-success.scss")
+		path.resolve(STATIC_PATH, "styles/pages/cart.scss")
 	],
 	"salesManager~indexPage": [
 		path.resolve(STATIC_PATH, "styles/pages/salesManager/index.scss")
