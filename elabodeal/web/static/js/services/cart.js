@@ -23,7 +23,7 @@ cartService.registerFunction('selectOrDeselectProduct', {
 
 
 cartService.registerFunction('save', {
-	url: '/api/carts/',
+	url: '/api/me/carts/',
 	method: 'post',
 	successMsg: 'Koszyk został pomyślnie zapisany.'
 });
