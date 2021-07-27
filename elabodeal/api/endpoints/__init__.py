@@ -16,8 +16,9 @@ from .settings import (
 )
 from .cart import CartEndpoint
 from .saved_carts import (
-	SavedCartsEndpoint,
-	ShareSavedCartEndpoint
+	MeSavedCartsEndpoint,
+	MeShareSavedCartEndpoint,
+	MeSavedCartsDetailsEndpoint
 )
 from .checkout_session import (
 	CheckoutSessionEndpoint,

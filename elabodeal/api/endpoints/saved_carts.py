@@ -1,7 +1,10 @@
+from rest_framework.exceptions import NotFound
+
 from elabodeal.api.endpoints import Endpoint
 from elabodeal.api.interactors import (
     SaveCartInteractor,
-    ShareSavedCartInteractor
+    ShareSavedCartInteractor,
+    DeleteSavedCartInteractor
 )
 from elabodeal.api.repositories import (
     CartRepository,
@@ -15,7 +18,7 @@ from elabodeal.api.serializers import (
 from elabodeal.utils import CartSessionManager
 
 
-class SavedCartsEndpoint(Endpoint):
+class MeSavedCartsEndpoint(Endpoint):
     def post(self, request):
         user = request.user
         session = request.session
@@ -42,7 +45,7 @@ class SavedCartsEndpoint(Endpoint):
         return self.respond(status=201)
 
 
-class ShareSavedCartEndpoint(Endpoint):
+class MeShareSavedCartEndpoint(Endpoint):
     def post(self, request, id):
         cart_repo = CartRepository()
         shared_cart_repo = SharedCartRepository()
@@ -59,3 +62,19 @@ class ShareSavedCartEndpoint(Endpoint):
             data=serialized_shared_cart.data,
             status=201
         )
+
+
+class MeSavedCartsDetailsEndpoint(Endpoint):
+    def delete(self, request, id = None):
+        user = request.user
+
+        cart_repo = CartRepository()
+
+        interactor = DeleteSavedCartInteractor(
+            cart_repo=cart_repo
+        )
+        deleted_cart = interactor.execute(user, id)
+
+        if not deleted_cart: raise NotFound
+
+        return self.respond(status=200)

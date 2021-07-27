@@ -2,13 +2,14 @@ from django.urls import path, include
 
 from elabodeal.api.endpoints import (
     CartEndpoint,
-    SavedCartsEndpoint,
+    MeSavedCartsEndpoint,
     MeProductsEndpoint,
-    ShareSavedCartEndpoint,
+    MeShareSavedCartEndpoint,
     CheckoutSessionEndpoint,
     MeChangePasswordEndpoint,
     MeProductsGroupsEndpoint,
     MeUpdateSettingsEndpoint,
+    MeSavedCartsDetailsEndpoint,
     MeProductsDetailsEndpoint,
     MeChangeEmailRequestEndpoint,
     SucceedCheckoutSessionEndpoint,
@@ -67,6 +68,21 @@ urlpatterns = [
                 'settings/publisher/',
                 MeUpdatePublisherSettingsEndpoint.as_view(),
                 name='me-publisher-update-settings'
+            ),
+            path(
+                'carts/',
+                MeSavedCartsEndpoint.as_view(),
+                name='me-saved-carts'
+            ),
+            path(
+                'carts/<uuid:id>/',
+                MeSavedCartsDetailsEndpoint.as_view(),
+                name='me-saved-cart-details'
+            ),
+            path(
+                'carts/<uuid:id>/share/',
+                MeShareSavedCartEndpoint.as_view(),
+                name='me-share-saved-cart'
             )
         ])
     ),
@@ -84,15 +100,5 @@ urlpatterns = [
         'checkout_session/succeed/',
         SucceedCheckoutSessionEndpoint.as_view(),
         name='checkout-session-succeed'
-    ),
-    path(
-        'carts/',
-        SavedCartsEndpoint.as_view(),
-        name='saved-carts'
-    ),
-    path(
-        'carts/<uuid:id>/share/',
-        ShareSavedCartEndpoint.as_view(),
-        name='share-saved-cart'
     )
 ]
