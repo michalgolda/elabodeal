@@ -12,6 +12,7 @@ class SharedCartManager(models.Manager):
 			code=code,
 			cart=cart
 		)
+		shared_cart.save()
 
 		return shared_cart
 
