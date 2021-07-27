@@ -3,12 +3,6 @@ from .base import BaseView, BaseAjaxView
 from .cart import (
     CartView,
     CartCheckoutView
-    # CartAddItemAction,
-    # CartDeleteItemAction,
-    # CartCheckoutDeliveryView, 
-    # CartCheckoutPaymentView,
-    # CartCheckoutPaymentAjaxView, 
-    # CartCheckoutPaymentSuccessView
 )
 from .salesmanager import (
     SalesManagerIndexView, 
@@ -24,3 +18,7 @@ from .product import ProductView
 from .search_results import SearchResultsView
 from .email_verification import EmailVerificationView
 from .purchased_products import PurchasedProductsView
+from .saved_carts import (
+    SavedCartsView,
+    SavedCartDetailsView
+)

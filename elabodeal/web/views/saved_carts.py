@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 
-from elabodeal.web.views import BaseView, BaseAjaxView
-from elabodeal.models import Cart, CartItem, Product, SharedCart
+from elabodeal.models import Cart, SharedCart
+from elabodeal.web.views import BaseView
 
 
 class SavedCartsView(BaseView):
@@ -9,32 +9,35 @@ class SavedCartsView(BaseView):
 
 	def get(self, request):
 		user = request.user
-
 		carts = Cart.objects.filter(user=user).all()
 
-		context = {'carts': carts}
+		context = { 'carts': carts }
+		
+		return self.respond('saved-carts.html', request, context)
 
-		return self.respond('saved_carts.html', request, context)
 
-
-class SavedCartShareAjaxView(BaseAjaxView):
+class SavedCartDetailsView(BaseView):
 	auth_required = True
 
-	def post(self, request):
-		cart_id = request.POST.get('cart_id')
+	def get(self, request, id):
+		user = request.user
+		existing_cart = Cart.objects.filter(user=user, id=id).first()
 
-		saved_cart = Cart.objects.filter(id=cart_id).first()
-		if not saved_cart or not cart_id:
-			return self.respond(message='BadRequest',
-								status=400)
+		if not existing_cart: return redirect('web:index')
 
-		shared_cart = SharedCart.objects.create_share(cart=saved_cart)
+		existing_cart_products = existing_cart.products.all()
+		exisitng_shared_cart = SharedCart.objects.filter(cart=existing_cart).first()
 
-		data = {'url': shared_cart.url}
+		serialized_existing_shared_cart = {
+			'code': exisitng_shared_cart.code
+		} if exisitng_shared_cart else None
 
-		return self.respond(message='Success',
-							data=data,
-							status=201)
+		context = {
+			'cart': existing_cart,
+			'products': existing_cart_products,
+			'application_data': {
+				'sc': serialized_existing_shared_cart
+			}
+		}
 
-
-		
+		return self.respond('saved-cart-details.html', request, context)
