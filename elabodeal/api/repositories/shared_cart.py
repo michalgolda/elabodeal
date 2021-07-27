@@ -4,7 +4,7 @@ from elabodeal.models import SharedCart
 
 class SharedCartRepository(Repository):
     def add(self, cart):
-        return SharedCart.objects.create_share(cart)
+        return SharedCart.objects.create_shared_cart(cart)
 
     def get_all_by(self, *args, **kwargs):
         return self._query_filter(*args, **kwargs).all()
@@ -16,4 +16,4 @@ class SharedCartRepository(Repository):
         return any(self._query_filter(*args, **kwargs).delete())
 
     def _query_filter(self, *args, **kwargs):
-        return Publisher.objects.filter(*args, **kwargs)
+        return SharedCart.objects.filter(*args, **kwargs)
