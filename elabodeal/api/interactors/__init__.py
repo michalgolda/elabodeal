@@ -25,7 +25,8 @@ from .cart import (
 )
 from .saved_carts import (
 	SaveCartInteractor,
-	ShareSavedCartInteractor
+	ShareSavedCartInteractor,
+	DeleteSavedCartInteractor
 )
 from .checkout_session import (
 	CreateCheckoutSessionInteractor,

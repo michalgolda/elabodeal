@@ -25,15 +25,21 @@ class SaveCartInteractor(Interactor):
 
 
 class ShareSavedCartInteractor(Interactor):
-    def __init__(self, shared_cart_repo, cart_repo):
-        self.cart_repo = cart_repo
-        self.shared_cart_repo = shared_cart_repo
+	def __init__(self, shared_cart_repo, cart_repo):
+		self.cart_repo = cart_repo
+		self.shared_cart_repo = shared_cart_repo
 
-    def execute(self, cart_id):
-        existing_cart = self.cart_repo.get_one_by(id=cart_id)
+	def execute(self, cart_id):
+		existing_cart = self.cart_repo.get_one_by(id=cart_id)
 
-        shared_cart = self.shared_cart_repo.add(existing_cart)
+		shared_cart = self.shared_cart_repo.add(existing_cart)
 
-        return shared_cart
+		return shared_cart
 
 
+class DeleteSavedCartInteractor(Interactor):
+	def __init__(self, cart_repo):
+		self.cart_repo = cart_repo
+
+	def execute(self, user, cart_id):
+		return self.cart_repo.delete_by(user=user, id=cart_id)
