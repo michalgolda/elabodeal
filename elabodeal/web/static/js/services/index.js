@@ -2,7 +2,7 @@ import cartService from './cart';
 import userService from './user';
 import publisherService from './publisher';
 import savedCartService from './savedCart';
-import checkoutSessionService from './checkout_session';
+import checkoutSessionService from './checkoutSession';
 
 
 export {
