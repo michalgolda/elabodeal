@@ -29,7 +29,7 @@ class SavedCartDetailsView(BaseView):
 		exisitng_shared_cart = SharedCart.objects.filter(cart=existing_cart).first()
 
 		serialized_existing_shared_cart = {
-			'code': exisitng_shared_cart.code
+			'sup': exisitng_shared_cart.share_url_path
 		} if exisitng_shared_cart else None
 
 		context = {

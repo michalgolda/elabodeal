@@ -3,6 +3,7 @@ from elabodeal.models import SharedCart
 
 
 class SharedCartSerializer(serializers.ModelSerializer):
+    share_url_path = serializers.ReadOnlyField()
 
     class Meta:
         model = SharedCart

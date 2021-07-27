@@ -3,6 +3,7 @@ import random
 import string
 
 from django.db import models
+from django.shortcuts import reverse
 
 
 class SharedCartManager(models.Manager):
@@ -34,3 +35,7 @@ class SharedCart(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 
 	objects = SharedCartManager()
+
+	@property
+	def share_url_path(self):
+		return reverse('web:shared-cart', args=[self.code])

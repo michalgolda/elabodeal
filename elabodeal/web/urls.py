@@ -71,5 +71,5 @@ urlpatterns = [
 		path('start/', SalesManagerStartView.as_view(), name='salesmanager-start'),
 		# path('product/<int:id>/', SalesManagerPreviewProductView.as_view(), name='salesmanager-preview-product')
 	])),
-	path('shc/<str:code>/', SharedCartView.as_view(), name='shared-cart-detail')
+	path('shared_cart/<str:code>/', SharedCartView.as_view(), name='shared-cart')
 ]

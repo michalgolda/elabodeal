@@ -6,15 +6,17 @@ from elabodeal.models import SharedCart
 
 class SharedCartView(BaseView):
 	def get(self, request, code):
-		shared_cart = SharedCart.objects.filter(code=code).first()
-		if not shared_cart:
-			return redirect('web:index')
+		existing_shared_cart = SharedCart.objects.filter(code=code).first()
+		
+		if not existing_shared_cart: return redirect('web:index')
 
-		shared_cart_items = shared_cart.cart.items.all()
+		existing_cart = existing_shared_cart.cart
+		existing_cart_products = existing_cart.products.all()
 
 		context = {
-			'cart': shared_cart.cart,
-			'cart_items': shared_cart_items,
-			'shared_cart': shared_cart}
+			'cart': existing_cart,
+			'products': existing_cart_products,
+			'shared_cart': existing_shared_cart
+		}
 
-		return self.respond('shared_cart.html', request, context)
+		return self.respond('shared-cart.html', request, context)

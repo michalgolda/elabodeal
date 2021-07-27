@@ -1,0 +1,107 @@
+.section {
+    margin-bottom: 1rem;
+
+    &__flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.cart-information {
+    width: 100%;
+    height: auto;
+
+    .top-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.cart-description {
+    width: 100%;
+    height: auto;
+    background-color: $color-white;
+    border: 1px solid $color-grey;
+    border-radius: 2px;
+    padding: 1rem;
+}
+
+.cart-items {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 148px;
+    margin-top: 1rem;
+    grid-row-gap: 1rem;
+}
+
+.product {
+    width: 100%;
+    height: 148px;
+    padding: 0.5rem;
+    display: grid;
+    grid-template-columns: 92.34px 1fr;
+    grid-column-gap: 0.5rem;
+    background-color: $color-white;
+    border: 1px solid $color-grey;
+    border-radius: 2px;
+
+    & > img {
+        border-radius: 2px;
+        height: 132px;
+        width: 100%;
+    }
+
+    &__details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__title {
+        font-weight: bold;
+        font-size: $font-size-medium;
+    }
+
+    &__price {
+        font-weight: bold;
+        font-size: $font-size-medium;
+        color: $color-green;
+        min-width: 90px;
+        padding-left: .5rem;
+    }
+
+    // &__delete {
+    //     color: $color-grey;
+    //     width: 16px;
+    //     height: 20px;
+
+    //     &:hover {
+    //         cursor: pointer;
+    //         color: $color-black;
+    //         @include transition-animation;
+    //     }
+    // }
+}
+
+.cart-details {
+    width: 100%;
+    height: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+
+    & > p {
+        font-weight: 600;
+        font-size: $font-size-medium;
+        color: $color-black;
+        float: left;
+        padding: 0.275rem 1rem 0.275rem;
+    }
+}
+
+.modal-btn {
+    margin-left: .5rem;
+}

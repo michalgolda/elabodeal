@@ -4,6 +4,9 @@ const path = require("path");
 const STATIC_PATH = path.resolve(__dirname, "elabodeal/web/static/");
 
 module.exports = {
+	"sharedCartPage": [
+		path.resolve(STATIC_PATH, "styles/pages/shared-cart.scss")
+	],
 	"savedCartDetailsPage": [
 		path.resolve(STATIC_PATH, "js/pages/savedCartDetails/index.js"),
 		path.resolve(STATIC_PATH, "styles/pages/saved-cart-details.scss")
