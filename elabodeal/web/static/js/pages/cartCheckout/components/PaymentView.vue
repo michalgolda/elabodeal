@@ -86,6 +86,10 @@
 						<label>Akceptuje politykę prywatnośći</label>
 					</div>
 				</div>
+				<img
+					width="120"
+					src="/static/images/stripe.png"
+				>
 				<button 
 					class="btn btn__primary btn-block"
 					type="submit"
