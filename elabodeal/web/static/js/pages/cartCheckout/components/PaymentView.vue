@@ -71,6 +71,12 @@
 					</div>
 				</div>
 				<div>
+					<div class="flex-center">
+						<img
+							width="120"
+							src="/static/images/stripe.png"
+						>
+					</div>
 					<div class="form__input-checkbox">
 						<input 
 							type="checkbox" 
@@ -86,10 +92,6 @@
 						<label>Akceptuje politykę prywatnośći</label>
 					</div>
 				</div>
-				<img
-					width="120"
-					src="/static/images/stripe.png"
-				>
 				<button 
 					class="btn btn__primary btn-block"
 					type="submit"
