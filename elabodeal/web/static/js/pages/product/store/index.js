@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import { cartModule } from './modules';
-import { cartService, checkoutSessionService } from '@/services';
+import { cartService } from '@/services';
 
 
 const store = createStore({
@@ -12,16 +12,11 @@ const store = createStore({
 		buyNowProduct (ctx, { productId }) {
 			const data = new FormData();
 
-			data.append('clear', true);
 			data.append('product_id', productId);
 
 			cartService.addProduct(data, {
 				successCallback: () => {
-					checkoutSessionService.createSession(null, {
-						successCallback: () => {
-							window.location = '/c/checkout/';
-						}
-					});
+					window.location = '/c/';
 				}
 			});
 		}

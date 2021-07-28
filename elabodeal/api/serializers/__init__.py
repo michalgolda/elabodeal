@@ -15,10 +15,7 @@ from .settings import (
 from .file import FileSerializer
 from .product_language import ProductLanguageSerializer
 from .product_premiere import ProductPremiereSerializer
-from .cart import (
-	UpdateCartRequestSerializer,
-	AddProductToCartRequestSerializer
-)
+from .cart import UpdateCartRequestSerializer
 from .shared_cart import SharedCartSerializer
 from .saved_carts import SaveCartRequestSerializer
 from .checkout_session import UpdateCheckoutSessionRequestSerializer

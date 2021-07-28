@@ -12,8 +12,7 @@ from elabodeal.api.interactors import (
 from elabodeal.api.serializers import (
 	ProductSerializer,
 	SaveCartRequestSerializer,
-	UpdateCartRequestSerializer,
-	AddProductToCartRequestSerializer
+	UpdateCartRequestSerializer
 )
 from elabodeal.utils import CartSessionManager
 
@@ -25,7 +24,7 @@ class CartEndpoint(Endpoint):
 	def post(self, request):
 		session = request.session
 
-		serialized_request = AddProductToCartRequestSerializer(
+		serialized_request = UpdateCartRequestSerializer(
 			data=request.data
 		)
 		serialized_request.is_valid(raise_exception=True)
