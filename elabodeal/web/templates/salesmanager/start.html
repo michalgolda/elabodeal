@@ -5,52 +5,18 @@
 
 {% block page-styles %}
 <link rel="preload" href="{% static 'dist/salesManager~startPage.css' %}" as="style">
-<link rel="stylesheet" href="{% static 'dist/salesmanager~startPage.css' %}">
+<link rel="stylesheet" href="{% static 'dist/salesManager~startPage.css' %}">
+{% endblock %}
+
+{% block page-scripts %}
+<link rel="preload" href="{% static 'dist/salesManager~startPage.js' %}" as="script">
+<script defer src="{% static 'dist/salesManager~startPage.js' %}"></script>
 {% endblock %}
 
 {% block body %}
-	{% include 'components/navigation.html' %}
-	<div class="wrapper">
-		<div class="section">
-			<div class="form-wrapper">
-				<form class="form" method="POST" action="{% url 'web:salesmanager-start' %}">
-					{% csrf_token %}
-
-					<p class="h2">Aby móc wystawić swojego ebooka na sprzedaż musisz wypełnić ponniższy formularz.</p>
-					<p class="h3">1. Dane do wypłaty</p>
-					<div>
-						<label>KRAJ</label>
-						{{ form.country }}
-					</div>
-					<div>
-						<label>SWIFT</label>
-						{{ form.swift }}
-					</div>
-					<div>
-						<label>NUMER RACHUNKU</label>
-						{{ form.account_number }}
-					</div>
-					<p class="h3">2. Dane sprzedającego</p>
-					<div class="form__section">
-						<div>
-							<label>IMIĘ</label>
-							{{ form.first_name }}
-						</div>
-						<div>
-							<label>NAZWISKO</label>
-							{{ form.last_name }}
-						</div>
-					</div>
-					<p class="h3">3. Powiadomienia</p>
-					<p class="form__information">Zmiana ustawień powiadomień możesz dokonać w ustawieniach.</p>
-					<div class="form__option">
-						{{ form.sell_notification }}
-						<p>Wyślij email z informacją o sprzedaży kopii książki</p>
-					</div>
-					<button class="btn btn__primary btn-block">Kontynuj</button>
-				</form>
-			</div>
-		</div>
-	</div>
-	{% include 'components/small-footer-light.html' %}
+{% include 'components/navigation.html' %}
+<div id="mount0_0">
+{% include 'components/loader.html' %}
+</div>
+{% include 'components/small-footer-light.html' %}
 {% endblock %}

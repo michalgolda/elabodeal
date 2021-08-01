@@ -37,6 +37,7 @@ module.exports = {
 		path.resolve(STATIC_PATH, "styles/pages/salesManager/index.scss")
 	],
 	"salesManager~startPage": [
+		path.resolve(STATIC_PATH, "js/pages/salesManager/start/index.js"),
 		path.resolve(STATIC_PATH, "styles/pages/salesManager/start.scss")
 	],
 	"salesManager~addProductPage": [

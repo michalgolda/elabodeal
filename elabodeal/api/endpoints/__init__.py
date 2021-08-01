@@ -24,3 +24,4 @@ from .checkout_session import (
 	CheckoutSessionEndpoint,
 	SucceedCheckoutSessionEndpoint
 )
+from .publisher import CreatePublisherEndpoint

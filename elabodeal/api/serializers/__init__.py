@@ -19,3 +19,4 @@ from .cart import UpdateCartRequestSerializer
 from .shared_cart import SharedCartSerializer
 from .saved_carts import SaveCartRequestSerializer
 from .checkout_session import UpdateCheckoutSessionRequestSerializer
+from .publisher import CreatePublisherRequestSerializer

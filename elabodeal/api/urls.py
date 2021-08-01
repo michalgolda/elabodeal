@@ -8,6 +8,7 @@ from elabodeal.api.endpoints import (
     CheckoutSessionEndpoint,
     MeChangePasswordEndpoint,
     MeProductsGroupsEndpoint,
+    CreatePublisherEndpoint,
     MeUpdateSettingsEndpoint,
     MeSavedCartsDetailsEndpoint,
     MeProductsDetailsEndpoint,
@@ -100,5 +101,10 @@ urlpatterns = [
         'checkout_session/succeed/',
         SucceedCheckoutSessionEndpoint.as_view(),
         name='checkout-session-succeed'
+    ),
+    path(
+        'publisher_application/',
+        CreatePublisherEndpoint.as_view(),
+        name='publisher-application'
     )
 ]

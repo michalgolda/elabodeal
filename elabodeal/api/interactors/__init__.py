@@ -34,3 +34,4 @@ from .checkout_session import (
 	RemoveCheckoutSessionInteractor,
 	SucceedCheckoutSessionInteractor
 )
+from .publisher import CreatePublisherInteractor

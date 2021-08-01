@@ -33,4 +33,10 @@ userService.registerFunction('changePassword', {
 });
 
 
+userService.registerFunction('createPublisher', {
+	url: '/api/publisher_application/',
+	method: 'post'
+});
+
+
 export default userService;

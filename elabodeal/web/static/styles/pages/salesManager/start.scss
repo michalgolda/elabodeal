@@ -1,43 +1,74 @@
-.form-wrapper {
-    height: auto;
-    max-width: 400px;
-    margin: 2rem auto;
-}
+.chooser {
+    min-height: calc(100vh - 120px);
 
-.form {
-    width: 100%;
-    height: auto;
-    display: grid;
-    grid-template-columns: auto;
-    grid-row-gap: 1rem;
-    
-    
-    &__section {
+    .wrapper {
+        padding: 0;
+        min-height: auto;
+    }
+
+    &__title {
+        color: $color-green;
+    }
+
+    &__description {
+        margin-bottom: 1rem;
+        font-size: $font-size-medium;
+    }
+
+    &__optionList {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 1rem;
-    }
-
-    &__information {
-        font-size: $font-size-small;
-        font-weight: 500;
-        color: $color-grey;
-    }
-
-    &__error {
-        color: $color-red;
-        font-size: $font-size-small;
+        grid-template-columns: 256px 256px;
+        column-gap: 1rem;
     }
 
     &__option {
-        display: flex;
-        justify-content: left;
-        align-items: center;
+        width: 256px;
+        height: 256px;
+        padding: .5rem;
+        border-radius: 2px;
+        background-color: white;
+        border: 1px solid $color-grey;
+        text-align: center;
 
-        & > p {
-            padding-left: 1rem;
-            font-weight: 500;
-            font-size: $font-size-small;
+        & > div > i {
+            font-size: 7rem;
+            color: $color-orange;
         }
+
+        & > div > p {
+            font-weight: bold;
+            font-size: $font-size-medium;
+            margin-top: .5rem;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: $color-orange;
+
+            & > div > i {
+                color: white;
+            }
+
+            & > div > p {
+                color: white;
+            }
+        }
+    }
+}
+
+.form {
+    margin: 0 auto;
+    max-width: 512px;
+
+    &__group {
+        &-col-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: .5rem;
+        }
+    }
+
+    &__inputContainer {
+        margin-bottom: .5rem;;
     }
 }
