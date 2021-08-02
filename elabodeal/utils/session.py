@@ -99,7 +99,7 @@ class CartSessionManager:
         product_in_cart = bool(
             list(
                 filter(
-                    lambda product: product == product_id,
+                    lambda product: product.id == product_id,
                     self._products
                 )
             )
