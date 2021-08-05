@@ -3,6 +3,10 @@
 {% block title-description %}Zaloguj się{% endblock %}
 
 {% block form %}
+<div class="links">
+	<a class="links__link links__link-current" href="{% url 'web:login' %}">Zaloguj się</a>
+	<a class="links__link" href="{% url 'web:register' %}">Zarejestruj się</a>
+</div>
 <form class="form" method="POST" action="/zaloguj/" autocomplete="off">
 	{% if form.errors %}
 		{% for error in form.email.errors %}

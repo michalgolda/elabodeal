@@ -11,6 +11,25 @@
         padding: 1rem;
         background-color: $color-white;
 
+        .links {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0 2rem 0;
+            text-transform: uppercase;
+            justify-content: space-between;
+
+            &__link {
+                color: $color-grey;
+
+                &-current {
+                    font-weight: bold;
+                    color: $color-orange;
+                    padding-bottom: .25rem;
+                    border-bottom: 2px solid $color-green;
+                }
+            }
+        }
+
         .form-container {
             max-width: 300px;
             min-width: 300px;
@@ -24,7 +43,6 @@
             .form {
                 width: 100%;
                 height: auto;
-                margin-top: 2rem;
 
                 &__section {
                     margin-top: 1rem;
