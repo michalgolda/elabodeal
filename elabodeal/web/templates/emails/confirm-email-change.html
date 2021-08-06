@@ -1,0 +1,47 @@
+{% extends './base.html' %}
+
+{% block styles %}
+<style>
+	.body__content {
+		text-align: center;
+	}
+
+	.body__title {
+		font-size: 1.5rem;
+		margin-bottom: 1.5rem ;
+	}
+	
+	.body__code {
+		font-size: 3.5rem;
+		font-weight: bold;
+	}
+
+	.body__expireCodeInformation {
+		font-weight: 400;
+		font-size: .8rem;
+		margin-top: 0.5rem;
+		margin-bottom: 1.5rem;
+		text-transform: uppercase;
+	}
+	
+	.body__btn {
+		color: white;
+		display: block;
+		margin: 0 auto;
+		border-radius: 2px;
+		text-decoration: none;
+		max-width: fit-content;
+		background-color: #2EC4B6;
+		padding: .5rem 1rem .5rem 1rem;
+	}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="body__content">
+	<p class="body__title">Zweryfikuj swój nowy adres email</p>
+	<p class="body__code">{{ code }}</p>
+	<p class="body__expireCodeInformation">Kod jest ważny przez 1 godzinę</p>
+	<a class="body__btn" href="#">Kliknij, aby zweryfikować </a>
+</div>
+{% endblock %}

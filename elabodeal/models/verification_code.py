@@ -7,7 +7,7 @@ from django.utils import timezone
 
 
 class VerificationCodeManager(models.Manager):
-	def create_code(self, email, expires = 3600):
+	def create_code(self, email, expires = 3600 * 60 * 60):
 		current_datetime = timezone.now()
 		code_length = self.model.MAX_CODE_LENGTH
 

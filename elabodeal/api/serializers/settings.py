@@ -80,7 +80,7 @@ class ConfirmEmailChangeRequestSerializer(serializers.Serializer):
 
 		current_datetime = timezone.now()
 
-		existing_code = VerificationCode.objects.filter(email=email).first()
+		existing_code = VerificationCode.objects.filter(email=email).last()
 
 		if not existing_code:
 			raise serializers.ValidationError({

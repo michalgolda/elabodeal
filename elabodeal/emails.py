@@ -19,9 +19,9 @@ class EmailDTO:
         }
 
 
-class ChangeEmailRequestEmailDTO(EmailDTO):
+class ConfirmEmailChangeEmailDTO(EmailDTO):
     subject = 'Elabodeal - Kod weryfikacyjny'
-    template = 'emails/confirm-change-email.html'
+    template = 'emails/confirm-email-change.html'
 
 
 class ConfirmNewUserEmail(EmailDTO):

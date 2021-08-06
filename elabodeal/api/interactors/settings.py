@@ -1,6 +1,6 @@
 from elabodeal.celery.tasks import send_email
 from elabodeal.api.interactors import Interactor
-from elabodeal.emails import ChangeEmailRequestEmailDTO
+from elabodeal.emails import ConfirmEmailChangeEmailDTO
 
 
 def update_model_attrs(model, attrs):
@@ -51,11 +51,13 @@ class ChangeEmailRequestInteractor(Interactor):
 	def execute(self, email):
 		verification_code = self.verification_code_repo.add(email=email)
 
-		email_dto = ChangeEmailRequestEmailDTO(
+		email_context = {
+			'code': verification_code.code
+		}
+
+		email_dto = ConfirmEmailChangeEmailDTO(
 			to=email,
-			context=dict(
-				code=verification_code.code
-			)
+			context=email_context
 		)
 
 		serialized_email_dto = email_dto.asdict()
