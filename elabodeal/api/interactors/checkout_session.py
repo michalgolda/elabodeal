@@ -1,5 +1,8 @@
 import uuid
+
+from elabodeal.celery.tasks import send_email
 from elabodeal.api.interactors import Interactor
+from elabodeal.emails import PurchaseConfirmationEmailDTO
 
 
 class CreateCheckoutSessionInteractor(Interactor):
@@ -59,6 +62,47 @@ class RemoveCheckoutSessionInteractor(Interactor):
 
 
 class SucceedCheckoutSessionInteractor(Interactor):
-	def execute(self, session):
+	def __init__(self, cart_manager, product_repo):
+		self.product_repo = product_repo
+		self.cart_manager = cart_manager
+
+	def execute(self, user, session):
+		checkout_session = session['checkout_session']
+		checkout_session_delivery = checkout_session['delivery']
+
+		buyer_email = checkout_session_delivery['email']
+		buyer_first_name = checkout_session_delivery['first_name']
+		total_price = self.cart_manager.total_price_of_selected_products
+
+		purchased_products = []
+		cart_products = self.cart_manager.selected_products
+
+		for cart_product in cart_products:
+			cart_product_id = cart_product.id
+
+			product = self.product_repo.get_one_by(id=cart_product_id)
+
+			purchased_products.append({
+				'title': product.title,
+				'price': float(product.price),
+				'author': product.author,
+				'cover_img_path': product.cover_img.path
+			})
+
+		email_context = {
+			'total_price': total_price,
+			'buyer_first_name': buyer_first_name,
+			'purchased_products': purchased_products,
+			'userIsAuthenticated': user.is_authenticated
+		}
+
+		email_dto = PurchaseConfirmationEmailDTO(
+			to=buyer_email,
+			context=email_context
+		)
+		send_email.delay(
+			serialized_email_dto=email_dto.asdict()
+		)
+
 		del session['cart']
 		del session['checkout_session']

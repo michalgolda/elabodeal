@@ -1,0 +1,140 @@
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', 'sans-serif';
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .header {
+            background-color: #FF9F1C;
+        }
+
+        .header__text {
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0 2.5rem 0;
+        }
+
+        .body {
+            background-color: #F9F7F7;
+        }
+
+        .body__container {
+            margin: 1.5rem;
+            border-radius: 2px;
+            background-color: white;
+            border: 1px solid #E5E5E5;
+            padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+        }
+
+        .footer {
+            background-color: #2EC4B6;
+        }
+
+        .footer__body {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            padding: 2.5rem 1.5rem 2.5rem 1.5rem;
+        }
+
+        .footer__informations h3 {
+            color: white;
+        }
+
+        .footer__informations p {
+            color: #E5E5E5;
+            margin-top: 1rem;
+            font-size: .9rem;
+        }
+
+        .footer__informations a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .footer__links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .footer__links a {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            color: #2EC4B6;
+            font-size: 2rem;
+            margin-left: 1rem;
+            border-radius: 2px;
+            align-items: center;
+            text-decoration: none;
+            justify-content: center;
+            background-color: white;
+        }
+    </style>
+
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <table>
+        <thead class="header">
+            <tr>
+                <td>
+                    <h1 class="header__text">eLiberly</h1>
+                </td>
+            </tr>
+        </thead>
+        <tbody class="body">
+            <tr>
+                <td>
+                    <div class="body__container">
+                        {% block body %}{% endblock %}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot class="footer">
+            <tr>
+                <td class="footer__body">
+                    <div class="footer__informations">
+                        <h3>eLiberly</h3>
+                        <p>
+                            Tsukamoto Sogyo Building, Basement 1st Floor,
+                            2-15, Ginza 4-chome, Chuo-ku, Tokyo, Japan
+                        </p>
+                        <p>
+                            Wiadomość wygenerowana automatycznie,
+                            prosimy na nią nie odpowiadać.
+                            <a href="#">Regulamin</a>
+                        </p>
+                        <p>
+                            Administratorem danych osobowych jest nazwa firmy.
+                            Więcej informacji na
+                            <a href="#">eliberly.com</a>
+                        </p>
+                    </div>
+                    <div class="footer__links">
+                        <a href="#"><span>I</span></a>
+                        <a href="#"><span>F</span></a>
+                        <a href="#"><span>T</span></a>
+                        <a href="#"><span>Y</span></a>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</body>

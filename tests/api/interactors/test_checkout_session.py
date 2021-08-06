@@ -1,6 +1,9 @@
 from unittest import mock
 from tests import BaseTestCase
 
+from django.core import mail
+from django.test import override_settings
+
 from elabodeal.api.interactors import (
     CreateCheckoutSessionInteractor,
 	UpdateCheckoutSessionInteractor,
@@ -99,4 +102,64 @@ class RemoveCheckoutSessionInteractorTest(BaseTestCase):
 
 
 class SucceedCheckoutSessionInteractorTest(BaseTestCase):
-	pass
+	
+	@mock.patch('elabodeal.utils.CartSessionManager')
+	@mock.patch('elabodeal.api.repositories.ProductRepository')
+	def setUp(self, mock_cart_manager, mock_product_repo):
+		self.mock_product_repo = mock_product_repo
+		self.mock_cart_manager = mock_cart_manager
+
+		self.mock_user = mock.MagicMock(
+			id=1,
+			is_authenticated=True
+		)
+		self.mock_product = mock.MagicMock(
+			id=1,
+			title='test',
+			author='test',
+			price=20.00,
+			cover_img=mock.MagicMock(
+				path='test'
+			)
+		)
+
+		self.mock_session = {
+			'cart': {},
+			'checkout_session': {
+				'delivery': {
+					'email': 'test@test.pl',
+					'first_name': 'test'
+				}
+			}
+		}
+
+		type(self.mock_cart_manager).total_price_of_selected_products = mock.PropertyMock(
+			return_value=2
+		)
+		type(self.mock_cart_manager).selected_products = mock.PropertyMock(
+			return_value=[self.mock_product]
+		)
+
+		self.mock_product_repo.get_one_by.return_value = self.mock_product
+
+		mail.outbox = []
+
+	@override_settings(
+		task_always_eager=True,
+		EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend'
+	)
+	def test_execute(self):
+		interactor = SucceedCheckoutSessionInteractor(
+			product_repo=self.mock_product_repo,
+			cart_manager=self.mock_cart_manager
+		)
+		interactor.execute(
+			user=self.mock_user,
+			session=self.mock_session
+		)
+
+		self.mock_product_repo.get_one_by.assert_called_once_with(
+			id=self.mock_product.id
+		)
+
+		self.assertEqual(len(mail.outbox), 1)

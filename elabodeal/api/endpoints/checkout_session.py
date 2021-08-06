@@ -8,12 +8,12 @@ from elabodeal.api.interactors import (
 )
 from elabodeal.api.endpoints import Endpoint
 from elabodeal.api.services import StripePaymentService
+from elabodeal.api.repositories import ProductRepository
 from elabodeal.api.serializers import UpdateCheckoutSessionRequestSerializer
 
 
 class CheckoutSessionEndpoint(Endpoint):
 	permission_classes = []
-	authentication_classes = []
 
 	def post(self, request):
 		session = request.session
@@ -66,12 +66,21 @@ class CheckoutSessionEndpoint(Endpoint):
 
 class SucceedCheckoutSessionEndpoint(Endpoint):
 	permission_classes = []
-	authentication_classes = []
 	
 	def post(self, request):
+		user = request.user
 		session = request.session
 
-		interactor = SucceedCheckoutSessionInteractor()
-		interactor.execute(session)
+		product_repo = ProductRepository()
+		cart_manager = CartSessionManager(session)
+
+		interactor = SucceedCheckoutSessionInteractor(
+			product_repo=product_repo,
+			cart_manager=cart_manager
+		)
+		interactor.execute(
+			user,
+			session
+		)
 
 		return self.respond(status=200)

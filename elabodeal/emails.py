@@ -27,3 +27,8 @@ class ChangeEmailRequestEmailDTO(EmailDTO):
 class ConfirmNewUserEmail(EmailDTO):
     subject = 'Elabodeal - Potwierdzenie rejestracji'
     template = 'emails/confirm-new-user.html'
+
+
+class PurchaseConfirmationEmailDTO(EmailDTO):
+    subject = 'Elabodeal - Potwierdzenie płatnośći'
+    template = 'emails/purchase-confirmation.html'
