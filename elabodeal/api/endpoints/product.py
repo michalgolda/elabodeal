@@ -43,13 +43,13 @@ class MeProductsEndpoint(Endpoint):
 		)
 
 	def post(self, request):
-		publisher = request.user.publisher
-
 		serialized_request = CreateProductRequestSerializer(
 			data=request.data
 		)
 		serialized_request.is_valid(raise_exception=True)
 
+		user = request.user
+		publisher = user.publisher
 
 		file_repo = FileRepository()
 		category_repo = CategoryRepository()
@@ -67,6 +67,7 @@ class MeProductsEndpoint(Endpoint):
 			product_premiere_repo=product_premiere_repo
 		)
 		created_product = interactor.execute(
+			user,
 			publisher,
 			**serialized_request.validated_data
 		)

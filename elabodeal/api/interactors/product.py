@@ -1,5 +1,7 @@
+from elabodeal.celery.tasks import send_email
 from elabodeal.api.interactors import Interactor
 from elabodeal.api.exceptions import ResourceDoesNotExists
+from elabodeal.emails import PublishedProductInformationEmailDTO
 
 
 class BaseProductInteractor(Interactor):
@@ -39,7 +41,7 @@ class CreateProductInteractor(BaseProductInteractor):
 		self.product_premiere_repo = product_premiere_repo
 
 	def execute(
-		self, publisher, product_group_id,
+		self, user, publisher, product_group_id,
 		category_id, product_language_id, 
 		title, description, contents, 
 		author, isbn, price, age_category, 
@@ -90,7 +92,7 @@ class CreateProductInteractor(BaseProductInteractor):
 				datetime=premiere_datetime
 			)
 
-		return self.product_repo.add(
+		created_product = self.product_repo.add(
 			publisher=publisher,
 			group=existing_product_group,
 			category=existing_category,
@@ -110,6 +112,26 @@ class CreateProductInteractor(BaseProductInteractor):
 			other_images=uploaded_other_images,
 			premiere=premiere
 		)
+
+		email_context = {
+			'product': {
+				'title': title,
+				'price': price,
+				'author': author,
+				'cover_img_path': created_product.cover_img.path
+			}
+		}
+
+		email_dto = PublishedProductInformationEmailDTO(
+			to=user.email,
+			context=email_context
+		)
+
+		serialized_email_dto = email_dto.asdict()
+
+		send_email.delay(serialized_email_dto)
+
+		return created_product
 
 
 class DeleteProductInteractor(BaseProductInteractor):

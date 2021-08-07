@@ -1,0 +1,129 @@
+{% extends './base.html' %}
+
+{% block styles %}
+<style>
+    .body__title {
+        font-size: 2.5rem;
+    }
+
+    .body__subtitle {
+        color: #777;
+        margin-top: .5rem;
+        font-size: 1.2rem;
+    }
+
+    .body__products {
+        display: grid;
+        row-gap: .5rem;
+        margin-top: 1.5rem;
+        grid-template-rows: auto;
+    }
+
+    .product {
+        width: 100%;
+        height: auto;
+        padding: .5rem;
+        display: flex;
+        border-radius: 2px;
+        align-items: center;
+        border: 1px solid #E5E5E5;
+        justify-content: space-between;
+    }
+
+    .product__details {
+        display: flex;
+        align-items: center;
+    }
+
+    .product__cover {
+        width: 80px;
+        height: 120px;
+        margin-right: .5rem;
+        background-color: #777;
+    }
+
+    .product__title {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .product__author {
+        font-size: 1.2rem;
+    }
+
+    .product__price {
+        color: #2EC4B6;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .body__greeting {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+
+    .body__greeting p {
+        color: #777;
+        font-size: 1.2rem;
+    }
+
+    .body__greeting a {
+        display: block;
+        color: white;
+        margin: 0 auto;
+        margin-top: .5rem;
+        border-radius: 2px;
+        text-decoration: none;
+        max-width: fit-content;
+        background-color: #2EC4B6;
+        padding: .5rem 1rem .5rem 1rem;
+    }
+
+    .body__informations {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+
+    .body__informations p {
+        color: #777;
+        font-size: 1.2rem;
+    }
+
+    .body__informations a {
+        color: white;
+        display: block;
+        max-width: 256px;
+        border-radius: 2px;
+        margin: .5rem auto;
+        text-decoration: none;
+        background-color: #FF9F1C;
+        padding: .5rem 1rem .5rem 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<p class="body__title">Produkt został dodany na rynek!</p>
+<p class="body__subtitle">Twój produkt właśnie trafił do sprzedaży.</p>
+<div class="body__products">
+    <div class="product">
+        <div class="product__details">
+            <img class="product__cover" src="http://localhost:8000{{ product.cover_img_path }}" alt="{{ product.title }}">
+            <div>
+                <p class="product__title">{{ product.title }}</p>
+                <p class="product__author">{{ product.author }}</p>
+            </div>
+        </div>
+        <p class="product__price">{{ product.price }} PLN</p>
+    </div>
+<div>
+<div class="body__greeting">
+    <p>Zarządzaj swoimi produktami</p>
+    <a href="#">Odwiedź menedzer sprzedaży</a>
+</div>
+<div class="body__informations">
+    <p>Możesz również obserwować statystyki sprzedaży</p>
+    <a href="{% url 'web:register' %}">Odwiedź statystyki</a>
+</div>
+</div>
+{% endblock %}

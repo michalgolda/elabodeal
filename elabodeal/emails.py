@@ -32,3 +32,8 @@ class ConfirmNewUserEmail(EmailDTO):
 class PurchaseConfirmationEmailDTO(EmailDTO):
     subject = 'Elabodeal - Potwierdzenie płatnośći'
     template = 'emails/purchase-confirmation.html'
+
+
+class PublishedProductInformationEmailDTO(EmailDTO):
+    subject = 'Elabodeal - Wystawienie produktu na rynek'
+    template = 'emails/published-product-information.html'
