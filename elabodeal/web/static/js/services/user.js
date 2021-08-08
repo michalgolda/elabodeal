@@ -39,4 +39,17 @@ userService.registerFunction('createPublisher', {
 });
 
 
+userService.registerFunction('registerConfirmation', {
+	url: '/api/confirm/',
+	method: 'post'
+});
+
+
+userService.registerFunction('resendRegisterConfirmation', {
+	url: '/api/confirm/resend/',
+	method: 'post',
+	successMsg: 'Nowy kod aktywacyjny został wysłany.'
+});
+
+
 export default userService;

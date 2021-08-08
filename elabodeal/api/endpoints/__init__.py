@@ -25,3 +25,7 @@ from .checkout_session import (
 	SucceedCheckoutSessionEndpoint
 )
 from .publisher import CreatePublisherEndpoint
+from .user_register_confirmation import (
+	UserRegisterConfirmationEndpoint,
+	ResendUserRegisterConfirmationEndpoint
+)

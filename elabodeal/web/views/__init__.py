@@ -4,6 +4,10 @@ from .cart import (
     CartView,
     CartCheckoutView
 )
+from .saved_carts import (
+    SavedCartsView,
+    SavedCartDetailsView
+)
 from .salesmanager import (
     SalesManagerIndexView, 
     SalesManagerStartView,
@@ -11,14 +15,10 @@ from .salesmanager import (
 )
 from .index import IndexView
 from .logout import LogoutView
+from .product import ProductView
 from .settings import SettingsView
 from .shared_cart import SharedCartView
 from .auth import LoginView, RegisterView
-from .product import ProductView
 from .search_results import SearchResultsView
-from .email_verification import EmailVerificationView
 from .purchased_products import PurchasedProductsView
-from .saved_carts import (
-    SavedCartsView,
-    SavedCartDetailsView
-)
+from .user_register_confirmation import UserRegisterConfirmationView

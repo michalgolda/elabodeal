@@ -2,21 +2,23 @@ from django.urls import path, include
 
 from elabodeal.api.endpoints import (
     CartEndpoint,
-    MeSavedCartsEndpoint,
     MeProductsEndpoint,
-    MeShareSavedCartEndpoint,
+    MeSavedCartsEndpoint,
+    CreatePublisherEndpoint,
     CheckoutSessionEndpoint,
+    MeShareSavedCartEndpoint,
     MeChangePasswordEndpoint,
     MeProductsGroupsEndpoint,
-    CreatePublisherEndpoint,
     MeUpdateSettingsEndpoint,
     MeSavedCartsDetailsEndpoint,
     MeProductsDetailsEndpoint,
     MeChangeEmailRequestEndpoint,
     SucceedCheckoutSessionEndpoint,
     MeProductsGroupsDetailsEndpoint,
+    UserRegisterConfirmationEndpoint,
     MeUpdatePublisherSettingsEndpoint,
     MeConfirmEmailChangeRequestEndpoint,
+    ResendUserRegisterConfirmationEndpoint
 )
 
 app_name = 'api'
@@ -106,5 +108,15 @@ urlpatterns = [
         'publisher_application/',
         CreatePublisherEndpoint.as_view(),
         name='publisher-application'
+    ),
+    path(
+        'confirm/',
+        UserRegisterConfirmationEndpoint.as_view(),
+        name='user-register-confirmation'
+    ),
+    path(
+        'confirm/resend/',
+        ResendUserRegisterConfirmationEndpoint.as_view(),
+        name='resend-user-register-confirmation'
     )
 ]

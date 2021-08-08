@@ -35,3 +35,7 @@ from .checkout_session import (
 	SucceedCheckoutSessionInteractor
 )
 from .publisher import CreatePublisherInteractor
+from .user_register_confirmation import (
+	UserRegisterConfirmationInteractor,
+	ResendUserRegisterConfirmationInteractor
+)

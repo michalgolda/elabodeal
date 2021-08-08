@@ -1,0 +1,18 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section {
+    max-width: 512px;
+    text-align: center;
+}
+
+.code {
+    margin-top: 1.5rem;
+}
+
+strong {
+    color: $color-orange;
+}

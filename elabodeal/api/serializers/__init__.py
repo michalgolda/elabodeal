@@ -1,5 +1,3 @@
-from .confirm_email import ConfirmEmailRequestSerializer
-from .resend_confirm_email import ResendConfirmEmailRequestSerializer
 from .product_group import ProductGroupSerializer
 from .product import (
 	ProductSerializer,
@@ -20,3 +18,4 @@ from .shared_cart import SharedCartSerializer
 from .saved_carts import SaveCartRequestSerializer
 from .checkout_session import UpdateCheckoutSessionRequestSerializer
 from .publisher import CreatePublisherRequestSerializer
+from .user_register_confirmation import ResendUserRegisterConfirmationRequestSerializer

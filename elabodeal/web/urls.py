@@ -15,8 +15,8 @@ from elabodeal.web.views import (
 	SalesManagerStartView,
 	SalesManagerIndexView, 
 	PurchasedProductsView,
-    EmailVerificationView, 
 	SalesManagerAddProductView,
+    UserRegisterConfirmationView
 )
 
 app_name = 'web'
@@ -24,9 +24,9 @@ app_name = 'web'
 urlpatterns = [
 	path('', IndexView.as_view(), name='index'),
 	path('p/<uuid:id>/', ProductView.as_view(), name='product'),
-	path('zaloguj/', LoginView.as_view(), name='login'),
-	path('zarejestruj/', RegisterView.as_view(), name='register'),
-	path('weryfikacja/', EmailVerificationView.as_view(), name='email-verification'),
+	path('login/', LoginView.as_view(), name='login'),
+	path('register/', RegisterView.as_view(), name='register'),
+	path('confirm/', UserRegisterConfirmationView.as_view(), name='user-register-confirmation'),
 	path('wyloguj/', LogoutView.as_view(), name='logout'),
 	path('s/', SearchResultsView.as_view(), name='search-results'),
 	path('purchased_products/', PurchasedProductsView.as_view(), name='purchased-products'),
