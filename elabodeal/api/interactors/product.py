@@ -1,7 +1,6 @@
-from elabodeal.celery.tasks import send_email
 from elabodeal.api.interactors import Interactor
 from elabodeal.api.exceptions import ResourceDoesNotExists
-from elabodeal.emails import PublishedProductInformationEmailDTO
+from elabodeal.emails import PublishedProductInformationEmail
 
 
 class BaseProductInteractor(Interactor):
@@ -113,23 +112,16 @@ class CreateProductInteractor(BaseProductInteractor):
 			premiere=premiere
 		)
 
-		email_context = {
-			'product': {
+		published_product_information_email = PublishedProductInformationEmail(
+			to=user.email,
+			template_context={
 				'title': title,
 				'price': price,
 				'author': author,
 				'cover_img_path': created_product.cover_img.path
 			}
-		}
-
-		email_dto = PublishedProductInformationEmailDTO(
-			to=user.email,
-			context=email_context
 		)
-
-		serialized_email_dto = email_dto.asdict()
-
-		send_email.delay(serialized_email_dto)
+		published_product_information_email.send()
 
 		return created_product
 

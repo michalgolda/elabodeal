@@ -1,8 +1,7 @@
 import uuid
 
-from elabodeal.celery.tasks import send_email
 from elabodeal.api.interactors import Interactor
-from elabodeal.emails import PurchaseConfirmationEmailDTO
+from elabodeal.emails import PurchaseConfirmationEmail
 
 
 class CreateCheckoutSessionInteractor(Interactor):
@@ -93,21 +92,16 @@ class SucceedCheckoutSessionInteractor(Interactor):
 				'cover_img_path': product.cover_img.path
 			})
 
-		email_template_context = {
-			'total_price': total_price,
-			'buyer_first_name': buyer_first_name,
-			'purchased_products': purchased_products,
-			'userIsAuthenticated': user.is_authenticated
-		}
-
-		email_dto = PurchaseConfirmationEmailDTO(
+		purchased_confirmation_email = PurchaseConfirmationEmail(
 			to=buyer_email,
-			context=email_template_context
+			template_context={
+				'total_price': total_price,
+				'buyer_first_name': buyer_first_name,
+				'purchased_products': purchased_products,
+				'userIsAuthenticated': user.is_authenticated
+			}
 		)
-
-		serialized_email_dto = email_dto.asdict()
-
-		send_email.delay(serialized_email_dto)
+		purchased_confirmation_email.send()
 
 		del session['cart']
 		del session['checkout_session']
