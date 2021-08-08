@@ -83,7 +83,8 @@ class SucceedCheckoutSessionInteractor(Interactor):
 
 			product = self.product_repo.get_one_by(id=cart_product_id)
 
-			self.purchased_product_repo.add(user=user, product=product)
+			if user.is_authenticated:
+				self.purchased_product_repo.add(user=user, product=product)
 
 			purchased_products.append({
 				'title': product.title,
