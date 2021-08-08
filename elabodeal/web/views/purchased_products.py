@@ -11,4 +11,4 @@ class PurchasedProductsView(BaseView):
 
 		context = {'purchased_products': purchased_products}
 
-		return self.respond('purchased_products.html', request, context)
+		return self.respond('purchased-products.html', request, context)

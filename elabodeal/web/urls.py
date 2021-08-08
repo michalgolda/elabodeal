@@ -29,7 +29,7 @@ urlpatterns = [
 	path('weryfikacja/', EmailVerificationView.as_view(), name='email-verification'),
 	path('wyloguj/', LogoutView.as_view(), name='logout'),
 	path('s/', SearchResultsView.as_view(), name='search-results'),
-	path('mp/', PurchasedProductsView.as_view(), name='purchased-products'),
+	path('purchased_products/', PurchasedProductsView.as_view(), name='purchased-products'),
 	path('settings/', SettingsView.as_view(), name='settings'),
 	path('c/', include([
 		path('', CartView.as_view(), name='cart'),
