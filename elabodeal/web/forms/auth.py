@@ -1,8 +1,8 @@
 from django import forms
 
-from elabodeal.models import User, VerificationCode
-from elabodeal.emails import ConfirmNewUserEmail
 from elabodeal.celery.tasks import send_email
+from elabodeal.models import User, VerificationCode
+from elabodeal.emails import UserRegisterConfirmationEmailDTO
 
 
 class LoginForm(forms.Form):
@@ -80,15 +80,15 @@ class RegisterForm(forms.Form):
 		)
 		verification_code.save()
 
-		confirm_new_user_email = ConfirmNewUserEmail(
+		email_dto = UserRegisterConfirmationEmailDTO(
 			to=email,
-			context=dict(
-				code=verification_code.code
-			)
+			template_context={
+				'code': verification_code.code
+			}
 		)
 
-		send_email(
-			email=confirm_new_user_email.asdict()
-		)
+		serialized_email_dto = email_dto.serialize()
+
+		send_email(serialized_email_dto)
 
 

@@ -1,21 +1,26 @@
 from dataclasses import dataclass, field
+from django.template.loader import render_to_string
 
 
 @dataclass
 class EmailDTO:
     to: str
-    context: dict
+    template_context: dict
     subject: str = field(init=False, default=None)
     template: str = field(init=False, default=None)
     text_message: str = field(init=False, default=None)
 
-    def asdict(self):
+    def serialize(self):
+        html_message = render_to_string(
+            self.template,
+            self.template_context
+        ) if self.template else None
+
         return {
             'to': self.to,
-            'context': self.context,
             'subject': self.subject,
-            'template': self.template,
-            'text_message': self.text_message
+            'text_message': self.text_message,
+            'html_message': html_message
         }
 
 
@@ -24,9 +29,9 @@ class ConfirmEmailChangeEmailDTO(EmailDTO):
     template = 'emails/confirm-email-change.html'
 
 
-class ConfirmNewUserEmail(EmailDTO):
+class UserRegisterConfirmationEmailDTO(EmailDTO):
     subject = 'Elabodeal - Potwierdzenie rejestracji'
-    template = 'emails/confirm-new-user.html'
+    template = 'emails/user-register-confirmation.html'
 
 
 class PurchaseConfirmationEmailDTO(EmailDTO):

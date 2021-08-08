@@ -1,76 +1,83 @@
 from tests import BaseTestCase
-
 from elabodeal.emails import (
-    Email, 
-    ConfirmChangeEmail, 
-    ConfirmNewUserEmail
+    EmailDTO,
+    ConfirmEmailChangeEmailDTO,
+    PurchaseConfirmationEmailDTO,
+    UserRegisterConfirmationEmailDTO,
+    PublishedProductInformationEmailDTO
 )
 
 
-class TestEmail(BaseTestCase):
+class EmailDTOTest(BaseTestCase):
     def test_simple(self):
-        email = Email(
-            to='test',
-            context=None
+        email_dto = EmailDTO(
+            to='test@test.pl',
+            template_context=None
+        )
+        email_dto.subject = 'test'
+        email_dto.text_message = 'test'
+
+        serialized_email_dto = email_dto.serialize()
+
+        self.assertEqual(serialized_email_dto, {
+            'to': email_dto.to,
+            'subject': email_dto.subject,
+            'text_message': email_dto.text_message,
+            'html_message': None
+        })
+
+
+class ConfirmEmailChangeEmailDTOTest(BaseTestCase):
+    def test_simple(self):
+        email_dto = ConfirmEmailChangeEmailDTO(
+            to='test@test.pl',
+            template_context=None
         )
 
-        self.assertEqual(hasattr(email, 'to'), True)
-        self.assertEqual(hasattr(email, 'context'), True)
-        self.assertEqual(hasattr(email, 'subject'), True)
-        self.assertEqual(hasattr(email, 'template'), True)
-        self.assertEqual(hasattr(email, 'text_message'), True)
+        serialized_email_dto = email_dto.serialize()
 
-    def test_asdict_method(self):
-        email = Email(
-            to='test',
-            context=None,
+        self.assertNotEqual(serialized_email_dto.get('html_message'), None)
+        self.assertEqual(email_dto.subject, 'Elabodeal - Kod weryfikacyjny')
+        self.assertEqual(email_dto.template, 'emails/confirm-email-change.html')
+
+
+class UserRegisterConfirmationEmailDTOTest(BaseTestCase):
+    def test_simple(self):
+        email_dto = UserRegisterConfirmationEmailDTO(
+            to='test@test.pl',
+            template_context=None
         )
 
-        email.template = 'test'
-        email.subject = 'test'
-        email.text_message = 'test'
+        serialized_email_dto = email_dto.serialize()
 
-        self.assertEqual(
-            email.asdict(), 
-            {
-                'to': 'test',
-                'subject': 'test',
-                'template': 'test',
-                'text_message': 'test',
-                'context': None
-            }
-        )
+        self.assertNotEqual(serialized_email_dto.get('html_message'), None)
+        self.assertEqual(email_dto.subject, 'Elabodeal - Potwierdzenie rejestracji')
+        self.assertEqual(email_dto.template, 'emails/user-register-confirmation.html')
 
 
-class TestConfirmChangeEmail(BaseTestCase):
-    def test_default_params(self):
-        email = ConfirmChangeEmail(
-            to='test',
-            context=None
+class PurchaseConfirmationEmailDTOTest(BaseTestCase):
+    def test_simple(self):
+        email_dto = PurchaseConfirmationEmailDTO(
+            to='test@test.pl',
+            template_context=None
         )
 
-        self.assertEqual(
-            email.subject, 
-            'Elabodeal - Kod weryfikacyjny'
-        )
-        self.assertEqual(
-            email.template,
-            'emails/confirm-change-email.html'    
-        )
+        serialized_email_dto = email_dto.serialize()
+
+        self.assertNotEqual(serialized_email_dto.get('html_message'), None)
+        self.assertEqual(email_dto.subject, 'Elabodeal - Potwierdzenie płatnośći')
+        self.assertEqual(email_dto.template, 'emails/purchase-confirmation.html')
 
 
-class TestConfirmNewUserEmail(BaseTestCase):
-    def test_default_params(self):
-        email = ConfirmNewUserEmail(
-            to='test',
-            context=None
+class PublishedProductInformationEmailDTOTest(BaseTestCase):
+    def test_simple(self):
+        email_dto = PublishedProductInformationEmailDTO(
+            to='test@test.pl',
+            template_context=None
         )
 
-        self.assertEqual(
-            email.subject, 
-            'Elabodeal - Potwierdzenie rejestracji'
-        )
-        self.assertEqual(
-            email.template,
-            'emails/confirm-new-user.html'    
-        )
+        serialized_email_dto = email_dto.serialize()
+
+        self.assertNotEqual(serialized_email_dto.get('html_message'), None)
+        self.assertEqual(email_dto.subject, 'Elabodeal - Wystawienie produktu na rynek')
+        self.assertEqual(email_dto.template, 'emails/published-product-information.html')
