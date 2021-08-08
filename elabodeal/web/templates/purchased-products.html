@@ -18,10 +18,10 @@
 		{% for purchased_product in purchased_products %}
 		<div class="record">
 			<div>
-				<p class="record__title">{{ purchased.product.title }}</p>
+				<p class="record__title">{{ purchased_product.product.title }}</p>
 				<div class="record__informations">
 					<p class="record__information">
-						Data zapsiu - <strong>{{ purchased_product.purchased_at.day }}.{{ purchased_product.purchased_at.month }}.{{ purchased_product.purchased_at.year }}</strong>
+						Data zakupu - <strong>{{ purchased_product.purchased_at.day }}.{{ purchased_product.purchased_at.month }}.{{ purchased_product.purchased_at.year }}</strong>
 					</p>
 				</div>
 			</div>

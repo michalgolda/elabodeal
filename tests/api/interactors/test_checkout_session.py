@@ -105,9 +105,11 @@ class SucceedCheckoutSessionInteractorTest(BaseTestCase):
 	
 	@mock.patch('elabodeal.utils.CartSessionManager')
 	@mock.patch('elabodeal.api.repositories.ProductRepository')
-	def setUp(self, mock_cart_manager, mock_product_repo):
+	@mock.patch('elabodeal.api.repositories.PurchasedProductRepository')
+	def setUp(self, mock_cart_manager, mock_product_repo, mock_purchased_product_repo):
 		self.mock_product_repo = mock_product_repo
 		self.mock_cart_manager = mock_cart_manager
+		self.mock_purchased_product_repo = mock_purchased_product_repo
 
 		self.mock_user = mock.MagicMock(
 			id=1,
@@ -151,7 +153,8 @@ class SucceedCheckoutSessionInteractorTest(BaseTestCase):
 	def test_execute(self):
 		interactor = SucceedCheckoutSessionInteractor(
 			product_repo=self.mock_product_repo,
-			cart_manager=self.mock_cart_manager
+			cart_manager=self.mock_cart_manager,
+			purchased_product_repo=self.mock_purchased_product_repo
 		)
 		interactor.execute(
 			user=self.mock_user,
@@ -160,6 +163,11 @@ class SucceedCheckoutSessionInteractorTest(BaseTestCase):
 
 		self.mock_product_repo.get_one_by.assert_called_once_with(
 			id=self.mock_product.id
+		)
+
+		self.mock_purchased_product_repo.add.assert_called_once_with(
+			user=self.mock_user,
+			product=self.mock_product
 		)
 
 		self.assertEqual(len(mail.outbox), 1)

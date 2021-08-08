@@ -62,9 +62,10 @@ class RemoveCheckoutSessionInteractor(Interactor):
 
 
 class SucceedCheckoutSessionInteractor(Interactor):
-	def __init__(self, cart_manager, product_repo):
+	def __init__(self, cart_manager, product_repo, purchased_product_repo):
 		self.product_repo = product_repo
 		self.cart_manager = cart_manager
+		self.purchased_product_repo = purchased_product_repo
 
 	def execute(self, user, session):
 		checkout_session = session['checkout_session']
@@ -82,6 +83,8 @@ class SucceedCheckoutSessionInteractor(Interactor):
 
 			product = self.product_repo.get_one_by(id=cart_product_id)
 
+			self.purchased_product_repo.add(user=user, product=product)
+
 			purchased_products.append({
 				'title': product.title,
 				'price': float(product.price),
@@ -89,7 +92,7 @@ class SucceedCheckoutSessionInteractor(Interactor):
 				'cover_img_path': product.cover_img.path
 			})
 
-		email_context = {
+		email_template_context = {
 			'total_price': total_price,
 			'buyer_first_name': buyer_first_name,
 			'purchased_products': purchased_products,
@@ -98,11 +101,12 @@ class SucceedCheckoutSessionInteractor(Interactor):
 
 		email_dto = PurchaseConfirmationEmailDTO(
 			to=buyer_email,
-			context=email_context
+			context=email_template_context
 		)
-		send_email.delay(
-			serialized_email_dto=email_dto.asdict()
-		)
+
+		serialized_email_dto = email_dto.asdict()
+
+		send_email.delay(serialized_email_dto)
 
 		del session['cart']
 		del session['checkout_session']

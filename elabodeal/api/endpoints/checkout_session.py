@@ -8,7 +8,10 @@ from elabodeal.api.interactors import (
 )
 from elabodeal.api.endpoints import Endpoint
 from elabodeal.api.services import StripePaymentService
-from elabodeal.api.repositories import ProductRepository
+from elabodeal.api.repositories import (
+	ProductRepository,
+	PurchasedProductRepository
+)
 from elabodeal.api.serializers import UpdateCheckoutSessionRequestSerializer
 
 
@@ -73,10 +76,12 @@ class SucceedCheckoutSessionEndpoint(Endpoint):
 
 		product_repo = ProductRepository()
 		cart_manager = CartSessionManager(session)
+		purchased_product_repo = PurchasedProductRepository()
 
 		interactor = SucceedCheckoutSessionInteractor(
 			product_repo=product_repo,
-			cart_manager=cart_manager
+			cart_manager=cart_manager,
+			purchased_product_repo=purchased_product_repo
 		)
 		interactor.execute(
 			user,

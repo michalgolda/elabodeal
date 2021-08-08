@@ -10,3 +10,4 @@ from .category import CategoryRepository
 from .file import FileRepository
 from .product_language import ProductLanguageRepository
 from .product_premiere import ProductPremiereRepository
+from .purchased_product import PurchasedProductRepository
