@@ -1,94 +1,158 @@
 from django import forms
+from django.utils.translation import gettext as _
+from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate, login
 
 from elabodeal.celery.tasks import send_email
 from elabodeal.models import User, VerificationCode
-from elabodeal.emails import UserRegisterConfirmationEmailDTO
+from elabodeal.emails import UserRegisterConfirmationEmail
 
 
 class LoginForm(forms.Form):
-	email=forms.EmailField(
-		widget=forms.TextInput(
-			attrs={'class': 'form__input'}),
-		error_messages={'invalid': 'Podaj poprawny email'})
 
-	password = forms.CharField(
-		widget=forms.PasswordInput(attrs={'class': 'form__input'}))
+    def __init__(self, request = None, *args, **kwargs):
+        self.request = request
+
+        request_post_data = request.POST if request else None
+
+        super(LoginForm, self).__init__(request_post_data, *args, **kwargs)
+
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                'class': 'form__input'
+            }
+        )
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form__input'
+            }
+        )
+    )
+
+    def clean(self):
+        super().clean()
+
+        user_email = self.cleaned_data['email']
+        user_password = self.cleaned_data['password']
+
+        user = authenticate(
+            self.request,
+            email=user_email,
+            password=user_password
+        )
+
+        if not user:
+            raise ValidationError(
+                _('Nieprawdiłowy email lub hasło')
+            )
+
+        self.cleaned_data['user'] = user
+
+        return self.cleaned_data
+
+    def execute(self):
+        user = self.cleaned_data['user']
+
+        login(self.request, user)
 
 
 class RegisterForm(forms.Form):
-	username = forms.CharField(
-		max_length=30,
-		widget=forms.TextInput(attrs={'class': 'form__input'}))
+    
+    def __init__(self, request = None, *args, **kwargs):
+        request_post_data = request.POST if request else None
 
-	email=forms.EmailField(
-		widget=forms.TextInput(attrs={'class': 'form__input'})
-	)
+        super(RegisterForm, self).__init__(request_post_data, *args, **kwargs)
 
-	password1 = forms.CharField(
-		widget=forms.PasswordInput(attrs={'class': 'form__input'})
-	)
+    username = forms.CharField(
+        max_length=User.MAX_USERNAME_LENGTH,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form__input'
+            }
+        )
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                'class': 'form__input'
+            }
+        )
+    )
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form__input'
+            }
+        )
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form__input'
+            }
+        )
+    )
 
-	password2 = forms.CharField(
-		widget=forms.PasswordInput(attrs={'class': 'form__input'})
-	)
+    def clean_username(self):
+        username = self.cleaned_data['username']
 
-	def clean_password2(self):
-		password1 = self.cleaned_data.get('password1')
-		password2 = self.cleaned_data.get('password2')
-		
-		if password1 != password2:
-			self.add_error(
-				'password2', 
-				'Hasła nie są takie same')
+        existing_user = User.objects.filter(username=username).first()
 
-		return password2
+        if existing_user:
+            raise ValidationError(
+                _('Podana nazwa użytkownika jest w użyciu')
+            )
 
-	def clean_username(self):
-		username = self.cleaned_data.get('username')
-		
-		user = User.objects.filter(username=username).first()
-		
-		if user:
-			self.add_error(
-				'username', 
-				'Nazwa użytkownika jest zajęta')
+        return username
 
-		return username
+    def clean_email(self):
+        email = self.cleaned_data['email']
 
-	def clean_email(self):
-		email = self.cleaned_data.get('email')
-	
-		user = User.objects.filter(email=email).first()
-		print(user)
+        existing_user = User.objects.filter(email=email).first()
 
-		if user:
-			self.add_error(
-				'email', 
-				'Podany adres email jest zajęty')
+        if existing_user:
+            raise ValidationError(
+                _('Podany adres email jest w użyciu')
+            )
 
-		return email
+        return email
 
-	def save(self):
-		email = self.cleaned_data.get('email')
-		username = self.cleaned_data.get('username')
-		password = self.cleaned_data.get('password1')
+    def clean(self):
+        super().clean()
 
-		User.objects.create_user(email, username, password)
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
 
-		verification_code = VerificationCode.objects.create_code(
-			email=email
-		)
-		verification_code.save()
+        if password1 != password2:
+            self.add_error(
+                'password',
+                _('Hasła nie są takie same')
+            )
 
-		email_dto = UserRegisterConfirmationEmailDTO(
-			to=email,
-			template_context={
-				'code': verification_code.code
-			}
-		)
+        self.cleaned_data['password'] = password1
 
-		serialized_email_dto = email_dto.serialize()
+        return self.cleaned_data
 
-		send_email(serialized_email_dto)
+    def execute(self):
+        email = self.cleaned_data['email']
+        username = self.cleaned_data['username']
+        password = self.cleaned_data['password']
 
+        # User.objects.create_user(
+        #     email,
+        #     username,
+        #     password
+        # )
 
+        created_verification_code = VerificationCode.objects.create_code(email)
+
+        user_register_confirmation_email = UserRegisterConfirmationEmail(
+            to=email,
+            template_context={
+                'code': created_verification_code.code
+            }
+        )
+        user_register_confirmation_email.send()

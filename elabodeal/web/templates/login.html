@@ -1,0 +1,28 @@
+{% extends 'layouts/auth.html' %}
+
+{% block title-description %}Zaloguj się{% endblock %}
+
+{% block form %}
+<div class="links">
+	<a class="links__link links__link-current" href="{% url 'web:login' %}">Zaloguj się</a>
+	<a class="links__link" href="{% url 'web:register' %}">Zarejestruj się</a>
+</div>
+<form class="form" method="POST" action="/zaloguj/" autocomplete="off">
+    {% csrf_token %}
+	
+	{% for error in form.non_field_errors %}
+    <p class="form__input-error-msg">{{ error }}</p>
+    {% endfor %}
+
+	<div class="form__section">
+		<label>EMAIL</label>
+		{{ form.email }}
+	</div>
+	<div class="form__section">
+		<label>HASŁO</label>
+		{{ form.password }}
+	</div>	
+
+	<button class="btn btn__primary btn-block" type="submit">Zaloguj się</button>
+</form>
+{% endblock %}

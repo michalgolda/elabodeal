@@ -1,0 +1,50 @@
+{% extends 'layouts/auth.html' %}
+
+{% block title-description %}Stwórz swoje konto{% endblock %}
+
+{% block form %}
+<div class="links">
+	<a class="links__link" href="{% url 'web:login' %}">Zaloguj się</a>
+	<a class="links__link links__link-current" href="{% url 'web:register' %}">Zarejestruj się</a>
+</div>
+<form class="form" method="POST" action="/zarejestruj/" autocomplete="off">
+	{% csrf_token %}
+
+	<div class="form__section">
+		<label>NAZWA UŻYTKOWNIKA</label>
+        {% for error in form.username.errors %}
+        <p class="form__input-error-msg">{{ error }}</p>
+        {% endfor %}
+
+		{{ form.username }}
+	</div>
+	<div class="form__section">
+		<label>EMAIL</label>
+        {% for error in form.email.errors %}
+        <p class="form__input-error-msg">{{ error }}</p>
+        {% endfor %}
+
+		{{ form.email }}
+	</div>
+	<div class="form__section">
+		<label>HASŁO</label>
+        {% for error in form.password1.errors %}
+        <p class="form__input-error-msg">{{ error }}</p>
+        {% endfor %}
+		{{ form.password1 }}
+	</div>
+	<div class="form__section">
+		<label>POWTÓRZ HASŁO</label>
+        {% for error in form.password.errors %}
+        <p class="form__input-error-msg">{{ error }}</p>
+        {% endfor %}
+        {% for error in form.password2.errors %}
+        <p class="form__input-error-msg">{{ error }}</p>
+        {% endfor %}
+
+		{{ form.password2 }}
+	</div>
+
+	<button class="btn btn__primary btn-block" type="submit">Zarejestruj się</button>
+</form>
+{% endblock %}
