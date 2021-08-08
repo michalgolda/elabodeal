@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, reverse
 
 from elabodeal.web.views import BaseView
 from elabodeal.web.forms import LoginForm, RegisterForm
@@ -41,7 +41,14 @@ class RegisterView(BaseView):
         if form.is_valid(): 
             form.execute()
 
-            return redirect('web:user-register-confirmation')
+            email = form.cleaned_data['email']
+
+            register_confirmation_url = '{}.?email={}'.format(
+                reverse('web:user-register-confirmation'),
+                email
+            )
+
+            return redirect(register_confirmation_url)
 
         context = {'form': form}
 

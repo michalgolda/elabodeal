@@ -141,11 +141,11 @@ class RegisterForm(forms.Form):
         username = self.cleaned_data['username']
         password = self.cleaned_data['password']
 
-        # User.objects.create_user(
-        #     email,
-        #     username,
-        #     password
-        # )
+        User.objects.create_user(
+            email,
+            username,
+            password
+        )
 
         created_verification_code = VerificationCode.objects.create_code(email)
 

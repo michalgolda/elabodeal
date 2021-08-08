@@ -7,7 +7,7 @@
 	<a class="links__link links__link-current" href="{% url 'web:login' %}">Zaloguj się</a>
 	<a class="links__link" href="{% url 'web:register' %}">Zarejestruj się</a>
 </div>
-<form class="form" method="POST" action="/zaloguj/" autocomplete="off">
+<form class="form" method="POST" action="{% url 'web:login' %}" autocomplete="off">
     {% csrf_token %}
 	
 	{% for error in form.non_field_errors %}
