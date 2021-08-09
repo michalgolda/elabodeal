@@ -91,23 +91,29 @@ class ChangeEmailRequestInteractorTest(BaseTestCase):
 	def setUp(self, mock_verification_code_repo):
 		self.mock_verification_code_repo = mock_verification_code_repo
 
+		self.mock_verification_code = mock.MagicMock(
+			code=123123,
+			email='test@test.pl'
+		)
+
+		self.mock_verification_code_repo.add.return_value = self.mock_verification_code_repo
+
 	@override_settings(
 		EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend',
         task_always_eager=True
 	)
 	def test_execute(self):
-		self.mock_verification_code_repo.add.return_value = mock.MagicMock(
-			email='test@test.pl',
-			code='123'
-		)
-
 		interactor = ChangeEmailRequestInteractor(
 			verification_code_repo=self.mock_verification_code_repo
 		)
-		interactor.execute(email='test@test.pl')
+		interactor.execute(email=self.mock_verification_code.email)
+
+		self.mock_verification_code_repo.delete_by.assert_called_once_with(
+			email=self.mock_verification_code.email
+		)
 
 		self.mock_verification_code_repo.add.assert_called_once_with(
-			email='test@test.pl'
+			email=self.mock_verification_code.email
 		)
 
 		self.assertEqual(len(mail.outbox), 1)

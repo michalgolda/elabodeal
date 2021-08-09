@@ -48,6 +48,8 @@ class ChangeEmailRequestInteractor(Interactor):
 		self.verification_code_repo = verification_code_repo
 
 	def execute(self, email):
+		self.verification_code_repo.delete_by(email=email)
+
 		verification_code = self.verification_code_repo.add(email=email)
 
 		confirm_email_change_email = ConfirmEmailChangeEmail(
