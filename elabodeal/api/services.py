@@ -9,6 +9,10 @@ class PaymentService(ABC):
 	def create_payment_intent(self, amount, currency):
 		raise NotImplementedError
 
+	@abstractmethod
+	def cancel_payment_intent(sefl, payment_intent_id):
+		raise NotImplementedError
+
 
 class StripePaymentService(PaymentService):
 	
