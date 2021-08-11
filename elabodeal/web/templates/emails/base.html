@@ -1,3 +1,5 @@
+{% load utils %}
+
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;600;700;900&display=swap"
         rel="stylesheet">
@@ -19,12 +21,12 @@
         }
 
         .header {
+            text-align: center;
             background-color: #FF9F1C;
         }
 
-        .header__text {
-            color: white;
-            text-align: center;
+        .header__img {
+            width: 256px;
             padding: 2.5rem 0 2.5rem 0;
         }
 
@@ -73,17 +75,11 @@
         }
 
         .footer__links a {
-            width: 32px;
-            height: 32px;
             display: flex;
-            color: #2EC4B6;
-            font-size: 2rem;
             margin-left: 1rem;
-            border-radius: 2px;
             align-items: center;
             text-decoration: none;
             justify-content: center;
-            background-color: white;
         }
     </style>
 
@@ -94,7 +90,9 @@
         <thead class="header">
             <tr>
                 <td>
-                    <h1 class="header__text">eLiberly</h1>
+                    <a href="{% absolute_url 'web:index' %}">
+                        <img class="header__img" src="{% absolute_static '/images/white-logo.png' %}">
+                    </a>
                 </td>
             </tr>
         </thead>
@@ -128,10 +126,18 @@
                         </p>
                     </div>
                     <div class="footer__links">
-                        <a href="#"><span>I</span></a>
-                        <a href="#"><span>F</span></a>
-                        <a href="#"><span>T</span></a>
-                        <a href="#"><span>Y</span></a>
+                        <a href="#">
+                            <img src="{% absolute_static '/images/instagram.png' %}">
+                        </a>
+                        <a href="#">
+                            <img src="{% absolute_static '/images/facebook.png' %}">
+                        </a>
+                        <a href="#">
+                            <img src="{% absolute_static '/images/twitter.png' %}">
+                        </a>
+                        <a href="#">
+                            <img src="{% absolute_static '/images/youtube.png' %}">
+                        </a>
                     </div>
                 </td>
             </tr>
