@@ -30,6 +30,16 @@
 			<div class="section section__flex">
 				<p class="product-price">{{ product.price }} zł</p>
 				<div class="product-actions">
+					{% if user_has_product %}
+					<a 
+						class="btn btn__secondary" 
+						href="{% url 'web:purchased-products' %}"
+					>
+						<i class="fas fa-check"></i>&nbsp;&nbsp;
+						Znajduje się na półce
+					</a>
+					<a class="btn btn__primary" href="#">Kup jako prezent</a>
+					{% else %}
 					<button 
 						id="buy-now"
 						class="btn btn__primary"
@@ -44,6 +54,7 @@
 					>
 						Dodaj do koszyka
 					</button>
+					{% endif %}
 				</div>
 			</div>
 			<div class="section">

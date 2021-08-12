@@ -197,13 +197,9 @@
 }
 
 .product-actions {
-    display: flex;
-    align-items: center;
-    justify-content: right;
-
-    & > button {
-        margin-left: .5rem;
-    }
+    display: grid;
+    column-gap: .5rem;
+    grid-template-columns: auto auto;
 }
 
 .cart-updated-item {
