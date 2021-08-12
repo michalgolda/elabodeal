@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.utils.translation import gettext as _
 
 
 class PublisherManager(models.Manager):
@@ -38,9 +39,13 @@ class Publisher(models.Model):
 	
 	objects = PublisherManager()
 
-	def __str__(self):
-		return self.full_name
+	class Meta:
+		verbose_name = _('Wydawca')
+		verbose_name_plural = _('Wydawcy')
 
 	@property
-	def full_name(self) -> str:
+	def full_name(self):
 		return f'{self.first_name} {self.last_name}'
+	
+	def __str__(self):
+		return str(self.id)

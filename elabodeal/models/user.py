@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
 	AbstractBaseUser, 
 	BaseUserManager
 )
+from django.utils.translation import gettext as _
 
 
 class UserManager(BaseUserManager):
@@ -58,6 +59,8 @@ class User(AbstractBaseUser):
 
 	class Meta:
 		db_table = 'users'
+		verbose_name = _('Użytkownik')
+		verbose_name_plural = _('Użytkownicy')
 	
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['username']
@@ -73,3 +76,6 @@ class User(AbstractBaseUser):
 
 	def has_module_perms(self, app_label):
 		return self.is_superuser
+
+	def __str__(self):
+		return str(self.id)

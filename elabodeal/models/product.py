@@ -6,6 +6,7 @@ from itertools import chain
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete
+from django.utils.translation import gettext as _
 
 from elabodeal.celery.tasks import clear_product_files
 
@@ -88,6 +89,10 @@ class Product(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
+	class Meta:
+		verbose_name = _('Produkt')
+		verbose_name_plural = _('Produkty')
+
 	@property
 	def filled_stars(self):
 		return range(int(self.average_rating))
@@ -99,6 +104,9 @@ class Product(models.Model):
 	@property
 	def has_infinity_copies(self):
 		return self.copies == 0
+
+	def __str__(self):
+		return str(self.id)
 
 
 @receiver(pre_delete, sender=Product)

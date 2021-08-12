@@ -4,6 +4,7 @@ from datetime import timedelta
 
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 
 class VerificationCodeManager(models.Manager):
@@ -40,3 +41,10 @@ class VerificationCode(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	
 	objects = VerificationCodeManager()
+
+	class Meta:
+		verbose_name = _('Kod weryfikacyjny')
+		verbose_name_plural = _('Kody weryfikacyjne')
+
+	def __str__(self):
+		return str(self.id)

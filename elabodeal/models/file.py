@@ -5,6 +5,7 @@ from pathlib import Path
 
 from django.db import models
 from django.templatetags.static import static
+from django.utils.translation import gettext as _
 from django.core.files.storage import DefaultStorage
 
 
@@ -74,3 +75,10 @@ class File(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 
 	objects = FileManager()
+
+	class Meta:
+		verbose_name = _('Plik')
+		verbose_name_plural = _('Pliki')
+
+	def __str__(self):
+		return str(self.id)

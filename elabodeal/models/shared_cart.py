@@ -4,6 +4,7 @@ import string
 
 from django.db import models
 from django.shortcuts import reverse
+from django.utils.translation import gettext as _
 
 
 class SharedCartManager(models.Manager):
@@ -36,6 +37,13 @@ class SharedCart(models.Model):
 
 	objects = SharedCartManager()
 
+	class Meta:
+		verbose_name = _('Udostępniony koszyk')
+		verbose_name_plural = _('Udostępnione koszyki')
+
 	@property
 	def share_url_path(self):
 		return reverse('web:shared-cart', args=[self.code])
+
+	def __str__(self):
+		return str(self.id)

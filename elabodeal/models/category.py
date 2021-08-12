@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.utils.translation import gettext as _
 
 
 class Category(models.Model):
@@ -13,7 +14,8 @@ class Category(models.Model):
 	name = models.CharField(max_length=MAX_NAME_LENGTH)
 
 	class Meta:
-		verbose_name_plural = 'Categories'
+		verbose_name = _('Kategoria')
+		verbose_name_plural = _('Kategorie')
 
 	def __str__(self):
-		return self.name
+		return str(self.id)

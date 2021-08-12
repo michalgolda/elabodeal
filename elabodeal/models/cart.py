@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.utils.translation import gettext as _
 
 
 class Cart(models.Model):
@@ -22,6 +23,10 @@ class Cart(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
+	class Meta:
+		verbose_name = _('Koszyk')
+		verbose_name_plural = _('Koszyki')
+
 	@property
 	def products_count(self):
 		return self.products.count()
@@ -34,3 +39,6 @@ class Cart(models.Model):
 			total_price += float(product.price)
 
 		return '{0:.2f}'.format(round(total_price, 2))
+
+	def __str__(self):
+		return str(self.id)
