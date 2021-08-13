@@ -39,9 +39,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'libraries': {
-                'stripe': 'elabodeal.web.templatetags.stripe',
-                'user': 'elabodeal.web.templatetags.user',
-                'publisher': 'elabodeal.web.templatetags.publisher',
                 'json': 'elabodeal.web.templatetags.json',
                 'utils': 'elabodeal.web.templatetags.utils'
             },

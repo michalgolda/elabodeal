@@ -46,7 +46,7 @@ export default {
 		AccountNumberSettingsSection
 	},
 	computed: mapState({
-		userIsPublisher: state => state.user.isPublisher
+		userIsPublisher: state => state.user.is_publisher
 	})
 }
 </script>

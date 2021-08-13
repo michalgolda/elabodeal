@@ -1,12 +1,13 @@
 import { createStore } from "vuex";
+import { appData } from '@/utils/data';
 import {
 	uiModule,
 	userSettingsModule, 
 	publisherSettingsModule } from "./modules";
-
+ 
 
 const initialState = () => {
-	const { user, publisher } = window.__APP_CONTEXT__;
+	const { user, publisher } = appData;
 
 	return {
 		user,
