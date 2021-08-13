@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static  %}
+
+{% block title-description %}
+Profil
+{% endblock %}
+
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/profilePage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/profilePage.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<header class="profileHeader">
+    <div class="profileHeader__img"></div>
+    <div class="profileHeader__content">
+        <p class="profileHeader__text">Fajna książka</p>
+        <div class="profileHeader__highlightProduct"></div>
+    </div>
+</header>
+{% include 'components/big-footer.html' %}
+{% endblock %}
