@@ -1,0 +1,114 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title-description %}
+Wyniki wyszukiwania
+{% endblock %}
+
+{% block page-styles %}
+<link rel="preload" href="{% static 'dist/searchResultsPage.css' %}" as="style">
+<link rel="stylesheet" href="{% static 'dist/searchResultsPage.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include 'components/navigation.html' %}
+<div class="wrapper">
+{% if results %}
+<div class="product-list">
+{% for product in results %}
+<div class="product">
+    <img src="{{ product.cover_img.path }}" alt="{{ product.title }}" />
+    <div class="product__info">
+        <div class="section">
+            <h2 class="product__title">{{ product.title }}</h2>
+            <h4 class="product__author">{{ product.author }}</h4>
+        </div>
+        <div class="section">
+            <p class="product__price h2">{{ product.price }} zł</p>
+            <div class="product__stars h2">
+                {% for _ in product.filled_stars  %}
+                <i class="fas fa-star"></i>
+                {% endfor %}
+                {% for _ in product.empty_stars %}
+                <i class="far fa-star"></i>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="section">
+            <div class="product__metadata">
+                <p>
+                    Liczba kopii: 
+                    <strong>
+                        {% if product.has_infinity_copies %}
+                        <i class="fas fa-infinity"></i>
+                        {% else %}
+                        {{ product.copies }}
+                        {% endif %}
+                    </strong>
+                </p>
+                <p>Odsłony: <strong>0</strong></p>
+                <p>Opinie: <strong>{{ product.rating_count }}</strong></p>
+                <p>Data publikacji:
+                    <strong>{{ product.created_at.day }}.{{ product.created_at.month }}.{{ product.created_at.year }}</strong>
+                </p>
+            </div>
+            <a class="btn btn__secondary btn-block" href="{% url 'web:product' id=product.id %}">Pokaż szczegóły</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<h1>Brak wyników wyszukiwania</h1>
+<a class="btn btn__primary backLink" href="{% url 'web:index' %}">Strona główna</a>
+<div class="section otherProducts">
+    <p class="section__title">Polecane produkty</p>
+    <div class="product-list">
+    {% for product in other_products %}
+    <div class="product">
+        <img src="{{ product.cover_img.path }}" alt="{{ product.title }}" />
+        <div class="product__info">
+            <div class="section">
+                <h2 class="product__title">{{ product.title }}</h2>
+                <h4 class="product__author">{{ product.author }}</h4>
+            </div>
+            <div class="section">
+                <p class="product__price h2">{{ product.price }} zł</p>
+                <div class="product__stars h2">
+                    {% for _ in product.filled_stars  %}
+                    <i class="fas fa-star"></i>
+                    {% endfor %}
+                    {% for _ in product.empty_stars %}
+                    <i class="far fa-star"></i>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="section">
+                <div class="product__metadata">
+                    <p>
+                        Liczba kopii: 
+                        <strong>
+                        {% if product.has_infinity_copies %}
+                        <i class="fas fa-infinity"></i>
+                        {% else %}
+                        {{ product.copies }}
+                        {% endif %}
+                        </strong>
+                    </p>
+                    <p>Odsłony: <strong>0</strong></p>
+                    <p>Opinie: <strong>{{ product.rating_count }}</strong></p>
+                    <p>Data publikacji:
+                        <strong>{{ product.created_at.day }}.{{ product.created_at.month }}.{{ product.created_at.year }}</strong>
+                    </p>
+                </div>
+                <a class="btn btn__secondary btn-block" href="{% url 'web:product' id=product.id %}">Pokaż szczegóły</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+</div>
+{% include 'components/small-footer-light.html' %}
+{% endblock %}

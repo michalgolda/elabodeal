@@ -4,6 +4,7 @@ from elabodeal.web.views import (
     IndexView, 
     LoginView,
 	LogoutView, 
+	ProfileView,
 	ProductView,
 	RegisterView, 
 	SettingsView,
@@ -23,12 +24,12 @@ app_name = 'web'
 
 urlpatterns = [
 	path('', IndexView.as_view(), name='index'),
-	path('p/<uuid:id>/', ProductView.as_view(), name='product'),
+	path('product/<uuid:id>/', ProductView.as_view(), name='product'),
 	path('login/', LoginView.as_view(), name='login'),
 	path('register/', RegisterView.as_view(), name='register'),
 	path('confirm/', UserRegisterConfirmationView.as_view(), name='user-register-confirmation'),
-	path('wyloguj/', LogoutView.as_view(), name='logout'),
-	path('s/', SearchResultsView.as_view(), name='search-results'),
+	path('logout/', LogoutView.as_view(), name='logout'),
+	path('results/', SearchResultsView.as_view(), name='search-results'),
 	path('purchased_products/', PurchasedProductsView.as_view(), name='purchased-products'),
 	path('settings/', SettingsView.as_view(), name='settings'),
 	path('c/', include([
