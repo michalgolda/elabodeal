@@ -127,7 +127,7 @@ const store = createStore({
 		createCheckoutSession () {
 			checkoutSessionService.createSession(null, {
 				successCallback: () => {
-					window.location = '/c/checkout/';
+					window.location = '/cart/checkout/';
 				}
 			});
 		}

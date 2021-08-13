@@ -31,7 +31,7 @@ const store = createStore({
 		cancelCheckoutProcess (	) {
 			checkoutSessionService.removeSession(null, {
 				successCallback: () => {
-					window.location = '/c/';
+					window.location = '/cart/';
 				}
 			});
 		}

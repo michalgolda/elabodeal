@@ -16,7 +16,7 @@ const store = createStore({
 
 			cartService.addProduct(data, {
 				successCallback: () => {
-					window.location = '/c/';
+					window.location = '/cart/';
 				}
 			});
 		}
