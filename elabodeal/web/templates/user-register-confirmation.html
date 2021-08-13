@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'csr-base.html' %}
 {% load static %}
 
 {% block title-description %}
@@ -13,12 +13,4 @@ Potwierdzenie rejestracji konta użytkownika
 {% block page-scripts %}	
 <link rel="preload" href="{% static 'dist/userRegisterConfirmationPage.js' %}" as="script">
 <script defer src="{% static 'dist/userRegisterConfirmationPage.js' %}"></script>
-{% endblock %}
-
-{% block body %}
-{% include 'components/navigation.html' %}
-<div id="mount0_0">
-{% include 'components/loader.html' %}
-</div>
-{% include 'components/small-footer-light.html' %}
 {% endblock %}
