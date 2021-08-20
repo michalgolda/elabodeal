@@ -24,7 +24,10 @@ from .checkout_session import (
 	CheckoutSessionEndpoint,
 	SucceedCheckoutSessionEndpoint
 )
-from .publisher import CreatePublisherEndpoint
+from .publisher import (
+	FollowersEndpoint,
+	CreatePublisherEndpoint
+)
 from .user_register_confirmation import (
 	UserRegisterConfirmationEndpoint,
 	ResendUserRegisterConfirmationEndpoint

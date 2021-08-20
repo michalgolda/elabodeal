@@ -50,6 +50,7 @@ class User(AbstractBaseUser):
 	email = models.EmailField(unique=True)
 	email_verified = models.BooleanField(default=False)
 	email_verified_at = models.DateTimeField(null=True, blank=True)
+	followers = models.ManyToManyField('elabodeal.Publisher', related_name='publisher_followers')
 	is_staff = models.BooleanField(default=False)
 	is_online = models.BooleanField(default=False)
 	is_superuser = models.BooleanField(default=False)
@@ -70,6 +71,9 @@ class User(AbstractBaseUser):
 	@property
 	def is_publisher(self):
 		return self.publisher != None	
+
+	def already_following(self, publisher_id):
+		return self.followers.filter(id=publisher_id).exists()
 
 	def has_perm(self, perm, obj=None):
 		return self.is_superuser

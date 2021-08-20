@@ -30,6 +30,7 @@ class Publisher(models.Model):
 		default=uuid.uuid4,
 		editable=False
 	)
+	followers = models.ManyToManyField('elabodeal.User', related_name='user_followers')
 	first_name = models.CharField(max_length=MAX_FIRST_NAME_LENGTH)
 	last_name = models.CharField(max_length=MAX_LAST_NAME_LENGTH)
 	account_number = models.CharField(max_length=MAX_ACCOUNT_NUMBER_LENGTH)

@@ -7,6 +7,10 @@ module.exports = {
 	"searchResultsPage": [
 		path.resolve(STATIC_PATH, "styles/pages/search-results.scss")
 	],
+	"profilePage": [
+		path.resolve(STATIC_PATH, "styles/pages/profile.scss"),
+		path.resolve(STATIC_PATH, "js/pages/profile/index.js")
+	],
 	"userRegisterConfirmationPage": [
 		path.resolve(STATIC_PATH, "js/pages/userRegisterConfirmation/index.js"),
 		path.resolve(STATIC_PATH, "styles/pages/user-register-confirmation.scss")

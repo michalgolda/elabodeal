@@ -16,4 +16,15 @@ publisherService.registerFunction('updateSettings', {
 	successMsg: 'Ustawienia zostały pomyślnie zapisane.'
 });
 
+publisherService.registerFunction('follow', {
+	url: '/api/followers/',
+	method: 'post'
+});
+
+publisherService.registerFunction('unFollow', {
+	url: '/api/followers/',
+	method: 'delete'
+});
+
+
 export default publisherService;

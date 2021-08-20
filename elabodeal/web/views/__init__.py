@@ -16,6 +16,7 @@ from .salesmanager import (
 from .index import IndexView
 from .logout import LogoutView
 from .product import ProductView
+from .profile import ProfileView
 from .settings import SettingsView
 from .shared_cart import SharedCartView
 from .auth import LoginView, RegisterView

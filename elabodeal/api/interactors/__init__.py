@@ -34,7 +34,11 @@ from .checkout_session import (
 	RemoveCheckoutSessionInteractor,
 	SucceedCheckoutSessionInteractor
 )
-from .publisher import CreatePublisherInteractor
+from .publisher import (
+	CreatePublisherInteractor,
+	FollowPublisherInteractor,
+	UnFollowPublisherInteractor
+)
 from .user_register_confirmation import (
 	UserRegisterConfirmationInteractor,
 	ResendUserRegisterConfirmationInteractor

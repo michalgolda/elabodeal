@@ -2,6 +2,7 @@ from django.urls import path, include
 
 from elabodeal.api.endpoints import (
     CartEndpoint,
+    FollowersEndpoint,
     MeProductsEndpoint,
     MeSavedCartsEndpoint,
     CreatePublisherEndpoint,
@@ -10,8 +11,8 @@ from elabodeal.api.endpoints import (
     MeChangePasswordEndpoint,
     MeProductsGroupsEndpoint,
     MeUpdateSettingsEndpoint,
-    MeSavedCartsDetailsEndpoint,
     MeProductsDetailsEndpoint,
+    MeSavedCartsDetailsEndpoint,
     MeChangeEmailRequestEndpoint,
     SucceedCheckoutSessionEndpoint,
     MeProductsGroupsDetailsEndpoint,
@@ -118,5 +119,10 @@ urlpatterns = [
         'confirm/resend/',
         ResendUserRegisterConfirmationEndpoint.as_view(),
         name='resend-user-register-confirmation'
+    ),
+    path(
+        'followers/',
+        FollowersEndpoint.as_view(),
+        name='followers'
     )
 ]

@@ -2,7 +2,7 @@
 {% load static  %}
 
 {% block title-description %}
-Profil
+{{ publisher.full_name }}
 {% endblock %}
 
 {% block page-styles %}
@@ -10,14 +10,131 @@ Profil
 <link rel="stylesheet" href="{% static 'dist/profilePage.css' %}">
 {% endblock %}
 
+{% block page-scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+<link rel="preload" href="{% static 'dist/profilePage.js' %}" as="script">
+<script defer src="{% static 'dist/profilePage.js' %}"></script>
+{% endblock %}
+
 {% block body %}
 {% include 'components/navigation.html' %}
-<header class="profileHeader">
-    <div class="profileHeader__img"></div>
-    <div class="profileHeader__content">
-        <p class="profileHeader__text">Fajna książka</p>
-        <div class="profileHeader__highlightProduct"></div>
+<div class="wrapper">
+    <div class="profileBadge">
+        <img class="profileBadge__avatar" src="https://64.media.tumblr.com/tumblr_lsmd6zqBUe1qbdhn3o1_500.png">
+        <p class="profileBadge__fullName">{{ publisher.full_name }}</p>
+        <p class="profileBadge__whoIsHe">Doktor ekonomii</p>
+        <div class="profileBadge__btnWrapper">
+            {% if request.user.is_authenticated %}
+            {% if user_already_following %}
+            <button 
+                id="unFollowBtn"
+                data-publisher-id="{{ publisher.id }}"  
+                class="btn btn__secondary"
+            >
+                <i class="fas fa-check"></i>&nbsp;&nbsp;
+                Obserwujesz
+            </button>
+            {% else %}
+            <button 
+                id="followBtn" 
+                data-publisher-id="{{ publisher.id }}"  
+                class="btn btn__primary"
+            >
+                Zaobserwuj
+            </button>
+            {% endif %}
+            {% else %}
+            <a class="btn btn__primary" href="{% url 'web:login' %}">Zaobserwuj</a>
+            {% endif %}
+        </div>
+        <p class="profileBadge__description">
+            gatunek dużego ptaka brodzącego z rodziny bocianów (Ciconiidae). ... Dorosłe ptaki mają długie czerwone nogi oraz długie spiczasto zakończone czerwone dzioby i mierzą średnio 100–115 cm od czubka dzioba do końca ogona, ze skrzydłami o rozpiętości 155–215 cm.to duży kot, z silnymi łapami i ostrymi pazurami. Jego długość nie przekracza 350cm, waży ok. 250 kg. Wyposażony w szczęke, potrzebną do polowania, może osiągać prędkość 60km/h.
+        </p>
     </div>
-</header>
+    <div class="container">
+        <div class="profileBanner">
+            <img class="profileBanner__img" src="https://wallpaperaccess.com/full/1713248.jpg">
+            <div class="profileBanner__content">
+                {% if banner.text %}
+                <p class="profileBanner__text">{{ banner.text }}</p>
+                {% endif %}
+                {% if banner.product %}
+                <img class="profileBanner__productHighlight" src="{{ banner.product.cover_img.path }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="pageWidget">
+            <div class="profileStatistics">
+                <div class="profileStatisticContainer profileTextStatistic">
+                    <div class="profileTextStatistic__container">
+                        <p class="profileTextStatistic__key">Obserwujący</p>
+                        <p id="followers" class="profileTextStatistic__value">{{ followers }}</p>
+                    </div>
+                    <div class="profileTextStatistic__container">
+                        <p class="profileTextStatistic__key">Ilość ebooków</p>
+                        <p class="profileTextStatistic__value">{{ products_count }}</p>
+                    </div>
+                </div>
+                <div class="profileStatisticContainer profileChartStatistic">
+                    <div id="categoriesChart">
+                    {% include 'components/loader.html' %}
+                    </div>
+                </div>
+                <div class="profileStatisticContainer profileChartStatistic">
+                    <div id="languagesChart">
+                    {% include 'components/loader.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <p class="section__title">Lista produktów</p>
+            <div class="product-list">
+            {% for product in products %}
+            <div class="product">
+                <img src="{{ product.cover_img.path }}" alt="{{ product.title }}" />
+                <div class="product__info">
+                    <div class="section">
+                        <h2 class="product__title">{{ product.title }}</h2>
+                        <h4 class="product__author">{{ product.author }}</h4>
+                    </div>
+                    <div class="section">
+                        <p class="product__price h2">{{ product.price }} zł</p>
+                        <div class="product__stars h2">
+                            {% for _ in product.filled_stars  %}
+                            <i class="fas fa-star"></i>
+                            {% endfor %}
+                            {% for _ in product.empty_stars %}
+                            <i class="far fa-star"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="product__metadata">
+                            <p>
+                                Liczba kopii: 
+                                <strong>
+                                    {% if product.has_infinity_copies %}
+                                    <i class="fas fa-infinity"></i>
+                                    {% else %}
+                                    {{ product.copies }}
+                                    {% endif %}
+                                </strong>
+                            </p>
+                            <p>Odsłony: <strong>0</strong></p>
+                            <p>Opinie: <strong>{{ product.rating_count }}</strong></p>
+                            <p>Data publikacji:
+                                <strong>{{ product.created_at.day }}.{{ product.created_at.month }}.{{ product.created_at.year }}</strong>
+                            </p>
+                        </div>
+                        <a class="btn btn__secondary btn-block" href="{% url 'web:product' id=product.id %}">Pokaż szczegóły</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 {% include 'components/big-footer.html' %}
 {% endblock %}

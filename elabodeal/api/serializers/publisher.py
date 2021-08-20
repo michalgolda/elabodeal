@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from elabodeal.models import Publisher
+from django.utils.translation import gettext as _
 
 
 class CreatePublisherRequestSerializer(serializers.Serializer):
@@ -19,3 +20,17 @@ class CreatePublisherRequestSerializer(serializers.Serializer):
         max_length=Publisher.MAX_ACCOUNT_NUMBER_LENGTH,
         min_length=Publisher.MAX_ACCOUNT_NUMBER_LENGTH
     )
+
+
+class FollowPublisherRequestSerializer(serializers.Serializer):
+    publisher_id = serializers.UUIDField()
+
+    def validate_publisher_id(self, publisher_id):
+        existing_publisher = Publisher.objects.filter(id=publisher_id).first()
+
+        if not existing_publisher:
+            raise serializers.ValidationError(
+                _('Wydawca o podanym identyfikatorze nie istnieje.')
+            )
+
+        return publisher_id
