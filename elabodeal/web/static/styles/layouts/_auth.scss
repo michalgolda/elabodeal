@@ -109,3 +109,15 @@
         }
     }
 }
+
+.underFormLinks {
+    text-align: left;
+    margin-top: 2rem;
+
+    &__link {
+        font-weight: bold;
+        color: $color-green;
+        text-decoration: underline;
+        font-size: $font-size-small;
+    }
+}

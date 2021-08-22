@@ -43,3 +43,7 @@ from .user_register_confirmation import (
 	UserRegisterConfirmationInteractor,
 	ResendUserRegisterConfirmationInteractor
 )
+from .reset_password import (
+	EndResetPasswordFlowInteractor,
+	StartResetPasswordFlowInteractor
+)

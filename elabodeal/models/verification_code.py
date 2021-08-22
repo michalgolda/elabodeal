@@ -7,6 +7,10 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 
+class VerificationCodeValidationError(Exception):
+	pass
+
+
 class VerificationCodeManager(models.Manager):
 	def create_code(self, email, expires = 3600 * 60 * 60):
 		current_datetime = timezone.now()
@@ -25,6 +29,31 @@ class VerificationCodeManager(models.Manager):
 		verification_code.save()
 
 		return verification_code
+
+	def validate(self, email, code):
+		existing_verification_code = self.model.objects.filter(email=email).last()
+
+		if not existing_verification_code:
+			raise VerificationCodeValidationError(
+				_(
+					'Nie znaleziono kodu weryfikacyjnego',
+					'przypisanego do podanego adresu email'
+				)				
+			)
+
+		current_datetime = timezone.now()
+
+		if current_datetime > existing_verification_code.expiration_at:
+			raise VerificationCodeValidationError(
+				_('Podany kod weryfikacyjny jest nieaktwyny')
+			)
+
+		if code != existing_verification_code.code:
+			raise VerificationCodeValidationError(
+				_('Podany kod weryfikacyjny jest błędny')
+			)
+
+		return existing_verification_code
 
 
 class VerificationCode(models.Model):

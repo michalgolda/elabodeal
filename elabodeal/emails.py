@@ -43,3 +43,8 @@ class PurchaseConfirmationEmail(Email):
 class PublishedProductInformationEmail(Email):
     subject = 'Elabodeal - Wystawienie produktu na rynek'
     template = 'emails/published-product-information.html'
+
+
+class ResetPasswordRequestEmail(Email):
+    subject = 'Elabodeal - Resetowanie hasła'
+    template = 'emails/reset-password-request.html'

@@ -11,6 +11,7 @@ from elabodeal.web.views import (
 	SharedCartView,
 	SavedCartsView,
     CartCheckoutView,
+	ResetPasswordView,
 	SearchResultsView,
 	SavedCartDetailsView,
 	SalesManagerStartView,
@@ -40,5 +41,6 @@ urlpatterns = [
 	path('results/', SearchResultsView.as_view(), name='search-results'),
 	path('shared_cart/<str:code>/', SharedCartView.as_view(), name='shared-cart'),
 	path('purchased_products/', PurchasedProductsView.as_view(), name='purchased-products'),
-	path('confirm/', UserRegisterConfirmationView.as_view(), name='user-register-confirmation')
+	path('confirm/', UserRegisterConfirmationView.as_view(), name='user-register-confirmation'),
+	path('reset-password/', ResetPasswordView.as_view(), name='reset-password')
 ]

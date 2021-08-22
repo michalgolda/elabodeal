@@ -32,3 +32,4 @@ from .user_register_confirmation import (
 	UserRegisterConfirmationEndpoint,
 	ResendUserRegisterConfirmationEndpoint
 )
+from .reset_password import ResetPasswordFlowEndpoint

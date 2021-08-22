@@ -9,6 +9,10 @@ from .settings import (
 	UpdateUserSettingsRequestSerializer,
 	UpdatePublisherSettingsRequestSerializer
 )
+from .reset_password import (
+	EndResetPasswordFlowRequestSerializer,
+	StartResetPasswordFlowRequestSerializer
+)
 from .file import FileSerializer
 from .cart import UpdateCartRequestSerializer
 from .shared_cart import SharedCartSerializer

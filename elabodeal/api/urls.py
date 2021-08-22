@@ -11,6 +11,7 @@ from elabodeal.api.endpoints import (
     MeChangePasswordEndpoint,
     MeProductsGroupsEndpoint,
     MeUpdateSettingsEndpoint,
+    ResetPasswordFlowEndpoint,
     MeProductsDetailsEndpoint,
     MeSavedCartsDetailsEndpoint,
     MeChangeEmailRequestEndpoint,
@@ -124,5 +125,10 @@ urlpatterns = [
         'followers/',
         FollowersEndpoint.as_view(),
         name='followers'
+    ),
+    path(
+        'reset-password/',
+        ResetPasswordFlowEndpoint.as_view(),
+        name='reset-password'
     )
 ]

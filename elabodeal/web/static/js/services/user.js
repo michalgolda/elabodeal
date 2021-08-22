@@ -52,4 +52,17 @@ userService.registerFunction('resendRegisterConfirmation', {
 });
 
 
+userService.registerFunction('startResetPasswordFlow', {
+	url: '/api/reset-password/',
+	method: 'post',
+	successMsg: 'Na podany adres email został wysłany kod bezpieczeństwa.'
+});
+
+
+userService.registerFunction('endResetPasswordFlow', {
+	url: '/api/reset-password/',
+	method: 'put',
+	successMsg: 'Hasło zostało pomyślnie zresetowane.'
+});
+
 export default userService;
