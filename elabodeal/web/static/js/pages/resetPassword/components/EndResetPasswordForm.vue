@@ -1,11 +1,11 @@
 <template>
     <div class="informations">
         <h2>Zresetuj swoje hasło</h2>
-        <p>Podaj kod bezpieczeństwa wysłany na podany adres email <strong>{{ email }}</strong></p>
+        <p>Podaj kod weryfikacyjny wysłany na podany adres email <strong>{{ email }}</strong></p>
     </div>
-    <form @submit.prevent="handleSubmit" class="form">
+    <form @submit.prevent="endResetPasswordFlow" class="form">
         <div class="form__input-group">
-            <label>Kod bezpieczeństwa</label>
+            <label>Kod weryfikacyjny</label>
             <p 
                 class="form__input-error-msg"
                 v-for="error in codeErrors"
@@ -13,76 +13,94 @@
             >
                 {{ error }}
             </p>
-            <input ref="codeInput" type="text" name="code" required/>
+            <input ref="codeInputRef" type="text" name="code" required/>
         </div>
         <div class="form__input-group">
             <label>Nowe hasło</label>
             <p 
                 class="form__input-error-msg"
-                v-for="error in newPassword1Errors"
+                v-for="error in newPasswordOneErrors"
                 :key="error"
             >
                 {{ error }}
             </p>
-            <input ref="newPassword1Input" type="password" name="new_password1" required/>
+            <input ref="newPasswordOneInputRef" type="password" name="new_password1" required/>
         </div>
         <div class="form__input-group">
             <label>Powtórz nowe hasło</label>
             <p 
                 class="form__input-error-msg"
-                v-for="error in newPassword2Errors"
+                v-for="error in newPasswordTwoErrors"
                 :key="error"
             >
                 {{ error }}
             </p>
-            <input ref="newPassword2Input" type="password" name="new_password2" required/>
+            <input ref="newPasswordTwoInputRef" type="password" name="new_password2" required/>
         </div>
         <div class="form__input-group">
             <button class="btn btn__secondary btn-block" type="submit">Zmień</button>
         </div>
-        <button @click="handleResendCode" class="btn btn__primary btn-block" type="button">Wyślij kod ponownie</button>
+        <button @click="startResetPasswordFlow" class="btn btn__primary btn-block" type="button">Wyślij kod ponownie</button>
     </form>
 </template>
 <script>
-import { 
-    mapState as mapRootState,
-    mapActions as mapRootActions,
-    createNamespacedHelpers } from 'vuex'
-
-const { mapState: mapUiState } = createNamespacedHelpers('ui');
-
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { uiModuleTypes, mainModuleTypes } from '../store/modules'
 
 export default {
-    computed: {
-        ...mapRootState(['email']),
-        ...mapUiState({
-            codeErrors: state => state.errors.code,
-            newPassword1Errors: state => state.errors.new_password1,
-            newPassword2Errors: state => state.errors.new_password2 
-        })
-    },
-    methods: {
-        ...mapRootActions([
-            'startResetPasswordFlow',
-            'endResetPasswordFlow'
-        ]),
-        handleSubmit () {
-            const { 
-                codeInput,
-                newPassword1Input,
-                newPassword2Input } = this.$refs;
+    setup () {
+        const store = useStore()
 
-            this.endResetPasswordFlow({
-                email: this.email,
-                code: codeInput.value,
-                newPassword1: newPassword1Input.value,
-                newPassword2: newPassword2Input.value
-            })
-        },
-        handleResendCode () {
-            this.startResetPasswordFlow({
-                email: this.email
-            })
+        const email = computed(() => {
+            return store.getters[mainModuleTypes.getters.GET_EMAIL]
+        })
+
+        const codeErrors = computed(() => {
+            return store.getters[uiModuleTypes.getters.GET_CODE_ERRORS]
+        })
+
+        const newPasswordOneErrors = computed(() => {
+            return store.getters[uiModuleTypes.getters.GET_NEW_PASSWORD_ONE_ERRORS]
+        })
+
+        const newPasswordTwoErrors = computed(() => {
+            return store.getters[uiModuleTypes.getters.GET_NEW_PASSWORD_TWO_ERRORS]
+        })
+
+        const startResetPasswordFlow = () => {
+            store.dispatch(
+                mainModuleTypes.actions.START_RESET_PASSWORD_FLOW,
+                email
+            )
+        }
+
+        const codeInputRef = ref(null)
+        const newPasswordOneInputRef = ref(null)
+        const newPasswordTwoInputRef = ref(null)
+
+        const endResetPasswordFlow = () => {
+            const codeInput = codeInputRef.value;
+            const newPasswordOneInput = newPasswordOneInputRef.value;
+            const newPasswordTwoInput = newPasswordTwoInputRef.value;
+
+            store.dispatch(
+                mainModuleTypes.actions.END_RESET_PASSWORD_FLOW,
+                {
+                    code: codeInput.value,
+                    newPasswordOne: newPasswordOneInput.value,
+                    newPasswordTwo: newPasswordTwoInput.value
+                }
+            )
+        }
+
+        return {
+            email,
+            codeErrors,
+            newPasswordTwoErrors,
+            newPasswordOneErrors,
+            endResetPasswordFlow,
+            startResetPasswordFlow
         }
     }
 }

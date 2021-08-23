@@ -1,5 +1,9 @@
-import uiModule from './ui';
+import uiModule, { uiModuleTypes } from './ui';
+import mainModule, { mainModuleTypes } from './main';
 
 export {
-    uiModule
+    uiModule,
+    uiModuleTypes,
+    mainModule,
+    mainModuleTypes
 }
