@@ -43,7 +43,7 @@
 	</Modal>
 </template>
 <script>
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 
 import Modal from '@/components/Modal';
 
@@ -53,10 +53,10 @@ export default {
 		Modal
 	},
 	setup (props) {
-		const { context } = props
+		const { context } = toRefs(props)
 
 		const product = computed(() => {
-			return context.product
+			return context.value.product
 		})
 
 		return { product }

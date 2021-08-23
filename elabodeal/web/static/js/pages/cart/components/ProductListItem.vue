@@ -35,6 +35,7 @@
 	</div>
 </template>
 <script>
+import { toRefs } from 'vue'
 import { useStore } from 'vuex'
 import { mainModuleTypes } from '../store/modules';
 
@@ -67,7 +68,7 @@ export default {
 		}
 	},
 	setup (props) {
-		const { productId } = props
+		const { productId } = toRefs(props)
 
 		const store = useStore()
 
@@ -76,14 +77,14 @@ export default {
 
 			store.dispatch(
 				mainModuleTypes.actions.TOGGLE_PRODUCT,
-				{ productId, selected }
+				{ productId: productId.value, selected }
 			)
 		}
 
 		const removeProductFromCart = () => {
 			store.dispatch(
 				mainModuleTypes.actions.REMOVE_PRODUCT_FROM_CART,
-				{ productId }
+				{ productId: productId.value }
 			)
 		}
 

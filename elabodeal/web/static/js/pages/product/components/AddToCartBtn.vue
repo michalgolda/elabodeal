@@ -7,6 +7,7 @@
 	</button>
 </template>
 <script>
+import { toRefs } from 'vue'
 import { useStore } from 'vuex'
 import { cartModuleTypes } from '../store/modules'
 
@@ -19,14 +20,14 @@ export default {
 		}
 	},
 	setup (props) {
-		const { productId } = props
+		const { productId } = toRefs(props)
 
 		const store = useStore()
 
 		const addProductToCart = () => {
 			store.dispatch(
 				cartModuleTypes.actions.ADD_PRODUCT_TO_CART,
-				{ productId }
+				{ productId: productId.value }
 			)
 		}
 

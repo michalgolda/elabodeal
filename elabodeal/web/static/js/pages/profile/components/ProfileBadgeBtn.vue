@@ -28,9 +28,7 @@ export default {
             required: true
         }
     },
-    setup (props) {
-        const { publisherId } = props
-        
+    setup () {
         const store = useStore()
 
         const userAlreadyFollowing = computed(() => {
@@ -38,7 +36,6 @@ export default {
         })
 
         return {
-            publisherId,
             userAlreadyFollowing
         }
     }

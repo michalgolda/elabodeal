@@ -45,9 +45,7 @@ export default {
 			required: true
 		}
 	},
-	setup (props) {
-		const { description, contents } = props
-
+	setup () {
 		const store = useStore()
 
 		const showContents = () => {
@@ -71,8 +69,6 @@ export default {
 		})
 
 		return { 
-			contents,
-			description,
 			showContents,
 			showDescription,
 			contentsIsVisible,

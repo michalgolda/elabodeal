@@ -7,6 +7,7 @@
     </button>
 </template>
 <script>
+import { toRefs } from 'vue'
 import { useStore } from 'vuex'
 import { mainModuleTypes } from '../store/modules'
 
@@ -19,14 +20,14 @@ export default {
         }
     },
     setup (props) {
-        const { publisherId } = props
+        const { publisherId } = toRefs(props)
 
         const store = useStore()
 
         const followPublisherProfile = () => {
             store.dispatch(
                 mainModuleTypes.actions.FOLLOW_PUBLISHER_PROFILE,
-                { publisherId }
+                { publisherId: publisherId.value }
             )
         }
 
