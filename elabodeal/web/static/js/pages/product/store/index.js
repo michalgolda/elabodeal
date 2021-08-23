@@ -1,26 +1,12 @@
 import { createStore } from 'vuex';
-import { cartModule } from './modules';
-import { cartService } from '@/services';
+import { cartModule, uiModule } from './modules';
 
 
-const store = createStore({
-	namespaced: true,
-	modules: {
-		cart: cartModule
-	},
-	actions: {
-		buyNowProduct (ctx, { productId }) {
-			const data = new FormData();
+const modules = { 
+    ui: uiModule,
+    cart: cartModule
+}
 
-			data.append('product_id', productId);
+const store = createStore({ modules })
 
-			cartService.addProduct(data, {
-				successCallback: () => {
-					window.location = '/cart/';
-				}
-			});
-		}
-	}
-});
-
-export default store;
+export default store

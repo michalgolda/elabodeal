@@ -1,13 +1,14 @@
 <template>
     <button
-        @click="handleClick"
+        @click="buyNowProduct"
         class="btn btn__primary"
     >
         Kup teraz
     </button>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { useStore } from 'vuex'
+import { cartModuleTypes } from '../store/modules'
 
 
 export default {
@@ -17,13 +18,19 @@ export default {
             required: true
         }
     },
-    methods: {
-        ...mapActions(['buyNowProduct']),
-        handleClick () {
-            this.buyNowProduct({
-                productId: this.productId
-            });
+    setup (props) {
+        const { productId } = props
+
+        const store = useStore()
+
+        const buyNowProduct = () => {
+            store.dispatch(
+                cartModuleTypes.actions.BUY_NOW_PRODUCT,
+                { productId }
+            )
         }
+
+        return { buyNowProduct }
     }
 }
 </script>

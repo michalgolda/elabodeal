@@ -1,15 +1,14 @@
 <template>
 	<button 
 		class="btn btn__secondary"
-		@click="handleClick"
+		@click="addProductToCart"
 	>
 		Dodaj do koszyka
 	</button>
 </template>
 <script>
-import { createNamespacedHelpers } from 'vuex';
-
-const { mapActions: mapCartActions } = createNamespacedHelpers('cart');
+import { useStore } from 'vuex'
+import { cartModuleTypes } from '../store/modules'
 
 
 export default {
@@ -19,13 +18,19 @@ export default {
 			required: true
 		}
 	},
-	methods: {
-		...mapCartActions(['addProductToCart']),
-		handleClick () {
-			this.addProductToCart({
-				productId: this.productId
-			});
+	setup (props) {
+		const { productId } = props
+
+		const store = useStore()
+
+		const addProductToCart = () => {
+			store.dispatch(
+				cartModuleTypes.actions.ADD_PRODUCT_TO_CART,
+				{ productId }
+			)
 		}
+
+		return { addProductToCart }
 	}
 }
 </script>

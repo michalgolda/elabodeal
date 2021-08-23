@@ -1,5 +1,10 @@
-import cartModule from './cart';
+import cartModule, { cartModuleTypes } from './cart'
+import uiModule, { uiModuleTypes } from './ui'
+
 
 export {
-	cartModule
+	cartModule,
+	cartModuleTypes,
+	uiModule,
+	uiModuleTypes
 }

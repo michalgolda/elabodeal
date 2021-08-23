@@ -43,16 +43,23 @@
 	</Modal>
 </template>
 <script>
+import { computed } from 'vue'
+
 import Modal from '@/components/Modal';
+
 
 export default {
 	components: {
 		Modal
 	},
-	computed: {
-		product () {
-			return this.context.product;
-		}
+	setup (props) {
+		const { context } = props
+
+		const product = computed(() => {
+			return context.product
+		})
+
+		return { product }
 	}
 }
 </script>
