@@ -30,7 +30,7 @@ const mutationTypes = {
 const mutations = {
     [mutationTypes.REMOVE_PRODUCT] (state, productId) {
         state.products = state.products.filter((product) => {
-            return product.id === productId
+            return product.id !== productId
         })
     },
     [mutationTypes.SELECT_PRODUCT] (state, productId) {
@@ -49,7 +49,7 @@ const mutations = {
         const product = state.selectedProducts.filter((product) => {
             return product.id === productId
         })
-        
+
         const totalPriceElm = document.getElementsByClassName('cart-total-price')[1]
     
         const updatedTotalPrice = parseFloat(totalPriceElm.innerText) + product.price
@@ -60,7 +60,7 @@ const mutations = {
         const product = state.selectedProducts.filter((product) => {
             return product.id === productId
         })
-        
+
         const totalPriceElm = document.getElementsByClassName('cart-total-price')[1]
     
         const updatedTotalPrice = parseFloat(totalPriceElm.innerText) - product.price
@@ -140,7 +140,7 @@ const actions = {
                     mutationTypes.REMOVE_PRODUCT,
                     productId,
                     { root: true }
-                );
+                )
 
                 ctx.commit(
                     mutationTypes.UPDATE_TOTAL_PRICE,
@@ -172,6 +172,12 @@ const actions = {
                             productId,
                             { root: true }
                         )
+                        
+                        ctx.commit(
+                            mutationTypes.ADD_PRODUCT_PRICE_TO_TOTAL_PRICE,
+                            productId,
+                            { root: true }
+                        )
 
                         break
                     case 'UNSELECT':
@@ -181,10 +187,16 @@ const actions = {
                             { root: true }
                         )
 
+                        ctx.commit(
+                            mutationTypes.SUBTRACT_PRODUCT_PRICE_FROM_TOTAL_PRICE,
+                            productId,
+                            { root: true }
+                        )
+
                         break
                 }
             }
-        });
+        })
     },
     [actionTypes.CREATE_CHECKOUT_SESSION] () {
         checkoutSessionService.createSession(null, {
@@ -202,6 +214,7 @@ export const mainModuleTypes = createNamespacedTypes('main', {
 })
 
 const mainModule = {
+    state,
     actions,
     getters,
     mutations,
