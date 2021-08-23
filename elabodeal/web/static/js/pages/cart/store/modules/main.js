@@ -45,8 +45,8 @@ const mutations = {
             return product.id !== productId
         })
     },
-    [mutationTypes.ADD_PRODUCT_PRICE_TO_TOTAL_PRICE] (_, productId) {
-        const product = state.selectedProducts.filter((product) => {
+    [mutationTypes.ADD_PRODUCT_PRICE_TO_TOTAL_PRICE] (state, productId) {
+        const product = state.products.find((product) => {
             return product.id === productId
         })
 
@@ -57,7 +57,7 @@ const mutations = {
         totalPriceElm.innerText = updatedTotalPrice.toFixed(2)
     },
     [mutationTypes.SUBTRACT_PRODUCT_PRICE_FROM_TOTAL_PRICE] (state, productId) {
-        const product = state.selectedProducts.filter((product) => {
+        const product = state.products.find((product) => {
             return product.id === productId
         })
 
@@ -156,7 +156,7 @@ const actions = {
             }
         });
     },
-    [actionTypes.TOGGLE_PRODUCT] (ctx, { productId }) {
+    [actionTypes.TOGGLE_PRODUCT] (ctx, { productId, selected }) {
         const data = new FormData()
 
         data.append('product_id', productId)
