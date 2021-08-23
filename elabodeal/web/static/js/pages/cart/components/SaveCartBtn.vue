@@ -1,6 +1,6 @@
 <template>
 	<button 
-		v-if="showBtn"
+		v-if="cartIsNotEmpty"
 		class="btn btn__primary"
 		@click="handleClick"
 	>
@@ -8,16 +8,21 @@
 	</button>
 </template>
 <script>
-import { mapState } from 'vuex';
-
-
 export default {
-	computed: mapState({
-		showBtn: state => state.products.length > 0
-	}),
-	methods: {
-		handleClick () {
-			this.$modalManager.show('saveCartModal');
+	setup () {
+		const store = useStore()
+
+		const showModal = () => {
+			this.$modalManager.show('saveCartModal')
+		}
+
+		const cartIsNotEmpty = () => {
+			return !store.getters[mainModuleTypes.getters.CART_IS_EMPTY]
+		}
+		
+		return {
+			showModal,
+			cartIsNotEmpty
 		}
 	}
 }

@@ -24,17 +24,29 @@
 	</div>
 </template>
 <script>
-import { mapState } from 'vuex';
-import ProductListItem from './ProductListItem';
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { mainModuleTypes } from '../store/modules'
+
 
 export default {
 	components: {
 		ProductListItem
 	},
-	computed: {
-		...mapState(['products']),
-		cartIsEmpty () {
-			return this.products.length === 0
+	setup () {
+		const store = useStore()
+
+		const products = computed(() => {
+			return store.getters[mainModuleTypes.getters.GET_PRODUCTS]
+		})
+
+		const cartIsEmpty = computed(() => {
+			return store.getters[mainModuleTypes.getters.CART_IS_EMPTY]
+		})
+
+		return {
+			products,
+			cartIsEmpty
 		}
 	}
 }

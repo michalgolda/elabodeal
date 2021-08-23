@@ -19,7 +19,7 @@
 					type="text" 
 					name="title" 
 					required
-					@change="handleChangeTitle"
+					ref="titleInputRef"
 				>
 			</div>
 			<div style="margin-top: .5rem; margin-bottom: .5rem;">
@@ -32,8 +32,8 @@
 					{{ error }}
 				</p>
 				<textarea 
-					name="description" 
-					@change="handleChangeDescription"
+					name="description"
+					ref="descriptionInputRef"
 				/> 
 			</div>
 			<button 
@@ -45,43 +45,46 @@
 	</Modal>
 </template>
 <script>
-import { 
-	mapActions as mapRootActions,
-	createNamespacedHelpers } from 'vuex';
-
-import Modal from '@/components/Modal';
-
-
-const { mapState: mapUiState } = createNamespacedHelpers('ui');
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { uiModuleTypes, mainModuleTypes } from '../store/modules'
 
 
 export default {
 	components: {
 		Modal
 	},
-	computed: mapUiState({
-		titleErrors: state => state.error.title,
-		descriptionErrors: state => state.error.description
-	}),
-	data () {
-		return {
-			title: '',
-			description: ''
+	setup () {
+		const store = useStore()
+
+		const titleInputRef = ref(null)
+		const descriptionInputRef = ref(null)
+
+		const saveCart = () => {
+			const titleInput = titleInputRef.value
+			const descriptionInput = descriptionInputRef.value
+
+			store.dispatch(
+				mainModuleTypes.actions.SAVE_CART,
+				{ 
+					title: titleInput.value, 
+					description: descriptionInput.value
+				}
+			)
 		}
-	},
-	methods: {
-		...mapRootActions(['saveCart']),
-		handleSubmit () {
-			this.saveCart({
-				title: this.title,
-				description: this.description
-			});
-		},
-		handleChangeTitle (e) {
-			this.title = e.target.value;
-		},
-		handleChangeDescription (e) {
-			this.description = e.target.value;
+
+		const titleErrors = computed(() => {
+			return store.getters[uiModuleTypes.getters.GET_TITLE_ERRORS]
+		})
+
+		const descriptionErrors = computed(() => {
+			return store.getters[uiModuleTypes.getters.GET_DESCRIPTION_ERRORS]
+		})
+
+		return {
+			saveCart,
+			titleErrors,
+			descriptionErrors
 		}
 	}
 }

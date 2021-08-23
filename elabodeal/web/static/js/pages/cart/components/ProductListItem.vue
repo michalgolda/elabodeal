@@ -4,7 +4,7 @@
 			<input 
 				type="checkbox" 
 				:checked="selected"
-				@change="handleToggleProduct"
+				@change="toggleProduct"
 			>
 		</div>
 		<img 
@@ -28,14 +28,15 @@
 		</div>
 		<button 
 			style="background-color: transparent; border: none; outline: none;"
-			@click="handleRemoveProduct"
+			@click="removeProductFromCart"
 		>
 			<i class="fas fa-times h2 product__delete" />
 		</button>
 	</div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { useStore } from 'vuex'
+import { mainModuleTypes } from '../store/modules';
 
 
 export default {
@@ -65,20 +66,30 @@ export default {
 			required: true
 		}
 	},
-	methods: {
-		...mapActions(['removeProductFromCart', 'selectOrDeselectProduct']),
-		handleRemoveProduct () {
-			this.removeProductFromCart({
-				product_id: this.productId
-			});
-		},
-		handleToggleProduct (e) {
-			const { checked } = e.target;
+	setup (props) {
+		const { productId } = props
 
-			this.selectOrDeselectProduct({
-				product_id: this.productId,
-				selected: checked
-			});
+		const store = useStore()
+
+		const toggleProduct = (e) => {
+			const selected = e.target.checked
+
+			store.dispatch(
+				mainModuleTypes.actions.TOGGLE_PRODUCT,
+				{ productId, selected }
+			)
+		}
+
+		const removeProductFromCart = () => {
+			store.dispatch(
+				mainModuleTypes.actions.REMOVE_PRODUCT_FROM_CART,
+				{ productId }
+			)
+		}
+
+		return {
+			toggleProduct,
+			removeProductFromCart
 		}
 	}
 }

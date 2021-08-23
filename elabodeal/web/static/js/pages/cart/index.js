@@ -11,7 +11,7 @@ import SaveCartModal from './components/SaveCartModal';
 import CreateCheckoutSessionBtn from './components/CreateCheckoutSessionBtn';
 
 
-const vueInstance = createApp();
+const app = createApp();
 
 const modalManager = createModalManager({
     modals: {
@@ -19,16 +19,16 @@ const modalManager = createModalManager({
     }
 });
 
-vueInstance.use(modalManager);
+app.use(modalManager);
 
 const injectedStore = storeAppGlobalPropertiesInjector(
     store,
     ['$modalManager']
 );
 
-vueInstance.use(injectedStore);
+app.use(injectedStore);
 
-mountPageComponents(vueInstance, {
+mountPageComponents(app, {
     'product-list': ProductList,
     'save-cart-btn': SaveCartBtn,
     'create-checkout-session-btn': CreateCheckoutSessionBtn

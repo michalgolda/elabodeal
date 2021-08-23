@@ -1,8 +1,8 @@
 <template>
 	<button
-		v-if="enableBtn"
+		v-if="enabledBtn"
 		class="btn btn__primary"
-		@click="handleClick"
+		@click="createCheckoutSession"
 	>
 		Przejdź dalej
 	</button>
@@ -15,17 +15,31 @@
 	</button>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex';
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { mainModuleTypes } from '../store/modules'
 
 
 export default {
-	computed: mapState({
-		enableBtn: state => state.selectedProducts.length > 0 && state.products.length > 0
-	}),
-	methods: {
-		...mapActions(['createCheckoutSession']),
-		handleClick () {
-			this.createCheckoutSession();
+	setup () {
+		const store = useStore()
+	
+		const enabledBtn = computed(() => {
+			return store.getters[
+				mainModuleTypes.getters.CREATE_CHECKOUT_SESSION_BTN_ENABLED
+			]
+		})
+
+		const createCheckoutSession = () => {
+			store.dispatch(
+				mainModuleTypes.actions.CREATE_CHECKOUT_SESSION,
+				null
+			)
+		}
+
+		return {
+			enabledBtn,
+			createCheckoutSession
 		}
 	}
 }
