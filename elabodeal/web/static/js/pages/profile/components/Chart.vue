@@ -1,7 +1,10 @@
 <template>
-    <div ref="chartContainer" />
+    <div ref="chartContainerRef" />
 </template>
 <script>
+import { ref, onMounted } from 'vue'
+
+
 export default {
     props: {
         title: {
@@ -17,44 +20,52 @@ export default {
             required: true
         }
     },
-    data () {
-        return {
-            config: {
-                type: 'doughnut',
-                data: {
-                    labels: this.labels,
-                    datasets: this.datasets,
-                },
-                options: {
-                    plugins: {
-                        legend: {
-                            labels: {
-                                boxWidth: 10,
-                                boxHeight: 10
-                            },
-                            position: 'bottom'
+    setup (props) {
+        // eslint-disable-next-line
+        const { labels, datasets, title } = props;
+
+        const config = {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: datasets,
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            boxWidth: 10,
+                            boxHeight: 10
                         },
-                        title: {
-                            display: true,
-                            text: this.title,
-                            padding: {
-                                bottom: 10
-                            }
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: title,
+                        padding: {
+                            bottom: 10
                         }
                     }
                 }
             }
         }
-    },
-    mounted () {
-        const chartContainer = this.$refs['chartContainer'];
-        
-        const canvas = document.createElement('canvas');
 
-        chartContainer.appendChild(canvas);
+        const chartContainerRef = ref(null)
 
-        // eslint-disable-next-line
-        this.chart = new Chart(canvas, this.config);
+        onMounted(() => {
+            const chartContainer = chartContainerRef.value
+
+            const canvas = document.createElement('canvas');
+
+            chartContainer.appendChild(canvas);
+
+            // eslint-disable-next-line
+            new Chart(canvas, config);
+        })
+
+        return {
+            chartContainerRef
+        }
     }
 }
 </script>

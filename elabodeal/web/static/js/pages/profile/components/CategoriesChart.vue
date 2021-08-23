@@ -6,18 +6,36 @@
     />
 </template>
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
+import { chartsModuleTypes } from '../store/modules'
 import Chart from './Chart';
-import { appData } from '@/utils/data';
 
 
 export default {
     components: {
         Chart
     },
-    data () {
-        const { labels, datasets } = appData['charts']['categories'];
+    setup () {
+        const store = useStore()
 
-        return { labels, datasets };
+        const chartData = store.getters[
+            chartsModuleTypes.getters.GET_CATEGORIES_CHART_DATA
+        ]
+
+        const labels = computed(() => {
+            return chartData['labels']
+        })
+
+        const datasets = computed(() => {
+            return chartData['datasets']
+        })
+
+        return {
+            labels,
+            datasets
+        }
     }
 }
 </script>

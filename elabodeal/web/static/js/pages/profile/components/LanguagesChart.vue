@@ -1,23 +1,41 @@
 <template>
-    <Chart 
-        title="Języki"
-        :labels="labels"
-        :datasets="datasets"
-    />
+	<Chart 
+		title="Języki"
+		:labels="labels"
+		:datasets="datasets"
+	/>
 </template>
 <script>
-import Chart from './Chart';
-import { appData } from '@/utils/data';
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
+import { chartsModuleTypes } from '../store/modules'
+import Chart from './Chart'
 
 
 export default {
-    components: {
-        Chart
-    },
-    data () {
-        const { labels, datasets } = appData['charts']['languages'];
+	components: {
+		Chart
+	},
+	setup () {
+		const store = useStore()
 
-        return { labels, datasets };
-    }
+		const chartData = store.getters[
+			chartsModuleTypes.getters.GET_LANGUAGES_CHART_DATA
+		]
+
+		const labels = computed(() => {
+			return chartData['labels']
+		})
+
+		const datasets = computed(() => {
+			return chartData['datasets']
+		})
+
+		return {
+			labels,
+			datasets
+		}
+	}
 }
 </script>

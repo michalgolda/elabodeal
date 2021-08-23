@@ -1,13 +1,15 @@
 <template>
     <button 
-        @click="handleClick"
+        @click="followPublisherProfile"
         class="btn btn__primary"
     >
         Zaobserwuj
     </button>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { useStore } from 'vuex'
+import { mainModuleTypes } from '../store/modules'
+
 
 export default {
     props: {
@@ -16,12 +18,20 @@ export default {
             required: true
         }
     },
-    methods: {
-        ...mapActions(['followPublisherProfile']),
-        handleClick () {
-            this.followPublisherProfile({
-                publisherId: this.publisherId
-            });
+    setup (props) {
+        const { publisherId } = props
+
+        const store = useStore()
+
+        const followPublisherProfile = () => {
+            store.dispatch(
+                mainModuleTypes.actions.FOLLOW_PUBLISHER_PROFILE,
+                { publisherId }
+            )
+        }
+
+        return {
+            followPublisherProfile
         }
     }
 }

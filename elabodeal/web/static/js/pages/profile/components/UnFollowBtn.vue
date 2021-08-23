@@ -1,6 +1,6 @@
 <template>
     <button 
-        @click="handleClick"
+        @click="unFollowPublisherProfile"
         class="btn btn__secondary"
     >
         <i class="fas fa-check" />&nbsp;&nbsp;
@@ -8,7 +8,8 @@
     </button>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { useStore } from 'vuex'
+import {  mainModuleTypes } from '../store/modules'
 
 
 export default {
@@ -18,12 +19,20 @@ export default {
             required: true
         }
     },
-    methods: {
-        ...mapActions(['unFollowPublisherProfile']),
-        handleClick () {
-            this.unFollowPublisherProfile({
-                publisherId: this.publisherId
-            });
+    setup (props) {
+        const { publisherId } = props
+    
+        const store = useStore()
+
+        const unFollowPublisherProfile = () => {
+            store.dispatch(
+                mainModuleTypes.actions.UNFOLLOW_PUBLISHER_PROFILE,
+                { publisherId }
+            )
+        }
+
+        return {
+            unFollowPublisherProfile
         }
     }
 }
