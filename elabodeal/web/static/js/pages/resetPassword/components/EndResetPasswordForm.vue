@@ -71,7 +71,7 @@ export default {
         const startResetPasswordFlow = () => {
             store.dispatch(
                 mainModuleTypes.actions.START_RESET_PASSWORD_FLOW,
-                email
+                { email: email.value }
             )
         }
 
@@ -87,6 +87,7 @@ export default {
             store.dispatch(
                 mainModuleTypes.actions.END_RESET_PASSWORD_FLOW,
                 {
+                    email: email.value,
                     code: codeInput.value,
                     newPasswordOne: newPasswordOneInput.value,
                     newPasswordTwo: newPasswordTwoInput.value
@@ -97,10 +98,13 @@ export default {
         return {
             email,
             codeErrors,
+            codeInputRef,
             newPasswordTwoErrors,
             newPasswordOneErrors,
             endResetPasswordFlow,
-            startResetPasswordFlow
+            startResetPasswordFlow,
+            newPasswordOneInputRef,
+            newPasswordTwoInputRef
         }
     }
 }
