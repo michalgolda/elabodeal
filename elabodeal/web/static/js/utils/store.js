@@ -19,4 +19,15 @@ const storeAppGlobalPropertiesInjector = (store, properties) => {
 	}
 };
 
+export const createNamespacedTypes = (namespace, definitions) => {
+	for (var definitionName in definitions) {
+		const types = definitions[definitionName]
+		
+		for (var typeName in types)
+			types[typeName] = `${namespace}/${typeName}`
+	}
+
+	return definitions
+}
+
 export default storeAppGlobalPropertiesInjector;
