@@ -45,7 +45,11 @@ function ModalManager ({ modals } = {}) {
 ModalManager.prototype.install = function (app) {
 	this.app = app;
 
+	// Support options API
 	app.config.globalProperties.$modalManager = this;
+	
+	// Support composition API
+	app.provide('$modalManager', this)
 
 	app.mixin({
 		mounted: () => this.restore()
