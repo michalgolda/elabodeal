@@ -2,23 +2,30 @@
 	<button 
 		v-if="cartIsNotEmpty"
 		class="btn btn__primary"
-		@click="handleClick"
+		@click="showModal"
 	>
 		Zapisz koszyk
 	</button>
 </template>
 <script>
+import { computed, inject } from 'vue'
+import { useStore } from 'vuex'
+import { mainModuleTypes } from '../store/modules'
+
+
 export default {
 	setup () {
 		const store = useStore()
 
+		const $modalManager = inject('$modalManager')
+
 		const showModal = () => {
-			this.$modalManager.show('saveCartModal')
+			$modalManager.show('saveCartModal')
 		}
 
-		const cartIsNotEmpty = () => {
+		const cartIsNotEmpty = computed(() => {
 			return !store.getters[mainModuleTypes.getters.CART_IS_EMPTY]
-		}
+		})
 		
 		return {
 			showModal,

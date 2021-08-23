@@ -4,7 +4,7 @@
 	>
 		<form 
 			autocomplete="off"
-			@submit.prevent="handleSubmit"
+			@submit.prevent="saveCart"
 		>
 			<div>
 				<label>TYTUŁ</label>
@@ -45,9 +45,11 @@
 	</Modal>
 </template>
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { uiModuleTypes, mainModuleTypes } from '../store/modules'
+
+import Modal from '@/components/Modal'
 
 
 export default {
@@ -84,7 +86,9 @@ export default {
 		return {
 			saveCart,
 			titleErrors,
-			descriptionErrors
+			titleInputRef,
+			descriptionErrors,
+			descriptionInputRef
 		}
 	}
 }

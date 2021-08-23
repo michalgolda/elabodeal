@@ -28,6 +28,8 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { mainModuleTypes } from '../store/modules'
 
+import ProductListItem from './ProductListItem'
+
 
 export default {
 	components: {
