@@ -1,16 +1,25 @@
-from django.db.models import F, Count
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 
 from elabodeal.web.views import BaseView
-from elabodeal.models import Publisher, Product
+from elabodeal.models import (
+    User,
+    Product,
+    Publisher
+)
 
 
 def check_publisher_existing(method):
-    def wrapper(request, id, *args, **kwargs):
-        existing_publisher = Publisher.objects.filter(id=id).first()
+    def wrapper(request, username, *args, **kwargs):
+        existing_user = User.objects.filter(username=username).first()
 
-        if not existing_publisher: return redirect('web:index')
+        if not existing_user: 
+            return redirect('web:index')
+
+        if not existing_user.is_publisher: 
+            return redirect('web:index')
+
+        existing_publisher = existing_user.publisher
 
         return method(request, existing_publisher, *args, **kwargs)
     return wrapper
@@ -25,8 +34,6 @@ def check_whether_user_already_following(method):
                 existing_publisher.id
             )
 
-            print(user_already_following)
-        
         return method(request, existing_publisher, user_already_following)
     return wrapper
 
