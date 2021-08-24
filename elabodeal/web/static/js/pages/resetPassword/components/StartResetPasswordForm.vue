@@ -9,13 +9,6 @@
     >
         <div class="form__input-group">
             <label>Adres email powiązany z kontem</label>
-            <p 
-                class="form__input-error-msg"
-                v-for="error in emailErrors"
-                :key="error"
-            >
-                {{ error }}
-            </p>
             <input 
                 ref="emailInputRef" 
                 type="text" 
@@ -29,18 +22,14 @@
     </form>
 </template>
 <script>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useStore } from 'vuex'
-import { uiModuleTypes, mainModuleTypes } from '../store/modules'
+import { mainModuleTypes } from '../store/modules'
 
 
 export default {
     setup () {
         const store = useStore()
-
-        const emailErrors = computed(() => {
-            return store.getters[uiModuleTypes.getters.GET_EMAIL_ERRORS]
-        })
 
         const emailInputRef = ref(null)
 
@@ -55,7 +44,6 @@ export default {
 
         return {
             emailInputRef,
-            emailErrors,
             startResetPasswordFlow
         }
     }

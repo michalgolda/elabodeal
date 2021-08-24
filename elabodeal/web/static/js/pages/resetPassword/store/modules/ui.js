@@ -31,15 +31,11 @@ const mutations = {
 const getterTypes = {
     SHOW_END_FORM: 'SHOW_END_FORM',
     GET_CODE_ERRORS: 'GET_CODE_ERRORS',
-    GET_EMAIL_ERRORS: 'GET_EMAIL_ERRORS',
     GET_NEW_PASSWORD_TWO_ERRORS: 'GET_NEW_PASSWORD_TWO_ERRORS',
     GET_NEW_PASSWORD_ONE_ERRORS: 'GET_NEW_PASSWORD_ONE_ERRORS'
 }
 
 const getters = {
-    [getterTypes.GET_EMAIL_ERRORS] (state) {
-        return state.errors.email
-    },
     [getterTypes.SHOW_END_FORM] (state, getters, rootState, rootGetters) {
         return state.step === 'end' && rootGetters[mainModuleTypes.getters.GET_EMAIL]
     },

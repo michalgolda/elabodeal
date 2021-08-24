@@ -56,8 +56,13 @@ const actions = {
         })
     },
     [actionTypes.END_RESET_PASSWORD_FLOW] (
-        ctx, 
-        { email, code, newPasswordOne, newPasswordTwo }
+        _, 
+        { 
+            email, 
+            code, 
+            newPasswordOne, 
+            newPasswordTwo 
+        }
     ) {
         const data = new FormData()
 
@@ -69,13 +74,6 @@ const actions = {
         userService.endResetPasswordFlow(data, {
             successCallback: () => {
                 window.location = '/login/';
-            },
-            errorCallback: (errorRes) => {
-                ctx.commit(
-                    uiModuleTypes.mutations.SHOW_ERRORS,
-                    errorRes.data.error.details,
-                    {root: true}
-                )
             }
         })
     }

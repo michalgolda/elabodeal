@@ -7,6 +7,8 @@ class StartResetPasswordFlowInteractor(Interactor):
         self.verification_code_repo = verification_code_repo
     
     def execute(self, email):
+        if not email: return
+
         verification_code = self.verification_code_repo.add(email=email)
 
         reset_password_request_email = ResetPasswordRequestEmail(
@@ -24,6 +26,8 @@ class EndResetPasswordFlowInteractor(Interactor):
         self.verification_code_repo = verification_code_repo
 
     def execute(self, email, password):
+        if not email: return
+
         user = self.user_repo.get_one_by(email=email)
 
         user.set_password(password)

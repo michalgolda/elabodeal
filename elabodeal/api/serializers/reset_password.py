@@ -13,10 +13,7 @@ class StartResetPasswordFlowRequestSerializer(serializers.Serializer):
     def validate_email(self, email):
         existing_user = User.objects.filter(email=email).first()
 
-        if not existing_user:
-            raise serializers.ValidationError(
-                _('Adres email jest błędny lub użytkownik o podanym adresie email nie istnieje.')
-            )
+        if not existing_user: return None
 
         return email
 
@@ -33,10 +30,7 @@ class EndResetPasswordFlowRequestSerializer(serializers.Serializer):
     def validate_email(self, email):
         existing_user = User.objects.filter(email=email).first()
 
-        if not existing_user:
-            raise serializers.ValidationError(
-                _('Adres email jest błędny lub użytkownik o podanym adresie email nie istnieje.')
-            )
+        if not existing_user: return
 
         return email
 
