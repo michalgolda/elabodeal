@@ -9,40 +9,49 @@
 		<StepElement
 			:number="2" 
 			name="Wysyłka"
-			:current="currentStepIsDeliver"
-			:succeed="currentStepIsPayment || currentStepIsSuccess"
+			:current="showDeliverView"
+			:succeed="showPaymentView || showPaymentSuccessView"
 		/>
 		<div class="checkout-step__separator" />
 		<StepElement
 			:number="3" 
 			name="Płatność"
-			:current="currentStepIsPayment"
-			:succeed="currentStepIsSuccess"
+			:current="showPaymentView"
+			:succeed="showPaymentSuccessView"
 		/>
 	</div>
 </template>
 <script>
-import { createNamespacedHelpers } from 'vuex';
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { uiModuleTypes } from '../store/modules';
 
 import StepElement from './StepElement';
-
-const { mapState: mapUiState } = createNamespacedHelpers('ui');
 
 
 export default {
 	components: {
 		StepElement
 	},
-	computed: {
-		...mapUiState(['currentStep']),
-		currentStepIsDeliver () {
-			return this.currentStep === 'deliver';
-		},
-		currentStepIsPayment () {
-			return this.currentStep === 'payment';
-		},
-		currentStepIsSuccess () {
-			return this.currentStep === 'success';
+	setup () {
+		const store = useStore()
+
+		const showDeliverView = computed(() => {
+			return store.getters[uiModuleTypes.getters.SHOW_DELIVER_VIEW]
+		})
+
+		const showPaymentView = computed(() => {
+			return store.getters[uiModuleTypes.getters.SHOW_PAYMENT_VIEW]
+		})
+
+		const showPaymentSuccessView = computed(() => {
+			return store.getters[uiModuleTypes.getters.SHOW_PAYMENT_SUCCESS_VIEW]
+		})
+
+		return {
+			showDeliverView,
+			showPaymentView,
+			showPaymentSuccessView
 		}
 	}
 }

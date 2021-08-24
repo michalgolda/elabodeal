@@ -3,11 +3,11 @@
 		<div class="wrapper success-msg-wrapper flex-center">
 			<div class="success-msg">
 				<h1 class="success-msg__title">
-					{{ paymentFirstName }}, dziękujemy za zakupy 😉
+					{{ firstName }}, dziękujemy za zakupy 😉
 				</h1>
 				<h3 class="success-msg__description">
 					Płatność zakończona sukcesem. Wkrótce otrzymasz wiadomość na 
-					<span class="success-msg__highlight">{{ deliveryEmail }}</span> z zakupionym produktem. Możesz opuścić widoczną stronę, klikając w przycisk poniżej.
+					<span class="success-msg__highlight">{{ email }}</span> z zakupionym produktem. Możesz opuścić widoczną stronę, klikając w przycisk poniżej.
 				</h3>
 				<a 
 					class="btn btn__primary" 
@@ -20,24 +20,34 @@
 	</BaseView>
 </template>
 <script>
-import { createNamespacedHelpers } from 'vuex';
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 
 import BaseView from './BaseView';
+import { deliveryModuleTypes, paymentModuleTypes } from '../store/modules';
 
-const { mapState: mapPaymentState } = createNamespacedHelpers('payment');
-const { mapState: mapDeliverState } = createNamespacedHelpers('deliver');
 
 export default {
 	components: {
 		BaseView
 	},
-	computed: {
-		...mapPaymentState({
-			paymentFirstName: state => state.payment.first_name
-		}),
-		...mapDeliverState({
-			deliveryEmail: state => state.delivery.email
+	setup () {
+		const store = useStore()
+
+		const firstName = computed(() => {
+			return store.getters[
+				paymentModuleTypes.getters.GET_PAYER_FIRST_NAME
+			]
 		})
+
+		const email = computed(() => {
+			return store.getters[deliveryModuleTypes.getters.GET_DELIVERY_EMAIL]
+		})
+
+		return {
+			email,
+			firstName
+		}
 	}
 }
 </script>

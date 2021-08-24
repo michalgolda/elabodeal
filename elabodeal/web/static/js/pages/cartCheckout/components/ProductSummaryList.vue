@@ -25,20 +25,36 @@
 	</div>
 </template>
 <script>
-import { createNamespacedHelpers } from 'vuex';
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { paymentModuleTypes } from '../store/modules';
 
 import ProductSummaryListItem from './ProductSummaryListItem';
-
-const { mapState: mapPaymentState } = createNamespacedHelpers('payment');
 
 
 export default {
 	components: {
 		ProductSummaryListItem
 	},
-	computed: mapPaymentState([
-		'summaryProducts', 
-		'summaryTotalPrice'
-	])
+	setup () {
+		const store = useStore()
+
+		const summaryProducts = computed(() => {
+			return store.getters[
+				paymentModuleTypes.getters.GET_SUMMARY_PRODUCTS
+			]
+		})
+
+		const summaryTotalPrice = computed(() => {
+			return store.getters[
+				paymentModuleTypes.getters.GET_SUMMARY_TOTAL_PRICE
+			]
+		})
+
+		return {
+			summaryProducts,
+			summaryTotalPrice
+		}
+	}
 }
 </script>

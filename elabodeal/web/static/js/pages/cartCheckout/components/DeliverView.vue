@@ -2,7 +2,7 @@
 	<BaseView>
 		<div class="form-wrapper">
 			<form 
-				@submit.prevent="handleSubmit" 
+				@submit.prevent="updateDeliverData" 
 				class="form"
 				autocomplete="off" 
 			>
@@ -20,8 +20,8 @@
 							name="first_name"
 							type="text"
 							required="required"
-							:value="first_name"
-							ref="first_name"
+							:value="firstName"
+							ref="firstNameInputRef"
 						>
 					</div>
 					<div>
@@ -37,8 +37,8 @@
 							name="last_name"
 							type="text"
 							required="required"
-							:value="last_name"
-							ref="last_name" 
+							:value="lastName"
+							ref="lastNameInputRef" 
 						>
 					</div>
 				</div>
@@ -56,7 +56,7 @@
 						type="email"
 						required="required"
 						:value="email"
-						ref="email" 
+						ref="emailInputRef" 
 					>
 				</div>
 				<button 
@@ -68,7 +68,7 @@
 				<button 
 					class="btn btn__secondary btn-block"
 					type="button"
-					@click="() => cancelCheckoutProcess()"
+					@click="cancelCheckoutFlow"
 				>
 					Wstecz
 				</button>
@@ -77,40 +77,84 @@
 	</BaseView>
 </template>
 <script>
+import { computed, ref } from 'vue'
+import { useStore } from 'vuex'
 import { 
-	createNamespacedHelpers,
-	mapState as mapRootState,
-	mapActions as mapRootActions } from 'vuex';
+	uiModuleTypes,
+	mainModuleTypes, 
+	deliveryModuleTypes } from '../store/modules'
 
-import BaseView from './BaseView';
-
-const { mapState: mapUiState } = createNamespacedHelpers('ui');
-const { mapActions: mapDeliverActions } = createNamespacedHelpers('deliver');
+import BaseView from './BaseView'
 
 
 export default {
 	components: {
 		BaseView
 	},
-	computed: {
-		...mapUiState({
-			firstNameErrors: state => state.error.first_name,
-			lastNameErrors: state => state.error.last_name,
-			emailErrors: state => state.error.email
-		}),
-		...mapRootState(['email', 'first_name', 'last_name'])
-	},
-	methods: {
-		...mapRootActions(['cancelCheckoutProcess']),
-		...mapDeliverActions(['collectDeliverData']),
-		handleSubmit () {
-			const { first_name, last_name, email } = this.$refs;
+	setup () {
+		const store = useStore()
 
-			this.collectDeliverData({
-				email: email.value,
-				last_name: last_name.value,
-				first_name: first_name.value
-			});
+		const email = computed(() => {
+			return store.getters[deliveryModuleTypes.getters.GET_EMAIL]
+		})
+
+		const firstName = computed(() => {
+			return store.getters[deliveryModuleTypes.getters.GET_FIRST_NAME]
+		})
+
+		const lastName = computed(() => {
+			return store.getters[deliveryModuleTypes.getters.GET_LAST_NAME]
+		})
+
+		const emailErrors = computed(() => {
+			return store.getters[uiModuleTypes.getters.GET_EMAIL_ERRORS]
+		})
+		
+		const firstNameErrors = computed(() => {
+			return store.getters[uiModuleTypes.getters.GET_FIRST_NAME_ERRORS]
+		})
+
+		const lastNameErrors = computed(() => {
+			return store.getters[uiModuleTypes.getters.GET_LAST_NAME_ERRORS]
+		})
+
+		const emailInputRef = ref(null)
+		const lastNameInputRef = ref(null)
+		const firstNameInputRef = ref(null)
+
+		const updateDeliverData = () => {
+			const emailInput = emailInputRef.value
+			const lastNameInput = lastNameInputRef.value
+			const firstNameInput = firstNameInputRef.value
+
+			store.dispatch(
+				deliveryModuleTypes.actions.UPDATE_DELIVER_DATA,
+				{
+					email: emailInput.value,
+					lastName: lastNameInput.value,
+					firstName: firstNameInput.value
+				}
+			)
+		}
+
+		const cancelCheckoutFlow = () => {
+			store.dispatch(
+				mainModuleTypes.actions.CANCEL_CHECKOUT_FLOW
+			)
+		}
+
+		return {
+			email,
+			lastName,
+			firstName,
+			emailErrors,
+			lastNameErrors,
+			firstNameErrors,
+			emailInputRef,
+			lastNameInputRef,
+			firstNameInputRef,
+			updateDeliverData,
+			cancelCheckoutFlow
 		}
 	}
 }

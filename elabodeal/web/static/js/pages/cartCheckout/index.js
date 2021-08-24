@@ -4,10 +4,10 @@ import store from './store';
 import Main from './components/Main';
 
 
-const vueInstance = createApp(Main);
+const app = createApp(Main);
 
 const mountElement = document.getElementById('mount0_0');
 
-vueInstance.use(store);
+app.use(store);
 
-vueInstance.mount(mountElement);
+app.mount(mountElement);
