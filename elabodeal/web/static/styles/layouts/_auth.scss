@@ -111,13 +111,13 @@
 }
 
 .underFormLinks {
-    text-align: left;
     margin-top: 2rem;
+    text-align: center;
 
     &__link {
+        font-size: .8rem;
         font-weight: bold;
         color: $color-green;
         text-decoration: underline;
-        font-size: $font-size-small;
     }
 }
