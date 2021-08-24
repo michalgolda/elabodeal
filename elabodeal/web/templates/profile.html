@@ -23,7 +23,23 @@
         <img class="profileBadge__avatar" src="https://64.media.tumblr.com/tumblr_lsmd6zqBUe1qbdhn3o1_500.png">
         <p class="profileBadge__fullName">{{ publisher.full_name }}</p>
         <p class="profileBadge__whoIsHe">Doktor ekonomii</p>
-        <div class="profileBadge__btnWrapper">
+        <p class="profileBadge__description">
+            gatunek dużego ptaka brodzącego z rodziny bocianów (Ciconiidae). ... Dorosłe ptaki mają długie czerwone nogi oraz długie spiczasto zakończone czerwone dzioby i mierzą średnio 100–115 cm od czubka dzioba do końca ogona, ze skrzydłami o rozpiętości 155–215 cm.to duży kot, z silnymi łapami i ostrymi pazurami. Jego długość nie przekracza 350cm, waży ok. 250 kg. Wyposażony w szczęke, potrzebną do polowania, może osiągać prędkość 60km/h.
+        </p>
+    </div>
+    <div class="container">
+        <div class="profileBanner">
+            <img class="profileBanner__img" src="https://wallpaperaccess.com/full/1713248.jpg">
+            <div class="profileBanner__content">
+                {% if banner.text %}
+                <p class="profileBanner__text">{{ banner.text }}</p>
+                {% endif %}
+                {% if banner.product %}
+                <img class="profileBanner__productHighlight" src="{{ banner.product.cover_img.path }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="pageBar">
             {% if request.user.is_authenticated %}
             {% if user_already_following %}
             <button 
@@ -46,22 +62,6 @@
             {% else %}
             <a class="btn btn__primary" href="{% url 'web:login' %}">Zaobserwuj</a>
             {% endif %}
-        </div>
-        <p class="profileBadge__description">
-            gatunek dużego ptaka brodzącego z rodziny bocianów (Ciconiidae). ... Dorosłe ptaki mają długie czerwone nogi oraz długie spiczasto zakończone czerwone dzioby i mierzą średnio 100–115 cm od czubka dzioba do końca ogona, ze skrzydłami o rozpiętości 155–215 cm.to duży kot, z silnymi łapami i ostrymi pazurami. Jego długość nie przekracza 350cm, waży ok. 250 kg. Wyposażony w szczęke, potrzebną do polowania, może osiągać prędkość 60km/h.
-        </p>
-    </div>
-    <div class="container">
-        <div class="profileBanner">
-            <img class="profileBanner__img" src="https://wallpaperaccess.com/full/1713248.jpg">
-            <div class="profileBanner__content">
-                {% if banner.text %}
-                <p class="profileBanner__text">{{ banner.text }}</p>
-                {% endif %}
-                {% if banner.product %}
-                <img class="profileBanner__productHighlight" src="{{ banner.product.cover_img.path }}">
-                {% endif %}
-            </div>
         </div>
         <div class="pageWidget">
             <div class="profileStatistics">

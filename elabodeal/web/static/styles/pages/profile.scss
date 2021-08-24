@@ -15,7 +15,7 @@
     display: grid;
     row-gap: 2rem;
     height: fit-content;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto 32px auto auto;
 }
 
 .profileBanner {
@@ -82,6 +82,7 @@
         font-weight: bold;
         text-align: center;
         padding-top: .5rem;
+        margin-bottom: .5rem;
         padding-bottom: .5rem;
         font-size: $font-size-medium;
         background-color: $color-orange;
@@ -96,14 +97,8 @@
         background-color: $color-green;
     }
 
-    &__btnWrapper {
-        margin-top: 1rem;
-        text-align: center;
-        margin-bottom: 1rem;
-    }
-
     &__description {
-        padding: 0 .5rem 1rem .5rem;
+        padding: 1rem .5rem 1rem .5rem;
     }
 }
 
@@ -115,6 +110,11 @@
     padding-right: .5rem;
     background-color: white;
     border: 1px solid $color-grey;
+}
+
+.pageBar {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .profileStatistics {
