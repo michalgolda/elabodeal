@@ -3,7 +3,10 @@
         <h2>Zresetuj swoje hasło</h2>
         <p>Podaj kod weryfikacyjny wysłany na podany adres email <strong>{{ email }}</strong></p>
     </div>
-    <form @submit.prevent="endResetPasswordFlow" class="form">
+    <form 
+        @submit.prevent="endResetPasswordFlow" 
+        class="form"
+    >
         <div class="form__input-group">
             <label>Kod weryfikacyjny</label>
             <p 
@@ -13,7 +16,12 @@
             >
                 {{ error }}
             </p>
-            <input ref="codeInputRef" type="text" name="code" required/>
+            <input 
+                ref="codeInputRef" 
+                type="text" 
+                name="code" 
+                required
+            >
         </div>
         <div class="form__input-group">
             <label>Nowe hasło</label>
@@ -24,7 +32,12 @@
             >
                 {{ error }}
             </p>
-            <input ref="newPasswordOneInputRef" type="password" name="new_password1" required/>
+            <input 
+                ref="newPasswordOneInputRef" 
+                type="password" 
+                name="new_password1" 
+                required
+            >
         </div>
         <div class="form__input-group">
             <label>Powtórz nowe hasło</label>
@@ -35,12 +48,28 @@
             >
                 {{ error }}
             </p>
-            <input ref="newPasswordTwoInputRef" type="password" name="new_password2" required/>
+            <input 
+                ref="newPasswordTwoInputRef" 
+                type="password" 
+                name="new_password2" 
+                required
+            >
         </div>
         <div class="form__input-group">
-            <button class="btn btn__secondary btn-block" type="submit">Zmień</button>
+            <button 
+                class="btn btn__secondary btn-block" 
+                type="submit"
+            >
+                Zmień
+            </button>
         </div>
-        <button @click="startResetPasswordFlow" class="btn btn__primary btn-block" type="button">Wyślij kod ponownie</button>
+        <button 
+            @click="startResetPasswordFlow" 
+            class="btn btn__primary btn-block" 
+            type="button"
+        >
+            Wyślij kod ponownie
+        </button>
     </form>
 </template>
 <script>

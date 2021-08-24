@@ -3,7 +3,10 @@
         <h2>Zresetuj swoje hasło</h2>
         <p>Miejsce na informację dotyczącą procesu resetowania hasła</p>
     </div>
-    <form @submit.prevent="startResetPasswordFlow" class="form">
+    <form 
+        @submit.prevent="startResetPasswordFlow" 
+        class="form"
+    >
         <div class="form__input-group">
             <label>Adres email powiązany z kontem</label>
             <p 
@@ -13,9 +16,16 @@
             >
                 {{ error }}
             </p>
-            <input ref="emailInputRef" type="text" name="email" required />
+            <input 
+                ref="emailInputRef" 
+                type="text" 
+                name="email" 
+                required 
+            >
         </div>
-        <button class="btn btn__secondary btn-block">Dalej</button>
+        <button class="btn btn__secondary btn-block">
+            Dalej
+        </button>
     </form>
 </template>
 <script>
