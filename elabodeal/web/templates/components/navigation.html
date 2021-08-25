@@ -75,9 +75,11 @@
 </nav>
 <div id="js-menu" class="nav__menu">
 	<div class="nav__menu-wrapper">
+		{% if request.user.is_publisher %}
 		<div class="nav__menu-action">
-			<a href="#">Twój profil</a>
+			<a href="{% url 'web:profiles' username=request.user.username %}">Twój profil</a>
 		</div>
+		{% endif %}
 		<div class="nav__menu-action">
 			<a href="{% url 'web:purchased-products' %}">Moja półka</a>
 		</div>
