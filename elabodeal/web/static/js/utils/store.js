@@ -12,8 +12,10 @@ export function globalPropertiesWrapper (store, properties) {
 			for (var propertyName of properties) {
 				const globalProperties = app.config.globalProperties
 	
-				if (globalProperties.hasOwnProperty(propertyName)) {
-					store[propertyName] = globalProperties[propertyName]
+				const globalPropertyValue = globalProperties[propertyName]
+
+				if (globalPropertyValue) {
+					store[propertyName] = globalPropertyValue
 				} else {
 					console.warn(
 						`
