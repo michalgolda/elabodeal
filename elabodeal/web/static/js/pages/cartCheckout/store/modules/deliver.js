@@ -1,11 +1,11 @@
-import { appData } from '@/utils/data'
+import { getApplicationData } from '@/utils/data'
 import { uiModuleTypes } from './ui'
 import { checkoutSessionService } from '@/services'
 import { createNamespacedTypes } from '@/utils/store'
 
 
 const state = () => {
-	const { delivery } = appData;
+	const { delivery } = getApplicationData();
 	
 	return {
 		delivery: delivery ? delivery : {}

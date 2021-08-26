@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import { appData } from '@/utils/data';
+import { getApplicationData } from '@/utils/data';
 import {
 	uiModule,
 	userSettingsModule, 
@@ -7,7 +7,7 @@ import {
  
 
 const initialState = () => {
-	const { user, publisher } = appData;
+	const { user, publisher } = getApplicationData();
 
 	return {
 		user,

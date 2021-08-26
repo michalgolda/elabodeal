@@ -1,11 +1,11 @@
 import { uiModuleTypes } from './ui'
-import { appData } from '@/utils/data'
+import { getApplicationData } from '@/utils/data'
 import { createNamespacedTypes } from '@/utils/store'
 import { cartService, checkoutSessionService } from '@/services'
 
 
 const state = () => {
-    const { products } = appData
+    const { products } = getApplicationData()
 
     const selectedProducts = products.filter((product) => {
         return product.selected === true

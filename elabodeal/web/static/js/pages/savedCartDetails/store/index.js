@@ -1,9 +1,9 @@
 import { createStore } from 'vuex';
 import { savedCartService } from '@/services';
-import { appData } from '@/utils/data';
+import { getApplicationData } from '@/utils/data';
 
 const initialState = () => {
-    const { sc: sharedCart } = appData;
+    const { sc: sharedCart } = getApplicationData();
     
     return {
         shareURLPath: sharedCart ? sharedCart.sup : null

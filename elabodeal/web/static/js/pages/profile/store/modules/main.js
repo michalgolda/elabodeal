@@ -1,10 +1,10 @@
-import { appData } from '@/utils/data'
+import { getApplicationData } from '@/utils/data'
 import { publisherService } from '@/services'
 import { createNamespacedTypes } from '@/utils/store'
 
 
 const state = () => {
-    const { userAlreadyFollowing } = appData
+    const { userAlreadyFollowing } = getApplicationData()
 
     return { userAlreadyFollowing }
 }

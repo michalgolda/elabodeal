@@ -1,4 +1,4 @@
-import { appData } from '@/utils/data'
+import { getApplicationData } from '@/utils/data'
 import { uiModuleTypes } from './ui'
 import { checkoutSessionService } from '@/services'
 import { createNamespacedTypes } from '@/utils/store'
@@ -9,7 +9,7 @@ const state = () => {
 		checkout_session: checkoutSession,
 		summary_products: summaryProducts,
 		summary_total_price: summaryTotalPrice,
-		stripe_publishable_key: stripePublishableKey } = appData
+		stripe_publishable_key: stripePublishableKey } = getApplicationData()
 
 	const paymentIntentClientSecret = checkoutSession['cs']
 

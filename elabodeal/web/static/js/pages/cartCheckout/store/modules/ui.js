@@ -1,10 +1,12 @@
-import { appData } from '@/utils/data'
+import { getApplicationData } from '@/utils/data'
 import { deliveryModuleTypes } from './deliver'
 import { createNamespacedTypes } from '@/utils/store'
 
 
 const state = () => {
-	const { step } = appData['checkout_session']
+	const { checkout_session: checkoutSession } = getApplicationData()
+
+	const { step } = checkoutSession
 
 	return {
 		errors: {},

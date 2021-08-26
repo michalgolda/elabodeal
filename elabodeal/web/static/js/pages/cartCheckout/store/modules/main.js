@@ -1,4 +1,4 @@
-import { appData } from '@/utils/data'
+import { getApplicationData } from '@/utils/data'
 import { checkoutSessionService } from '@/services'
 import { createNamespacedTypes } from '@/utils/store'
 
@@ -6,7 +6,7 @@ import { createNamespacedTypes } from '@/utils/store'
 const state = () => {
     const { 
 		user, 
-		checkout_session: checkoutSession } = appData
+		checkout_session: checkoutSession } = getApplicationData()
 
 	const delivery = checkoutSession['delivery'] ? checkoutSession['delivery'] : {}
 

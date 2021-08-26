@@ -1,11 +1,13 @@
 import { createStore } from 'vuex';
 import { uiModule } from './modules';
-import { appData } from '@/utils/data';
+import { getApplicationData } from '@/utils/data';
 import { userService } from '@/services';
 
 
 const initialState = () => {
-    const supportedCountries = appData.supported_countries;
+    const { 
+        supported_countries: supportedCountries 
+    } = getApplicationData();
 
     return {
         supportedCountries

@@ -1,9 +1,11 @@
-import { appData } from '@/utils/data'
+import { getApplicationData } from '@/utils/data'
 import { createNamespacedTypes } from '@/utils/store'
 
 
 const state = () => {
-    const { categories, languages } = appData['charts']
+    const { charts } = getApplicationData()
+
+    const { categories, languages } = charts
     
     return {
         languages,
