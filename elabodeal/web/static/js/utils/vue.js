@@ -10,39 +10,42 @@ import { mount } from 'mount-vue-component';
  * @param {Object} components
  */
 export function mountComponents (app, components) {
-	const componentsKeys = Object.keys(components)
-
-	for (var componentKey of componentsKeys) {
+	for (var componentKey in components) {
 		const component = components[componentKey]
-		const componentMountElm = document.getElementById(componentKey)
+		const mountElement = document.getElementById(componentKey)
 
-		if (componentMountElm) {
-			const vComponentMountElm = componentMountElm.cloneNode(true)
+		if (mountElement) {
+			const vMountElement = mountElement.cloneNode(true)
 
-			vComponentMountElm.innerHTML = ''
+			vMountElement.innerHTML = ''
 
 			mount(component, {
 				app,
-				element: vComponentMountElm,
-				props: { ...componentMountElm.dataset }
+				element: vMountElement,
+				props: { ...mountElement.dataset }
 			})
 
-			const vComponentMountElmChildNodes = vComponentMountElm.childNodes
-			
-			const vComponentMountElmHasNotFragment = vComponentMountElmChildNodes !== 1
+			const vMountElementChildNodes = vMountElement.childNodes
 
-			if (vComponentMountElmHasNotFragment) {
+			console.log(vMountElementChildNodes)
+
+			const vMountElementHasFragment = vMountElementChildNodes.length > 1
+
+			console.log(vMountElementHasFragment)
+
+			if (vMountElementHasFragment) {
 				const vFragment = document.createElement('div')
 
-				vFragment.append(...vComponentMountElmChildNodes)
+				vFragment.append(...vMountElementChildNodes)
 
-				vComponentMountElm.innerHTML = ''
-				vComponentMountElm.appendChild(vFragment)
+				vMountElement.innerHTML = ''
+				vMountElement.appendChild(vFragment)
 			}
 
-			const vMountedComponent = vComponentMountElmChildNodes[0]
+			const vMountedComponent = vMountElementChildNodes[0]
 
-			componentMountElm.replaceWith(vMountedComponent)
+			mountElement.replaceWith(vMountedComponent)
 		}
 	}
 }
+
