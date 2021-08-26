@@ -2,6 +2,7 @@
   "name": "elabodeal",
   "version": "0.0.0",
   "scripts": {
+    "test": "jest",
     "dev": "webpack --config webpack.dev.config.js",
     "build": "webpack --config webpack.prod.config.js"
   },
@@ -19,6 +20,7 @@
     "eslint-plugin-vue": "^7.12.1",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "husky": "^4.3.8",
+    "jest": "^27.0.6",
     "mini-css-extract-plugin": "^1.6.0",
     "mount-vue-component": "^0.10.0",
     "sass": "^1.35.1",
