@@ -1,30 +1,25 @@
-import { createApp, h as createElement } from 'vue';
-import storeAppGlobalPropertiesInjector from '@/utils/store';
-import createModalManager from '@/modalManager';
+import { createApp } from 'vue'
+import createModalManager from '@/modalManager'
+import { globalPropertiesWrapper }  from '@/utils/store'
+
 import store from './store';
 
-import Main from './components/Main';
-import ConfirmEmailChangeModal from './components/ConfirmEmailChangeModal';
+import Main from './components/Main'
+import ConfirmEmailChangeModal from './components/ConfirmEmailChangeModal'
 
 
-const mountElement = document.getElementById('mount0_0');
+const app = createApp(Main)
 
-const vueInstance = createApp({
-	render() {
-		return createElement(Main);
-	}
-});
+const modals = { confirmEmailChangeModal: ConfirmEmailChangeModal }
 
-const modalManager = createModalManager({
-	modals: {
-		confirmEmailChangeModal: ConfirmEmailChangeModal
-	}
-});
+const modalManager = createModalManager({ modals })
 
-vueInstance.use(modalManager);
+app.use(modalManager)
 
-const injectedStore = storeAppGlobalPropertiesInjector(store, ['$modalManager']);
+const wrappedStore = globalPropertiesWrapper(store, ['$modalManager'])
 
-vueInstance.use(injectedStore);
+app.use(wrappedStore)
 
-vueInstance.mount(mountElement);
+const mountElement = document.getElementById('mount0_0')
+
+app.mount(mountElement)

@@ -1,34 +1,30 @@
-import { createApp } from 'vue';
-import storeAppGlobalPropertiesInjector from '@/utils/store';
-import { mountPageComponents } from '@/utils/vue';
-import createModalManager from '@/modalManager';
+import { createApp } from 'vue'
+import { mountComponents } from '@/utils/vue'
+import createModalManager from '@/modalManager'
+import { globalPropertiesWrapper } from '@/utils/store'
 
-import store from './store';
+import store from './store'
 
-import DeleteCartBtn from './components/DeleteCartBtn';
-import ShareCartBtn from './components/ShareCartBtn';
-import SharedCartModal from './components/SharedCartModal';
-
-
-const vueInstance = createApp();
-
-const modalManager = createModalManager({
-    modals: {
-        sharedCartModal: SharedCartModal
-    }
-});
-
-vueInstance.use(modalManager);
-
-const injectedStore = storeAppGlobalPropertiesInjector(
-	store, 
-	['$modalManager']
-);
-
-vueInstance.use(injectedStore);
+import ShareCartBtn from './components/ShareCartBtn'
+import DeleteCartBtn from './components/DeleteCartBtn'
+import SharedCartModal from './components/SharedCartModal'
 
 
-mountPageComponents(vueInstance, {
+const app = createApp()
+
+const modals = { sharedCartModal: SharedCartModal }
+
+const modalManager = createModalManager({ modals })
+
+app.use(modalManager)
+
+const wrappedStore = globalPropertiesWrapper(store, ['$modalManager'])
+
+app.use(wrappedStore);
+
+const components = {
     'share-cart-btn': ShareCartBtn,
-    'delete-cart-btn': DeleteCartBtn
-});
+    'delete-cart-btn': DeleteCartBtn 
+}
+
+mountComponents(app, components)

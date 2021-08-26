@@ -1,35 +1,32 @@
-import { createApp } from 'vue';
-import { mountPageComponents } from '@/utils/vue';
-import createModalManager from '@/modalManager';
-import storeAppGlobalPropertiesInjector from '@/utils/store';
+import { createApp } from 'vue'
+import { mountComponents } from '@/utils/vue'
+import createModalManager from '@/modalManager'
+import { globalPropertiesWrapper } from '@/utils/store'
 
-import store from './store';
+import store from './store'
 
-import ProductList from './components/ProductList';
-import SaveCartBtn from './components/SaveCartBtn';
-import SaveCartModal from './components/SaveCartModal';
-import CreateCheckoutSessionBtn from './components/CreateCheckoutSessionBtn';
+import ProductList from './components/ProductList'
+import SaveCartBtn from './components/SaveCartBtn'
+import SaveCartModal from './components/SaveCartModal'
+import CreateCheckoutSessionBtn from './components/CreateCheckoutSessionBtn'
 
 
-const app = createApp();
+const app = createApp()
 
-const modalManager = createModalManager({
-    modals: {
-        saveCartModal: SaveCartModal
-    }
-});
+const modals = { saveCartModal: SaveCartModal }
 
-app.use(modalManager);
+const modalManager = createModalManager({ modals })
 
-const injectedStore = storeAppGlobalPropertiesInjector(
-    store,
-    ['$modalManager']
-);
+app.use(modalManager)
 
-app.use(injectedStore);
+const wrappedStore = globalPropertiesWrapper(store, ['$modalManager'])
 
-mountPageComponents(app, {
+app.use(wrappedStore)
+
+const components = {
     'product-list': ProductList,
     'save-cart-btn': SaveCartBtn,
     'create-checkout-session-btn': CreateCheckoutSessionBtn
-});
+}
+
+mountComponents(app, components)
