@@ -1,16 +1,14 @@
-import { createApp, h as createElement } from "vue";
+import { createApp } from 'vue'
 
-import store from "./store";
-import Main from "./components/Main.vue";
+import store from './store'
+
+import Main from './components/Main.vue'
 
 
-const mountElement = document.getElementById( "mount0_0" );
+const app = createApp(Main)
 
-const vueInstance = createApp( {
-	render: function () {
-		return createElement( Main );
-	}
-} );
+app.use(store)
 
-vueInstance.use(store);
-vueInstance.mount( mountElement );
+const mountElement = document.getElementById('mount0_0')
+
+app.mount(mountElement)

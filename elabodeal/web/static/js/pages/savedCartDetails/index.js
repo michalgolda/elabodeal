@@ -20,7 +20,7 @@ app.use(modalManager)
 
 const wrappedStore = globalPropertiesWrapper(store, ['$modalManager'])
 
-app.use(wrappedStore);
+app.use(wrappedStore)
 
 const components = {
     'share-cart-btn': ShareCartBtn,

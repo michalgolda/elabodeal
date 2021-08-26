@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import createModalManager from '@/modalManager'
 import { globalPropertiesWrapper }  from '@/utils/store'
 
-import store from './store';
+import store from './store'
 
 import Main from './components/Main'
 import ConfirmEmailChangeModal from './components/ConfirmEmailChangeModal'
