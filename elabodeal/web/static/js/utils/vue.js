@@ -27,11 +27,7 @@ export function mountComponents (app, components) {
 
 			const vMountElementChildNodes = vMountElement.childNodes
 
-			console.log(vMountElementChildNodes)
-
 			const vMountElementHasFragment = vMountElementChildNodes.length > 1
-
-			console.log(vMountElementHasFragment)
 
 			if (vMountElementHasFragment) {
 				const vFragment = document.createElement('div')
