@@ -77,7 +77,11 @@
 					{% else %}
 					<p>Razem: <span>0.00 zł</span></p>
 					{% endif %}
+					{% if request.session.cart.products %}
 					<button id="create-checkout-session-btn" class="btn btn__primary">Przejdź dalej</button>
+					{% else %}
+					<button id="create-checkout-session-btn" class="btn btn__disabled">Przejdź dalej</button>
+					{% endif %}
 				</div>
 			</div>
 		</div>
