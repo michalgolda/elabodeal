@@ -1,37 +1,48 @@
 import { mount } from 'mount-vue-component';
 
- 
-export const mountPageComponents = (vueInstance, components) => {
-	const keys = Object.keys(components);
 
-	for (var key of keys) {
-		const vueComponent = components[key];
-		const mountElement = document.getElementById(key);
+/**
+ * A function which mount and replace mount element with component.
+ * This function use mount function from mount-vue-component library which
+ * allow mount many of components using one app context.
+ * 
+ * @param {VueApp} app
+ * @param {Object} components
+ */
+export function mountComponents (app, components) {
+	const componentsKeys = Object.keys(components)
 
-		if (mountElement) {
-			const vMountElement = mountElement.cloneNode(true);
+	for (var componentKey of componentsKeys) {
+		const component = components[componentKey]
+		const componentMountElm = document.getElementById(componentKey)
 
-			vMountElement.innerHTML = '';
+		if (componentMountElm) {
+			const vComponentMountElm = componentMountElm.cloneNode(true)
 
-			mount(vueComponent, {
-				app: vueInstance,
-				props: { ...mountElement.dataset },
-				element: vMountElement
-			});
+			vComponentMountElm.innerHTML = ''
 
-			let vMountElementChildNodes = vMountElement.childNodes;
-			const vMountElementHasFragment = vMountElementChildNodes.length === 1;
+			mount(component, {
+				app,
+				element: vComponentMountElm,
+				props: { ...componentMountElm.dataset }
+			})
 
-			if (!vMountElementHasFragment) {
-				const fragment = document.createElement('div');
+			const vComponentMountElmChildNodes = vComponentMountElm.childNodes
+			
+			const vComponentMountElmHasNotFragment = vComponentMountElmChildNodes !== 1
 
-				fragment.append(...vMountElementChildNodes);
+			if (vComponentMountElmHasNotFragment) {
+				const vFragment = document.createElement('div')
 
-				vMountElement.innerHTML = '';
-				vMountElement.appendChild(fragment);
+				vFragment.append(...vComponentMountElmChildNodes)
+
+				vComponentMountElm.innerHTML = ''
+				vComponentMountElm.appendChild(vFragment)
 			}
 
-			mountElement.replaceWith(vMountElementChildNodes[0]);
+			const vMountedComponent = vComponentMountElmChildNodes[0]
+
+			componentMountElm.replaceWith(vMountedComponent)
 		}
 	}
-};
+}
