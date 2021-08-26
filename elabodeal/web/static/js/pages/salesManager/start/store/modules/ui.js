@@ -1,4 +1,4 @@
-import { setCurrentUrlParam } from '@/utils/url';
+import { setCurrentURLParam } from '@/utils/url';
 
 
 const initialState = () => {
@@ -17,7 +17,7 @@ const uiModule = {
     state: initialState(),
     mutations: {
         setFormType (state, formType) {
-            setCurrentUrlParam('formType', formType);
+            setCurrentURLParam('formType', formType);
 
             state.formType = formType;
         },

@@ -1,4 +1,4 @@
-import { setCurrentUrlParams } from '@/utils/url';
+import { setCurrentURLParams } from '@/utils/url';
 
 
 const initialState = () => {
@@ -20,7 +20,7 @@ const uiModule = {
 		showTab(state, tabName) {
 			tabName = tabName ? tabName.toLowerCase() : 'user';
 
-			setCurrentUrlParams({
+			setCurrentURLParams({
 				tab: tabName,
 				section: null
 			});
@@ -30,7 +30,7 @@ const uiModule = {
 		showSection(state, sectionName) {
 			sectionName = sectionName ? sectionName.toLowerCase() : '';
 
-			setCurrentUrlParams({
+			setCurrentURLParams({
 				section: sectionName
 			});
 
@@ -38,7 +38,7 @@ const uiModule = {
 			state.section.error = {};
 		},
 		hideSection(state) {
-			setCurrentUrlParams({
+			setCurrentURLParams({
 				section: ''
 			});
 

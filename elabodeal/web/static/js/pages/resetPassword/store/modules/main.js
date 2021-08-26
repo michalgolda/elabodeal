@@ -1,6 +1,6 @@
 import { uiModuleTypes } from './ui'
 import { userService } from '@/services'
-import { setCurrentUrlParam } from '@/utils/url'
+import { setCurrentURLParam } from '@/utils/url'
 import { createNamespacedTypes } from '@/utils/store'
 
 
@@ -41,7 +41,7 @@ const actions = {
 
         userService.startResetPasswordFlow(data, {
             successCallback: () => {
-                setCurrentUrlParam('email', email);
+                setCurrentURLParam('email', email);
 
                 ctx.commit(mutationTypes.SET_EMAIL, email, {root: true})
                 ctx.commit(uiModuleTypes.mutations.SET_STEP, 'end', {root: true})

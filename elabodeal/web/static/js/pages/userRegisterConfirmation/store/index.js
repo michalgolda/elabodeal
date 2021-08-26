@@ -1,11 +1,11 @@
 import { createStore } from 'vuex';
 import { userService } from '@/services';
-import { getUrlParam } from '@/utils/url';
+import { getCurrentURLParamValue } from '@/utils/url';
 
 
 const initialState = () => {
-    const email = getUrlParam('email');
-    const code = getUrlParam('code');
+    const email = getCurrentURLParamValue('email');
+    const code = getCurrentURLParamValue('code');
     
     return {
         email,

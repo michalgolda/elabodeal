@@ -11,7 +11,7 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 import { mainModuleTypes, uiModuleTypes } from '../store/modules'
-import { getUrlParam } from '@/utils/url'
+import { getCurrentURLParamValue } from '@/utils/url'
 
 import EndResetPasswordForm from './EndResetPasswordForm'
 import StartResetPasswordForm from './StartResetPasswordForm'
@@ -25,8 +25,8 @@ export default {
     setup () {
         const store = useStore()
 
-        const stepParam = getUrlParam('step')
-        const emailParam = getUrlParam('email')
+        const stepParam = getCurrentURLParamValue('step')
+        const emailParam = getCurrentURLParamValue('email')
 
         store.commit(
             uiModuleTypes.mutations.SET_STEP,

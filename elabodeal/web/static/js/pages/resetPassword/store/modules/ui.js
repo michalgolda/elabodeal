@@ -1,5 +1,5 @@
 import { mainModuleTypes } from './main';
-import { setCurrentUrlParam } from '@/utils/url'
+import { setCurrentURLParam } from '@/utils/url'
 import { createNamespacedTypes } from '@/utils/store';
 
 
@@ -19,7 +19,7 @@ const mutations = {
     [mutationTypes.SET_STEP] (state, step) {
         step = step ? step.toLowerCase() : 'start'
 
-        setCurrentUrlParam('step', step)
+        setCurrentURLParam('step', step)
 
         state.step = step
     },
