@@ -38,7 +38,7 @@
 
     {% block page-bottom-scripts %}{% endblock %}
     {% if application_data %}
-    {{ application_data|json_script:"app-data" }}
+    {{ application_data|json_script:"application-data" }}
     {% endif %}
 </body>
 </html>
