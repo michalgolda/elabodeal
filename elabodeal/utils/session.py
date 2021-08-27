@@ -7,33 +7,44 @@ class CartSessionManager:
     @dataclass
     class Product:
         id: str
+        title: str
+        author: str
         price: float
-        selected: bool
+        cover_img_path: str
+        selected: bool = True
 
     def __init__(self, session):
         self.session = session
+
         self._products = []
         self._id = None
 
         cart = self.session.get('cart')
 
-        if cart:
-            self._id = cart.get('id')
+        if not cart: return
+        
+        self._id = cart.get('id')
 
-            cart_products = cart.get('products')
+        cart_products = cart.get('products')
 
-            for cart_product in cart_products:
-                cart_product_id = cart_product['id']
-                cart_product_price = cart_product['price']
-                cart_product_selected = cart_product['selected']
+        for cart_product in cart_products:
+            cart_product_id = cart_product['id']
+            cart_product_title = cart_product['title']
+            cart_product_price = cart_product['price']
+            cart_product_author = cart_product['author']
+            cart_product_selected = cart_product['selected']
+            cart_product_cover_img_path = cart_product['cover_img_path']
 
-                self._products.append(
-                    self.Product(
-                        cart_product_id,
-                        cart_product_price,
-                        cart_product_selected
-                    )
-                )
+            product = self.Product(
+                id=cart_product_id,
+                title=cart_product_title,
+                price=cart_product_price,
+                author=cart_product_author,
+                selected=cart_product_selected,
+                cover_img_path=cart_product_cover_img_path
+            )
+
+            self._products.append(product)
 
     @property
     def id(self):
@@ -84,34 +95,30 @@ class CartSessionManager:
             products=[asdict(p) for p in self._products],
             total_price_of_selected_products=self.total_price_of_selected_products,
         )
+    
+    def get_product(self, product_id):
+        for product in self._products:
+            if product.id == product_id:
+                return product
+
+        return None
 
     def product_is_selected(self, product_id):
-        return bool(
-            list(
-                filter(
-                    lambda product: product.id == product_id,
-                    self.selected_products
-                )
-            )
-        )
+        product = self.get_product(product_id)
 
-    def add(self, product_id, product_price, product_selected = True):
-        product_in_cart = bool(
-            list(
-                filter(
-                    lambda product: product.id == product_id,
-                    self._products
-                )
-            )
-        )
+        if not product: return
+
+        product_selected = product.selected
+
+        return product_selected
+
+    def product_in_cart(self, product_id):
+        return True if self.get_product(product_id) else False
+
+    def add(self, product):
+        product_in_cart = self.product_in_cart(product.id)
 
         if product_in_cart: return
-
-        product = self.Product(
-            product_id,
-            product_price,
-            product_selected
-        )
 
         self._products.append(product)
 
@@ -123,23 +130,16 @@ class CartSessionManager:
             )
         )
 
-    def select(self, product_id):
-        product = None
 
-        for cart_product in self._products:
-            if cart_product.id == product_id:
-                product = cart_product
+    def select(self, product_id):
+        product = self.get_product(product_id)
 
         if not product: return
 
         product.selected = True
 
     def deselect(self, product_id):
-        product = None
-
-        for cart_product in self._products:
-            if cart_product.id == product_id:
-                product = cart_product
+        product = self.get_product(product_id)
 
         if not product: return
 

@@ -17,7 +17,7 @@
 			:title="product.title"
 			:author="product.author"
 			:price="product.price"
-			:cover-img-path="product.cover_img.path"
+			:cover-img-path="product.cover_img_path"
 			:product-id="product.id"
 			:selected="product.selected"
 		/>
@@ -26,7 +26,6 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { mainModuleTypes } from '../store/modules'
 
 import ProductListItem from './ProductListItem'
 
@@ -39,11 +38,11 @@ export default {
 		const store = useStore()
 
 		const products = computed(() => {
-			return store.getters[mainModuleTypes.getters.GET_PRODUCTS]
+			return store.state.products
 		})
 
 		const cartIsEmpty = computed(() => {
-			return store.getters[mainModuleTypes.getters.CART_IS_EMPTY]
+			return store.state.products.length === 0
 		})
 
 		return {

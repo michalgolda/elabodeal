@@ -11,7 +11,10 @@ class CartSessionManagerTest(BaseTestCase):
                     {
                         'id': '1',
                         'price': 2.00,
-                        'selected': True
+                        'title': 'test',
+                        'author': 'test',
+                        'selected': True,
+                        'cover_img_path': 'test'
                     }
                 ]
             }
@@ -30,13 +33,17 @@ class CartSessionManagerTest(BaseTestCase):
     def test_products_property(self):
         cart_manager = CartSessionManager(self.session)
 
+        products = cart_manager.products
+
         self.assertEqual(
-            cart_manager.products, 
+            products, 
             [
                 CartSessionManager.Product(
                     id='1',
                     price=2.00,
-                    selected=True
+                    title='test',
+                    author='test',
+                    cover_img_path='test'
                 )
             ]
         )
@@ -52,7 +59,9 @@ class CartSessionManagerTest(BaseTestCase):
                 CartSessionManager.Product(
                     id='1',
                     price=2.00,
-                    selected=True
+                    title='test',
+                    author='test',
+                    cover_img_path='test'
                 )
             ]
         )
@@ -79,23 +88,65 @@ class CartSessionManagerTest(BaseTestCase):
 
         cart_manager_as_dict = cart_manager.asdict
 
-        self.assertIn('id', cart_manager_as_dict)
-        self.assertIn('isEmpty', cart_manager_as_dict)
-        self.assertIn('products', cart_manager_as_dict)
-        self.assertIn('total_price', cart_manager_as_dict)
-        self.assertIn('product_count', cart_manager_as_dict)
+        self.assertEquals(
+            cart_manager_as_dict, 
+            {
+                'id': '123',
+                'isEmpty': False,
+                'products': [{
+                    'id': '1',
+                    'price': 2.00,
+                    'title': 'test',
+                    'author': 'test',
+                    'selected': True,
+                    'cover_img_path': 'test'
+                }],
+                'total_price': '2.00',
+                'product_count': 1,
+                'total_price_of_selected_products': '2.00'
+            }
+        )
+
+    def test_get_product_method(self):
+        cart_manager = CartSessionManager(self.session)
+
+        product = cart_manager.get_product('1')
+
+        self.assertEqual(
+            product, 
+            CartSessionManager.Product(
+                id='1',
+                price=2.00,
+                title='test',
+                author='test',
+                cover_img_path='test'
+            )
+        )
 
     def test_product_is_selected_method(self):
         cart_manager = CartSessionManager(self.session)
 
         self.assertEqual(cart_manager.product_is_selected('1'), True)
 
+    def test_product_in_cart_method(self):
+        cart_manager = CartSessionManager(self.session)
+
+        self.assertEqual(cart_manager.product_in_cart('1'), True)
+
     def test_add_method(self):
         session = {}
 
         cart_manager = CartSessionManager(session)
 
-        cart_manager.add('1', 2.00)
+        product = CartSessionManager.Product(
+            id='1',
+            price=2.00,
+            title='test',
+            author='test',
+            cover_img_path='test'
+        )
+
+        cart_manager.add(product)
 
         self.assertEqual(
             cart_manager.products, 
@@ -103,7 +154,10 @@ class CartSessionManagerTest(BaseTestCase):
                 CartSessionManager.Product(
                     id='1',
                     price=2.00,
-                    selected=True
+                    title='test',
+                    author='test',
+                    selected=True,
+                    cover_img_path='test'
                 )
             ]
         )
@@ -118,13 +172,14 @@ class CartSessionManagerTest(BaseTestCase):
     def test_select_method(self):
         session = {
             'cart': {
-                'products': [
-                    {
-                        'id': '1',
-                        'price': 2.00,
-                        'selected': False
-                    }
-                ]
+                'products': [{
+                    'id': '1',
+                    'price': 2.00,
+                    'title': 'test',
+                    'author': 'test',
+                    'selected': False,
+                    'cover_img_path': 'test'
+                }]
             }
         }
 
@@ -157,7 +212,15 @@ class CartSessionManagerTest(BaseTestCase):
 
         cart_manager = CartSessionManager(self.session)
 
-        cart_manager.add('1', 2.00);
+        product = CartSessionManager.Product(
+            id='1',
+            price=2.00,
+            title='test',
+            author='test',
+            cover_img_path='test'
+        )
+
+        cart_manager.add(product);
         cart_manager.commit()
 
         updated_session = {

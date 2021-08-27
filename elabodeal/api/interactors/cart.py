@@ -9,9 +9,21 @@ class AddProductToCartInteractor(Interactor):
 	def execute(self, product_id):
 		product = self.product_repo.get_one_by(id=product_id)
 
-		product_price = product.price
+		product_id = str(product.id)
+		product_title = product.title
+		product_author = product.author
+		product_price = float(product.price)
+		product_cover_img_path = product.cover_img.path
 
-		self.cart_manager.add(str(product_id), float(product_price))
+		cart_manager_product = self.cart_manager.Product(
+			id=product_id,
+			price=product_price,
+			title=product_title,
+			author=product_author,
+			cover_img_path=product_cover_img_path
+		)
+
+		self.cart_manager.add(cart_manager_product)
 		self.cart_manager.commit()
 
 		return product

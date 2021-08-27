@@ -16,11 +16,15 @@ cartService.registerFunction('removeProduct', {
 });
 
 
-cartService.registerFunction('selectOrDeselectProduct', {
+cartService.registerFunction('selectProduct', {
 	url: '/api/cart/',
 	method: 'put'
-});
+})
 
+cartService.registerFunction('deselectProduct', {
+	url: '/api/cart/',
+	method: 'put'
+})
 
 cartService.registerFunction('save', {
 	url: '/api/me/carts/',

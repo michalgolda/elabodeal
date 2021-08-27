@@ -1,6 +1,6 @@
 <template>
 	<button
-		v-if="enabledBtn"
+		v-if="btnIsEnabled"
 		class="btn btn__primary"
 		@click="createCheckoutSession"
 	>
@@ -17,28 +17,24 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { mainModuleTypes } from '../store/modules'
 
 
 export default {
 	setup () {
 		const store = useStore()
-	
-		const enabledBtn = computed(() => {
-			return store.getters[
-				mainModuleTypes.getters.CREATE_CHECKOUT_SESSION_BTN_ENABLED
-			]
+
+		const btnIsEnabled = computed(() => {
+			const selectedProducts = store.getters.getSelectedProducts
+
+			return selectedProducts.length > 0
 		})
 
 		const createCheckoutSession = () => {
-			store.dispatch(
-				mainModuleTypes.actions.CREATE_CHECKOUT_SESSION,
-				null
-			)
+			store.dispatch('createCheckoutSession')
 		}
 
 		return {
-			enabledBtn,
+			btnIsEnabled,
 			createCheckoutSession
 		}
 	}

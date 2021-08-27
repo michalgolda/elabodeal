@@ -10,7 +10,6 @@
 <script>
 import { computed, inject } from 'vue'
 import { useStore } from 'vuex'
-import { mainModuleTypes } from '../store/modules'
 
 
 export default {
@@ -24,7 +23,7 @@ export default {
 		}
 
 		const cartIsNotEmpty = computed(() => {
-			return !store.getters[mainModuleTypes.getters.CART_IS_EMPTY]
+			return store.state.products.length > 0
 		})
 		
 		return {

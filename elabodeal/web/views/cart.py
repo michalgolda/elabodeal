@@ -8,39 +8,20 @@ from elabodeal.utils import CartSessionManager
 
 
 class CartView(BaseView):
-	def get_products(self, request):
+	def get(self, request):
 		session = request.session
+		
 		cart_manager = CartSessionManager(session)
 
-		products = []
-		cart_products = cart_manager.products
+		cart_manager_as_dict = cart_manager.asdict
 
-		for cart_product in cart_products:
-			product = Product.objects.filter(id=cart_product.id).first()
-			product_is_selected = cart_product.selected
+		products = cart_manager_as_dict['products']
 
-			products.append({
-				'id': str(product.id),
-				'title': product.title,
-				'author': product.author,
-				'price': float(product.price),
-				'cover_img': {
-					'path': product.cover_img.path
-				},
-				'selected': product_is_selected
-			})
-
-		return products
-
-	def get_context(self, request):
-		return {
+		context = {
 			'application_data': {
-				'products': self.get_products(request)
+				'products': products
 			}
 		}
-
-	def get(self, request):
-		context = self.get_context(request)
 
 		return self.respond('cart.html', request, context)
 

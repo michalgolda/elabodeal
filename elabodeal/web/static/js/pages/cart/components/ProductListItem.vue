@@ -28,7 +28,7 @@
 		</div>
 		<button 
 			style="background-color: transparent; border: none; outline: none;"
-			@click="removeProductFromCart"
+			@click="removeProduct"
 		>
 			<i class="fas fa-times h2 product__delete" />
 		</button>
@@ -37,7 +37,6 @@
 <script>
 import { toRefs } from 'vue'
 import { useStore } from 'vuex'
-import { mainModuleTypes } from '../store/modules';
 
 
 export default {
@@ -73,24 +72,36 @@ export default {
 		const store = useStore()
 
 		const toggleProduct = (e) => {
-			const selected = e.target.checked
+			const actionType = e.target.checked ? 'DESELECT' : 'SELECT'
 
-			store.dispatch(
-				mainModuleTypes.actions.TOGGLE_PRODUCT,
-				{ productId: productId.value, selected }
-			)
+			switch (actionType) {
+				case 'SELECT':
+					store.dispatch(
+						'selectProduct', 
+						{ productId: productId.value }
+					)
+
+					break
+				case 'DESELECT':
+					store.dispatch(
+						'deselectProduct',
+						{ productId: productId.value }
+					)
+
+					break
+			}
 		}
 
-		const removeProductFromCart = () => {
+		const removeProduct = () => {
 			store.dispatch(
-				mainModuleTypes.actions.REMOVE_PRODUCT_FROM_CART,
+				'removeProduct',
 				{ productId: productId.value }
 			)
 		}
 
 		return {
 			toggleProduct,
-			removeProductFromCart
+			removeProduct
 		}
 	}
 }

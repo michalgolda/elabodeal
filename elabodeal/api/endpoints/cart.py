@@ -68,7 +68,12 @@ class CartEndpoint(Endpoint):
 			**serialized_request.validated_data
 		)
 
-		return self.respond(status=200)
+		return self.respond(
+			data={
+				'cart': cart_manager.asdict
+			},
+			status=200
+		)
 
 	def delete(self, request):
 		session = request.session

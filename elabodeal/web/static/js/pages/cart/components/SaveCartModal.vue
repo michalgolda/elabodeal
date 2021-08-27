@@ -47,7 +47,6 @@
 <script>
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import { uiModuleTypes, mainModuleTypes } from '../store/modules'
 
 import Modal from '@/components/Modal'
 
@@ -67,7 +66,7 @@ export default {
 			const descriptionInput = descriptionInputRef.value
 
 			store.dispatch(
-				mainModuleTypes.actions.SAVE_CART,
+				'saveCart',
 				{ 
 					title: titleInput.value, 
 					description: descriptionInput.value
@@ -76,11 +75,11 @@ export default {
 		}
 
 		const titleErrors = computed(() => {
-			return store.getters[uiModuleTypes.getters.GET_TITLE_ERRORS]
+			return store.state.errors.title
 		})
 
 		const descriptionErrors = computed(() => {
-			return store.getters[uiModuleTypes.getters.GET_DESCRIPTION_ERRORS]
+			return store.state.errors.description
 		})
 
 		return {

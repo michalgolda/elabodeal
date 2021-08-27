@@ -17,32 +17,43 @@ class AddProductToCartInteractorTest(BaseTestCase):
 		self.mock_cart_manager = mock_cart_manager
 		self.mock_product_repo = mock_product_repo
 
+		self.mock_product = mock_product = mock.MagicMock(
+			id='1', 
+			price=2.00,
+			title='test',
+			author='test',
+			cover_img=mock.MagicMock(path='test')
+		)
+
+		self.mock_product_repo.get_one_by.return_value = self.mock_product
+
+		self.mock_cart_product = self.mock_cart_manager.Product(
+			id=self.mock_product.id,
+			price=self.mock_product.price,
+			title=self.mock_product.title,
+			author=self.mock_product.author,
+			cover_img_path=self.mock_product.cover_img.path
+		)
+
 	def test_execute(self):
-		mock_product = mock.MagicMock(id='1', price=1)
-
-		self.mock_product_repo.get_one_by.return_value = mock_product
-
 		interactor = AddProductToCartInteractor(
 			product_repo=self.mock_product_repo,
 			cart_manager=self.mock_cart_manager
 		)
 
-		product = interactor.execute(mock_product.id, True)
+		product = interactor.execute(self.mock_product.id)
 
 		self.mock_product_repo.get_one_by.assert_called_once_with(
-			id=mock_product.id
+			id=self.mock_product.id
 		)
 
-		self.mock_cart_manager.clear.assert_called()
-
 		self.mock_cart_manager.add.assert_called_once_with(
-			mock_product.id,
-			mock_product.price
+			self.mock_cart_product
 		)
 
 		self.mock_cart_manager.commit.assert_called()
 
-		self.assertEqual(product, mock_product)
+		self.assertEqual(product, self.mock_product)
 
 
 class RemoveProductFromCartInteractorTest(BaseTestCase):

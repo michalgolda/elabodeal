@@ -11,7 +11,7 @@
 				<i class="fas fa-shopping-cart nav__icon"></i>
 				<div>
 					{% if 'cart' in request.session %}
-					<span class="cart-total-price">
+					<span id="cart-total-price">
 						{{ request.session.cart.total_price }}
 					</span> 
 					<span>zł</span> 
@@ -19,7 +19,7 @@
 						({{ request.session.cart.product_count }})
 					</span>
 					{% else %}
-					<span class="cart-total-price">0.00</span> 
+					<span id="cart-total-price">0.00</span> 
 					<span>zł</span>
 					<span id="cart-product-count">(0)</span>
 					{% endif %}
@@ -42,7 +42,7 @@
 				<i class="fas fa-shopping-cart nav__icon"></i>
 				<div>
 					{% if 'cart' in request.session %}
-					<span class="cart-total-price">
+					<span id="cart-total-price">
 						{{ request.session.cart.total_price }}
 					</span> 
 					<span>zł</span> 
@@ -50,7 +50,7 @@
 						({{ request.session.cart.product_count }})
 					</span>
 					{% else %}
-					<span class="cart-total-price">0.00</span> 
+					<span id="cart-total-price">0.00</span> 
 					<span>zł</span>
 					<span id="cart-product-count">(0)</span>
 					{% endif %}
