@@ -9,7 +9,8 @@
 <script>
 import { toRefs } from 'vue'
 import { useStore } from 'vuex'
-import { mainModuleTypes } from '../store/modules'
+
+import { actionsTypes } from '../store/actions'
 
 
 export default {
@@ -26,7 +27,7 @@ export default {
 
         const followPublisherProfile = () => {
             store.dispatch(
-                mainModuleTypes.actions.FOLLOW_PUBLISHER_PROFILE,
+                actionsTypes.FOLLOW_PUBLISHER_PROFILE,
                 { publisherId: publisherId.value }
             )
         }

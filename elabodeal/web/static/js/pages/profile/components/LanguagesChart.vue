@@ -9,7 +9,6 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 
-import { chartsModuleTypes } from '../store/modules'
 import Chart from './Chart'
 
 
@@ -20,9 +19,7 @@ export default {
 	setup () {
 		const store = useStore()
 
-		const chartData = store.getters[
-			chartsModuleTypes.getters.GET_LANGUAGES_CHART_DATA
-		]
+		const chartData = store.state.charts.languages
 
 		const labels = computed(() => {
 			return chartData['labels']

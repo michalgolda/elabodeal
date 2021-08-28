@@ -2,7 +2,7 @@
     <div ref="chartContainerRef" />
 </template>
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, toRefs, onMounted } from 'vue'
 
 
 export default {
@@ -21,14 +21,13 @@ export default {
         }
     },
     setup (props) {
-        // eslint-disable-next-line
-        const { labels, datasets, title } = props;
+        const { labels, datasets, title } = toRefs(props)
 
         const config = {
             type: 'doughnut',
             data: {
-                labels: labels,
-                datasets: datasets,
+                labels: labels.value,
+                datasets: datasets.value,
             },
             options: {
                 plugins: {
@@ -41,7 +40,7 @@ export default {
                     },
                     title: {
                         display: true,
-                        text: title,
+                        text: title.value,
                         padding: {
                             bottom: 10
                         }
@@ -55,12 +54,12 @@ export default {
         onMounted(() => {
             const chartContainer = chartContainerRef.value
 
-            const canvas = document.createElement('canvas');
+            const canvas = document.createElement('canvas')
 
-            chartContainer.appendChild(canvas);
+            chartContainer.appendChild(canvas)
 
             // eslint-disable-next-line
-            new Chart(canvas, config);
+            new Chart(canvas, config)
         })
 
         return {

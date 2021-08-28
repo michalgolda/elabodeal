@@ -21,7 +21,7 @@ publisherService.registerFunction('follow', {
 	method: 'post'
 });
 
-publisherService.registerFunction('unFollow', {
+publisherService.registerFunction('unfollow', {
 	url: '/api/followers/',
 	method: 'delete'
 });

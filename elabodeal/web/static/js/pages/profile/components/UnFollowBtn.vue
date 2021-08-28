@@ -1,6 +1,6 @@
 <template>
     <button 
-        @click="unFollowPublisherProfile"
+        @click="unfollowPublisherProfile"
         class="btn btn__secondary"
     >
         <i class="fas fa-check" />&nbsp;&nbsp;
@@ -10,7 +10,8 @@
 <script>
 import { toRefs } from 'vue'
 import { useStore } from 'vuex'
-import {  mainModuleTypes } from '../store/modules'
+
+import {  actionsTypes } from '../store/actions'
 
 
 export default {
@@ -25,15 +26,15 @@ export default {
     
         const store = useStore()
 
-        const unFollowPublisherProfile = () => {
+        const unfollowPublisherProfile = () => {
             store.dispatch(
-                mainModuleTypes.actions.UNFOLLOW_PUBLISHER_PROFILE,
+                actionsTypes.UNFOLLOW_PUBLISHER_PROFILE,
                 { publisherId: publisherId.value }
             )
         }
 
         return {
-            unFollowPublisherProfile
+            unfollowPublisherProfile
         }
     }
 }
