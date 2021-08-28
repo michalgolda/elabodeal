@@ -68,7 +68,7 @@ Service.prototype.registerFunction = function (functionName, config) {
         {
             writable: false,
             enumerable: false,
-            configurable: false,
+            configurable: true,
             value: serviceFunction
         } 
     )  
