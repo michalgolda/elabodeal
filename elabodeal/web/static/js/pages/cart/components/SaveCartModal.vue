@@ -48,6 +48,8 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 
+import { actionsTypes } from '../store/types'
+
 import Modal from '@/components/Modal'
 
 
@@ -66,7 +68,7 @@ export default {
 			const descriptionInput = descriptionInputRef.value
 
 			store.dispatch(
-				'saveCart',
+				actionsTypes.SAVE_CART,
 				{ 
 					title: titleInput.value, 
 					description: descriptionInput.value

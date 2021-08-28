@@ -38,6 +38,8 @@
 import { toRefs } from 'vue'
 import { useStore } from 'vuex'
 
+import { actionsTypes } from '../store/types'
+
 
 export default {
 	props: {
@@ -77,14 +79,14 @@ export default {
 			switch (actionType) {
 				case 'SELECT':
 					store.dispatch(
-						'selectProduct', 
+						actionsTypes.SELECT_PRODUCT, 
 						{ productId: productId.value }
 					)
 
 					break
 				case 'DESELECT':
 					store.dispatch(
-						'deselectProduct',
+						actionsTypes.DESELECT_PRODUCT,
 						{ productId: productId.value }
 					)
 
@@ -94,7 +96,7 @@ export default {
 
 		const removeProduct = () => {
 			store.dispatch(
-				'removeProduct',
+				actionsTypes.REMOVE_PRODUCT,
 				{ productId: productId.value }
 			)
 		}

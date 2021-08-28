@@ -18,19 +18,23 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 
+import { gettersTypes, actionsTypes } from '../store/types'
+
 
 export default {
 	setup () {
 		const store = useStore()
 
 		const btnIsEnabled = computed(() => {
-			const selectedProducts = store.getters.getSelectedProducts
+			const selectedProducts = store.getters[
+				gettersTypes.GET_SELECTED_PRODUCTS
+			]
 
 			return selectedProducts.length > 0
 		})
 
 		const createCheckoutSession = () => {
-			store.dispatch('createCheckoutSession')
+			store.dispatch(actionsTypes.CREATE_CHECKOUT_SESSION)
 		}
 
 		return {

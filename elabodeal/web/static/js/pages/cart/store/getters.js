@@ -4,6 +4,12 @@ const getSelectedProducts = (state) => {
     })
 }
 
-const getters = { getSelectedProducts }
+export const gettersTypes = {
+    GET_SELECTED_PRODUCTS: 'GET_SELECTED_PRODUCTS'
+}
+
+const getters = { 
+    [gettersTypes.GET_SELECTED_PRODUCTS]: getSelectedProducts 
+}
 
 export default getters

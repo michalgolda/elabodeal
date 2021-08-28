@@ -1,4 +1,4 @@
-import constants from './constants'
+import { mutationsTypes } from './types'
 import { cartService, checkoutSessionService } from '@/services'
 
 
@@ -8,17 +8,17 @@ function saveCart ({ commit }, { title, description }) {
     data.append('title', title)
     data.append('description', description)
     
-    commit(constants.SAVE_CART_REQUEST)
+    commit(mutationsTypes.SAVE_CART_REQUEST)
     
     cartService.save(data, {
         successCallback () { 
-            commit(constants.SAVE_CART_SUCCESS) 
+            commit(mutationsTypes.SAVE_CART_SUCCESS) 
         },
         errorCallback (errorResponse) {
             const errors = errorResponse.data.error.details
 
             commit(
-                constants.SAVE_CART_FAILURE,
+                mutationsTypes.SAVE_CART_FAILURE,
                 errors
             )
         }
@@ -30,14 +30,14 @@ function removeProduct ({ commit }, { productId }) {
 
     data.append('product_id', productId)
 
-    commit(constants.REMOVE_PRODUCT_REQUEST)
+    commit(mutationsTypes.REMOVE_PRODUCT_REQUEST)
 
     cartService.removeProduct({ data }, {
         successCallback ({ data }) {
             const { cart } = data
 
             commit(
-                constants.REMOVE_PRODUCT_SUCCESS,
+                mutationsTypes.REMOVE_PRODUCT_SUCCESS,
                 {
                     products: cart.products,
                     totalPrice: cart.total_price,
@@ -49,7 +49,7 @@ function removeProduct ({ commit }, { productId }) {
             const errors = errorResponse.data.error.details
 
             commit(
-                constants.REMOVE_PRODUCT_FAILURE,
+                mutationsTypes.REMOVE_PRODUCT_FAILURE,
                 errors
             )
         }
@@ -61,14 +61,14 @@ function selectProduct ({ commit }, { productId }) {
 
     data.append('product_id', productId)
 
-    commit(constants.SELECT_PRODUCT_REQUEST)
+    commit(mutationsTypes.SELECT_PRODUCT_REQUEST)
 
     cartService.selectProduct(data, {
         successCallback ({ data }) {
             const { cart } = data
 
             commit(
-                constants.SELECT_PRODUCT_SUCCESS,
+                mutationsTypes.SELECT_PRODUCT_SUCCESS,
                 {
                     products: cart.products,
                     totalPrice: cart.total_price_of_selected_products
@@ -79,7 +79,7 @@ function selectProduct ({ commit }, { productId }) {
             const errors = errorResponse.data.error.details
 
             commit(
-                constants.SELECT_PRODUCT_FAILURE,
+                mutationsTypes.SELECT_PRODUCT_FAILURE,
                 errors
             )
         }
@@ -91,14 +91,14 @@ function deselectProduct ({ commit }, { productId }) {
 
     data.append('product_id', productId)
 
-    commit(constants.DESELECT_PRODUCT_REQUEST)
+    commit(mutationsTypes.DESELECT_PRODUCT_REQUEST)
 
     cartService.deselectProduct(data, {
         successCallback ({ data }) {
             const { cart } = data
 
             commit(
-                constants.DESELECT_PRODUCT_SUCCESS,
+                mutationsTypes.DESELECT_PRODUCT_SUCCESS,
                 {
                     products: cart.products,
                     totalPrice: cart.total_price
@@ -109,7 +109,7 @@ function deselectProduct ({ commit }, { productId }) {
             const errors = errorResponse.data.error.details
 
             commit(
-                constants.DESELECT_PRODUCT_FAILURE,
+                mutationsTypes.DESELECT_PRODUCT_FAILURE,
                 errors
             )
         }
@@ -117,29 +117,37 @@ function deselectProduct ({ commit }, { productId }) {
 }
 
 function createCheckoutSession ({ commit }) {
-    commit(constants.CREATE_CHECKOUT_SESSION_REQUEST)
+    commit(mutationsTypes.CREATE_CHECKOUT_SESSION_REQUEST)
     
     checkoutSessionService.createSession(null, {
         successCallback () {
-            commit(constants.CREATE_CHECKOUT_SESSION_SUCCESS)
+            commit(mutationsTypes.CREATE_CHECKOUT_SESSION_SUCCESS)
         },
         errorCallback (errorResponse) {
             const errors = errorResponse.data.error.details
             
             commit(
-                constants.CREATE_CHECKOUT_SESSION_FAILURE,
+                mutationsTypes.CREATE_CHECKOUT_SESSION_FAILURE,
                 errors
             )
         }
     })
 }
 
+export const actionsTypes = {
+    SAVE_CART: 'SAVE_CART',
+    REMOVE_PRODUCT: 'REMOVE_PRODUCT',
+    SELECT_PRODUCT: 'SELECT_PRODUCT',
+    DESELECT_PRODUCT: 'DESELECT_PRODUCT',
+    CREATE_CHECKOUT_SESSION: 'CREATE_CHECKOUT_SESSION'
+}
+
 const actions = {
-    saveCart,
-    removeProduct,
-    selectProduct,
-    deselectProduct,
-    createCheckoutSession
+    [actionsTypes.SAVE_CART]: saveCart,
+    [actionsTypes.REMOVE_PRODUCT]: removeProduct,
+    [actionsTypes.SELECT_PRODUCT]: selectProduct,
+    [actionsTypes.DESELECT_PRODUCT]: deselectProduct,
+    [actionsTypes.CREATE_CHECKOUT_SESSION]: createCheckoutSession
 }
 
 export default actions
