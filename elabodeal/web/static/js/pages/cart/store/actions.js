@@ -1,4 +1,4 @@
-import { mutationsTypes } from './types'
+import { mutationsTypes } from './mutations'
 import { cartService, checkoutSessionService } from '@/services'
 
 
