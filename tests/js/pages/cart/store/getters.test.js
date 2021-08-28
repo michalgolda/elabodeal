@@ -1,10 +1,11 @@
 import getters from '../../../../../elabodeal/web/static/js/pages/cart/store/getters'
+import { gettersTypes } from '../../../../../elabodeal/web/static/js/pages/cart/store/getters'
 
 
-test('getSelectedProducts', () => {
+test(gettersTypes.GET_SELECTED_PRODUCTS, () => {
     const state = { products: [{ selected: true }] }
 
-    const result = getters.getSelectedProducts(state)
+    const result = getters[gettersTypes.GET_SELECTED_PRODUCTS](state)
 
     expect(result).toStrictEqual([{ selected: true }])
 })

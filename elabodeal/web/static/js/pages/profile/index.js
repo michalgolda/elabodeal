@@ -5,7 +5,7 @@ import store from './store'
 
 import LanguagesChart from './components/LanguagesChart'
 import CategoriesChart from './components/CategoriesChart'
-import ProfileBadgeBtn from './components/ProfileBadgeBtn'
+import FollowersBtnWrapper from './components/FollowersBtnWrapper'
 
 
 const app = createApp()
@@ -13,10 +13,10 @@ const app = createApp()
 app.use(store)
 
 const components = {
-    'followBtn': ProfileBadgeBtn,
-    'unFollowBtn': ProfileBadgeBtn,
     'languagesChart': LanguagesChart,
-    'categoriesChart': CategoriesChart
+    'followBtn': FollowersBtnWrapper,
+    'categoriesChart': CategoriesChart,
+    'unFollowBtn': FollowersBtnWrapper
 }
 
 mountComponents(app, components)

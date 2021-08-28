@@ -38,7 +38,7 @@
 import { toRefs } from 'vue'
 import { useStore } from 'vuex'
 
-import { actionsTypes } from '../store/types'
+import { actionsTypes } from '../store/actions'
 
 
 export default {

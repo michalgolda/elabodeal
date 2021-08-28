@@ -48,7 +48,7 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 
-import { actionsTypes } from '../store/types'
+import { actionsTypes } from '../store/actions'
 
 import Modal from '@/components/Modal'
 

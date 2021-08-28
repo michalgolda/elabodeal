@@ -18,7 +18,8 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 
-import { gettersTypes, actionsTypes } from '../store/types'
+import { gettersTypes } from '../store/getters'
+import { actionsTypes } from '../store/actions'
 
 
 export default {
