@@ -9,7 +9,8 @@
 <script>
 import { toRefs } from 'vue'
 import { useStore } from 'vuex'
-import { cartModuleTypes } from '../store/modules'
+
+import { actionsTypes } from '../store/actions'
 
 
 export default {
@@ -26,7 +27,7 @@ export default {
 
 		const addProductToCart = () => {
 			store.dispatch(
-				cartModuleTypes.actions.ADD_PRODUCT_TO_CART,
+				actionsTypes.ADD_PRODUCT_TO_CART,
 				{ productId: productId.value }
 			)
 		}

@@ -2,36 +2,34 @@
 	<div class="text-details__actions">
 		<button 
 			class="btn"
-			:class="[descriptionIsVisible ? 'btn__primary' : 'btn__primary-outline']"
+			:class="[state.showDescription ? 'btn__primary' : 'btn__primary-outline']"
 			@click="showDescription"
 		>
 			Opis
 		</button>
 		<button 
 			class="btn"
-			:class="[contentsIsVisible ? 'btn__primary' : 'btn__primary-outline']"
+			:class="[state.showContents ? 'btn__primary' : 'btn__primary-outline']"
 			@click="showContents"
 		>
 			Spis treści
 		</button>
 	</div>
 	<div 
-		v-if="descriptionIsVisible"
+		v-if="state.showDescription"
 		class="text-details__content"
 	>
 		<p>{{ description }}</p>
 	</div>
 	<div 
-		v-if="contentsIsVisible"
+		v-if="state.showContents"
 		class="text-details__content"
 	>
 		<p>{{ contents }}</p>
 	</div>
 </template>
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import { uiModuleTypes } from '../store/modules'
+import { ref } from 'vue'
 
 
 export default {
@@ -46,33 +44,25 @@ export default {
 		}
 	},
 	setup () {
-		const store = useStore()
-
-		const showContents = () => {
-			store.commit(
-				uiModuleTypes.mutations.SHOW_CONTENTS
-			)
-		}
-
-		const showDescription = () => {
-			store.commit(
-				uiModuleTypes.mutations.SHOW_DESCRIPTION
-			)
-		}
-		
-		const contentsIsVisible = computed(() => {
-			return store.getters[uiModuleTypes.getters.SHOW_CONTENTS]
+		const state = ref({
+			showDescription: true,
+			showContents: false
 		})
 
-		const descriptionIsVisible = computed(() => {
-			return store.getters[uiModuleTypes.getters.SHOW_DESCRIPTION]
-		})
+		function showDescription () { 
+			state.value.showContents = false
+			state.value.showDescription = true
+		}
 
-		return { 
+		function showContents () { 
+			state.value.showContents = true
+			state.value.showDescription = false
+		}
+
+		return {
+			state,
 			showContents,
-			showDescription,
-			contentsIsVisible,
-			descriptionIsVisible
+			showDescription
 		}
 	}
 }

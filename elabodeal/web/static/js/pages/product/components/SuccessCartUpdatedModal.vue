@@ -6,7 +6,7 @@
 			<div class="flex-center">
 				<img 
 					class="item__cover" 
-					:src="product.cover_img.url" 
+					:src="product.cover_img_path" 
 					:alt="product.title" 
 				>
 				<div class="item__container">
@@ -26,7 +26,7 @@
 		</div>
 		<div class="flex-center">
 			<a 
-				href="/c/"
+				href="/cart/"
 				class="btn btn-block btn__secondary" 
 				style="margin-right: .5rem;"
 				@click="$modalManager.hide()"
