@@ -27,7 +27,6 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { paymentModuleTypes } from '../store/modules';
 
 import ProductSummaryListItem from './ProductSummaryListItem';
 
@@ -40,15 +39,11 @@ export default {
 		const store = useStore()
 
 		const summaryProducts = computed(() => {
-			return store.getters[
-				paymentModuleTypes.getters.GET_SUMMARY_PRODUCTS
-			]
+			return store.state.summaryProducts
 		})
 
 		const summaryTotalPrice = computed(() => {
-			return store.getters[
-				paymentModuleTypes.getters.GET_SUMMARY_TOTAL_PRICE
-			]
+			return store.state.summaryTotalPrice
 		})
 
 		return {

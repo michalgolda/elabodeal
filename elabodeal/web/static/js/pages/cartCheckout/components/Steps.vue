@@ -24,7 +24,6 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { uiModuleTypes } from '../store/modules';
 
 import StepElement from './StepElement';
 
@@ -37,15 +36,15 @@ export default {
 		const store = useStore()
 
 		const showDeliverView = computed(() => {
-			return store.getters[uiModuleTypes.getters.SHOW_DELIVER_VIEW]
+			return store.state.currentStep === 'deliver'
 		})
 
 		const showPaymentView = computed(() => {
-			return store.getters[uiModuleTypes.getters.SHOW_PAYMENT_VIEW]
+			return store.state.currentStep === 'payment' && store.state.delivery !== {}
 		})
 
 		const showPaymentSuccessView = computed(() => {
-			return store.getters[uiModuleTypes.getters.SHOW_PAYMENT_SUCCESS_VIEW]
+			return store.state.currentStep === 'success'
 		})
 
 		return {

@@ -147,13 +147,11 @@
 	</BaseView>
 </template>
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useStripe } from '../hooks'
-import { 
-	uiModuleTypes,
-	paymentModuleTypes, 
-	deliveryModuleTypes } from '../store/modules'
+import { actionsTypes } from '../store/actions'
+import { mutationsTypes } from '../store/mutations'
 
 import BaseView from './BaseView'
 import ProductSummaryList from './ProductSummaryList'
@@ -167,31 +165,27 @@ export default {
 	setup () {
 		const store = useStore()
 
-		const stripePublishableKey = store.getters[
-			paymentModuleTypes.getters.GET_STRIPE_PUBLISHABLE_KEY
-		]
+		const stripePublishableKey = store.state.stripePublishableKey
 
-		const paymentIntentClientSecret = store.getters[
-			paymentModuleTypes.getters.GET_PAYMENT_INTENT_CLIENT_SECRET
-		]
+		const paymentIntentClientSecret = store.state.paymentIntentClientSecret
 
 		const paymentSuccessCallback = (_, payerFirstName) => {
 			store.dispatch(
-				paymentModuleTypes.actions.SUCCEED_CHECKOUT_SESSION,
-				{ firstName: payerFirstName },
-				{ root: true }
+				actionsTypes.SUCCEED_CHECKOUT_SESSION,
+				{ firstName: payerFirstName }
 			)
 		}
+
+		const stripeErrors = ref({})
 
 		const paymentErrorCallback = (error) => {
 			const errorCode = error.code
 			const errorMessage = error.message
 			const errorInput = errorCode.substr(errorCode.indexOf('_') + 1)
 
-			store.commit(
-				uiModuleTypes.mutations.SHOW_ERRORS,
-				{ [errorInput]: [errorMessage] }
-			)
+			stripeErrors.value[errorInput] = errorMessage
+
+			console.log(stripeErrors)
 		}
 
 		const { 
@@ -213,60 +207,46 @@ export default {
 		)
 
 		const delivery = computed(() => {
-			return store.getters[deliveryModuleTypes.getters.GET_DELIVERY]
+			return store.state.delivery
 		})
 
 		const backToDeliverView = () => {
 			store.commit(
-				uiModuleTypes.mutations.SET_CURRENT_STEP,
-				'deliver',
-				{ root: true }
+				mutationsTypes.SET_CURRENT_STEP,
+				'deliver'
 			)
 		}
 
 		const firstNameErrors = computed(() => {
-			return store.getters[
-				uiModuleTypes.getters.GET_FIRST_NAME_ERRORS
-			]
+			return store.state.errors.first_name
 		})
 
 		const lastNameErrors = computed(() => {
-			return store.getters[
-				uiModuleTypes.getters.GET_LAST_NAME_ERRORS
-			]
+			return store.state.errors.last_name
 		})
 
 		const emailErrors = computed(() => {
-			return store.getters[
-				uiModuleTypes.getters.GET_EMAIL_ERRORS
-			]
+			return store.state.errors.email
 		})
 
 		const phoneNumberErrors = computed(() => {
-			return store.getters[
-				uiModuleTypes.getters.GET_PHONE_NUMBER_ERRORS
-			]
+			return store.state.errors.phone_number
 		})
 
 		const cardCvcErrors = computed(() => {
-			return store.getters[
-				uiModuleTypes.getters.GET_CARD_CVC_ERRORS
-			]
+			return stripeErrors.value.cvc
 		})
 
 		const cardNumberErrors = computed(() => {
-			return store.getters[
-				uiModuleTypes.getters.GET_CARD_NUMBER_ERRORS
-			]
+			return stripeErrors.value.number
 		})
 
 		const cardExpiryErrors = computed(() => {
-			return store.getters[
-				uiModuleTypes.getters.GET_CARD_EXPIRY_ERRORS
-			]
+			return stripeErrors.value.expiry
 		})
 
 		return {
+			stripeErrors,
 			delivery,
 			emailInputRef,
 			backToDeliverView,

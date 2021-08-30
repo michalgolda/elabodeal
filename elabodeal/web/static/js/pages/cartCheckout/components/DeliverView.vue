@@ -68,7 +68,7 @@
 				<button 
 					class="btn btn__secondary btn-block"
 					type="button"
-					@click="cancelCheckoutFlow"
+					@click="cancelCheckoutSession"
 				>
 					Wstecz
 				</button>
@@ -79,10 +79,7 @@
 <script>
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import { 
-	uiModuleTypes,
-	mainModuleTypes, 
-	deliveryModuleTypes } from '../store/modules'
+import { actionsTypes } from '../store/actions'
 
 import BaseView from './BaseView'
 
@@ -95,27 +92,27 @@ export default {
 		const store = useStore()
 
 		const email = computed(() => {
-			return store.getters[deliveryModuleTypes.getters.GET_EMAIL]
+			return store.state.delivery.email
 		})
 
 		const firstName = computed(() => {
-			return store.getters[deliveryModuleTypes.getters.GET_FIRST_NAME]
+			return store.state.delivery.firstName
 		})
 
 		const lastName = computed(() => {
-			return store.getters[deliveryModuleTypes.getters.GET_LAST_NAME]
+			return store.state.delivery.lastName
 		})
 
 		const emailErrors = computed(() => {
-			return store.getters[uiModuleTypes.getters.GET_EMAIL_ERRORS]
+			return store.state.errors.email
 		})
 		
 		const firstNameErrors = computed(() => {
-			return store.getters[uiModuleTypes.getters.GET_FIRST_NAME_ERRORS]
+			return store.state.errors.first_name
 		})
 
 		const lastNameErrors = computed(() => {
-			return store.getters[uiModuleTypes.getters.GET_LAST_NAME_ERRORS]
+			return store.state.errors.last_name
 		})
 
 		const emailInputRef = ref(null)
@@ -128,7 +125,7 @@ export default {
 			const firstNameInput = firstNameInputRef.value
 
 			store.dispatch(
-				deliveryModuleTypes.actions.UPDATE_DELIVER_DATA,
+				actionsTypes.UPDATE_CHECKOUT_SESSION,
 				{
 					email: emailInput.value,
 					lastName: lastNameInput.value,
@@ -137,10 +134,8 @@ export default {
 			)
 		}
 
-		const cancelCheckoutFlow = () => {
-			store.dispatch(
-				mainModuleTypes.actions.CANCEL_CHECKOUT_FLOW
-			)
+		const cancelCheckoutSession = () => {
+			store.dispatch(actionsTypes.CANCEL_CHECKOUT_SESSION)
 		}
 
 		return {
@@ -154,7 +149,7 @@ export default {
 			lastNameInputRef,
 			firstNameInputRef,
 			updateDeliverData,
-			cancelCheckoutFlow
+			cancelCheckoutSession
 		}
 	}
 }

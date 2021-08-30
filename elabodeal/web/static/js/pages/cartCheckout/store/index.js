@@ -1,18 +1,14 @@
 import { createStore } from 'vuex'
-import { 
-	uiModule,
-	mainModule, 
-	paymentModule, 
-	deliveryModule } from './modules'
+
+import state from './state'
+import actions from './actions'
+import mutations from './mutations'
 
 
-const modules = {
-	ui: uiModule,
-	main: mainModule,
-	payment: paymentModule,
-	delivery: deliveryModule
-}
-
-const store = createStore({ modules })
+const store = createStore({
+	state,
+	actions,
+	mutations
+})
 
 export default store

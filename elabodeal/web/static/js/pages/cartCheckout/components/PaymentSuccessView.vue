@@ -24,7 +24,6 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 import BaseView from './BaseView';
-import { deliveryModuleTypes, paymentModuleTypes } from '../store/modules';
 
 
 export default {
@@ -35,13 +34,11 @@ export default {
 		const store = useStore()
 
 		const firstName = computed(() => {
-			return store.getters[
-				paymentModuleTypes.getters.GET_PAYER_FIRST_NAME
-			]
+			return store.state.payerFirstName
 		})
 
 		const email = computed(() => {
-			return store.getters[deliveryModuleTypes.getters.GET_DELIVERY_EMAIL]
+			return store.state.delivery.firstName
 		})
 
 		return {
