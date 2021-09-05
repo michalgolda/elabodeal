@@ -1,7 +1,7 @@
 <template>
     <UnFollowBtn 
         :publisher-id="publisherId"
-        v-if="userAlreadyFollowing"
+        v-if="currentUserAlreadyFollowing"
     />
     <FollowBtn 
         :publisher-id="publisherId"
@@ -30,12 +30,12 @@ export default {
     setup () {
         const store = useStore()
 
-        const userAlreadyFollowing = computed(() => {
-            return store.state.userAlreadyFollowing
+        const currentUserAlreadyFollowing = computed(() => {
+            return store.state.currentUserAlreadyFollowing
         })
 
         return {
-            userAlreadyFollowing
+            currentUserAlreadyFollowing
         }
     }
 }

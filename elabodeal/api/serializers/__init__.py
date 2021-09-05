@@ -21,8 +21,12 @@ from .saved_carts import SaveCartRequestSerializer
 from .product_language import ProductLanguageSerializer
 from .product_premiere import ProductPremiereSerializer
 from .publisher import (
+	PublisherProfileSerializer,
 	CreatePublisherRequestSerializer,
-	FollowPublisherRequestSerializer
+	FollowPublisherRequestSerializer,
+	UpdatePublisherProfileRequestSerializer,
+	UpdatePublisherProfileAvatarImgRequestSerializer,
+	UpdatePublisherProfileBannerImgRequestSerializer
 )
 from .checkout_session import UpdateCheckoutSessionRequestSerializer
 from .user_register_confirmation import ResendUserRegisterConfirmationRequestSerializer

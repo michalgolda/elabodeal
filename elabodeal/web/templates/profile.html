@@ -2,7 +2,7 @@
 {% load static  %}
 
 {% block title-description %}
-{{ publisher.full_name }}
+{{ existing_publisher.full_name }}
 {% endblock %}
 
 {% block page-styles %}
@@ -20,31 +20,52 @@
 {% include 'components/navigation.html' %}
 <div class="wrapper">
     <div class="profileBadge">
-        <img class="profileBadge__avatar" src="https://64.media.tumblr.com/tumblr_lsmd6zqBUe1qbdhn3o1_500.png">
-        <p class="profileBadge__fullName">{{ publisher.full_name }}</p>
-        <p class="profileBadge__whoIsHe">Doktor ekonomii</p>
-        <p class="profileBadge__description">
-            gatunek dużego ptaka brodzącego z rodziny bocianów (Ciconiidae). ... Dorosłe ptaki mają długie czerwone nogi oraz długie spiczasto zakończone czerwone dzioby i mierzą średnio 100–115 cm od czubka dzioba do końca ogona, ze skrzydłami o rozpiętości 155–215 cm.to duży kot, z silnymi łapami i ostrymi pazurami. Jego długość nie przekracza 350cm, waży ok. 250 kg. Wyposażony w szczęke, potrzebną do polowania, może osiągać prędkość 60km/h.
-        </p>
+        {% if existing_publisher.avatar_img %}
+        <img class="profileBadge__avatar" src="{{ existing_publisher.avatar_img.path }}">
+        {% else %}
+        <div class="profileBadge__avatar"></div>
+        {% endif %}
+        <p class="profileBadge__fullName">{{ existing_publisher.full_name }}</p>
+        <p id="who-you-are" class="profileBadge__whoIsHe">{{ existing_publisher.who_you_are }}</p>
+        <p id="bio" class="profileBadge__description">{{ existing_publisher.bio }}</p>
     </div>
     <div class="container">
         <div class="profileBanner">
-            <img class="profileBanner__img" src="https://wallpaperaccess.com/full/1713248.jpg">
+            {% if existing_publisher.banner_img %}
+            <img class="profileBanner__img" src="{{ existing_publisher.banner_img.path }}">
+            {% else %}
+            <div class="profileBanner__img"></div>
+            {% endif %}
             <div class="profileBanner__content">
-                {% if banner.text %}
-                <p class="profileBanner__text">{{ banner.text }}</p>
-                {% endif %}
-                {% if banner.product %}
-                <img class="profileBanner__productHighlight" src="{{ banner.product.cover_img.path }}">
+                <p 
+                    id="banner-text" 
+                    class="profileBanner__text"
+                >
+                    {{ existing_publisher.banner_text }}
+                </p>
+                {% if existing_publisher.banner_product %}
+                <img 
+                    id="banner-product"
+                    class="profileBanner__productHighlight" 
+                    src="{{ existing_publisher.banner_product.cover_img.path }}"
+                >
                 {% endif %}
             </div>
         </div>
         <div class="pageBar">
             {% if request.user.is_authenticated %}
-            {% if user_already_following %}
+            {% if current_user_is_profile_owner %}
             <button 
-                id="unFollowBtn"
-                data-publisher-id="{{ publisher.id }}"  
+                id="editBtn"
+                class="btn btn__secondary"
+            >
+                Edytuj profil
+            </button>
+            {% else %}
+            {% if current_user_already_following %}
+            <button 
+                id="unollowBtn"
+                data-existing_publisher-id="{{ existing_publisher.id }}"  
                 class="btn btn__secondary"
             >
                 <i class="fas fa-check"></i>&nbsp;&nbsp;
@@ -53,11 +74,12 @@
             {% else %}
             <button 
                 id="followBtn" 
-                data-publisher-id="{{ publisher.id }}"  
+                data-existing_publisher-id="{{ existing_publisher.id }}"  
                 class="btn btn__primary"
             >
                 Zaobserwuj
             </button>
+            {% endif %}
             {% endif %}
             {% else %}
             <a class="btn btn__primary" href="{% url 'web:login' %}">Zaobserwuj</a>
@@ -68,7 +90,7 @@
                 <div class="profileStatisticContainer profileTextStatistic">
                     <div class="profileTextStatistic__container">
                         <p class="profileTextStatistic__key">Obserwujący</p>
-                        <p id="followers" class="profileTextStatistic__value">{{ followers }}</p>
+                        <p id="followers" class="profileTextStatistic__value">{{ followers_count }}</p>
                     </div>
                     <div class="profileTextStatistic__container">
                         <p class="profileTextStatistic__key">Ilość ebooków</p>

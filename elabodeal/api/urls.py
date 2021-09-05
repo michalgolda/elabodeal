@@ -8,6 +8,8 @@ from elabodeal.api.endpoints import (
     CreatePublisherEndpoint,
     CheckoutSessionEndpoint,
     MeShareSavedCartEndpoint,
+    UpdatePublisherProfileBannerImgEndpoint,
+    UpdatePublisherProfileAvatarImgEndpoint,
     MeChangePasswordEndpoint,
     MeProductsGroupsEndpoint,
     MeUpdateSettingsEndpoint,
@@ -15,6 +17,7 @@ from elabodeal.api.endpoints import (
     MeProductsDetailsEndpoint,
     MeSavedCartsDetailsEndpoint,
     MeChangeEmailRequestEndpoint,
+    UpdatePublisherProfileEndpoint,
     SucceedCheckoutSessionEndpoint,
     MeProductsGroupsDetailsEndpoint,
     UserRegisterConfirmationEndpoint,
@@ -130,5 +133,20 @@ urlpatterns = [
         'reset-password/',
         ResetPasswordFlowEndpoint.as_view(),
         name='reset-password'
+    ),
+    path(
+        'profile/',
+        UpdatePublisherProfileEndpoint.as_view(),
+        name='update-publisher-profile'
+    ),
+    path(
+        'profile/banner_img/',
+        UpdatePublisherProfileBannerImgEndpoint.as_view(),
+        name='update-publisher-profile-banner-img'
+    ),
+    path(
+        'profile/avatar_img/',
+        UpdatePublisherProfileAvatarImgEndpoint.as_view(),
+        name='update-publisher-profile-avatar-img'
     )
 ]

@@ -26,7 +26,10 @@ from .checkout_session import (
 )
 from .publisher import (
 	FollowersEndpoint,
-	CreatePublisherEndpoint
+	CreatePublisherEndpoint,
+	UpdatePublisherProfileEndpoint,
+	UpdatePublisherProfileAvatarImgEndpoint,
+	UpdatePublisherProfileBannerImgEndpoint
 )
 from .user_register_confirmation import (
 	UserRegisterConfirmationEndpoint,

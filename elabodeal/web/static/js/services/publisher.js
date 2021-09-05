@@ -26,5 +26,20 @@ publisherService.registerFunction('unfollow', {
 	method: 'delete'
 });
 
+publisherService.registerFunction('updateProfile', {
+	url: '/api/profile/',
+	method: 'put',
+	successMsg: 'Profil został pomyślnie zaktualizowany.'
+})
+
+publisherService.registerFunction('updateProfileBannerImg', {
+	url: '/api/profile/banner_img/',
+	method: 'put'
+})
+
+publisherService.registerFunction('updateProfileAvatarImg', {
+	url: '/api/profile/avatar_img/',
+	method: 'put'
+})
 
 export default publisherService;

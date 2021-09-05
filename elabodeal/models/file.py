@@ -14,9 +14,14 @@ class FileManager(models.Manager):
 	def create_file(self, uploaded_memory_file, type):
 		storage = DefaultStorage()
 
-		extension = Path(uploaded_memory_file.name).suffix.replace('.', '') 
-		size = uploaded_memory_file.size
 		hash = hashlib.md5(uploaded_memory_file.read()).hexdigest()
+
+		existing_file = self.model.objects.filter(hash=hash).first()
+		
+		if existing_file: return existing_file
+
+		size = uploaded_memory_file.size
+		extension = Path(uploaded_memory_file.name).suffix.replace('.', '') 
 
 		file = self.model(
 			size=size,

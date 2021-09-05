@@ -37,7 +37,10 @@ from .checkout_session import (
 from .publisher import (
 	CreatePublisherInteractor,
 	FollowPublisherInteractor,
-	UnFollowPublisherInteractor
+	UnFollowPublisherInteractor,
+	UpdatePublisherProfileInteractor,
+	UpdatePublisherProfileBannerImgInteractor,
+	UpdatePublisherProfileAvatarImgInteractor
 )
 from .user_register_confirmation import (
 	UserRegisterConfirmationInteractor,

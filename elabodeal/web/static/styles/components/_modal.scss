@@ -12,8 +12,10 @@
     height: auto;
     padding: 16px;
     max-width: 512px;
+    overflow-y: scroll;
     border-radius: 2px;
     animation: fadeIn .5s;
+    max-height: calc(100vh - 4rem);
     background-color: $color-white;
 
     &__header {
