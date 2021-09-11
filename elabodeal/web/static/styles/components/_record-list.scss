@@ -48,7 +48,12 @@
         }
 
         &__action {
-            min-width: 128px;
+            min-width: 64px;
+            margin-left: .25rem;
+        }
+
+        &__actionsWrapper {
+            display: flex;
         }
     }
 }
