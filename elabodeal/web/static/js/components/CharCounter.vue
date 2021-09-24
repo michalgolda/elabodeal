@@ -1,8 +1,8 @@
 <template>
     <div>
-        <slot :update="updateCharCount" />
+        <slot :update="updateRemainingCharCount" />
         <p class="form__input-remainingCharCount">
-            Pozostała ilość znaków: {{ charCount }}
+            Pozostała ilość znaków: {{ remainingCharCount }}
         </p>
     </div>
 </template>
@@ -25,15 +25,15 @@ export default {
     setup (props) {
         const { maxValue, initialValue } = toRefs(props)
 
-        const charCount = ref(maxValue.value - initialValue.value)
+        const remainingCharCount = ref(maxValue.value - initialValue.value)
 
-        const updateCharCount = (e) => {
-            charCount.value = maxValue.value - e.target.value.length
+        const updateRemainingCharCount = (e) => {
+            remainingCharCount.value = maxValue.value - e.target.value.length
         }
 
         return {
-            charCount,
-            updateCharCount
+            remainingCharCount,
+            updateRemainingCharCount
         }        
     }
 }
