@@ -16,5 +16,11 @@
 				background-color: $color-light-red;
 			}
 		}
+
+		&-remainingCharCount {
+			margin-top: .5rem;
+			color: $color-black;
+			font-size: $font-size-small;
+		}
 	}
 }
