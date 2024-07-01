@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   postgres:
     image: postgres
@@ -19,7 +17,7 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/usr/bin/app
+      - .:/app
     ports:
       - "8000:8000"
     depends_on:
@@ -27,16 +25,16 @@ services:
       - redis
       - maildev
   celery_worker:
-    command: sh -c "celery -A elabodeal worker -l info -E" 
-    image: elabodeal_app
+    command: sh -c "celery -A elabodeal worker -l info -E"
+    image: elabodeal-app
     volumes:
-      - .:/usr/bin/app    
-    depends_on: 
+      - .:/app
+    depends_on:
       - app
       - redis
       - postgres
   maildev:
     image: maildev/maildev
     ports:
-      - "1080:80"
-      - "1025:25"
+      - "1080:1080"
+      - "1025:1025"

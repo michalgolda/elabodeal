@@ -17,6 +17,8 @@ class Email:
             self.template_context
         ) if self.template else None
 
+        print(html_message)
+
         send_email.delay({
             'to': self.to,
             'subject': self.subject,

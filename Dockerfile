@@ -1,14 +1,14 @@
 FROM python:3.8
 
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
-RUN mkdir /usr/bin/app/
+RUN mkdir /app
 
-WORKDIR /usr/bin/app/
+WORKDIR /app
 
-COPY requirements.txt /usr/bin/app/
+COPY requirements.txt /app
 
 RUN pip install -r requirements.txt
 
-COPY . /usr/bin/app/
+COPY . /app
 
